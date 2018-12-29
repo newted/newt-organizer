@@ -1,0 +1,18 @@
+{
+  "name": "newt-organizer",
+  "version": "1.0.0",
+  "description": "Organize your learning",
+  "main": "index.js",
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nehal Udyavar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
