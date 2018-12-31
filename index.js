@@ -1,6 +1,11 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const keys = require("./config/keys");
 // Require passport before initializing app
 require("./services/passport");
+
+// Connect to MongoDB
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
 const app = express();
 
