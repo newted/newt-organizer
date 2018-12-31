@@ -4,8 +4,14 @@ const keys = require("./config/keys");
 // Require passport before initializing app
 require("./services/passport");
 
+// Require models
+require("./models/User");
+
 // Connect to MongoDB
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.connect(
+  keys.mongoURI,
+  { useNewUrlParser: true }
+);
 
 const app = express();
 
