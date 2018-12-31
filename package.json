@@ -14,6 +14,7 @@
   "author": "Nehal Udyavar",
   "license": "ISC",
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
     "mongoose": "^5.4.1",
     "passport": "^0.4.0",
