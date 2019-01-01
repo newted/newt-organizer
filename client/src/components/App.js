@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
-const Navbar = () => <h2>Navbar</h2>
+import Navbar from './Navbar/Navbar'
 const Landing = () => <h2>Landing</h2>
 const Dashboard = () => <h2>Dashboard</h2>
 const Login = () => <h2>Login</h2>
