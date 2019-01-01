@@ -33,7 +33,15 @@ passport.use(
       }
 
       // No existing user, create a new user
-      const user = await new User({ googleId: profile.id }).save();
+      const user = await new User({
+        googleId: profile.id,
+        displayName: profile.displayName,
+        name: {
+          familyName: profile.name.familyName,
+          givenName: profile.name.givenName
+        },
+        email: profile.emails[0].value
+      }).save();
       done(null, user);
     }
   )
