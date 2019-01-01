@@ -1,19 +1,44 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './Navbar.css'
 
 class Navbar extends Component {
+  // Render Login or Logout based on authentication state
+  renderButton() {
+    switch(this.props.auth) {
+      case null:
+        return
+      case false:
+        return (
+          <a href="/auth/google">
+            <button className="btn logout-btn">
+              Login with Google
+            </button>
+          </a>
+        )
+      default:
+        return (
+          <button className="btn logout-btn">
+            Logout
+          </button>
+        )
+    }
+  }
+
   render() {
     return (
       <nav className="navbar-container">
         <div className="navbar">
           <div>Navbar</div>
-          <button className="btn logout-btn">
-            Login
-          </button>
+          { this.renderButton() }
         </div>
       </nav>
     )
   }
 }
 
-export default Navbar
+function mapStateToProps({ auth }) {
+  return { auth }
+}
+
+export default connect(mapStateToProps)(Navbar)
