@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchUser } from '../actions/authedUser'
 
 import Navbar from './Navbar/Navbar'
 const Landing = () => <h2>Landing</h2>
@@ -7,7 +9,12 @@ const Dashboard = () => <h2>Dashboard</h2>
 const Login = () => <h2>Login</h2>
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchUser()
+  }
+
   render() {
+    console.log(this.props)
     return (
       <BrowserRouter>
         <div>
@@ -21,4 +28,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(null, { fetchUser })(App)
