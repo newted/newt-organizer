@@ -5,8 +5,7 @@ import { fetchUser } from '../actions/authedUser'
 
 import Navbar from './Navbar/Navbar'
 import Landing from './Landing/Landing'
-const Dashboard = () => <h2>Dashboard</h2>
-const Login = () => <h2>Login</h2>
+import Dashboard from './Dashboard/Dashboard'
 
 class App extends Component {
   componentDidMount() {
@@ -20,7 +19,6 @@ class App extends Component {
           <Navbar />
           <Route exact path ='/' component={ Landing } />
           <Route path='/dashboard' component={ Dashboard } />
-          <Route path='/login' component={ Login } />
         </div>
       </BrowserRouter>
     )
