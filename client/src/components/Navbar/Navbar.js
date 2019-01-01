@@ -18,9 +18,11 @@ class Navbar extends Component {
         )
       default:
         return (
-          <button className="btn logout-btn">
-            Logout
-          </button>
+          <a href="/api/logout">
+            <button className="btn logout-btn">
+              Logout
+            </button>
+          </a>
         )
     }
   }
