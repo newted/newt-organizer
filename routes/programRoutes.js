@@ -6,7 +6,7 @@ const Program = mongoose.model("programs");
 module.exports = app => {
   app.post("/api/programs", async (req, res) => {
     // Get information from request body
-    const { name, shortname, provider } = req.body;
+    const { name, shortname, institution } = req.body;
 
     // Create Program
     const program = new Program({

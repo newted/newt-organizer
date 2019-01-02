@@ -5,7 +5,7 @@ const courseSchema = require("./Course");
 const programSchema = new Schema({
   name: String,
   shortname: String,
-  provider: String,
+  institution: String,
   courses: [CourseSchema],
   _user: {
     type: Schema.Types.ObjectId,
