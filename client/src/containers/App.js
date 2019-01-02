@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
+// API
 import { fetchUser } from '../actions/authedUser'
-
+// Components
 import Landing from './Landing'
 import Dashboard from './Dashboard'
 
@@ -13,7 +14,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <BrowserRouter>
         <Fragment>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
+// Styling
 import './Dashboard.css'
 
 class Dashboard extends Component {

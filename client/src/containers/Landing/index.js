@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+// Components
 import Navbar from '../../components/Navbar'
+// Styling
 import './Landing.css'
 
 class Landing extends Component {
