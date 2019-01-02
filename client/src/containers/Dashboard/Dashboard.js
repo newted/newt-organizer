@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from '../Navbar/Navbar'
-import Sidebar from '../Sidebar/Sidebar'
+import Navbar from '../../components/Navbar/Navbar'
+import Sidebar from '../../components/Sidebar/Sidebar'
 import './Dashboard.css'
 
 class Dashboard extends Component {
