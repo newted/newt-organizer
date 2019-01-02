@@ -3,8 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchUser } from '../actions/authedUser'
 
-import Landing from './Landing/Landing'
-import Dashboard from './Dashboard/Dashboard'
+import Landing from './Landing'
+import Dashboard from './Dashboard'
 
 class App extends Component {
   componentDidMount() {
