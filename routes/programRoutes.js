@@ -4,7 +4,7 @@ const requireLogin = require("../middleware/requireLogin");
 const Program = mongoose.model("programs");
 
 module.exports = app => {
-  app.post("/api/programs", async (req, res) => {
+  app.post("/api/programs", requireLogin, async (req, res) => {
     // Get information from request body
     const { name, shortname, institution } = req.body;
 
@@ -19,10 +19,10 @@ module.exports = app => {
 
     try {
       // Add program to database
-      await survey.save();
+      await program.save();
 
       // Send updated user information
-      res.status(201);
+      res.status(201).send({ message: "Program successfully created" });
     } catch (error) {
       res.status(422).send(error);
     }

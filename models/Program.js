@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const courseSchema = require("./Course");
+const CourseSchema = require("./Course");
 
 const programSchema = new Schema({
   name: String,
