@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
+import LoadingBar from 'react-redux-loading'
 import { fetchUser } from '../actions/authedUser'
 
 import Landing from './Landing'
@@ -12,15 +13,28 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <BrowserRouter>
-        <div>
-          <Route exact path ='/' component={ Landing } />
-          <Route path='/dashboard' component={ Dashboard } />
-        </div>
+        <Fragment>
+          <LoadingBar />
+          { this.props.loading === true
+            ? null
+            : <Switch>
+                <Route exact path ='/' component={ Landing } />
+                <Route path='/dashboard' component={ Dashboard } />
+              </Switch>
+          }
+        </Fragment>
       </BrowserRouter>
     )
   }
 }
 
-export default connect(null, { fetchUser })(App)
+function mapStateToProps({ auth }) {
+  return {
+    loading: auth === null
+  }
+}
+
+export default connect(mapStateToProps, { fetchUser })(App)

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
+import { loadingBarReducer } from 'react-redux-loading'
 import authReducer from './authReducer'
 
 export default combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  loadingBar: loadingBarReducer
 })
