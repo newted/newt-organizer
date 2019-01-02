@@ -6,7 +6,12 @@ const programSchema = new Schema({
   name: String,
   shortname: String,
   provider: String,
-  courses: [CourseSchema]
+  courses: [CourseSchema],
+  _user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  dateCreated: Date
 });
 
 mongoose.model("programs", programSchema);
