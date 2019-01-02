@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
+import Navbar from '../Navbar/Navbar'
 import Sidebar from '../Sidebar/Sidebar'
 import './Dashboard.css'
 
 class Dashboard extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="app-container">
         <Sidebar />
-        <div className="content-container">
-          <h3>Dashboard</h3>
-        </div>
+        <section className="page-container">
+          <Navbar />
+          <div className="main-container">
+            <div className="content-container">
+              <h3>Dashboard</h3>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }

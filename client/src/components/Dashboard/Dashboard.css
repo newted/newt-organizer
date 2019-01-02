@@ -1,9 +1,23 @@
-.container {
+.app-container {
   display: flex;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  width: 82%;
+}
+
+.main-container {
+  flex-grow: 1;
+  height: 100%;
+  padding: 1rem;
+  overflow: auto;
 }
 
 .content-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
