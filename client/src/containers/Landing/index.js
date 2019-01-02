@@ -8,7 +8,7 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar theme='landing' />
         <div className="landing-page">
           <div className="title-container">
             <h1 className="landing-title">newt</h1>

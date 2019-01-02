@@ -1,6 +1,14 @@
 .navbar-container {
   width: 100%;
+}
+
+.light-grey-navbar {
   background-color: #ddd;
+}
+
+.light-blue-navbar {
+  background-color: #38ceff;
+  color: white;
 }
 
 .navbar {

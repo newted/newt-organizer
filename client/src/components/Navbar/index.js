@@ -27,9 +27,19 @@ class Navbar extends Component {
     }
   }
 
+  // Render navbar background color based on whether it's landing page or not
+  renderNavbarColor() {
+    switch(this.props.theme) {
+      case 'landing':
+        return "light-blue-navbar"
+      default:
+        return "light-grey-navbar"
+    }
+  }
+
   render() {
     return (
-      <nav className="navbar-container">
+      <nav className={ "navbar-container " + this.renderNavbarColor() }>
         <div className="navbar">
           <div>Navbar</div>
           { this.renderButton() }
@@ -39,8 +49,11 @@ class Navbar extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth }, { theme }) {
+  return {
+    auth,
+    theme
+  }
 }
 
 export default connect(mapStateToProps)(Navbar)
