@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 // Components
 import Navbar from '../../components/Navbar'
 // Styling
-import './Landing.css'
+import styles from './Landing.module.css'
 
 class Landing extends Component {
   render() {
     return (
       <div>
         <Navbar theme='landing' />
-        <div className="landing-page">
-          <div className="title-container">
-            <h1 className="landing-title">newt</h1>
-            <h3 className="landing-subtitle">Organizing your learning</h3>
+        <div className={ styles.container }>
+          <div className={ styles.titleContainer }>
+            <h1 className={ styles.title }>newt</h1>
+            <h3 className={ styles.subtitle }>Organizing your learning</h3>
           </div>
         </div>
       </div>
