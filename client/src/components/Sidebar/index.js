@@ -1,9 +1,9 @@
 import React from 'react'
-import './Sidebar.css'
+import styles from './Sidebar.module.css'
 
 const Sidebar = () => (
-  <aside className="sidebar">
-    <div className="sidebar-navlinks">
+  <aside className={ styles.sidebar }>
+    <div className={ styles.sidebarNavlinks }>
       <div>Sidebar</div>
     </div>
   </aside>
