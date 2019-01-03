@@ -21,3 +21,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.addBtn {
+  background-color: #33ce57;
+  border-color: #48d368;
+  color: white;
+  font-weight: 500;
+}
+
+.addBtn:hover {
+  background-color: #5dd879;
+}
