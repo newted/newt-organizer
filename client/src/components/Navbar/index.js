@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+// Components
+import Button from '../Button'
+// Styling
 import styles from './Navbar.module.css'
 
 class Navbar extends Component {
@@ -11,17 +14,19 @@ class Navbar extends Component {
       case false:
         return (
           <a href="/auth/google">
-            <button className={ `${styles.btn} ${styles.logoutBtn}` }>
-              Login with Google
-            </button>
+            <Button
+              text='Login with Google'
+              additionalClass={ styles.logoutBtn }
+            />
           </a>
         )
       default:
         return (
           <a href="/api/logout">
-            <button className={ `${styles.btn} ${styles.logoutBtn}` }>
-              Logout
-            </button>
+            <Button
+              text='Logout'
+              additionalClass={ styles.logoutBtn }
+            />
           </a>
         )
     }
