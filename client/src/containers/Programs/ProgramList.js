@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 // Styling
+import '../../styles/shared.css'
 import './ProgramList.css'
 
 class ProgramList extends Component {
