@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
-import Button from '../../components/Button'
 // Styling
-import styles from './ProgramList.module.css'
+import styles from './AddProgram.module.css'
 
-class ProgramList extends Component {
+class AddProgram extends Component {
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
@@ -23,13 +22,7 @@ class ProgramList extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <div className={ styles.headerContainer }>
-                <h3 className={ styles.header }>Programs</h3>
-                <Link to='/programs/new'>
-                  <Button
-                    text='Add Program'
-                    additionalClass={ styles.addBtn }
-                  />
-                </Link>
+                <h3 className={ styles.header }>Add a New Program</h3>
               </div>
             </div>
           </div>
@@ -43,4 +36,4 @@ function mapStateToProps({ auth }) {
   return { auth }
 }
 
-export default connect(mapStateToProps)(ProgramList)
+export default connect(mapStateToProps)(AddProgram)

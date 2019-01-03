@@ -8,6 +8,7 @@ import { fetchUser } from '../actions/authedUser'
 import Landing from './Landing'
 import Dashboard from './Dashboard'
 import ProgramList from './Programs/ProgramList'
+import AddProgram from './Programs/AddProgram'
 
 class App extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class App extends Component {
             : <Switch>
                 <Route exact path ='/' component={ Landing } />
                 <Route path='/dashboard' component={ Dashboard } />
+                <Route path='/programs/new' component={ AddProgram } />
                 <Route path='/programs' component={ ProgramList } />
               </Switch>
           }
