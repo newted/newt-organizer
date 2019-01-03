@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 // Styling
-import '../../styles/shared.css'
-import './ProgramList.css'
+import styles from './ProgramList.module.css'
 
 class ProgramList extends Component {
   render() {
@@ -16,12 +15,12 @@ class ProgramList extends Component {
     }
 
     return (
-      <div className="app-container">
+      <div className={ styles.appContainer }>
         <Sidebar />
-        <section className="page-container">
+        <section className={ styles.pageContainer }>
           <Navbar />
-          <div className="main-container">
-            <div className="content-container">
+          <div className={ styles.mainContainer }>
+            <div className={ styles.contentContainer }>
               <h3>Programs</h3>
             </div>
           </div>
