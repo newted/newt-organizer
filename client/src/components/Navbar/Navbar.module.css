@@ -1,12 +1,12 @@
-.navbar-container {
+.navbarContainer {
   width: 100%;
 }
 
-.light-grey-navbar {
+.lightGreyNavbar {
   background-color: #ddd;
 }
 
-.light-blue-navbar {
+.lightBlueNavbar {
   background-color: #38ceff;
   color: white;
 }
@@ -33,12 +33,12 @@
   cursor: pointer;
 }
 
-.logout-btn {
+.logoutBtn {
   background-color: #eee;
   border: 1px solid #666;
 }
 
-.logout-btn:hover {
+.logoutBtn:hover {
   background-color: #fff;
   border-color: #0396ff;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './Navbar.css'
+import styles from './Navbar.module.css'
 
 class Navbar extends Component {
   // Render Login or Logout based on authentication state
@@ -11,7 +11,7 @@ class Navbar extends Component {
       case false:
         return (
           <a href="/auth/google">
-            <button className="btn logout-btn">
+            <button className={ `${styles.btn} ${styles.logoutBtn}` }>
               Login with Google
             </button>
           </a>
@@ -19,7 +19,7 @@ class Navbar extends Component {
       default:
         return (
           <a href="/api/logout">
-            <button className="btn logout-btn">
+            <button className={ `${styles.btn} ${styles.logoutBtn}` }>
               Logout
             </button>
           </a>
@@ -31,16 +31,16 @@ class Navbar extends Component {
   renderNavbarColor() {
     switch(this.props.theme) {
       case 'landing':
-        return "light-blue-navbar"
+        return styles.lightBlueNavbar
       default:
-        return "light-grey-navbar"
+        return styles.lightGreyNavbar
     }
   }
 
   render() {
     return (
-      <nav className={ "navbar-container " + this.renderNavbarColor() }>
-        <div className="navbar">
+      <nav className={ `${styles.navbarContainer} ${this.renderNavbarColor()}` }>
+        <div className={ styles.navbar }>
           <div>Navbar</div>
           { this.renderButton() }
         </div>
