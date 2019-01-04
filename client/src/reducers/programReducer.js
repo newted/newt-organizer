@@ -1,4 +1,4 @@
-import { CREATE_PROGRAM } from '../actions/programs'
+import { CREATE_PROGRAM, FETCH_PROGRAMS } from '../actions/programs'
 
 export default function(
   state = {
@@ -8,6 +8,11 @@ export default function(
 ) {
   switch(action.type) {
     case CREATE_PROGRAM:
+      return {
+        ...state,
+        items: action.payload
+      }
+    case FETCH_PROGRAMS:
       return {
         ...state,
         items: action.payload

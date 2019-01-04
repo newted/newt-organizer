@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+// API
+import { fetchPrograms } from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -9,6 +11,10 @@ import Button from '../../components/Button'
 import styles from './ProgramList.module.css'
 
 class ProgramList extends Component {
+  componentDidMount() {
+    this.props.fetchPrograms()
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
@@ -43,4 +49,4 @@ function mapStateToProps({ auth }) {
   return { auth }
 }
 
-export default connect(mapStateToProps)(ProgramList)
+export default connect(mapStateToProps, { fetchPrograms })(ProgramList)
