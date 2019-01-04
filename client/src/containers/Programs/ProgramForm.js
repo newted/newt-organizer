@@ -15,12 +15,13 @@ const FIELDS = [
 
 class ProgramForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name }) => {
+    return _.map(FIELDS, ({ label, name, required }) => {
       return <Field
         component={ ProgramField }
         type='text'
         label={ label }
         name={ name }
+        required={ required }
         key={ name }
       />
     })
