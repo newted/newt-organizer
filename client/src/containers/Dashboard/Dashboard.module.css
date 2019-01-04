@@ -13,3 +13,7 @@
 .contentContainer {
   composes: contentContainer from '../../styles/shared.css';
 }
+
+.header {
+  margin: 0;
+}

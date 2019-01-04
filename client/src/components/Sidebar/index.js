@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import FIELDS from './sidebarFields'
 import styles from './Sidebar.module.css'
+
+const FIELDS = [
+  { name: 'Dashboard', route: '/dashboard' },
+  { name: 'Programs', route: '/programs' }
+]
 
 class Sidebar extends Component {
   // Render sidebar links based on fields provided

@@ -33,7 +33,6 @@ class ProgramForm extends Component {
           onSubmit={ this.props.handleSubmit(values => console.log(values)) }
         >
           { this.renderFields() }
-          {/* <button type='submit'>Submit</button> */}
           <Button
             text='Submit'
             type='submit'

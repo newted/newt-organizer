@@ -21,7 +21,7 @@ class Dashboard extends Component {
           <Navbar />
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
-              <h3>Dashboard</h3>
+              <h2 className={ styles.header }>Dashboard</h2>
             </div>
           </div>
         </section>
