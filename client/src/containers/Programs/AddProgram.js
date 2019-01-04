@@ -25,9 +25,7 @@ class AddProgram extends Component {
               <div className={ styles.headerContainer }>
                 <h3 className={ styles.header }>Add a New Program</h3>
               </div>
-              <div>
-                <ProgramForm />
-              </div>
+              <ProgramForm />
             </div>
           </div>
         </section>

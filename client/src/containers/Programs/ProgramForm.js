@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Field } from 'redux-form'
+// Components
+import Button from '../../components/Button'
 import ProgramField from './ProgramField'
+// Styling
+import styles from './ProgramForm.module.css'
 
 const FIELDS = [
   { label: 'Program Name', name: 'name' },
@@ -29,7 +33,12 @@ class ProgramForm extends Component {
           onSubmit={ this.props.handleSubmit(values => console.log(values)) }
         >
           { this.renderFields() }
-          <button type='submit'>Submit</button>
+          {/* <button type='submit'>Submit</button> */}
+          <Button
+            text='Submit'
+            type='submit'
+            additionalClass={ styles.submitBtn }
+          />
         </form>
       </div>
     )
