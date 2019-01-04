@@ -6,7 +6,7 @@ export default ({ input, label, meta: { error, touched } }) => {
     <div className={ styles.inputGroup }>
       <label>{ label }</label>
       <input {...input} className={ styles.input }/>
-      { touched && error }
+      <small className={ styles.error }>{ touched && error }</small>
     </div>
   )
 }

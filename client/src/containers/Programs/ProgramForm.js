@@ -8,9 +8,9 @@ import ProgramField from './ProgramField'
 import styles from './ProgramForm.module.css'
 
 const FIELDS = [
-  { label: 'Program Name', name: 'name' },
-  { label: 'Short Name', name: 'shortname' },
-  { label: 'Institution', name: 'institution' }
+  { label: 'Program Name', name: 'name', required: true },
+  { label: 'Short Name', name: 'shortname', required: false },
+  { label: 'Institution', name: 'institution', required: true }
 ]
 
 class ProgramForm extends Component {
@@ -44,12 +44,15 @@ class ProgramForm extends Component {
   }
 }
 
+// Input validation function
 function validate(values) {
   const errors = {}
 
-  if (!values.name) {
-    errors.name = 'You must provide a Program name.'
-  }
+  _.each(FIELDS, ({ name, required }) => {
+    if(required && !values.name) {
+      errors[name] = 'You must provide a value.'
+    }
+  })
 
   return errors
 }
