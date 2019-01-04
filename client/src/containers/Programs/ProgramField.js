@@ -1,10 +1,11 @@
 import React from 'react'
+import styles from './ProgramField.module.css'
 
 export default ({ input, label }) => {
   return (
-    <div>
+    <div className={ styles.inputGroup }>
       <label>{ label }</label>
-      <input {...input} />
+      <input {...input} className={ styles.input }/>
     </div>
   )
 }
