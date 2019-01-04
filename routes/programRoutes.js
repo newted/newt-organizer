@@ -21,8 +21,7 @@ module.exports = app => {
       // Add program to database
       await program.save();
 
-      // Send updated user information
-      res.status(201).send({ message: "Program successfully created" });
+      res.status(201).send({});
     } catch (error) {
       res.status(422).send(error);
     }
