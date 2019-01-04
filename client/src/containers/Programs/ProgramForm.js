@@ -15,7 +15,7 @@ const FIELDS = [
 
 class ProgramForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name}) => {
+    return _.map(FIELDS, ({ label, name }) => {
       return <Field
         component={ ProgramField }
         type='text'
@@ -44,6 +44,17 @@ class ProgramForm extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {}
+
+  if (!values.name) {
+    errors.name = 'You must provide a Program name.'
+  }
+
+  return errors
+}
+
 export default reduxForm({
+  validate,
   form: 'programForm'
 })(ProgramForm)
