@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import { reduxForm, Field } from 'redux-form'
 import ProgramField from './ProgramField'
 
+const FIELDS = [
+  { label: 'Program Name', name: 'name' },
+  { label: 'Short Name', name: 'shortname' },
+  { label: 'Institution', name: 'institution' }
+]
+
 class ProgramForm extends Component {
   renderFields() {
-    return (
-      <div>
-        <Field type='text' name='name' component={ ProgramField } />
-      </div>
-    )
+    return _.map(FIELDS, ({ label, name}) => {
+      return <Field
+        component={ ProgramField }
+        type='text'
+        label={ label }
+        name={ name }
+        key={ name }
+      />
+    })
   }
 
   render() {
