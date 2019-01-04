@@ -50,7 +50,7 @@ function validate(values) {
   const errors = {}
 
   _.each(FIELDS, ({ name, required }) => {
-    if(required && !values.name) {
+    if(required && !values[name]) {
       errors[name] = 'You must provide a value.'
     }
   })
