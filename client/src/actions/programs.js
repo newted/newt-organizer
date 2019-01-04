@@ -9,8 +9,11 @@ const createProgram = (payload) => {
   }
 }
 
-export const submitProgram = (values) => async dispatch => {
+export const submitProgram = (values, history) => async dispatch => {
   const res = await axios.post('/api/programs', values)
+
+  // Redirect to programs page
+  history.push('/programs')
 
   dispatch(createProgram(res.data))
 }

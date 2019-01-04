@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Form, Field } from 'redux-form'
+import { withRouter } from 'react-router-dom'
 // Components
 import Button from '../../components/Button'
 import ProgramField from './ProgramField'
@@ -28,12 +29,13 @@ class ProgramForm extends Component {
   }
 
   render() {
-    const { handleSubmit, onSubmit } = this.props
+    const { handleSubmit, onSubmit, history } = this.props
+    console.log(this.props)
 
     return (
       <div>
         <Form
-          onSubmit={ handleSubmit(values => onSubmit(values)) }
+          onSubmit={ handleSubmit(values => onSubmit(values, history)) }
         >
           { this.renderFields() }
           <Button
@@ -63,4 +65,4 @@ function validate(values) {
 export default reduxForm({
   validate,
   form: 'programForm'
-})(ProgramForm)
+})(withRouter((ProgramForm)))
