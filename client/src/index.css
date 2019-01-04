@@ -5,3 +5,18 @@ body {
   font-family: 'avenir';
   overflow-x: hidden;
 }
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

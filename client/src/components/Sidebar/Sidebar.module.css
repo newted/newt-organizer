@@ -11,3 +11,15 @@
   flex-direction: column;
   padding: 3.5rem 1rem 1rem 1rem;
 }
+
+.navlink {
+  padding: .5rem 0rem;
+}
+
+.navlinkRow {
+  display: flex;
+}
+
+.activeNav {
+  font-weight: bold;
+}
