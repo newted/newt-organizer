@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import ProgramForm from './ProgramForm'
+// API
+import { submitProgram } from '../../actions/programs'
 // Styling
 import styles from './AddProgram.module.css'
 
@@ -25,7 +27,9 @@ class AddProgram extends Component {
               <div className={ styles.headerContainer }>
                 <h3 className={ styles.header }>Add a New Program</h3>
               </div>
-              <ProgramForm />
+              <ProgramForm
+                onSubmit={ this.props.submitProgram }
+              />
             </div>
           </div>
         </section>
@@ -38,4 +42,4 @@ function mapStateToProps({ auth }) {
   return { auth }
 }
 
-export default connect(mapStateToProps)(AddProgram)
+export default connect(mapStateToProps, { submitProgram })(AddProgram)
