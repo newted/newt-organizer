@@ -28,3 +28,8 @@
 .addBtn {
   composes: addBtn from '../../styles/shared.css';
 }
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+}

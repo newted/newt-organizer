@@ -1,18 +1,35 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 // API
 import { fetchPrograms } from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
+import ProgramCard from './ProgramCard'
 // Styling
 import styles from './ProgramList.module.css'
 
 class ProgramList extends Component {
   componentDidMount() {
     this.props.fetchPrograms()
+  }
+
+  renderCards() {
+    const { programs } = this.props
+
+    return _.map(programs.items, ({ _id, name, shortname, institution}) => {
+      return (
+        <ProgramCard
+          name={ name }
+          shortname={ shortname }
+          institution={ institution }
+          key={ _id }
+        />
+      )
+    })
   }
 
   render() {
@@ -37,6 +54,9 @@ class ProgramList extends Component {
                   />
                 </Link>
               </div>
+              <div className={ styles.cardContainer }>
+                { this.renderCards() }
+              </div>
             </div>
           </div>
         </section>
@@ -45,8 +65,11 @@ class ProgramList extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth, programs }) {
+  return {
+    auth,
+    programs
+  }
 }
 
 export default connect(mapStateToProps, { fetchPrograms })(ProgramList)
