@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { showLoading, hideLoading } from 'react-redux-loading'
 import LoadingBar from 'react-redux-loading'
 // API
 import { fetchUser } from '../actions/authedUser'
@@ -13,9 +14,11 @@ import AddProgram from './Programs/AddProgram'
 import ProgramPage from './Programs/ProgramPage'
 
 class App extends Component {
-  componentDidMount() {
-    this.props.fetchUser()
-    this.props.fetchPrograms()
+  async componentDidMount() {
+    await this.props.showLoading()
+    await this.props.fetchUser()
+    await this.props.fetchPrograms()
+    await this.props.hideLoading()
   }
 
   render() {
@@ -46,6 +49,8 @@ function mapStateToProps({ auth }) {
 }
 
 const mapDispatchToProps = {
+  showLoading,
+  hideLoading,
   fetchUser,
   fetchPrograms
 }

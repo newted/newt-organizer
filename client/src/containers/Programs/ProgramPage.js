@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import LoadingBar from 'react-redux-loading'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -14,6 +16,10 @@ class ProgramPage extends Component {
       return <Redirect to='/' />
     }
 
+    if (!this.props.program) {
+      return <LoadingBar />
+    }
+
     return (
       <div className={ styles.appContainer }>
         <Sidebar />
@@ -22,7 +28,7 @@ class ProgramPage extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <h2 className={ styles.header }>
-                { this.props.programId }
+                { this.props.program.name }
               </h2>
             </div>
           </div>
@@ -32,12 +38,17 @@ class ProgramPage extends Component {
   }
 }
 
-function mapStateToProps({ auth }, props) {
+function mapStateToProps({ auth, programs }, props) {
   const { programId } = props.match.params
+  const program = _.filter(
+    programs.items,
+    program => program._id === programId
+  )[0]
 
   return {
     auth,
-    programId
+    programId,
+    program
   }
 }
 
