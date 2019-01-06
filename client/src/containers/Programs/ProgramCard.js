@@ -1,13 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+// Styling
 import styles from './ProgramCard.module.css'
+import { UniversityIcon } from '../../utils/icons'
 
 const ProgramCard = ({ id, name, shortname, institution }) => (
   <Link
     to={{ pathname: `/programs/${id}` }}
     className={ styles.card }
   >
-    <div>
+    <div className={ styles.cardBody }>
+      <div className={ styles.icon }>
+        { UniversityIcon }
+      </div>
       <div className={ styles.title }>
         { name }
       </div>
