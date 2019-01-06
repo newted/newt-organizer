@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 // Components
 import Button from '../Button'
 // Styling
@@ -7,7 +8,7 @@ import styles from './Navbar.module.css'
 
 class Navbar extends Component {
   // Render Login or Logout based on authentication state
-  renderButton() {
+  renderButtons() {
     switch(this.props.auth) {
       case null:
         return
@@ -22,12 +23,22 @@ class Navbar extends Component {
         )
       default:
         return (
-          <a href="/api/logout">
-            <Button
-              text='Logout'
-              additionalClass={ styles.logoutBtn }
-            />
-          </a>
+          <div className={ styles.navbarBtns }>
+            {/* If Landing page and logged in, show 'To Dashboard' link */}
+            { this.props.theme === 'landing' && (
+              <Link to='/dashboard'>
+                <div className={ styles.toDash }>
+                  Go to Dashboard
+                </div>
+              </Link>
+            )}
+            <a href="/api/logout">
+              <Button
+                text='Logout'
+                additionalClass={ styles.logoutBtn }
+              />
+            </a>
+          </div>
         )
     }
   }
@@ -47,7 +58,7 @@ class Navbar extends Component {
       <nav className={ `${styles.navbarContainer} ${this.renderNavbarColor()}` }>
         <div className={ styles.navbar }>
           <div>Navbar</div>
-          { this.renderButton() }
+          { this.renderButtons() }
         </div>
       </nav>
     )

@@ -18,6 +18,24 @@
   padding: .75rem 2rem;
 }
 
+.navbarBtns {
+  display: flex;
+  align-items: center;
+}
+
+.toDash {
+  margin-right: 1rem;
+  color: white;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border: 2px solid #38ceff;
+}
+
+.toDash:hover {
+  border-bottom: 2px solid #fff;
+  font-weight: 600;
+}
+
 .logoutBtn {
   background-color: #eee;
   border: 1px solid #666;
