@@ -10,6 +10,21 @@ import Sidebar from '../../components/Sidebar'
 import styles from './ProgramPage.module.css'
 
 class ProgramPage extends Component {
+  renderContent() {
+    return (
+      <div className={ styles.contentContainer }>
+        <div className={ styles.headerContainer }>
+          <h2 className={ styles.header }>
+            { this.props.program.name }
+          </h2>
+          <h2 className={ styles.institution }>
+            { this.props.program.institution }
+          </h2>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
@@ -26,11 +41,7 @@ class ProgramPage extends Component {
         <section className={ styles.pageContainer }>
           <Navbar />
           <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <h2 className={ styles.header }>
-                { this.props.program.name }
-              </h2>
-            </div>
+            { this.renderContent() }
           </div>
         </section>
       </div>
