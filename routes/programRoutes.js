@@ -40,4 +40,17 @@ module.exports = app => {
       res.status(422).send(error);
     }
   });
+
+  // PUT request to update program information
+  app.put("/api/programs/:id/edit", requireLogin, (req, res) => {
+    const id = req.params.id;
+
+    Program.findByIdAndUpdate(id, { $set: req.body }, (error, program) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(program);
+      }
+    });
+  });
 };
