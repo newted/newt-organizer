@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
 import { fetchUser } from '../actions/authedUser'
+import { fetchPrograms } from '../actions/programs'
 // Components
 import Landing from './Landing'
 import Dashboard from './Dashboard'
@@ -14,6 +15,7 @@ import ProgramPage from './Programs/ProgramPage'
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser()
+    this.props.fetchPrograms()
   }
 
   render() {
@@ -43,4 +45,9 @@ function mapStateToProps({ auth }) {
   }
 }
 
-export default connect(mapStateToProps, { fetchUser })(App)
+const mapDispatchToProps = {
+  fetchUser,
+  fetchPrograms
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-// API
-import { fetchPrograms } from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -13,10 +11,6 @@ import ProgramCard from './ProgramCard'
 import styles from './ProgramList.module.css'
 
 class ProgramList extends Component {
-  componentDidMount() {
-    this.props.fetchPrograms()
-  }
-
   renderCards() {
     const { programs } = this.props
 
@@ -73,4 +67,4 @@ function mapStateToProps({ auth, programs }) {
   }
 }
 
-export default connect(mapStateToProps, { fetchPrograms })(ProgramList)
+export default connect(mapStateToProps)(ProgramList)
