@@ -1,8 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styles from './ProgramCard.module.css'
 
-const ProgramCard = ({ name, shortname, institution }) => (
-  <div className={ styles.card }>
+const ProgramCard = ({ id, name, shortname, institution }) => (
+  <Link
+    to={{ pathname: `/programs/${id}` }}
+    className={ styles.card }
+  >
     <div>
       <div className={ styles.title }>
         { name }
@@ -11,7 +15,7 @@ const ProgramCard = ({ name, shortname, institution }) => (
         { institution }
       </div>
     </div>
-  </div>
+  </Link>
 )
 
 export default ProgramCard

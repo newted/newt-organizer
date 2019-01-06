@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 // Styling
-import styles from './Dashboard.module.css'
+import styles from './ProgramPage.module.css'
 
 class ProgramPage extends Component {
   render() {
@@ -21,7 +21,9 @@ class ProgramPage extends Component {
           <Navbar />
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
-              <h2 className={ styles.header }>ProgramPage</h2>
+              <h2 className={ styles.header }>
+                { this.props.programId }
+              </h2>
             </div>
           </div>
         </section>
@@ -30,8 +32,13 @@ class ProgramPage extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth }, props) {
+  const { programId } = props.match.params
+
+  return {
+    auth,
+    programId
+  }
 }
 
 export default connect(mapStateToProps)(ProgramPage)

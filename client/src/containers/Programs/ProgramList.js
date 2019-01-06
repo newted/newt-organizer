@@ -26,6 +26,7 @@ class ProgramList extends Component {
           name={ name }
           shortname={ shortname }
           institution={ institution }
+          id={ _id }
           key={ _id }
         />
       )
