@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
@@ -25,7 +26,9 @@ class EditProgram extends Component {
               <div className={ styles.headerContainer }>
                 <h3 className={ styles.header }>Edit Program</h3>
               </div>
-              <EditProgramForm />
+              <EditProgramForm
+                info={ this.props.program }
+              />
             </div>
           </div>
         </section>
@@ -34,8 +37,17 @@ class EditProgram extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth, programs }, props) {
+  const { programId } = props.match.params
+  const program = _.filter(
+    programs.items,
+    program => program._id === programId
+  )[0]
+
+  return {
+    auth,
+    program
+  }
 }
 
 export default connect(mapStateToProps)(EditProgram)

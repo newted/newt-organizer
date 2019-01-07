@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Form, Field } from 'redux-form'
 import { withRouter } from 'react-router-dom'
+import LoadingBar from 'react-redux-loading'
 // Components
 import Button from '../../components/Button'
 import ProgramField from './ProgramField'
@@ -16,12 +17,15 @@ const FIELDS = [
 
 class EditProgramForm extends Component {
   renderFields() {
+    const { info } = this.props
+
     return _.map(FIELDS, ({ label, name, required }) => {
       return <Field
         component={ ProgramField }
         type='text'
         label={ label }
         name={ name }
+        placeholder={ info[name] }
         required={ required }
         key={ name }
       />
@@ -29,7 +33,11 @@ class EditProgramForm extends Component {
   }
 
   render() {
-    const { handleSubmit, onSubmit, history } = this.props
+    const { handleSubmit, onSubmit, info, history } = this.props
+
+    if (!info) {
+      return <LoadingBar />
+    }
 
     return (
       <div>
