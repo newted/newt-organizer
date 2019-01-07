@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
+import EditProgramForm from './EditProgramForm'
 // Styling
 import styles from './EditProgram.module.css'
 
@@ -21,7 +22,10 @@ class EditProgram extends Component {
           <Navbar />
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
-              <h2 className={ styles.header }>Edit Program</h2>
+              <div className={ styles.headerContainer }>
+                <h3 className={ styles.header }>Edit Program</h3>
+              </div>
+              <EditProgramForm />
             </div>
           </div>
         </section>

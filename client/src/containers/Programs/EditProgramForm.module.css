@@ -1,0 +1,10 @@
+.updateBtn {
+  width: 125px;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #006fe6;
+}
+
+.updateBtn:hover {
+  background-color: #3395ff;
+}
