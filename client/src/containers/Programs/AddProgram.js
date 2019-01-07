@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
-import ProgramForm from './ProgramForm'
+import AddProgramForm from './AddProgramForm'
 // API
 import { submitProgram } from '../../actions/programs'
 // Styling
@@ -27,7 +27,7 @@ class AddProgram extends Component {
               <div className={ styles.headerContainer }>
                 <h3 className={ styles.header }>Add a New Program</h3>
               </div>
-              <ProgramForm
+              <AddProgramForm
                 onSubmit={ this.props.submitProgram }
               />
             </div>

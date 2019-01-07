@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import Button from '../../components/Button'
 import ProgramField from './ProgramField'
 // Styling
-import styles from './ProgramForm.module.css'
+import styles from './AddProgramForm.module.css'
 
 const FIELDS = [
   { label: 'Program Name', name: 'name', required: true },
@@ -30,7 +30,6 @@ class ProgramForm extends Component {
 
   render() {
     const { handleSubmit, onSubmit, history } = this.props
-    console.log(this.props)
 
     return (
       <div>
@@ -64,5 +63,5 @@ function validate(values) {
 
 export default reduxForm({
   validate,
-  form: 'programForm'
+  form: 'addProgramForm'
 })(withRouter((ProgramForm)))
