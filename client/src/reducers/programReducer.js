@@ -1,4 +1,8 @@
-import { CREATE_PROGRAM, FETCH_PROGRAMS } from '../actions/programs'
+import {
+  CREATE_PROGRAM,
+  FETCH_PROGRAMS,
+  UPDATE_PROGRAM
+} from '../actions/programs'
 
 export default function(
   state = {
@@ -17,6 +21,8 @@ export default function(
         ...state,
         items: action.payload
       }
+    case UPDATE_PROGRAM:
+      return state
     default:
       return state
   }
