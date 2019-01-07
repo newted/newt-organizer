@@ -12,6 +12,7 @@ import Dashboard from './Dashboard'
 import ProgramList from './Programs/ProgramList'
 import AddProgram from './Programs/AddProgram'
 import ProgramPage from './Programs/ProgramPage'
+import EditProgram from './Programs/EditProgram'
 
 class App extends Component {
   async componentDidMount() {
@@ -32,6 +33,7 @@ class App extends Component {
                 <Route exact path ='/' component={ Landing } />
                 <Route path='/dashboard' component={ Dashboard } />
                 <Route path='/programs/new' component={ AddProgram } />
+                <Route path='/programs/:programId/edit' component={ EditProgram } />
                 <Route path='/programs/:programId' component={ ProgramPage } />
                 <Route path='/programs' component={ ProgramList } />
               </Switch>

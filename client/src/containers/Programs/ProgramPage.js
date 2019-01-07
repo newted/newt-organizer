@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // Components
@@ -23,10 +23,12 @@ class ProgramPage extends Component {
               { this.props.program.institution }
             </h2>
           </div>
-          <Button
-            text='Edit'
-            additionalClass={ styles.editBtn }
-          />
+          <Link to={{ pathname: `/programs/${this.props.program._id}/edit` }}>
+            <Button
+              text='Edit'
+              additionalClass={ styles.editBtn }
+            />
+          </Link>
         </div>
       </div>
     )
@@ -65,7 +67,6 @@ function mapStateToProps({ auth, programs }, props) {
 
   return {
     auth,
-    programId,
     program
   }
 }

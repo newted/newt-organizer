@@ -1,0 +1,19 @@
+.appContainer {
+  composes: appContainer from '../../styles/shared.css';
+}
+
+.pageContainer {
+  composes: pageContainer from '../../styles/shared.css';
+}
+
+.mainContainer {
+  composes: mainContainer from '../../styles/shared.css';
+}
+
+.contentContainer {
+  composes: contentContainer from '../../styles/shared.css';
+}
+
+.header {
+  margin: 1rem 2%;
+}
