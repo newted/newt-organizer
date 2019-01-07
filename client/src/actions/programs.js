@@ -4,10 +4,9 @@ export const CREATE_PROGRAM = 'CREATE_PROGRAM'
 export const FETCH_PROGRAMS = 'FETCH_PROGRAMS'
 export const UPDATE_PROGRAM = 'UPDATE_PROGRAM'
 
-const createProgram = (payload) => {
+const createProgram = () => {
   return {
-    type: CREATE_PROGRAM,
-    payload
+    type: CREATE_PROGRAM
   }
 }
 
@@ -27,12 +26,12 @@ const putProgram = () => {
 
 
 export const submitProgram = (values, history) => async dispatch => {
-  const res = await axios.post('/api/programs', values)
+  await axios.post('/api/programs', values)
 
   // Redirect to programs page
   history.push('/programs')
 
-  dispatch(createProgram(res.data))
+  dispatch(createProgram())
 }
 
 export const fetchPrograms = () => async dispatch => {

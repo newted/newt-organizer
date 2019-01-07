@@ -12,10 +12,7 @@ export default function(
 ) {
   switch(action.type) {
     case CREATE_PROGRAM:
-      return {
-        ...state,
-        items: action.payload
-      }
+      return state
     case FETCH_PROGRAMS:
       return {
         ...state,
