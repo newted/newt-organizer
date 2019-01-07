@@ -27,7 +27,11 @@ export const submitProgram = (values, history) => async dispatch => {
 }
 
 export const fetchPrograms = () => async dispatch => {
-  const res = await axios.get('/api/programs')
+  try {
+    const res = await axios.get('/api/programs')
 
-  dispatch(getPrograms(res.data))
+    dispatch(getPrograms(res.data))
+  } catch (err) {
+    console.log("Error while fetching programs.")
+  }
 }
