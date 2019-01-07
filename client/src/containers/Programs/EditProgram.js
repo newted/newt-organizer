@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+// API
+import { updateProgram } from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -28,6 +30,7 @@ class EditProgram extends Component {
               </div>
               <EditProgramForm
                 info={ this.props.program }
+                onSubmit={ this.props.updateProgram }
               />
             </div>
           </div>
@@ -50,4 +53,4 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps)(EditProgram)
+export default connect(mapStateToProps, { updateProgram })(EditProgram)

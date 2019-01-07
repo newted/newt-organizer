@@ -42,7 +42,9 @@ class EditProgramForm extends Component {
     return (
       <div>
         <Form
-          onSubmit={ handleSubmit(values => onSubmit(values, history)) }
+          onSubmit={ handleSubmit(values =>
+            onSubmit(info._id, values, history)
+          ) }
         >
           { this.renderFields() }
           <Button
