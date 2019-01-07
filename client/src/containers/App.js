@@ -5,7 +5,6 @@ import { showLoading, hideLoading } from 'react-redux-loading'
 import LoadingBar from 'react-redux-loading'
 // API
 import { fetchUser } from '../actions/authedUser'
-import { fetchPrograms } from '../actions/programs'
 // Components
 import Landing from './Landing'
 import Dashboard from './Dashboard'
@@ -18,7 +17,6 @@ class App extends Component {
   async componentDidMount() {
     await this.props.showLoading()
     await this.props.fetchUser()
-    await this.props.fetchPrograms()
     await this.props.hideLoading()
   }
 
@@ -53,8 +51,7 @@ function mapStateToProps({ auth }) {
 const mapDispatchToProps = {
   showLoading,
   hideLoading,
-  fetchUser,
-  fetchPrograms
+  fetchUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
