@@ -16,13 +16,31 @@
 
 .headerContainer {
   display: flex;
-}
-
-.header {
+  justify-content: space-between;
   margin: 1rem 2%;
 }
 
+.headings {
+  display: flex;
+  flex-grow: 1;
+}
+
+.header {
+  margin: 0 2% 0 0;
+}
+
 .institution {
-  margin: 1rem;
+  margin: 0 0 0 2%;
   color: #bbb;
+}
+
+.editBtn {
+  width: 75px;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #006fe6;
+}
+
+.editBtn:hover {
+  background-color: #3395ff;
 }

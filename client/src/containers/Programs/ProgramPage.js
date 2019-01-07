@@ -6,6 +6,7 @@ import LoadingBar from 'react-redux-loading'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
+import Button from '../../components/Button'
 // Styling
 import styles from './ProgramPage.module.css'
 
@@ -14,12 +15,18 @@ class ProgramPage extends Component {
     return (
       <div className={ styles.contentContainer }>
         <div className={ styles.headerContainer }>
-          <h2 className={ styles.header }>
-            { this.props.program.name }
-          </h2>
-          <h2 className={ styles.institution }>
-            { this.props.program.institution }
-          </h2>
+          <div className={ styles.headings }>
+            <h2 className={ styles.header }>
+              { this.props.program.name }
+            </h2>
+            <h2 className={ styles.institution }>
+              { this.props.program.institution }
+            </h2>
+          </div>
+          <Button
+            text='Edit'
+            additionalClass={ styles.editBtn }
+          />
         </div>
       </div>
     )
