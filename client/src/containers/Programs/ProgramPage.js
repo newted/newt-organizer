@@ -23,12 +23,18 @@ class ProgramPage extends Component {
               { this.props.program.institution }
             </h2>
           </div>
-          <Link to={{ pathname: `/programs/${this.props.program._id}/edit` }}>
+          <div>
+            <Link to={{ pathname: `/programs/${this.props.program._id}/edit` }}>
+              <Button
+                text='Edit'
+                additionalClass={ styles.editBtn }
+              />
+            </Link>
             <Button
-              text='Edit'
-              additionalClass={ styles.editBtn }
+              text='Delete'
+              additionalClass={ styles.deleteBtn }
             />
-          </Link>
+          </div>
         </div>
       </div>
     )
