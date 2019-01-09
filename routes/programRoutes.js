@@ -53,4 +53,17 @@ module.exports = app => {
       }
     });
   });
+
+  // DELETE requires to delete a program
+  app.delete("/api/programs/:id", requireLogin, async (req, res) => {
+    const id = req.params.id;
+
+    await Program.findByIdAndDelete(id, (error, program) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(program);
+      }
+    });
+  });
 };

@@ -8,6 +8,9 @@ import App from './containers/App'
 import reducers from './reducers'
 import middleware from './middleware'
 
+import axios from 'axios'
+window.axios = axios
+
 const store = createStore(reducers, {}, middleware)
 
 ReactDOM.render(
