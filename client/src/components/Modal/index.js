@@ -12,8 +12,8 @@ class Modal extends Component {
     const { showModal } = this.props
 
     return showModal
-    ? `${ styles.modal } ${ styles.displayBlock }`
-    : `${ styles.modal } ${ styles.displayNone }`
+    ? [styles.modal, styles.displayBlock].join(' ')
+    : [styles.modal, styles.displayNone].join(' ')
   }
 
   renderModalHeader() {
@@ -25,7 +25,9 @@ class Modal extends Component {
     }
 
     return (
-      <h2>{ header.props.children }</h2>
+      <div className={ styles.modalHeader }>
+        <h3>{ header.props.children }</h3>
+      </div>
     )
   }
 
@@ -38,7 +40,9 @@ class Modal extends Component {
     }
 
     return (
-      <div> { body.props.children }</div>
+      <div className={ styles.modalBody }>
+        <p>{ body.props.children }</p>
+      </div>
     )
   }
 
@@ -51,7 +55,9 @@ class Modal extends Component {
     }
 
     return (
-      <div>{ footer.props.children }</div>
+      <div>
+        { footer.props.children }
+      </div>
     )
   }
 
@@ -60,20 +66,21 @@ class Modal extends Component {
 
     return (
       <div className={ this.showHideClassName() }>
-        <div className={ styles.modalMain }>
+        <div className={ styles.modalContent }>
           <div>
             { this.renderModalHeader() }
           </div>
           <div>
             { this.renderModalBody() }
           </div>
-          <div>
+          <div className={ styles.modalFooter }>
+            <Button
+              text='Close'
+              additionalClass={ styles.modalCloseBtn }
+              onClick={ handleClose }
+            />
             { this.renderModalFooter() }
           </div>
-          <Button
-            text='Close'
-            onClick={ handleClose }
-          />
         </div>
       </div>
     )
