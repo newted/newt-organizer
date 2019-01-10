@@ -2,21 +2,16 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
+import programFields from './programFields'
 // Components
 import Button from '../../components/Button'
 import Field from '../../components/Field'
 // Styling
 import styles from './AddProgramForm.module.css'
 
-const FIELDS = [
-  { label: 'Program Name', name: 'name', required: true },
-  { label: 'Short Name', name: 'shortname', required: false },
-  { label: 'Institution', name: 'institution', required: true }
-]
-
 class ProgramForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name, required }) => {
+    return _.map(programFields, ({ label, name, required }) => {
       return <ReduxField
         component={ Field }
         type='text'
@@ -52,7 +47,7 @@ class ProgramForm extends Component {
 function validate(values) {
   const errors = {}
 
-  _.each(FIELDS, ({ name, required }) => {
+  _.each(programFields, ({ name, required }) => {
     if(required && !values[name]) {
       errors[name] = 'You must provide a value.'
     }
