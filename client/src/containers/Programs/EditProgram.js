@@ -26,7 +26,7 @@ class EditProgram extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <div className={ styles.headerContainer }>
-                <h3 className={ styles.header }>Edit Program</h3>
+                <h3>Edit Program</h3>
               </div>
               <EditProgramForm
                 info={ this.props.program }

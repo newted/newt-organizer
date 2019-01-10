@@ -21,10 +21,6 @@
   margin: 1rem 2%;
 }
 
-.header {
-  margin: 0;
-}
-
 .addBtn {
   composes: addBtn from '../../styles/shared.css';
 }

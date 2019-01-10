@@ -47,7 +47,7 @@ class ProgramList extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <div className={ styles.headerContainer }>
-                <h2 className={ styles.header }>Programs</h2>
+                <h2>Programs</h2>
                 <Link to='/programs/new'>
                   <Button
                     text='Add Program'

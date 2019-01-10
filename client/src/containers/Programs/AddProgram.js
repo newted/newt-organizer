@@ -25,7 +25,7 @@ class AddProgram extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <div className={ styles.headerContainer }>
-                <h3 className={ styles.header }>Add a New Program</h3>
+                <h3>Add a New Program</h3>
               </div>
               <AddProgramForm
                 onSubmit={ this.props.submitProgram }
