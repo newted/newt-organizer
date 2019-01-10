@@ -1,21 +1,33 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Button from '../../components/Button'
 import styles from './ListCourses.module.css'
 
 class ListCourses extends Component {
   render() {
+    const { programId } = this.props
+
     return (
       <div className={ styles.courseContainer }>
         <div className={ styles.headerContainer }>
           <h3>Courses</h3>
-          <Button
-            text='Add Course'
-            additionalClass={ styles.addBtn }
-          />
+          <Link to={{ pathname: `/programs/${programId}/courses/add` }}>
+            <Button
+              text='Add Course'
+              additionalClass={ styles.addBtn }
+            />
+          </Link>
         </div>
       </div>
     )
   }
 }
 
-export default ListCourses
+function mapStateToProps(_, { programId }) {
+  return {
+    programId
+  }
+}
+
+export default connect(mapStateToProps)(ListCourses)

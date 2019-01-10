@@ -71,7 +71,7 @@ class ProgramPage extends Component {
             </Modal>
           </div>
         </div>
-        <ListCourses />
+        <ListCourses programId={ program._id }/>
       </div>
     )
   }
