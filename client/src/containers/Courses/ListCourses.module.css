@@ -3,3 +3,12 @@
   flex-direction: column;
   margin: 1rem 2%;
 }
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.addBtn {
+  composes: addBtn from '../../styles/shared.css';
+}
