@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
+import AddCourseForm from './AddCourseForm'
 // Styling
 import styles from './AddCourse.module.css'
 
@@ -24,6 +25,7 @@ class AddCourse extends Component {
               <div className={ styles.headerContainer }>
                 <h3>Add a New Course</h3>
               </div>
+              <AddCourseForm />
             </div>
           </div>
         </section>
