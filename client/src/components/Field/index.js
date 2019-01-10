@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './ProgramField.module.css'
+import styles from './Field.module.css'
 
 export default ({ input, placeholder, label, required, meta: { error, touched } }) => {
   return (

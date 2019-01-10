@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { reduxForm, Form, Field } from 'redux-form'
+import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
 // Components
 import Button from '../../components/Button'
-import ProgramField from './ProgramField'
+import Field from '../../components/Field'
 // Styling
 import styles from './EditProgramForm.module.css'
 
@@ -20,8 +20,8 @@ class EditProgramForm extends Component {
     const { info } = this.props
 
     return _.map(FIELDS, ({ label, name, required }) => {
-      return <Field
-        component={ ProgramField }
+      return <ReduxField
+        component={ Field }
         type='text'
         label={ label }
         name={ name }

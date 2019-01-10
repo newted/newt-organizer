@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { reduxForm, Form, Field } from 'redux-form'
+import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 // Components
 import Button from '../../components/Button'
-import ProgramField from './ProgramField'
+import Field from '../../components/Field'
 // Styling
 import styles from './AddProgramForm.module.css'
 
@@ -17,8 +17,8 @@ const FIELDS = [
 class ProgramForm extends Component {
   renderFields() {
     return _.map(FIELDS, ({ label, name, required }) => {
-      return <Field
-        component={ ProgramField }
+      return <ReduxField
+        component={ Field }
         type='text'
         label={ label }
         name={ name }
