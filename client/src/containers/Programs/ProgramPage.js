@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
+// API
+import { deleteProgram }  from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -25,6 +27,8 @@ class ProgramPage extends Component {
   }
 
   renderContent() {
+    const { program, history, deleteProgram } = this.props
+
     return (
       <div className={ styles.contentContainer }>
         <div className={ styles.headerContainer }>
@@ -60,6 +64,7 @@ class ProgramPage extends Component {
                   type='button'
                   text='Delete'
                   additionalClass={ styles.deleteBtn }
+                  onClick={ () => deleteProgram(program._id, history) }
                 />
               </Modal.Footer>
             </Modal>
@@ -106,4 +111,4 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps)(ProgramPage)
+export default connect(mapStateToProps, { deleteProgram })(ProgramPage)
