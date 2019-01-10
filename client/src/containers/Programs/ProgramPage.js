@@ -10,6 +10,7 @@ import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+import ListCourses from '../Courses/ListCourses'
 // Styling
 import styles from './ProgramPage.module.css'
 
@@ -70,6 +71,7 @@ class ProgramPage extends Component {
             </Modal>
           </div>
         </div>
+        <ListCourses />
       </div>
     )
   }
