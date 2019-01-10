@@ -1,7 +1,8 @@
 import {
   CREATE_PROGRAM,
   FETCH_PROGRAMS,
-  UPDATE_PROGRAM
+  UPDATE_PROGRAM,
+  DELETE_PROGRAM
 } from '../actions/programs'
 
 export default function(
@@ -19,6 +20,8 @@ export default function(
         items: action.payload
       }
     case UPDATE_PROGRAM:
+      return state
+    case DELETE_PROGRAM:
       return state
     default:
       return state

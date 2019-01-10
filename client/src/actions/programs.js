@@ -3,6 +3,7 @@ import axios from 'axios'
 export const CREATE_PROGRAM = 'CREATE_PROGRAM'
 export const FETCH_PROGRAMS = 'FETCH_PROGRAMS'
 export const UPDATE_PROGRAM = 'UPDATE_PROGRAM'
+export const DELETE_PROGRAM = 'DELETE_PROGRAM'
 
 const createProgram = () => {
   return {
@@ -20,6 +21,12 @@ const getPrograms = (payload) => {
 const putProgram = () => {
   return {
     type: UPDATE_PROGRAM
+  }
+}
+
+const removeProgram = () => {
+  return {
+    type: DELETE_PROGRAM
   }
 }
 
@@ -53,5 +60,17 @@ export const updateProgram = (programId, values, history) => async dispatch => {
     dispatch(putProgram())
   } catch (err) {
     console.log("Error while updating program.")
+  }
+}
+
+export const deleteProgram = (programId, history) => async dispatch => {
+  try {
+    await axios.delete(`/api/programs/${programId}`)
+
+    history.push('/programs')
+
+    dispatch(removeProgram())
+  } catch (err) {
+    console.log("Error while deleting program.")
   }
 }
