@@ -7,8 +7,8 @@
   outline: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  /* width:100%;
-  height: 100%; */
+  width:100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -18,6 +18,7 @@
   flex-direction: column;
   background: white;
   width: 50%;
+  max-width: 500px;
   height: auto;
   top:50%;
   left:50%;
@@ -55,12 +56,12 @@
 
 .modalCloseBtn {
   margin-right: .5rem;
-  background-color: #bbb;
-  border: 1px solid #aeaeae;
+  background-color: #ccc;
+  border: 1px solid #bfbfbf;
 }
 
 .modalCloseBtn:hover {
-  background-color: #c8c8c8;
+  background-color: #d9d9d9;
 }
 
 .displayBlock {

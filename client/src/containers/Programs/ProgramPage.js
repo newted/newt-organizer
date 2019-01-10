@@ -7,10 +7,23 @@ import LoadingBar from 'react-redux-loading'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
+import Modal from '../../components/Modal'
 // Styling
 import styles from './ProgramPage.module.css'
 
 class ProgramPage extends Component {
+  state = {
+    showModal: false
+  }
+
+  openModal = () => {
+    this.setState({ showModal: true })
+  }
+
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
+
   renderContent() {
     return (
       <div className={ styles.contentContainer }>
@@ -33,7 +46,23 @@ class ProgramPage extends Component {
             <Button
               text='Delete'
               additionalClass={ styles.deleteBtn }
+              onClick={ this.openModal }
             />
+            <Modal
+              showModal={ this.state.showModal }
+              handleClose={ this.closeModal }
+            >
+              <Modal.Body>
+                Are you sure you want to delete this program?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  type='button'
+                  text='Delete'
+                  additionalClass={ styles.deleteBtn }
+                />
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
