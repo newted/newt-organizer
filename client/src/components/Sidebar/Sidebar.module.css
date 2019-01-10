@@ -23,3 +23,7 @@
 .activeNav {
   font-weight: bold;
 }
+
+.icon {
+  padding: 0 0.5rem;
+}
