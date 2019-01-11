@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
-import { deleteProgram }  from '../../actions/programs'
+import { deleteProgram, fetchPrograms }  from '../../actions/programs'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -17,6 +17,10 @@ import styles from './ProgramPage.module.css'
 class ProgramPage extends Component {
   state = {
     showModal: false
+  }
+
+  componentDidMount() {
+    this.props.fetchPrograms()
   }
 
   openModal = () => {
@@ -113,4 +117,9 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps, { deleteProgram })(ProgramPage)
+const mapDispatchToProps = {
+  deleteProgram,
+  fetchPrograms
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramPage)
