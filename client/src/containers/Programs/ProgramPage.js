@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
 import { deleteProgram }  from '../../actions/programs'
+import { fetchCourses } from '../../actions/courses'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -17,6 +18,18 @@ import styles from './ProgramPage.module.css'
 class ProgramPage extends Component {
   state = {
     showModal: false
+  }
+
+  // On mount, fetch courses (for when program card is clicked)
+  componentDidMount() {
+    if (this.props.program) {
+      this.props.fetchCourses(this.props.program._id)
+    }
+  }
+
+  // On update, fetch courses (for when program page is refreshed)
+  componentDidUpdate() {
+    this.props.fetchCourses(this.props.program._id)
   }
 
   openModal = () => {
@@ -113,4 +126,9 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps, { deleteProgram })(ProgramPage)
+const mapDispatchToProps = {
+  deleteProgram,
+  fetchCourses
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramPage)
