@@ -2,8 +2,9 @@ import {
   CREATE_PROGRAM,
   FETCH_PROGRAMS,
   UPDATE_PROGRAM,
-  DELETE_PROGRAM
+  DELETE_PROGRAM,
 } from '../actions/programs'
+import { CREATE_COURSE } from '../actions/courses'
 
 export default function(
   state = {
@@ -22,6 +23,8 @@ export default function(
     case UPDATE_PROGRAM:
       return state
     case DELETE_PROGRAM:
+      return state
+    case CREATE_COURSE:
       return state
     default:
       return state
