@@ -3,9 +3,6 @@ import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
-// Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 // Styling
 import styles from './CoursePage.module.css'
 
@@ -22,18 +19,12 @@ class CoursePage extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <div className={ styles.headerContainer }>
-                <h2>{ course.name }</h2>
-              </div>
-            </div>
+      <div className={ styles.mainContainer }>
+        <div className={ styles.contentContainer }>
+          <div className={ styles.headerContainer }>
+            <h2>{ course.name }</h2>
           </div>
-        </section>
+        </div>
       </div>
     )
   }

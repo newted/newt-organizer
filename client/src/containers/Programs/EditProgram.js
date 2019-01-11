@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 // API
 import { updateProgram } from '../../actions/programs'
 // Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 import EditProgramForm from './EditProgramForm'
 // Styling
 import styles from './EditProgram.module.css'
@@ -19,22 +17,16 @@ class EditProgram extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <div className={ styles.headerContainer }>
-                <h3>Edit Program</h3>
-              </div>
-              <EditProgramForm
-                info={ this.props.program }
-                onSubmit={ this.props.updateProgram }
-              />
-            </div>
+      <div className={ styles.mainContainer }>
+        <div className={ styles.contentContainer }>
+          <div className={ styles.headerContainer }>
+            <h3>Edit Program</h3>
           </div>
-        </section>
+          <EditProgramForm
+            info={ this.props.program }
+            onSubmit={ this.props.updateProgram }
+          />
+        </div>
       </div>
     )
   }

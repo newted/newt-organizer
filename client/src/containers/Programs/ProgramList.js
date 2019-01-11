@@ -5,8 +5,6 @@ import _ from 'lodash'
 // API
 import { fetchPrograms } from '../../actions/programs'
 // Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 // Styling
@@ -42,27 +40,21 @@ class ProgramList extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <div className={ styles.headerContainer }>
-                <h2>Programs</h2>
-                <Link to='/programs/new'>
-                  <Button
-                    text='Add Program'
-                    additionalClass={ styles.addBtn }
-                  />
-                </Link>
-              </div>
-              <div className={ styles.cardContainer }>
-                { this.renderCards() }
-              </div>
-            </div>
+      <div className={ styles.mainContainer }>
+        <div className={ styles.contentContainer }>
+          <div className={ styles.headerContainer }>
+            <h2>Programs</h2>
+            <Link to='/programs/new'>
+              <Button
+                text='Add Program'
+                additionalClass={ styles.addBtn }
+              />
+            </Link>
           </div>
-        </section>
+          <div className={ styles.cardContainer }>
+            { this.renderCards() }
+          </div>
+        </div>
       </div>
     )
   }

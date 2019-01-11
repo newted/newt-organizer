@@ -6,8 +6,6 @@ import LoadingBar from 'react-redux-loading'
 // API
 import { deleteProgram, fetchPrograms }  from '../../actions/programs'
 // Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
 import ListCourses from '../Courses/ListCourses'
@@ -91,14 +89,8 @@ class ProgramPage extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            { this.renderContent() }
-          </div>
-        </section>
+      <div className={ styles.mainContainer }>
+        { this.renderContent() }
       </div>
     )
   }

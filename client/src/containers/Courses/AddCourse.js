@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 import AddCourseForm from './AddCourseForm'
 // API
 import { submitCourse } from '../../actions/courses'
@@ -18,22 +16,16 @@ class AddCourse extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <div className={ styles.headerContainer }>
-                <h3>Add a New Course</h3>
-              </div>
-              <AddCourseForm
-                programId={ this.props.programId }
-                onSubmit={ this.props.submitCourse }
-              />
-            </div>
+      <div className={ styles.mainContainer }>
+        <div className={ styles.contentContainer }>
+          <div className={ styles.headerContainer }>
+            <h3>Add a New Course</h3>
           </div>
-        </section>
+          <AddCourseForm
+            programId={ this.props.programId }
+            onSubmit={ this.props.submitCourse }
+          />
+        </div>
       </div>
     )
   }

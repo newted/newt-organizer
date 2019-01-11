@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
 import AddProgramForm from './AddProgramForm'
 // API
 import { submitProgram } from '../../actions/programs'
@@ -18,21 +16,15 @@ class AddProgram extends Component {
     }
 
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <div className={ styles.mainContainer }>
-            <div className={ styles.contentContainer }>
-              <div className={ styles.headerContainer }>
-                <h3>Add a New Program</h3>
-              </div>
-              <AddProgramForm
-                onSubmit={ this.props.submitProgram }
-              />
-            </div>
+      <div className={ styles.mainContainer }>
+        <div className={ styles.contentContainer }>
+          <div className={ styles.headerContainer }>
+            <h3>Add a New Program</h3>
           </div>
-        </section>
+          <AddProgramForm
+            onSubmit={ this.props.submitProgram }
+          />
+        </div>
       </div>
     )
   }

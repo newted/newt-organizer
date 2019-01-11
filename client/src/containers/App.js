@@ -7,6 +7,9 @@ import LoadingBar from 'react-redux-loading'
 import { fetchUser } from '../actions/authedUser'
 import { fetchPrograms } from '../actions/programs'
 // Components
+import Sidebar from '../components/Sidebar'
+import Navbar from '../components/Navbar'
+// Containers
 import Landing from './Landing'
 import Dashboard from './Dashboard'
 import ProgramList from './Programs/ProgramList'
@@ -15,6 +18,8 @@ import ProgramPage from './Programs/ProgramPage'
 import EditProgram from './Programs/EditProgram'
 import AddCourse from './Courses/AddCourse'
 import CoursePage from './Courses/CoursePage'
+// Styling
+import styles from './App.module.css'
 
 class App extends Component {
   async componentDidMount() {
@@ -24,6 +29,27 @@ class App extends Component {
     await this.props.hideLoading()
   }
 
+  renderContent() {
+    return (
+      <div className={ styles.appContainer }>
+        <Sidebar />
+        <section className={ styles.pageContainer }>
+          <Navbar />
+          <Switch>
+            <Route exact path ='/' component={ Landing } />
+            <Route path='/dashboard' component={ Dashboard } />
+            <Route path='/programs/new' component={ AddProgram } />
+            <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
+            <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
+            <Route path='/programs/:programId/edit' component={ EditProgram } />
+            <Route path='/programs/:programId' component={ ProgramPage } />
+            <Route path='/programs' component={ ProgramList } />
+          </Switch>
+        </section>
+      </div>
+    )
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -31,16 +57,7 @@ class App extends Component {
           <LoadingBar />
           { this.props.loading === true
             ? null
-            : <Switch>
-                <Route exact path ='/' component={ Landing } />
-                <Route path='/dashboard' component={ Dashboard } />
-                <Route path='/programs/new' component={ AddProgram } />
-                <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
-                <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
-                <Route path='/programs/:programId/edit' component={ EditProgram } />
-                <Route path='/programs/:programId' component={ ProgramPage } />
-                <Route path='/programs' component={ ProgramList } />
-              </Switch>
+            : this.renderContent()
           }
         </Fragment>
       </BrowserRouter>
