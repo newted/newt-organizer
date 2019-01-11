@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import LoadingBar from 'react-redux-loading'
 // Components
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
@@ -14,6 +15,10 @@ class CoursePage extends Component {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
       return <Redirect to='/' />
+    }
+
+    if (!course) {
+      return <LoadingBar />
     }
 
     return (
@@ -42,10 +47,12 @@ function mapStateToProps({ auth, programs }, props) {
     program => program._id === programId
   )[0]
 
-  const course = _.filter(
-    program.courses,
-    course => course._id === courseId
-  )[0]
+  const course = program
+    ? _.filter(
+        program.courses,
+        course => course._id === courseId
+      )[0]
+    : null
 
   return {
     auth,
