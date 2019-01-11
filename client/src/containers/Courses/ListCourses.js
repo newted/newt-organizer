@@ -12,7 +12,6 @@ import { BookIcon } from '../../utils/icons'
 class ListCourses extends Component {
   renderCards() {
     const { programId, courses } = this.props
-    console.log(courses)
 
     return _.map(courses, ({ _id, name }) => {
       return (
@@ -56,7 +55,6 @@ function mapStateToProps({ programs }, { programId }) {
   )[0]
 
   const courses = program.courses
-  console.log(courses)
 
   return {
     programId,

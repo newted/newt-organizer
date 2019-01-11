@@ -35,8 +35,8 @@ class App extends Component {
                 <Route exact path ='/' component={ Landing } />
                 <Route path='/dashboard' component={ Dashboard } />
                 <Route path='/programs/new' component={ AddProgram } />
+                <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
                 <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
-                <Route path='/programs/:programId/courses/add' component={ AddCourse } />
                 <Route path='/programs/:programId/edit' component={ EditProgram } />
                 <Route path='/programs/:programId' component={ ProgramPage } />
                 <Route path='/programs' component={ ProgramList } />

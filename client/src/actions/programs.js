@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 
 export const CREATE_PROGRAM = 'CREATE_PROGRAM'
 export const FETCH_PROGRAMS = 'FETCH_PROGRAMS'
@@ -44,8 +45,13 @@ export const submitProgram = (values, history) => async dispatch => {
 export const fetchPrograms = () => async dispatch => {
   try {
     const res = await axios.get('/api/programs')
+    // Sort program by date it was created
+    const programs = _.sortBy(
+      res.data,
+      ({ dateCreated }) => new Date(dateCreated)
+    )
 
-    dispatch(getPrograms(res.data))
+    dispatch(getPrograms(programs))
   } catch (err) {
     console.log("Error while fetching programs.")
   }
