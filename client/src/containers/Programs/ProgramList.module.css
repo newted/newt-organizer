@@ -25,6 +25,10 @@
   composes: addBtn from '../../styles/shared.css';
 }
 
+.cardColor {
+  background-color: #ffcd38;
+}
+
 .cardContainer {
   display: flex;
   flex-wrap: wrap;

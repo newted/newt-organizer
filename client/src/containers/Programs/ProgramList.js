@@ -8,9 +8,10 @@ import { fetchPrograms } from '../../actions/programs'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import Button from '../../components/Button'
-import ProgramCard from './ProgramCard'
+import Card from '../../components/Card'
 // Styling
 import styles from './ProgramList.module.css'
+import { UniversityIcon } from '../../utils/icons'
 
 class ProgramList extends Component {
   componentDidMount() {
@@ -20,13 +21,14 @@ class ProgramList extends Component {
   renderCards() {
     const { programs } = this.props
 
-    return _.map(programs.items, ({ _id, name, shortname, institution}) => {
+    return _.map(programs.items, ({ _id, name, shortname, institution }) => {
       return (
-        <ProgramCard
-          name={ name }
-          shortname={ shortname }
-          institution={ institution }
-          id={ _id }
+        <Card
+          path={ `/programs/${_id}` }
+          title={ name }
+          subtitle={ institution }
+          icon={ UniversityIcon }
+          additionalClass={ styles.cardColor }
           key={ _id }
         />
       )

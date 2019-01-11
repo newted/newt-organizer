@@ -6,7 +6,7 @@ import styles from './Card.module.css'
 export default ({ path, icon, title, subtitle, additionalClass }) => (
   <Link
     to={{ pathname: path }}
-    className={ `${styles.card} ${styles.additionalClass}` }
+    className={ `${styles.card} ${additionalClass}` }
   >
     <div className={ styles.cardBody }>
       { icon && (
