@@ -9,8 +9,6 @@ module.exports = app => {
     // Database query to get user's programs
     const programs = await Program.find({
       _user: req.user.id
-    }).select({
-      courses: false
     });
 
     // Send back user's programs
