@@ -21,6 +21,26 @@ import CoursePage from './Courses/CoursePage'
 // Styling
 import styles from './App.module.css'
 
+const LandingContainer = () => <Route exact path='/' component={ Landing } />
+
+const AppContainer = () => (
+  <div className={ styles.appContainer }>
+    <Sidebar />
+    <section className={ styles.pageContainer }>
+      <Navbar />
+      <Switch>
+        <Route path='/dashboard' component={ Dashboard } />
+        <Route path='/programs/new' component={ AddProgram } />
+        <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
+        <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
+        <Route path='/programs/:programId/edit' component={ EditProgram } />
+        <Route path='/programs/:programId' component={ ProgramPage } />
+        <Route path='/programs' component={ ProgramList } />
+      </Switch>
+    </section>
+  </div>
+)
+
 class App extends Component {
   async componentDidMount() {
     await this.props.showLoading()
@@ -31,22 +51,12 @@ class App extends Component {
 
   renderContent() {
     return (
-      <div className={ styles.appContainer }>
-        <Sidebar />
-        <section className={ styles.pageContainer }>
-          <Navbar />
-          <Switch>
-            <Route exact path ='/' component={ Landing } />
-            <Route path='/dashboard' component={ Dashboard } />
-            <Route path='/programs/new' component={ AddProgram } />
-            <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
-            <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
-            <Route path='/programs/:programId/edit' component={ EditProgram } />
-            <Route path='/programs/:programId' component={ ProgramPage } />
-            <Route path='/programs' component={ ProgramList } />
-          </Switch>
-        </section>
-      </div>
+      <Fragment>
+        <Switch>
+          <Route exact path='/' component={ LandingContainer } />
+          <Route component={ AppContainer } />
+        </Switch>
+      </Fragment>
     )
   }
 
