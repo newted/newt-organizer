@@ -1,4 +1,4 @@
-import { CREATE_COURSE } from '../actions/courses'
+import { CREATE_COURSE, FETCH_COURSES } from '../actions/courses'
 
 export default function(
   state = {
@@ -9,6 +9,11 @@ export default function(
   switch(action.type) {
     case CREATE_COURSE:
       return state
+    case FETCH_COURSES:
+      return {
+        ...state,
+        items: action.payload
+      }
     default:
       return state
   }
