@@ -24,12 +24,14 @@ class AddCourseForm extends Component {
   }
 
   render() {
-    const { handleSubmit, onSubmit, history } = this.props
+    const { programId, handleSubmit, onSubmit, history } = this.props
 
     return (
       <div>
         <Form
-          onSubmit={ handleSubmit(values => onSubmit(values, history)) }
+          onSubmit={
+            handleSubmit(values => onSubmit(programId, values, history))
+          }
         >
           { this.renderFields() }
           <Button

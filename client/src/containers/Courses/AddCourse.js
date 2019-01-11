@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import Navbar from '../../components/Navbar'
 import Sidebar from '../../components/Sidebar'
 import AddCourseForm from './AddCourseForm'
+// API
+import { submitCourse } from '../../actions/courses'
 // Styling
 import styles from './AddCourse.module.css'
 
@@ -25,7 +27,10 @@ class AddCourse extends Component {
               <div className={ styles.headerContainer }>
                 <h3>Add a New Course</h3>
               </div>
-              <AddCourseForm />
+              <AddCourseForm
+                programId={ this.props.programId }
+                onSubmit={ this.props.submitCourse }
+              />
             </div>
           </div>
         </section>
@@ -34,8 +39,13 @@ class AddCourse extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth }, props) {
+  const { programId } = props.match.params
+
+  return {
+    auth,
+    programId
+  }
 }
 
-export default connect(mapStateToProps)(AddCourse)
+export default connect(mapStateToProps, { submitCourse })(AddCourse)
