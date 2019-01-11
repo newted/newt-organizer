@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
@@ -9,6 +10,7 @@ import styles from './CoursePage.module.css'
 
 class CoursePage extends Component {
   render() {
+    const { course } = this.props
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
       return <Redirect to='/' />
@@ -22,7 +24,7 @@ class CoursePage extends Component {
           <div className={ styles.mainContainer }>
             <div className={ styles.contentContainer }>
               <div className={ styles.headerContainer }>
-                <h2>Course Page</h2>
+                <h2>{ course.name }</h2>
               </div>
             </div>
           </div>
@@ -32,8 +34,23 @@ class CoursePage extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
+function mapStateToProps({ auth, programs }, props) {
+  const { programId, courseId } = props.match.params
+
+  const program = _.filter(
+    programs.items,
+    program => program._id === programId
+  )[0]
+
+  const course = _.filter(
+    program.courses,
+    course => course._id === courseId
+  )[0]
+
+  return {
+    auth,
+    course
+  }
 }
 
 export default connect(mapStateToProps)(CoursePage)
