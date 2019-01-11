@@ -5,6 +5,21 @@ const Program = mongoose.model("programs");
 const Course = mongoose.model("courses");
 
 module.exports = app => {
+  // GET request to receive a list of courses for given program
+  app.get("/api/programs/:id", requireLogin, async (req, res) => {
+    const id = req.params.id;
+
+    // Database query to get courses
+    const courses = await Program.find({
+      _id: id
+    }).select({
+      courses: true
+    });
+
+    // Send back courses
+    res.status(200).send(courses);
+  });
+
   // POST request to create a course
   app.post("/api/programs/:id/course", requireLogin, async (req, res) => {
     const id = req.params.id;
