@@ -11,3 +11,11 @@
   justify-content: space-between;
   margin: 1rem 2%;
 }
+
+.editBtn {
+  composes: editBtn from '../../styles/shared.css';
+}
+
+.deleteBtn {
+  composes: deleteBtn from '../../styles/shared.css';
+}

@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
+// Components
+import Button from '../../components/Button'
 // Styling
 import styles from './CoursePage.module.css'
 
@@ -23,6 +25,16 @@ class CoursePage extends Component {
         <div className={ styles.contentContainer }>
           <div className={ styles.headerContainer }>
             <h2>{ course.name }</h2>
+            <div>
+              <Button
+                text='Edit'
+                additionalClass={ styles.editBtn }
+              />
+              <Button
+                text='Delete'
+                additionalClass={ styles.deleteBtn }
+              />
+            </div>
           </div>
         </div>
       </div>

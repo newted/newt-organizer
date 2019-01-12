@@ -27,25 +27,9 @@
 }
 
 .editBtn {
-  width: 75px;
-  margin: 0 .5rem 0 0;
-  color: #fff;
-  background-color: #007bff;
-  border: 1px solid #006fe6;
-}
-
-.editBtn:hover {
-  background-color: #3395ff;
+  composes: editBtn from '../../styles/shared.css';
 }
 
 .deleteBtn {
-  width: 75px;
-  margin: 0 0 0 .5rem;
-  color: #fff;
-  background-color: #dc3545;
-  border: 1px solid #d32535;
-}
-
-.deleteBtn:hover {
-  background-color: #e4606d;
+  composes: deleteBtn from '../../styles/shared.css';
 }
