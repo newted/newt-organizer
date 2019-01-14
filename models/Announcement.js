@@ -6,4 +6,4 @@ const announcementSchema = new Schema({
   dateCreated: Date
 });
 
-mongoose.model("announcements", announcementSchema);
+module.exports = announcementSchema;

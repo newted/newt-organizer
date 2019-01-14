@@ -15,4 +15,4 @@ const quizSchema = new Schema({
   dateDue: Date
 });
 
-mongoose.model("quizzes", quizSchema);
+module.exports = quizSchema;

@@ -16,4 +16,4 @@ const assignmentSchema = new Schema({
   dateDue: Date
 });
 
-mongoose.model("assignments", assignmentSchema);
+module.exports = assignmentSchema;
