@@ -13,4 +13,4 @@ const courseSchema = new Schema({
   dateCreated: Date
 });
 
-mongoose.model("courses", courseSchema);
+module.exports = courseSchema
