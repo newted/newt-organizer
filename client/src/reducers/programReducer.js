@@ -4,7 +4,11 @@ import {
   UPDATE_PROGRAM,
   DELETE_PROGRAM,
 } from '../actions/programs'
-import { CREATE_COURSE, UPDATE_COURSE } from '../actions/courses'
+import {
+  CREATE_COURSE,
+  UPDATE_COURSE,
+  DELETE_COURSE
+} from '../actions/courses'
 
 export default function(
   state = {
@@ -27,6 +31,8 @@ export default function(
     case CREATE_COURSE:
       return state
     case UPDATE_COURSE:
+      return state
+    case DELETE_COURSE:
       return state
     default:
       return state

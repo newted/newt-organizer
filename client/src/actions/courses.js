@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const CREATE_COURSE = 'CREATE_COURSE'
 export const UPDATE_COURSE = 'UPDATE_COURSE'
+export const DELETE_COURSE = 'DELETE_COURSE'
 
 const createCourse = () => {
   return {
@@ -12,6 +13,12 @@ const createCourse = () => {
 const putCourse = () => {
   return {
     type: UPDATE_COURSE
+  }
+}
+
+const removeCourse = () => {
+  return {
+    type: DELETE_COURSE
   }
 }
 
@@ -38,5 +45,21 @@ export const updateCourse = (
     dispatch(putCourse())
   } catch (err) {
     console.log("Error while updating course.")
+  }
+}
+
+export const deleteCourse = (
+  programId,
+  courseId,
+  history
+) => async dispatch => {
+  try {
+    await axios.delete(`/api/programs/${programId}/courses/${courseId}`)
+
+    history.push(`/programs/${programId}`)
+
+    dispatch(removeCourse())
+  } catch (err) {
+    console.log("Error while deleting the course.")
   }
 }
