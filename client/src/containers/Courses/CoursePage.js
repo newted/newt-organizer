@@ -5,10 +5,23 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // Components
 import Button from '../../components/Button'
+import Modal from '../../components/Modal'
 // Styling
 import styles from './CoursePage.module.css'
 
 class CoursePage extends Component {
+  state = {
+    showModal: false
+  }
+
+  openModal = () => {
+    this.setState({ showModal: true })
+  }
+
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
+
   render() {
     const { programId, course } = this.props
     // Redirect to Landing page if not authenticated
@@ -37,7 +50,23 @@ class CoursePage extends Component {
               <Button
                 text='Delete'
                 additionalClass={ styles.deleteBtn }
+                onClick={ this.openModal }
               />
+              <Modal
+                showModal={ this.state.showModal }
+                handleClose={ this.closeModal }
+              >
+                <Modal.Body>
+                  Are you sure you want to delete this course?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    type='button'
+                    text='Delete'
+                    additionalClass={ styles.deleteBtn }
+                  />
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
         </div>
