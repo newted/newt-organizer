@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // Components
@@ -10,7 +10,7 @@ import styles from './CoursePage.module.css'
 
 class CoursePage extends Component {
   render() {
-    const { course } = this.props
+    const { programId, course } = this.props
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
       return <Redirect to='/' />
@@ -26,10 +26,14 @@ class CoursePage extends Component {
           <div className={ styles.headerContainer }>
             <h2>{ course.name }</h2>
             <div>
-              <Button
-                text='Edit'
-                additionalClass={ styles.editBtn }
-              />
+              <Link
+                to={{ pathname: `/programs/${programId}/courses/${course._id}/edit` }}
+              >
+                <Button
+                  text='Edit'
+                  additionalClass={ styles.editBtn }
+                />
+              </Link>
               <Button
                 text='Delete'
                 additionalClass={ styles.deleteBtn }
@@ -59,6 +63,7 @@ function mapStateToProps({ auth, programs }, props) {
 
   return {
     auth,
+    programId,
     course
   }
 }
