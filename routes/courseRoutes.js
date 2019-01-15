@@ -79,4 +79,31 @@ module.exports = app => {
       );
     }
   );
+
+  // DELETE request to delete course from a program
+  app.delete(
+    "/api/programs/:programId/courses/:courseId",
+    requireLogin,
+    (req, res) => {
+      const { programId, courseId } = req.params;
+
+      Program.findByIdAndUpdate(
+        programId,
+        {
+          $pull: {
+            courses: {
+              _id: courseId
+            }
+          }
+        },
+        (error, program) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(program);
+          }
+        }
+      );
+    }
+  );
 };
