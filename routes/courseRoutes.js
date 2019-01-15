@@ -30,7 +30,7 @@ module.exports = app => {
       name,
       shortname,
       dateCreated: Date.now()
-    }
+    };
 
     Program.findByIdAndUpdate(
       id,
@@ -48,4 +48,35 @@ module.exports = app => {
       }
     );
   });
+
+  // PUT request to edit information about a course in a program
+  app.put(
+    "/api/programs/:programId/courses/:courseId/edit",
+    requireLogin,
+    async (req, res) => {
+      const { programId, courseId } = req.params;
+
+      const { name, shortname } = req.body;
+
+      Program.findOneAndUpdate(
+        {
+          _id: programId,
+          "courses._id": courseId
+        },
+        {
+          $set: {
+            "courses.$.name": name,
+            "courses.$.shortname": shortname
+          }
+        },
+        (error, program) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(program);
+          }
+        }
+      );
+    }
+  );
 };
