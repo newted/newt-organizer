@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
+import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
 import courseFields from './courseFields'
 // Components
@@ -28,7 +29,7 @@ class EditCourseForm extends Component {
   }
 
   render() {
-    const { handleSubmit, info } = this.props
+    const { handleSubmit, onSubmit, info, history } = this.props
 
     if (!info) {
       return <LoadingBar />
@@ -37,7 +38,9 @@ class EditCourseForm extends Component {
     return (
       <div>
         <Form
-          onSubmit={ handleSubmit(values => console.log(values)) }
+          onSubmit={ handleSubmit(values =>
+            onSubmit(info.programId, info._id, values, history)
+          ) }
         >
           { this.renderFields() }
           <Button
@@ -53,4 +56,4 @@ class EditCourseForm extends Component {
 
 export default reduxForm({
   form: 'editCourseForm'
-})(EditCourseForm)
+})(withRouter(EditCourseForm))

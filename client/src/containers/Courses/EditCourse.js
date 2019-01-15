@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+// API
+import { updateCourse } from '../../actions/courses'
 // Components
 import EditCourseForm from './EditCourseForm'
 // Styling
@@ -22,6 +24,7 @@ class EditCourse extends Component {
           </div>
           <EditCourseForm
             info={ this.props.course }
+            onSubmit={ this.props.updateCourse }
           />
         </div>
       </div>
@@ -43,10 +46,14 @@ function mapStateToProps({ auth, programs }, props) {
       )[0]
     : null
 
+  if (course) {
+    course.programId = programId
+  }
+
   return {
     auth,
     course
   }
 }
 
-export default connect(mapStateToProps)(EditCourse)
+export default connect(mapStateToProps, { updateCourse })(EditCourse)

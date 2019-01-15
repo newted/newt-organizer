@@ -33,7 +33,7 @@ export const updateCourse = (
   try {
     await axios.put(`/api/programs/${programId}/courses/${courseId}/edit`, values)
 
-    history.push(`/programs/${programId}/courses/${courseId}`)
+    history.push(`/programs/${programId}`)
 
     dispatch(putCourse())
   } catch (err) {
