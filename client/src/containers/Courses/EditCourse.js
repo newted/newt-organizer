@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+// Components
+import EditCourseForm from './EditCourseForm'
 // Styling
 import styles from './EditCourse.module.css'
 
@@ -17,6 +19,7 @@ class EditCourse extends Component {
           <div className={ styles.headerContainer }>
             <h3>Edit Course</h3>
           </div>
+          <EditCourseForm />
         </div>
       </div>
     )
