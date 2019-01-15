@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
+import LoadingBar from 'react-redux-loading'
 import courseFields from './courseFields'
 // Components
 import Button from '../../components/Button'
@@ -11,12 +12,15 @@ import styles from './EditCourseForm.module.css'
 
 class EditCourseForm extends Component {
   renderFields() {
+    const { info } = this.props
+
     return _.map(courseFields, ({ label, name, required }) => {
       return <ReduxField
         component={ Field }
         type='text'
         label={ label }
         name={ name }
+        placeholder={ info[name] }
         required={ required }
         key={ name }
       />
@@ -24,8 +28,12 @@ class EditCourseForm extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
-    
+    const { handleSubmit, info } = this.props
+
+    if (!info) {
+      return <LoadingBar />
+    }
+
     return (
       <div>
         <Form
