@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
+// API
+import { deleteCourse } from '../../actions/courses'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
@@ -23,7 +25,7 @@ class CoursePage extends Component {
   }
 
   render() {
-    const { programId, course } = this.props
+    const { programId, course, history, deleteCourse } = this.props
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
       return <Redirect to='/' />
@@ -64,6 +66,9 @@ class CoursePage extends Component {
                     type='button'
                     text='Delete'
                     additionalClass={ styles.deleteBtn }
+                    onClick={
+                      () => deleteCourse(programId, course._id, history)
+                    }
                   />
                 </Modal.Footer>
               </Modal>
@@ -97,4 +102,4 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps)(CoursePage)
+export default connect(mapStateToProps, { deleteCourse })(CoursePage)
