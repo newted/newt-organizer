@@ -36,7 +36,7 @@ class EditCourseForm extends Component {
     }
 
     return (
-      <div>
+      <div className={ styles.formContainer }>
         <Form
           onSubmit={ handleSubmit(values =>
             onSubmit(info.programId, info._id, values, history)

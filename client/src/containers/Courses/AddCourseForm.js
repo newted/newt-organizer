@@ -27,7 +27,7 @@ class AddCourseForm extends Component {
     const { programId, handleSubmit, onSubmit, history } = this.props
 
     return (
-      <div>
+      <div className={ styles.formContainer }>
         <Form
           onSubmit={
             handleSubmit(values => onSubmit(programId, values, history))
