@@ -15,7 +15,7 @@ const EditProgramForm = ({ info, onSubmit }) => {
     return <LoadingBar />
   }
 
-  class EditProgramFormClass extends Component {
+  class EditProgramFormComponent extends Component {
     renderFields() {
       return _.map(programFields, ({ label, name, required }) => {
         return <ReduxField
@@ -30,11 +30,7 @@ const EditProgramForm = ({ info, onSubmit }) => {
     }
 
     render() {
-      const { handleSubmit, onSubmit, info, history } = this.props
-
-      if (!info) {
-        return <LoadingBar />
-      }
+      const { handleSubmit, onSubmit, history } = this.props
 
       return (
         <div className={ styles.formContainer }>
@@ -56,16 +52,16 @@ const EditProgramForm = ({ info, onSubmit }) => {
     }
   }
 
-  EditProgramFormClass = reduxForm({
+  EditProgramFormComponent = reduxForm({
     form: 'editProgramForm',
     initialValues: {
       name: info.name,
       shortname: info.shortname,
       institution: info.institution
     }
-  })(withRouter(EditProgramFormClass))
+  })(withRouter(EditProgramFormComponent))
 
-  return <EditProgramFormClass info={ info } onSubmit={ onSubmit } />
+  return <EditProgramFormComponent info={ info } onSubmit={ onSubmit } />
 }
 
 export default EditProgramForm

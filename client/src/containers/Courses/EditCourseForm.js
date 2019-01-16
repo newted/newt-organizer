@@ -16,7 +16,7 @@ const EditCourseForm = ({ info, onSubmit }) => {
     return <LoadingBar />
   }
 
-  class EditCourseFormClass extends Component {
+  class EditCourseFormComponent extends Component {
     renderFields() {
       return _.map(courseFields, ({ label, name, required }) => {
         return <ReduxField
@@ -31,11 +31,7 @@ const EditCourseForm = ({ info, onSubmit }) => {
     }
 
     render() {
-      const { handleSubmit, onSubmit, info, history } = this.props
-
-      if (!info) {
-        return <LoadingBar />
-      }
+      const { handleSubmit, onSubmit, history } = this.props
 
       return (
         <div className={ styles.formContainer }>
@@ -57,15 +53,15 @@ const EditCourseForm = ({ info, onSubmit }) => {
     }
   }
 
-  EditCourseFormClass = reduxForm({
+  EditCourseFormComponent = reduxForm({
     form: 'editCourseForm',
     initialValues: {
       name: info.name,
       shortname: info.shortname
     }
-  })(withRouter(EditCourseFormClass))
+  })(withRouter(EditCourseFormComponent))
 
-  return <EditCourseFormClass info={ info } onSubmit={ onSubmit }/>
+  return <EditCourseFormComponent info={ info } onSubmit={ onSubmit }/>
 }
 
 export default EditCourseForm
