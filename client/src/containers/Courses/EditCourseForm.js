@@ -11,50 +11,61 @@ import Field from '../../components/Field'
 import styles from './EditCourseForm.module.css'
 
 
-class EditCourseForm extends Component {
-  renderFields() {
-    const { info } = this.props
-
-    return _.map(courseFields, ({ label, name, required }) => {
-      return <ReduxField
-        component={ Field }
-        type='text'
-        label={ label }
-        name={ name }
-        placeholder={ info[name] }
-        required={ required }
-        key={ name }
-      />
-    })
+const EditCourseForm = ({ info, onSubmit }) => {
+  if (!info) {
+    return <LoadingBar />
   }
 
-  render() {
-    const { handleSubmit, onSubmit, info, history } = this.props
-
-    if (!info) {
-      return <LoadingBar />
+  class EditCourseFormClass extends Component {
+    renderFields() {
+      return _.map(courseFields, ({ label, name, required }) => {
+        return <ReduxField
+          component={ Field }
+          type='text'
+          label={ label }
+          name={ name }
+          required={ required }
+          key={ name }
+        />
+      })
     }
 
-    return (
-      <div className={ styles.formContainer }>
-        <Form
-          onSubmit={ handleSubmit(values =>
-            onSubmit(info.programId, info._id, values, history)
-          ) }
-        >
-          { this.renderFields() }
-          <Button
-            type='submit'
-            additionalClass={ styles.updateBtn }
+    render() {
+      const { handleSubmit, onSubmit, info, history } = this.props
+
+      if (!info) {
+        return <LoadingBar />
+      }
+
+      return (
+        <div className={ styles.formContainer }>
+          <Form
+            onSubmit={ handleSubmit(values =>
+              onSubmit(info.programId, info._id, values, history)
+            ) }
           >
-            Update
-          </Button>
-        </Form>
-      </div>
-    )
+            { this.renderFields() }
+            <Button
+              type='submit'
+              additionalClass={ styles.updateBtn }
+            >
+              Update
+            </Button>
+          </Form>
+        </div>
+      )
+    }
   }
+
+  EditCourseFormClass = reduxForm({
+    form: 'editCourseForm',
+    initialValues: {
+      name: info.name,
+      shortname: info.shortname
+    }
+  })(withRouter(EditCourseFormClass))
+
+  return <EditCourseFormClass info={ info } onSubmit={ onSubmit }/>
 }
 
-export default reduxForm({
-  form: 'editCourseForm'
-})(withRouter(EditCourseForm))
+export default EditCourseForm
