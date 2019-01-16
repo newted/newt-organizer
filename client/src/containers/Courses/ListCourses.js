@@ -34,10 +34,9 @@ class ListCourses extends Component {
         <div className={ styles.headerContainer }>
           <h3>Courses</h3>
           <Link to={{ pathname: `/programs/${programId}/courses/add` }}>
-            <Button
-              text='Add Course'
-              additionalClass={ styles.addBtn }
-            />
+            <Button additionalClass={ styles.addBtn }>
+              Add Course
+            </Button>
           </Link>
         </div>
         <div className={ styles.cardContainer }>

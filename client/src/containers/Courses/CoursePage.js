@@ -44,16 +44,16 @@ class CoursePage extends Component {
               <Link
                 to={{ pathname: `/programs/${programId}/courses/${course._id}/edit` }}
               >
-                <Button
-                  text='Edit'
-                  additionalClass={ styles.editBtn }
-                />
+                <Button additionalClass={ styles.editBtn }>
+                  Edit
+                </Button>
               </Link>
               <Button
-                text='Delete'
                 additionalClass={ styles.deleteBtn }
                 onClick={ this.openModal }
-              />
+              >
+                Delete
+              </Button>
               <Modal
                 showModal={ this.state.showModal }
                 handleClose={ this.closeModal }
@@ -64,12 +64,13 @@ class CoursePage extends Component {
                 <Modal.Footer>
                   <Button
                     type='button'
-                    text='Delete'
                     additionalClass={ styles.deleteBtn }
                     onClick={
                       () => deleteCourse(programId, course._id, history)
                     }
-                  />
+                  >
+                    Delete
+                  </Button>
                 </Modal.Footer>
               </Modal>
             </div>

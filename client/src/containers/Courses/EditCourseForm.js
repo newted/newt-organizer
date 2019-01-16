@@ -44,10 +44,11 @@ class EditCourseForm extends Component {
         >
           { this.renderFields() }
           <Button
-            text='Update'
             type='submit'
             additionalClass={ styles.updateBtn }
-          />
+          >
+            Update
+          </Button>
         </Form>
       </div>
     )

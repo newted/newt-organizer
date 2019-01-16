@@ -75,10 +75,11 @@ class Modal extends Component {
           </div>
           <div className={ styles.modalFooter }>
             <Button
-              text='Close'
               additionalClass={ styles.modalCloseBtn }
               onClick={ handleClose }
-            />
+            >
+              Close
+            </Button>
             { this.renderModalFooter() }
           </div>
         </div>

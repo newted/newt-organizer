@@ -45,10 +45,9 @@ class ProgramList extends Component {
           <div className={ styles.headerContainer }>
             <h2>Programs</h2>
             <Link to='/programs/new'>
-              <Button
-                text='Add Program'
-                additionalClass={ styles.addBtn }
-              />
+              <Button additionalClass={ styles.addBtn }>
+                Add Program
+              </Button>
             </Link>
           </div>
           <div className={ styles.cardContainer }>

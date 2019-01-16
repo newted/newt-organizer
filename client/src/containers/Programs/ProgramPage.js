@@ -45,16 +45,16 @@ class ProgramPage extends Component {
           </div>
           <div>
             <Link to={{ pathname: `/programs/${this.props.program._id}/edit` }}>
-              <Button
-                text='Edit'
-                additionalClass={ styles.editBtn }
-              />
+              <Button additionalClass={ styles.editBtn }>
+                Edit
+              </Button>
             </Link>
             <Button
-              text='Delete'
               additionalClass={ styles.deleteBtn }
               onClick={ this.openModal }
-            />
+            >
+              Delete
+            </Button>
             <Modal
               showModal={ this.state.showModal }
               handleClose={ this.closeModal }
@@ -65,10 +65,11 @@ class ProgramPage extends Component {
               <Modal.Footer>
                 <Button
                   type='button'
-                  text='Delete'
                   additionalClass={ styles.deleteBtn }
                   onClick={ () => deleteProgram(program._id, history) }
-                />
+                >
+                  Delete
+                </Button>
               </Modal.Footer>
             </Modal>
           </div>

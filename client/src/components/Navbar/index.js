@@ -15,10 +15,9 @@ class Navbar extends Component {
       case false:
         return (
           <a href="/auth/google">
-            <Button
-              text='Login with Google'
-              additionalClass={ styles.logoutBtn }
-            />
+            <Button additionalClass={ styles.logoutBtn }>
+              Login with Google
+            </Button>
           </a>
         )
       default:
@@ -33,10 +32,9 @@ class Navbar extends Component {
               </Link>
             )}
             <a href="/api/logout">
-              <Button
-                text='Logout'
-                additionalClass={ styles.logoutBtn }
-              />
+              <Button additionalClass={ styles.logoutBtn }>
+                Logout
+              </Button>
             </a>
           </div>
         )

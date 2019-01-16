@@ -35,10 +35,11 @@ class AddCourseForm extends Component {
         >
           { this.renderFields() }
           <Button
-            text='Submit'
             type='submit'
             additionalClass={ styles.submitBtn }
-          />
+          >
+            Submit
+          </Button>
         </Form>
       </div>
     )
