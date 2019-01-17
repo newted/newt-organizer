@@ -8,7 +8,7 @@ import { deleteProgram, fetchPrograms }  from '../../actions/programs'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
-import ListCourses from '../Courses/ListCourses'
+import ProgramCourseList from '../Courses/ProgramCourseList'
 // Styling
 import styles from './ProgramPage.module.css'
 
@@ -74,7 +74,7 @@ class ProgramPage extends Component {
             </Modal>
           </div>
         </div>
-        <ListCourses programId={ program._id }/>
+        <ProgramCourseList programId={ program._id }/>
       </div>
     )
   }

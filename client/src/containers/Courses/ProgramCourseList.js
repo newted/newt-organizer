@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 // Styling
-import styles from './ListCourses.module.css'
+import styles from './ProgramCourseList.module.css'
 import { BookIcon } from '../../utils/icons'
 
-class ListCourses extends Component {
+class ProgramCourseList extends Component {
   renderCards() {
     const { programId, courses } = this.props
 
@@ -61,4 +61,4 @@ function mapStateToProps({ programs }, { programId }) {
   }
 }
 
-export default connect(mapStateToProps)(ListCourses)
+export default connect(mapStateToProps)(ProgramCourseList)
