@@ -1,4 +1,5 @@
 import { FETCH_PROGRAMS } from '../actions/programs'
+import { coursesByProgram } from '../utils/reducerHelpers'
 
 export default function (
   state = {
@@ -10,7 +11,7 @@ export default function (
     case FETCH_PROGRAMS:
       return {
         ...state,
-        items: action.payload
+        items: coursesByProgram(action.payload)
       }
     default:
       return state
