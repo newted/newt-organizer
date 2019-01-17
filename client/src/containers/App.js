@@ -19,6 +19,7 @@ import EditProgram from './Programs/EditProgram'
 import AddCourse from './Courses/AddCourse'
 import CoursePage from './Courses/CoursePage'
 import EditCourse from './Courses/EditCourse'
+import CourseList from './Courses/CourseList'
 // Styling
 import styles from './App.module.css'
 
@@ -38,6 +39,7 @@ const AppContainer = () => (
         <Route path='/programs/:programId/edit' component={ EditProgram } />
         <Route path='/programs/:programId' component={ ProgramPage } />
         <Route path='/programs' component={ ProgramList } />
+        <Route path='/courses' component={ CourseList } />
       </Switch>
     </section>
   </div>
