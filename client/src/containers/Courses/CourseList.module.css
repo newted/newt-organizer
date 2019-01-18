@@ -14,23 +14,25 @@
 }
 
 .coursesContainer {
-  margin: 1rem 2%;
   display: flex;
   flex-direction: column;
+  margin: 1rem 0;
 }
 
 .courseSection {
   color: #555;
   font-size: 1.3rem;
   font-weight: 500;
-  padding: .25rem 0;
-  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
 }
 
 .headings {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
+  margin: 0 2%;
+  padding: .25rem 0;
+  border-bottom: 1px solid #ddd;
 }
 
 .header {
@@ -40,4 +42,13 @@
 .institution {
   margin: 0 0 0 2%;
   color: #bbb;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.cardColor {
+  background-color: #ff8f6b;
 }

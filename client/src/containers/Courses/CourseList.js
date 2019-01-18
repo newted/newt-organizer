@@ -3,9 +3,27 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+// Components
+import Card from '../../components/Card'
+// Styling
 import styles from './CourseList.module.css'
+import { BookIcon } from '../../utils/icons'
 
 class CourseList extends Component {
+  renderCards(programId, courses) {
+    return _.map(courses, ({ _id, name }) => {
+      return (
+        <Card
+          path={ `/programs/${programId}/courses/${_id}` }
+          title={ name }
+          icon={ BookIcon }
+          additionalClass={ styles.cardColor }
+          key={ _id }
+        />
+      )
+    })
+  }
+
   renderCourseSections() {
     const { programs } = this.props
 
@@ -19,6 +37,9 @@ class CourseList extends Component {
             <div className={ styles.institution }>
               { institution }
             </div>
+          </div>
+          <div className={ styles.cardContainer }>
+            { this.renderCards(_id, courses) }
           </div>
         </div>
       )
