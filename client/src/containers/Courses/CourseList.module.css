@@ -39,6 +39,11 @@
   margin: 0 2% 0 0;
 }
 
+.header:hover {
+  color: #333;
+  font-weight: 700;
+}
+
 .institution {
   margin: 0 0 0 2%;
   color: #bbb;

@@ -1,6 +1,6 @@
 /* This is the page that's rendered when you click on Courses on the Sidebar */
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 // Components
@@ -32,9 +32,12 @@ class CourseList extends Component {
         return (
           <div className={ styles.courseSection} key={ _id }>
             <div className={ styles.headings }>
-              <div className={ styles.header }>
+              <Link
+                to={ `/programs/${_id}` }
+                className={ styles.header }
+              >
                 { name }
-              </div>
+              </Link>
               <div className={ styles.institution }>
                 { institution }
               </div>
