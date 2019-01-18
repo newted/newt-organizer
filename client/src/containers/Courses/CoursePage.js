@@ -8,6 +8,7 @@ import { deleteCourse } from '../../actions/courses'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+import CourseAssignmentList from '../Assignments/CourseAssignmentList'
 // Styling
 import styles from './CoursePage.module.css'
 
@@ -75,6 +76,7 @@ class CoursePage extends Component {
               </Modal>
             </div>
           </div>
+          <CourseAssignmentList />
         </div>
       </div>
     )
