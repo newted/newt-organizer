@@ -28,21 +28,23 @@ class CourseList extends Component {
     const { programs } = this.props
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
-      return (
-        <div className={ styles.courseSection} key={ _id }>
-          <div className={ styles.headings }>
-            <div className={ styles.header }>
-              { name }
+      if (courses.length > 0) {
+        return (
+          <div className={ styles.courseSection} key={ _id }>
+            <div className={ styles.headings }>
+              <div className={ styles.header }>
+                { name }
+              </div>
+              <div className={ styles.institution }>
+                { institution }
+              </div>
             </div>
-            <div className={ styles.institution }>
-              { institution }
+            <div className={ styles.cardContainer }>
+              { this.renderCards(_id, courses) }
             </div>
           </div>
-          <div className={ styles.cardContainer }>
-            { this.renderCards(_id, courses) }
-          </div>
-        </div>
-      )
+        )
+      }
     })
   }
 
