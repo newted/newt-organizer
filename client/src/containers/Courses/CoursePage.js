@@ -76,7 +76,10 @@ class CoursePage extends Component {
               </Modal>
             </div>
           </div>
-          <CourseAssignmentList />
+          <CourseAssignmentList
+            programId={ programId }
+            courseId={ course._id }
+          />
         </div>
       </div>
     )

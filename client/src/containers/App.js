@@ -20,6 +20,7 @@ import AddCourse from './Courses/AddCourse'
 import CoursePage from './Courses/CoursePage'
 import EditCourse from './Courses/EditCourse'
 import CourseList from './Courses/CourseList'
+import AddAssignment from './Assignments/AddAssignment'
 // Styling
 import styles from './App.module.css'
 
@@ -33,9 +34,22 @@ const AppContainer = () => (
       <Switch>
         <Route path='/dashboard' component={ Dashboard } />
         <Route path='/programs/new' component={ AddProgram } />
-        <Route path='/programs/:programId/courses/:courseId/edit' component={ EditCourse } />
-        <Route exact path='/programs/:programId/courses/add' component={ AddCourse } />
-        <Route path='/programs/:programId/courses/:courseId' component={ CoursePage } />
+        <Route
+          path='/programs/:programId/courses/:courseId/assignments/add'
+          component={ AddAssignment }
+        />
+        <Route
+          path='/programs/:programId/courses/:courseId/edit'
+          component={ EditCourse }
+        />
+        <Route
+          exact path='/programs/:programId/courses/add'
+          component={ AddCourse }
+        />
+        <Route
+          path='/programs/:programId/courses/:courseId'
+          component={ CoursePage }
+        />
         <Route path='/programs/:programId/edit' component={ EditProgram } />
         <Route path='/programs/:programId' component={ ProgramPage } />
         <Route path='/programs' component={ ProgramList } />
