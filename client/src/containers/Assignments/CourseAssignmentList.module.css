@@ -4,12 +4,19 @@
   margin: 1rem 2%;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: .25rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
 .header {
+  display: flex;
+  align-items: flex-end;
   color: #555;
   font-size: 1.1rem;
   font-weight: 500;
-  padding: .25rem 0;
-  border-bottom: 1px solid #ddd;
 }
 
 .addBtn {
