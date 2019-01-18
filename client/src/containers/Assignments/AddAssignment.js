@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+// Components
+import AddAssignmentForm from './AddAssignmentForm'
 // Styling
 import styles from './AddAssignment.module.css'
 
@@ -17,6 +19,7 @@ class AddAssignment extends Component {
           <div className={ styles.headerContainer }>
             <h3>Add a New Assignment</h3>
           </div>
+          <AddAssignmentForm />
         </div>
       </div>
     )
