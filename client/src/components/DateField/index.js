@@ -9,20 +9,24 @@ const DateField = ({ input, label, required, meta: { error, touched } }) => {
     <div className={ styles.inputGroup }>
       <div>
         <label className={ styles.label }>{ label }</label>
-        <span className={ styles.tag }>{ !required && 'Optional' }</span>
+        { !required && <span className={ styles.tag }>Optional</span> }
       </div>
       <div className={ styles.dateContainer }>
         <DatePicker
           dateFormat='MMM d, yyyy'
           selected={ input.value || null }
+          placeholderText='Select date'
           onChange={ input.onChange }
-          onFocus={ input.onFocus }
-          onBlur={ input.onBlur }
+          onFocus={ input.onFocus }   // Didn't pass these as {...input} because
+          onBlur={ input.onBlur }     // value field throws a type error
           onDrop={ input.onDrop }
           onDragStart={ input.onDragStart }
           className={ styles.input }
         />
-        <small className={ styles.error }>{ touched && error }</small>
+        { touched && error && (
+            <small className={ styles.error }>{ error }</small>
+          )
+        }
       </div>
     </div>
   )

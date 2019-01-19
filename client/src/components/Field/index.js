@@ -1,15 +1,18 @@
 import React from 'react'
 import styles from './Field.module.css'
 
-export default ({ input, placeholder, label, required, meta: { error, touched } }) => {
+export default ({ input, label, required, meta: { error, touched } }) => {
   return (
     <div className={ styles.inputGroup }>
       <div>
         <label className={ styles.label }>{ label }</label>
-        <span className={ styles.tag }>{ !required && 'Optional' }</span>
+        { !required && <span className={ styles.tag }>Optional</span> }
       </div>
-      <input {...input} placeholder={ placeholder } className={ styles.input }/>
-      <small className={ styles.error }>{ touched && error }</small>
+      <input { ...input } className={ styles.input }/>
+      { touched && error && (
+          <small className={ styles.error }>{ error }</small>
+        )
+      }
     </div>
   )
 }
