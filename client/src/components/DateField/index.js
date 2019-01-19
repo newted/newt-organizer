@@ -13,7 +13,7 @@ const DateField = ({ input, label, required, meta: { error, touched } }) => {
         <span className={ styles.tag }>{ !required && 'Optional' }</span>
       </div>
       <DatePicker
-        dateFormat='DD/MM/YYYY'
+        dateFormat='MMM d, yyyy'
         selected={ input.value || null }
         onChange={ input.onChange }
         className={ styles.input }
