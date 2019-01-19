@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "http-proxy-middleware": "^0.19.1",
     "react": "^16.7.0",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",
     "react-icons": "^3.2.2",
     "react-modal": "^3.8.1",

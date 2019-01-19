@@ -6,20 +6,29 @@ import assignmentFields from './assignmentFields'
 // Components
 import Button from '../../components/Button'
 import Field from '../../components/Field'
+import DateField from '../../components/DateField'
 // Styling
 import styles from './AddAssignmentForm.module.css'
 
 class AddAssignmentForm extends Component {
   renderFields() {
     return _.map(assignmentFields, ({ label, name, required }) => {
-      return <ReduxField
-        component={ Field }
-        type='text'
-        label={ label }
-        name={ name }
-        required={ required }
-        key={ name }
-      />
+      return name === 'dateDue'
+      ? <ReduxField
+          component={ DateField }
+          name={ name }
+          label={ label }
+          required={ required }
+          key={ name }
+        />
+      : <ReduxField
+          component={ Field }
+          type='text'
+          label={ label }
+          name={ name }
+          required={ required }
+          key={ name }
+        />
     })
   }
 
