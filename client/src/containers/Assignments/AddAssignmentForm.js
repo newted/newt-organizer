@@ -13,22 +13,14 @@ import styles from './AddAssignmentForm.module.css'
 class AddAssignmentForm extends Component {
   renderFields() {
     return _.map(assignmentFields, ({ label, name, required }) => {
-      return name === 'dateDue'
-      ? <ReduxField
-          component={ DateField }
-          name={ name }
-          label={ label }
-          required={ required }
-          key={ name }
-        />
-      : <ReduxField
-          component={ Field }
-          type='text'
-          label={ label }
-          name={ name }
-          required={ required }
-          key={ name }
-        />
+      return <ReduxField
+        component={ name === 'dateDue' ? DateField : Field }
+        type='text'
+        label={ label }
+        name={ name }
+        required={ required }
+        key={ name }
+      />
     })
   }
 
