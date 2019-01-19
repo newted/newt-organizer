@@ -1,3 +1,8 @@
+.input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .inputGroup {
   margin-bottom: 1rem;
 }
@@ -9,6 +14,11 @@
 .tag {
   font-size: .8rem;
   color: #aaa;
+}
+
+.dateContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .error {

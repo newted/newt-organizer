@@ -12,6 +12,6 @@ export default [
   {
     label: 'Due Date',
     name: 'dateDue',
-    required: false
+    required: true
   }
 ]
