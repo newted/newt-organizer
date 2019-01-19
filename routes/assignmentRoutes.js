@@ -11,12 +11,12 @@ module.exports = app => {
     (req, res) => {
       const { programId, courseId } = req.params;
 
-      const { name, details, dueDate } = req.body;
+      const { name, details, dateDue } = req.body;
 
       const assignment = {
         name,
         details,
-        dueDate,
+        dateDue,
         dateCreated: Date.now()
       };
 
