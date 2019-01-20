@@ -1,6 +1,6 @@
 export default [
   {
-    label: 'Assignment Name',
+    label: 'Name',
     name: 'name',
     required: true
   },

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import assignmentFields from './assignmentFields'
 // Components
 import Button from '../../components/Button'
 import Table from '../../components/Table'
@@ -19,7 +20,10 @@ const CourseAssignmentList = ({ programId, courseId, assignments }) => {
           </Button>
         </Link>
       </div>
-      <Table />
+      <Table
+        fields={ assignmentFields }
+        data={ assignments }
+      />
     </div>
   )
 }
