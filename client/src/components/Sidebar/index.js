@@ -7,7 +7,7 @@ class Sidebar extends Component {
   // Render sidebar links based on fields provided
   renderNavlinks() {
     return sidebarFields.map(({ name, route, icon }) => (
-      <li className={ styles.navlink } key={ name }>
+      <li key={ name }>
         <NavLink to={ route } activeClassName={ styles.activeNav }>
           <div className={ styles.navlinkRow }>
             { icon }
