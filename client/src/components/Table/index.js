@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import styles from './Table.module.css'
 
 class Table extends Component {
@@ -28,7 +29,10 @@ class Table extends Component {
               // A table data field for each table header
               return (
                 <td key={ object._id + label }>
-                  { object[name] }
+                  { name === 'dateDue'
+                    ? object[name] && moment(object[name]).format('ddd, MMM Do')
+                    : object[name]
+                  }
                 </td>
               )
             })
