@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+// Components
 import Button from '../../components/Button'
+import Table from '../../components/Table'
 // Styling
 import styles from './CourseAssignmentList.module.css'
 
-const CourseAssignmentList = ({ programId, courseId }) => {
+const CourseAssignmentList = ({ programId, courseId, assignments }) => {
   return (
     <div className={ styles.assignmentsContainer }>
       <div className={ styles.headerContainer }>
@@ -17,6 +19,7 @@ const CourseAssignmentList = ({ programId, courseId }) => {
           </Button>
         </Link>
       </div>
+      <Table />
     </div>
   )
 }

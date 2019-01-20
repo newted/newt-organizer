@@ -43,3 +43,34 @@ input::placeholder {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+thead {
+  border-bottom: 1px solid black;
+}
+
+th {
+  text-align: left;
+  padding: .25rem .5rem;
+}
+
+td {
+  padding: .5rem .5rem;
+}
+
+tr {
+  border-bottom: 1px solid #ccc;
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
+tbody > tr:hover {
+  background-color: #eee;
+}
