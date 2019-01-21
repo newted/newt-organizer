@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import moment from 'moment'
+// Styling
 import styles from './Table.module.css'
+import { FiMoreVertical } from 'react-icons/fi'
 
 class Table extends Component {
   renderTableHeader() {
@@ -37,6 +39,10 @@ class Table extends Component {
               )
             })
           }
+          {/* Options icon */}
+          <td className={ styles.options }>
+            <FiMoreVertical />
+          </td>
         </tr>
       )
     })
