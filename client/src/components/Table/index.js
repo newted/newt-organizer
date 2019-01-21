@@ -7,6 +7,12 @@ import styles from './Table.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
 
 class Table extends Component {
+  showHideDropdown() {
+    return this.props.dropdownVisible
+      ? [styles.menu, styles.displayBlock].join(' ')
+      : [styles.menu, styles.displayNone].join(' ')
+  }
+
   renderTableHeader() {
     const { fieldsObj } = this.props
 
@@ -41,7 +47,18 @@ class Table extends Component {
           }
           {/* Options icon */}
           <td className={ styles.options }>
-            <FiMoreVertical />
+            <div
+              className={ styles.dropdown }
+              onClick={ (event) => this.props.handleOpenDropdown(event) }
+            >
+              <FiMoreVertical />
+              <div
+                className={ this.showHideDropdown() }
+                ref={ (element) => { this.props.setDropdownMenu(element) } }
+              >
+                <div className={ styles.item }>Hello</div>
+              </div>
+            </div>
           </td>
         </tr>
       )
