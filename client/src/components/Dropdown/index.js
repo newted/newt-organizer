@@ -43,12 +43,13 @@ class Dropdown extends Component {
   }
 
   render() {
+    console.log(this.props.children[0])
     return (
       <div
         className={ styles.dropdown }
         onClick={ this.props.handleOpen }
       >
-        Dropdown
+        { this.props.children[0] }
         { this.renderDropdownMenu() }
       </div>
 

@@ -12,6 +12,7 @@ import Modal from '../../components/Modal'
 import CourseAssignmentList from '../Assignments/CourseAssignmentList'
 // Styling
 import styles from './CoursePage.module.css'
+// import { FiMoreVertical } from 'react-icons/fi'
 
 class CoursePage extends Component {
   state = {
@@ -75,9 +76,11 @@ class CoursePage extends Component {
                 visible={ this.state.showDropdown }
                 handleOpen={ this.openDropdown }
               >
+                <FiMoreVertical />
                 <Dropdown.Menu ref={ (element) => this.dropdownMenu = element }>
                   <Dropdown.Item onClick={ () => console.log('test') }>Hello</Dropdown.Item>
                   <Dropdown.Item>There</Dropdown.Item>
+                  <Dropdown.Item>Beeeeeeeeeeech</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown> */}
               <Modal
