@@ -43,18 +43,23 @@ class Table extends Component {
   }
 
   render() {
+    const { data, name } = this.props
+
     return (
       <div className={ styles.tableContainer }>
-        <table>
-          <thead>
-            <tr>
-              { this.renderTableHeader() }
-            </tr>
-          </thead>
-          <tbody>
-            { this.renderTableBody() }
-          </tbody>
-        </table>
+        { data.length === 0
+          ? <div>{ `There are no ${name}.` }</div>
+          : <table>
+              <thead>
+                <tr>
+                  { this.renderTableHeader() }
+                </tr>
+              </thead>
+              <tbody>
+                { this.renderTableBody() }
+              </tbody>
+            </table>
+        }
       </div>
     )
   }
@@ -75,12 +80,13 @@ function fieldsArrayToObject(fieldsArray) {
   return fieldsObj
 }
 
-function mapStateToProps(state, { data, fields }) {
+function mapStateToProps(state, { data, fields, name }) {
   const fieldsObj = fieldsArrayToObject(fields)
 
   return {
     data,
-    fieldsObj
+    fieldsObj,
+    name
   }
 }
 

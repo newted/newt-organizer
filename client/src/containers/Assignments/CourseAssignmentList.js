@@ -23,6 +23,7 @@ const CourseAssignmentList = ({ programId, courseId, assignments }) => {
       <Table
         fields={ assignmentFields }
         data={ assignments }
+        name='assignments'
       />
     </div>
   )
