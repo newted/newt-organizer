@@ -8,13 +8,15 @@ import { deleteCourse } from '../../actions/courses'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+// import Dropdown from '../../components/Dropdown'
 import CourseAssignmentList from '../Assignments/CourseAssignmentList'
 // Styling
 import styles from './CoursePage.module.css'
 
 class CoursePage extends Component {
   state = {
-    showModal: false
+    showModal: false,
+    // showDropdown: false
   }
 
   openModal = () => {
@@ -24,6 +26,20 @@ class CoursePage extends Component {
   closeModal = () => {
     this.setState({ showModal: false })
   }
+
+  // openDropdown = () => {
+  //   this.setState({ showDropdown: true }, () => {
+  //     document.addEventListener('click', this.closeDropdown)
+  //   })
+  // }
+  //
+  // closeDropdown = (event) => {
+  //   if (!this.dropdownMenu.contains(event.target)) {
+  //     this.setState({ showDropdown: false}, () => {
+  //       document.removeEventListener('click', this.closeDropdown)
+  //     })
+  //   }
+  // }
 
   render() {
     const { programId, course, history, deleteCourse } = this.props
@@ -55,6 +71,15 @@ class CoursePage extends Component {
               >
                 Delete
               </Button>
+              {/* <Dropdown
+                visible={ this.state.showDropdown }
+                handleOpen={ this.openDropdown }
+              >
+                <Dropdown.Menu ref={ (element) => this.dropdownMenu = element }>
+                  <Dropdown.Item onClick={ () => console.log('test') }>Hello</Dropdown.Item>
+                  <Dropdown.Item>There</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown> */}
               <Modal
                 showModal={ this.state.showModal }
                 handleClose={ this.closeModal }
