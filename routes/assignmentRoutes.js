@@ -40,4 +40,34 @@ module.exports = app => {
       );
     }
   );
+
+  // DELETE request to delete an assignment
+  app.delete(
+    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
+    requireLogin,
+    (req, res) => {
+      const { programId, courseId, assignmentId } = req.params;
+
+      Program.findOneAndUpdate(
+        {
+          _id: programId,
+          "courses._id": courseId
+        },
+        {
+          $pull: {
+            "courses.$.assignments": {
+              _id: assignmentId
+            }
+          }
+        },
+        (error, program) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(program);
+          }
+        }
+      );
+    }
+  );
 };
