@@ -7,21 +7,62 @@ import Table from '../../components/Table'
 // Styling
 import styles from './CourseAssignmentList.module.css'
 
+const initializeDropdownMenuState = (assignments) => {
+  const dropdownMenuState = {}
+
+  assignments.map(assignment => {
+    return dropdownMenuState[assignment._id] = null
+  })
+
+  return dropdownMenuState
+}
+
 class CourseAssignmentList extends Component {
   state = {
-    showDropdown: false,
-    dropdownMenu: null
+    showDropdown: initializeDropdownMenuState(this.props.assignments),
+    dropdownMenu: null,
+    currentDropdownId: null
   }
 
-  openDropdown = (event) => {
-    this.setState({ showDropdown: true }, () => {
+  addCurrentDropdownId = (assignmentId) => {
+    this.setState({
+      currentDropdownId: assignmentId
+    })
+  }
+
+  removeCurrentDropdownId = () => {
+    this.setState({
+      currentDropdownId: null
+    })
+  }
+
+  openDropdown = (assignmentId, event) => {
+    console.log('Opening dropdown...')
+    this.setState(prevState => ({
+      showDropdown: {
+        ...prevState.showDropdown,
+        [assignmentId]: true
+      }
+    }), () => {
+      console.log('Adding event listener')
+      this.addCurrentDropdownId(assignmentId)
       document.addEventListener('click', this.closeDropdown)
     })
   }
 
   closeDropdown = (event) => {
+    console.log('Closing dropdown...')
+    const assignmentId = this.state.currentDropdownId
+
     if (!this.state.dropdownMenu.contains(event.target)) {
-      this.setState({ showDropdown: false}, () => {
+      this.setState(prevState => ({
+        showDropdown: {
+          ...prevState.showDropdown,
+          [assignmentId]: false
+        }
+      }), () => {
+        console.log('Removing event listener')
+        this.removeCurrentDropdownId()
         document.removeEventListener('click', this.closeDropdown)
       })
     }
@@ -35,6 +76,7 @@ class CourseAssignmentList extends Component {
 
   render() {
     const { programId, courseId, assignments } = this.props
+    console.log(this.state)
 
     return (
       <div className={ styles.assignmentsContainer }>
