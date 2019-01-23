@@ -26,7 +26,6 @@ class Table extends Component {
     const { data, fieldsObj } = this.props
 
     return _.map(data, object => {
-      // console.log(object)
       return (
         // A table row for each object (assignment, etc.)
         <tr key={ object._id }>
@@ -60,6 +59,7 @@ class Table extends Component {
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
                 <div className={ styles.item } onClick={ () => console.log('Clicked') }>Hello</div>
+                <div className={ styles.item } onClick={ () => console.log('Clicked there') }>There</div>
               </div>
             </div>
           </td>
@@ -91,11 +91,11 @@ class Table extends Component {
   }
 }
 
-// This function turns the fields array passed in as props into an object
-// of type [label]: [name]
-// The label is used to render the table headers
-// The name is used as the key to access that particular piece of information
-// from the data object also passed as a prop
+/* This function turns the fields array passed in as props into an object
+   of type [label]: [name]
+   The label is used to render the table headers
+   The name is used as the key to access that particular piece of information
+   from the data object also passed as a prop */
 function fieldsArrayToObject(fieldsArray) {
   const fieldsObj = {}
 

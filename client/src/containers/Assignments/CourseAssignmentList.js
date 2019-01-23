@@ -7,6 +7,9 @@ import Table from '../../components/Table'
 // Styling
 import styles from './CourseAssignmentList.module.css'
 
+// This function creates an object of [assignmentId]: null which is meant to
+// denote whether the dropdown for the table row for that particular assignment
+// is supposed to be visible or not.
 const initializeDropdownMenuState = (assignments) => {
   const dropdownMenuState = {}
 
@@ -21,37 +24,25 @@ class CourseAssignmentList extends Component {
   state = {
     showDropdown: initializeDropdownMenuState(this.props.assignments),
     dropdownMenu: null,
-    currentDropdownId: null
-  }
-
-  addCurrentDropdownId = (assignmentId) => {
-    this.setState({
-      currentDropdownId: assignmentId
-    })
-  }
-
-  removeCurrentDropdownId = () => {
-    this.setState({
-      currentDropdownId: null
-    })
-  }
+    currentDropdownId: null // Passed to closeDropdown function so it knows
+  }                         // which table row dropdown to close.
 
   openDropdown = (assignmentId, event) => {
-    console.log('Opening dropdown...')
+    // console.log('Opening dropdown...')
     this.setState(prevState => ({
       showDropdown: {
         ...prevState.showDropdown,
         [assignmentId]: true
-      }
+      },
+      currentDropdownId: assignmentId
     }), () => {
-      console.log('Adding event listener')
-      this.addCurrentDropdownId(assignmentId)
+      // console.log('Adding event listener')
       document.addEventListener('click', this.closeDropdown)
     })
   }
 
   closeDropdown = (event) => {
-    console.log('Closing dropdown...')
+    // console.log('Closing dropdown...')
     const assignmentId = this.state.currentDropdownId
 
     if (!this.state.dropdownMenu.contains(event.target)) {
@@ -59,10 +50,10 @@ class CourseAssignmentList extends Component {
         showDropdown: {
           ...prevState.showDropdown,
           [assignmentId]: false
-        }
+        },
+        currentDropdownId: null
       }), () => {
-        console.log('Removing event listener')
-        this.removeCurrentDropdownId()
+        // console.log('Removing event listener')
         document.removeEventListener('click', this.closeDropdown)
       })
     }
@@ -76,7 +67,7 @@ class CourseAssignmentList extends Component {
 
   render() {
     const { programId, courseId, assignments } = this.props
-    console.log(this.state)
+    // console.log(this.state)
 
     return (
       <div className={ styles.assignmentsContainer }>
