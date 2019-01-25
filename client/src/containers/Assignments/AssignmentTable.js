@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+// Components
+import Dropdown from '../../components/Dropdown'
 // API
 import { deleteAssignment } from '../../actions/assignments'
 // Styling
@@ -10,12 +12,6 @@ import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
 
 class AssignmentTable extends Component {
-  showHideDropdown(objectId) {
-    return this.props.dropdownVisible[objectId]
-      ? [styles.menu, styles.displayBlock].join(' ')
-      : [styles.menu, styles.displayNone].join(' ')
-  }
-
   renderTableHeader() {
     const { fieldsObj } = this.props
 
@@ -56,27 +52,25 @@ class AssignmentTable extends Component {
           }
           {/* Options icon */}
           <td className={ styles.options }>
-            <div
-              className={ styles.dropdown }
-              onClick={ (event) =>
+            <Dropdown
+              visible={ this.props.dropdownVisible[object._id] }
+              handleOpen={ (event) =>
                 this.props.handleOpenDropdown(object._id, event)
               }
             >
               <FiMoreVertical />
-              <div
-                className={ this.showHideDropdown(object._id) }
+              <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
-                <div
-                  className={ styles.item }
+                <Dropdown.Item
                   onClick={
                     () => deleteAssignment(programId, courseId, object._id, history)
                   }
                 >
                   Delete
-                </div>
-              </div>
-            </div>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </td>
         </tr>
       )

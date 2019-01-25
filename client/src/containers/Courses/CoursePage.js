@@ -28,20 +28,6 @@ class CoursePage extends Component {
     this.setState({ showModal: false })
   }
 
-  // openDropdown = () => {
-  //   this.setState({ showDropdown: true }, () => {
-  //     document.addEventListener('click', this.closeDropdown)
-  //   })
-  // }
-  //
-  // closeDropdown = (event) => {
-  //   if (!this.dropdownMenu.contains(event.target)) {
-  //     this.setState({ showDropdown: false}, () => {
-  //       document.removeEventListener('click', this.closeDropdown)
-  //     })
-  //   }
-  // }
-
   render() {
     const { programId, course, history, deleteCourse } = this.props
     // Redirect to Landing page if not authenticated
