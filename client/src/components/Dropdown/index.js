@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+// Styling
 import styles from './Dropdown.module.css'
+// Helpers
 import findByComponentType from '../../utils/findByComponentType'
 
 const Menu = () => null
 const Item = () => null
 
 class Dropdown extends Component {
+  static propTypes = {
+    visible: PropTypes.bool,
+    handleOpen: PropTypes.func.isRequired,
+    children: PropTypes.arrayOf(PropTypes.object)
+  }
+
   showHideClassName() {
     return this.props.visible
       ? [styles.menu, styles.displayBlock].join(' ')
@@ -16,7 +25,7 @@ class Dropdown extends Component {
     return items.map(item => (
         <div
           className={ styles.item }
-          onClick={ item.props.onClick }
+          onClick={ item.props.onClick } // Specific onClick property of the item
           key={ item.props.children}>
             { item.props.children }
         </div>
@@ -54,7 +63,7 @@ class Dropdown extends Component {
         className={ styles.dropdown }
         onClick={ this.props.handleOpen }
       >
-        { this.props.children[0] }
+        { this.props.children[0] }  {/*Renders the icon or Dropdown name */}
         { this.renderDropdownMenu() }
       </div>
 

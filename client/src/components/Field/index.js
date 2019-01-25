@@ -1,4 +1,5 @@
 import React from 'react'
+// Styling
 import styles from './Field.module.css'
 
 export default ({ input, label, required, meta: { error, touched } }) => {

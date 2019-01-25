@@ -1,4 +1,5 @@
 import React from 'react'
+// Styling
 import styles from './Button.module.css'
 
 const Button = ({ type, onClick, additionalClass, children }) => (
