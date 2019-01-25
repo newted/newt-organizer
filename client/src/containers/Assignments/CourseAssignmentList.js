@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import assignmentFields from './assignmentFields'
 // Components
 import Button from '../../components/Button'
-import Table from '../../components/Table'
+import AssignmentTable from './AssignmentTable'
 // Styling
 import styles from './CourseAssignmentList.module.css'
 
@@ -60,14 +60,19 @@ class CourseAssignmentList extends Component {
   }
 
   setDropdownMenu = (event) => {
-    if (event) {
+    if (event && !this.state.dropdownMenu) {
       this.setState({ dropdownMenu: event })
     }
   }
 
   render() {
     const { programId, courseId, assignments } = this.props
-    // console.log(this.state)
+
+    const data = {
+      programId,
+      courseId,
+      assignments
+    }
 
     return (
       <div className={ styles.assignmentsContainer }>
@@ -81,9 +86,9 @@ class CourseAssignmentList extends Component {
             </Button>
           </Link>
         </div>
-        <Table
+        <AssignmentTable
           fields={ assignmentFields }
-          data={ assignments }
+          data={ data }
           name='assignments'
           dropdownVisible={ this.state.showDropdown }
           handleOpenDropdown={ this.openDropdown }
