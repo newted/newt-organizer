@@ -1,0 +1,11 @@
+.tableContainer {
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  padding: 1.5rem;
+  min-width: 350px;
+}
+
+.options {
+  color: #666;
+  width: 20px;
+}

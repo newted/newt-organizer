@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
 import { deleteCourse } from '../../actions/courses'
+import { fetchPrograms }  from '../../actions/programs'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
@@ -20,6 +21,10 @@ class CoursePage extends Component {
     // showDropdown: false
   }
 
+  componentDidMount() {
+    this.props.fetchPrograms()
+  }
+
   openModal = () => {
     this.setState({ showModal: true })
   }
@@ -27,20 +32,6 @@ class CoursePage extends Component {
   closeModal = () => {
     this.setState({ showModal: false })
   }
-
-  // openDropdown = () => {
-  //   this.setState({ showDropdown: true }, () => {
-  //     document.addEventListener('click', this.closeDropdown)
-  //   })
-  // }
-  //
-  // closeDropdown = (event) => {
-  //   if (!this.dropdownMenu.contains(event.target)) {
-  //     this.setState({ showDropdown: false}, () => {
-  //       document.removeEventListener('click', this.closeDropdown)
-  //     })
-  //   }
-  // }
 
   render() {
     const { programId, course, history, deleteCourse } = this.props
@@ -72,17 +63,6 @@ class CoursePage extends Component {
               >
                 Delete
               </Button>
-              {/* <Dropdown
-                visible={ this.state.showDropdown }
-                handleOpen={ this.openDropdown }
-              >
-                <FiMoreVertical />
-                <Dropdown.Menu ref={ (element) => this.dropdownMenu = element }>
-                  <Dropdown.Item onClick={ () => console.log('test') }>Hello</Dropdown.Item>
-                  <Dropdown.Item>There</Dropdown.Item>
-                  <Dropdown.Item>Beeeeeeeeeeech</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown> */}
               <Modal
                 showModal={ this.state.showModal }
                 handleClose={ this.closeModal }
@@ -137,4 +117,9 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps, { deleteCourse })(CoursePage)
+const mapDispatchToProps = {
+  deleteCourse,
+  fetchPrograms
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursePage)

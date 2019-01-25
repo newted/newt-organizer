@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+// Components
+import Dropdown from '../../components/Dropdown'
+// API
+import { deleteAssignment } from '../../actions/assignments'
 // Styling
-import styles from './Table.module.css'
+import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
 
-class Table extends Component {
-  showHideDropdown(objectId) {
-    return this.props.dropdownVisible[objectId]
-      ? [styles.menu, styles.displayBlock].join(' ')
-      : [styles.menu, styles.displayNone].join(' ')
-  }
-
+class AssignmentTable extends Component {
   renderTableHeader() {
     const { fieldsObj } = this.props
 
@@ -23,9 +22,15 @@ class Table extends Component {
   }
 
   renderTableBody() {
-    const { data, fieldsObj } = this.props
+    const {
+      data: { programId, courseId, assignments },
+      fieldsObj,
+      history,
+      deleteAssignment
+    } = this.props
 
-    return _.map(data, object => {
+    return _.map(assignments, object => {
+      // console.log(object)
       return (
         // A table row for each object (assignment, etc.)
         <tr key={ object._id }>
@@ -47,25 +52,25 @@ class Table extends Component {
           }
           {/* Options icon */}
           <td className={ styles.options }>
-            <div
-              className={ styles.dropdown }
-              onClick={ (event) =>
+            <Dropdown
+              visible={ this.props.dropdownVisible[object._id] }
+              handleOpen={ (event) =>
                 this.props.handleOpenDropdown(object._id, event)
               }
             >
               <FiMoreVertical />
-              <div
-                className={ this.showHideDropdown(object._id) }
+              <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
-                <div
-                  className={ styles.item }
-                  onClick={ () => console.log(object.name) }
+                <Dropdown.Item
+                  onClick={
+                    () => deleteAssignment(programId, courseId, object._id, history)
+                  }
                 >
                   Delete
-                </div>
-              </div>
-            </div>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </td>
         </tr>
       )
@@ -73,11 +78,11 @@ class Table extends Component {
   }
 
   render() {
-    const { data, name } = this.props
+    const { data: { assignments }, name } = this.props
 
     return (
       <div className={ styles.tableContainer }>
-        { data.length === 0
+        { assignments.length === 0
           ? <div>{ `There are no ${name}.` }</div>
           : <table>
               <thead>
@@ -120,4 +125,4 @@ function mapStateToProps(state, { data, fields, name }) {
   }
 }
 
-export default connect(mapStateToProps)(Table)
+export default connect(mapStateToProps, { deleteAssignment })(withRouter(AssignmentTable))

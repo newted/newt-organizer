@@ -37,13 +37,18 @@ class Dropdown extends Component {
         className={ this.showHideClassName() }
         ref={ (element) => menu.ref(element) }
       >
-        { this.renderDropdownItems(menu.props.children) }
+        {
+          menu.props.children.length > 0
+          ? this.renderDropdownItems(menu.props.children)
+          // Pass as array if only one child
+          : this.renderDropdownItems([menu.props.children])
+        }
+
       </div>
     )
   }
 
   render() {
-    console.log(this.props.children[0])
     return (
       <div
         className={ styles.dropdown }
