@@ -92,7 +92,6 @@ class CourseAssignmentList extends Component {
           name='assignments'
           dropdownVisible={ this.state.showDropdown }
           handleOpenDropdown={ this.openDropdown }
-          handleCloseDropdown={ this.closeDropdown }
           setDropdownMenu={ this.setDropdownMenu }
         />
       </div>
