@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 import assignmentFields from './assignmentFields'
@@ -11,6 +12,14 @@ import DateField from '../../components/DateField'
 import styles from './AddAssignmentForm.module.css'
 
 class AddAssignmentForm extends Component {
+  static propTypes = {
+    programId: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,  // React form submit func.
+    history: PropTypes.object
+  }
+
   renderFields() {
     return _.map(assignmentFields, ({ label, name, required }) => {
       return <ReduxField

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
@@ -12,6 +13,22 @@ import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
 
 class AssignmentTable extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      programId: PropTypes.string.isRequired,
+      courseId: PropTypes.string.isRequired,
+      assignments: PropTypes.arrayOf(PropTypes.object).isRequired
+    }),
+    deleteAssignment: PropTypes.func.isRequired,
+    dropdownVisible: PropTypes.object.isRequired,
+    fields: PropTypes.arrayOf(PropTypes.object),
+    fieldsObj: PropTypes.object.isRequired,
+    handleOpenDropdown: PropTypes.func.isRequired,
+    name: PropTypes.string,
+    setDropdownMenu: PropTypes.func.isRequired,
+    history: PropTypes.object,
+  }
+
   renderTableHeader() {
     const { fieldsObj } = this.props
 

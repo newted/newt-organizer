@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
@@ -9,6 +10,17 @@ import { submitAssignment } from '../../actions/assignments'
 import styles from './AddAssignment.module.css'
 
 class AddAssignment extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    programId: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
+    submitAssignment: PropTypes.func.isRequired,
+    // Connect stuff
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {

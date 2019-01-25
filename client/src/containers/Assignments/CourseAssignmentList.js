@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import assignmentFields from './assignmentFields'
 // Components
@@ -21,6 +22,12 @@ const initializeDropdownMenuState = (assignments) => {
 }
 
 class CourseAssignmentList extends Component {
+  static propTypes = {
+    programId: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
+    assignments: PropTypes.arrayOf(PropTypes.object).isRequired
+  }
+
   state = {
     showDropdown: initializeDropdownMenuState(this.props.assignments),
     dropdownMenu: null,
