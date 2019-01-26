@@ -15,7 +15,7 @@ const initializeDropdownMenuState = (assignments) => {
   const dropdownMenuState = {}
 
   assignments.map(assignment => {
-    return dropdownMenuState[assignment._id] = null
+    return dropdownMenuState[assignment._id] = false
   })
 
   return dropdownMenuState

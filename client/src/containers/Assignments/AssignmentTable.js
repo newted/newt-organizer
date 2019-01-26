@@ -20,7 +20,7 @@ class AssignmentTable extends Component {
       assignments: PropTypes.arrayOf(PropTypes.object).isRequired
     }),
     deleteAssignment: PropTypes.func.isRequired,
-    dropdownVisible: PropTypes.object.isRequired,
+    dropdownVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
     fields: PropTypes.arrayOf(PropTypes.object),
     fieldsObj: PropTypes.object.isRequired,
     handleOpenDropdown: PropTypes.func.isRequired,
