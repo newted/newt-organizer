@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
@@ -13,6 +14,25 @@ import ProgramCourseList from '../Courses/ProgramCourseList'
 import styles from './ProgramPage.module.css'
 
 class ProgramPage extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    program: PropTypes.shape({
+      courses: PropTypes.array,
+      dateCreated: PropTypes.string,
+      institution: PropTypes.string,
+      name: PropTypes.string,
+      shortname: PropTypes.string,
+      _id: PropTypes.string,
+      _user: PropTypes.string
+    }),
+    deleteProgram: PropTypes.func.isRequired,
+    fetchPrograms: PropTypes.func,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   state = {
     showModal: false
   }

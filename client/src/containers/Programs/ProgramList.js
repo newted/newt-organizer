@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 // API
 import { fetchPrograms } from '../../actions/programs'
 // Components
@@ -12,6 +13,18 @@ import styles from './ProgramList.module.css'
 import { UniversityIcon } from '../../utils/icons'
 
 class ProgramList extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    programs: PropTypes.shape({
+      items: PropTypes.array
+    }),
+    fetchPrograms: PropTypes.func,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   componentDidMount() {
     this.props.fetchPrograms()
   }
