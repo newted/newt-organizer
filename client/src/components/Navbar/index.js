@@ -55,7 +55,7 @@ class Navbar extends Component {
     return (
       <nav className={ `${styles.navbarContainer} ${this.renderNavbarColor()}` }>
         <div className={ styles.navbar }>
-          <div>Navbar</div>
+          <div>Newt</div>
           { this.renderButtons() }
         </div>
       </nav>

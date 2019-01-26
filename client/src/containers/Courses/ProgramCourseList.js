@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
@@ -10,6 +11,12 @@ import styles from './ProgramCourseList.module.css'
 import { BookIcon } from '../../utils/icons'
 
 class ProgramCourseList extends Component {
+  static propTypes = {
+    programId: PropTypes.string.isRequired,
+    courses: PropTypes.array,
+    dispatch: PropTypes.func
+  }
+
   renderCards() {
     const { programId, courses } = this.props
 

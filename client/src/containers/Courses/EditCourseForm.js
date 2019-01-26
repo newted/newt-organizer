@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
@@ -11,12 +12,27 @@ import Field from '../../components/Field'
 import styles from './EditCourseForm.module.css'
 
 
-const EditCourseForm = ({ info, onSubmit }) => {
-  if (!info) {
+const EditCourseForm = ({ course, onSubmit }) => {
+  if (!course) {
     return <LoadingBar />
   }
 
   class EditCourseFormComponent extends Component {
+    static propTypes = {
+      course: PropTypes.shape({
+        announcements: PropTypes.array,
+        assignments: PropTypes.array,
+        dateCreated: PropTypes.string,
+        name: PropTypes.string,
+        quizzes: PropTypes.array,
+        shortname: PropTypes.string,
+        _id: PropTypes.string
+      }),
+      handleSubmit: PropTypes.func.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+      history: PropTypes.object
+    }
+
     renderFields() {
       return _.map(courseFields, ({ label, name, required }) => {
         return <ReduxField
@@ -37,7 +53,7 @@ const EditCourseForm = ({ info, onSubmit }) => {
         <div className={ styles.formContainer }>
           <Form
             onSubmit={ handleSubmit(values =>
-              onSubmit(info.programId, info._id, values, history)
+              onSubmit(course.programId, course._id, values, history)
             ) }
           >
             { this.renderFields() }
@@ -56,12 +72,12 @@ const EditCourseForm = ({ info, onSubmit }) => {
   EditCourseFormComponent = reduxForm({
     form: 'editCourseForm',
     initialValues: {
-      name: info.name,
-      shortname: info.shortname
+      name: course.name,
+      shortname: course.shortname
     }
   })(withRouter(EditCourseFormComponent))
 
-  return <EditCourseFormComponent info={ info } onSubmit={ onSubmit }/>
+  return <EditCourseFormComponent course={ course } onSubmit={ onSubmit }/>
 }
 
 export default EditCourseForm

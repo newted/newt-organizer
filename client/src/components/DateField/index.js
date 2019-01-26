@@ -1,10 +1,33 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+// Components
 import DatePicker from 'react-datepicker'
 // Styling
 import styles from './DateField.module.css'
 import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 
 class DateField extends Component {
+  static propTypes = {
+    input: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      onBlur: PropTypes.func,
+      onChange: PropTypes.func,
+      onDragStart: PropTypes.func,
+      onDrop: PropTypes.func,
+      onFocus: PropTypes.func,
+      value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+      ]).isRequired
+    }),
+    label: PropTypes.string.isRequired,
+    required: PropTypes.bool.isRequired,
+    meta: PropTypes.shape({
+      error: PropTypes.string,
+      touched: PropTypes.bool
+    })
+  }
+
   // So Redux form *sometimes* passes input.value as a string and
   // sometimes as an object. Datepicker crashes it its selected prop is given
   // a string, only works if it's a Date object. So this function ensures

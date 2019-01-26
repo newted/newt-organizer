@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
@@ -10,12 +11,27 @@ import Field from '../../components/Field'
 // Styling
 import styles from './EditProgramForm.module.css'
 
-const EditProgramForm = ({ info, onSubmit }) => {
-  if (!info) {
+const EditProgramForm = ({ program, onSubmit }) => {
+  if (!program) {
     return <LoadingBar />
   }
 
   class EditProgramFormComponent extends Component {
+    static propTypes = {
+      program: PropTypes.shape({
+        courses: PropTypes.array,
+        dateCreated: PropTypes.string,
+        institution: PropTypes.string,
+        name: PropTypes.string,
+        shortname: PropTypes.string,
+        _id: PropTypes.string,
+        _user: PropTypes.string
+      }),
+      handleSubmit: PropTypes.func.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+      history: PropTypes.object
+    }
+
     renderFields() {
       return _.map(programFields, ({ label, name, required }) => {
         return <ReduxField
@@ -36,7 +52,7 @@ const EditProgramForm = ({ info, onSubmit }) => {
         <div className={ styles.formContainer }>
           <Form
             onSubmit={ handleSubmit(values =>
-              onSubmit(info._id, values, history)
+              onSubmit(program._id, values, history)
             ) }
           >
             { this.renderFields() }
@@ -55,13 +71,13 @@ const EditProgramForm = ({ info, onSubmit }) => {
   EditProgramFormComponent = reduxForm({
     form: 'editProgramForm',
     initialValues: {
-      name: info.name,
-      shortname: info.shortname,
-      institution: info.institution
+      name: program.name,
+      shortname: program.shortname,
+      institution: program.institution
     }
   })(withRouter(EditProgramFormComponent))
 
-  return <EditProgramFormComponent info={ info } onSubmit={ onSubmit } />
+  return <EditProgramFormComponent program={ program } onSubmit={ onSubmit } />
 }
 
 export default EditProgramForm

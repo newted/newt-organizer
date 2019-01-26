@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
@@ -9,6 +10,15 @@ import { submitProgram } from '../../actions/programs'
 import styles from './AddProgram.module.css'
 
 class AddProgram extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    submitProgram: PropTypes.func.isRequired,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {

@@ -2,7 +2,7 @@ import { FETCH_PROGRAMS } from '../actions/programs'
 
 export default function (
   state = {
-    items: {}
+    items: []
   },
   action
 ) {

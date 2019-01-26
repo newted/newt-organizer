@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+// Components
 import Button from '../Button'
+// Styling
 import styles from './Modal.module.css'
+// Helpers
 import findByComponentType from '../../utils/findByComponentType'
 
 const Header = () => null
@@ -8,6 +12,12 @@ const Body = () => null
 const Footer = () => null
 
 class Modal extends Component {
+  static propTypes = {
+    showModal: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    children: PropTypes.arrayOf(PropTypes.object)
+  }
+
   showHideClassName() {
     const { showModal } = this.props
 
