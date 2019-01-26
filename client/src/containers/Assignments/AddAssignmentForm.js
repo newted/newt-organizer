@@ -15,8 +15,8 @@ class AddAssignmentForm extends Component {
   static propTypes = {
     programId: PropTypes.string.isRequired,
     courseId: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,  // React form submit func.
+    handleSubmit: PropTypes.func.isRequired,  // React form submit func.
+    onSubmit: PropTypes.func.isRequired,
     history: PropTypes.object
   }
 

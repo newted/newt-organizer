@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
@@ -9,16 +10,33 @@ import { fetchPrograms }  from '../../actions/programs'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
-// import Dropdown from '../../components/Dropdown'
 import CourseAssignmentList from '../Assignments/CourseAssignmentList'
 // Styling
 import styles from './CoursePage.module.css'
-// import { FiMoreVertical } from 'react-icons/fi'
 
 class CoursePage extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    programId: PropTypes.string.isRequired,
+    course: PropTypes.shape({
+      announcements: PropTypes.array,
+      assignments: PropTypes.array,
+      dateCreated: PropTypes.string,
+      name: PropTypes.string,
+      quizzes: PropTypes.array,
+      shortname: PropTypes.string,
+      _id: PropTypes.string
+    }),
+    deleteCourse: PropTypes.func.isRequired,
+    fetchPrograms: PropTypes.func,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   state = {
     showModal: false,
-    // showDropdown: false
   }
 
   componentDidMount() {

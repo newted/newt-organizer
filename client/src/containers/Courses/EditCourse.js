@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // API
@@ -10,6 +11,24 @@ import EditCourseForm from './EditCourseForm'
 import styles from './EditCourse.module.css'
 
 class EditCourse extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    course: PropTypes.shape({
+      announcements: PropTypes.array,
+      assignments: PropTypes.array,
+      dateCreated: PropTypes.string,
+      name: PropTypes.string,
+      quizzes: PropTypes.array,
+      shortname: PropTypes.string,
+      _id: PropTypes.string
+    }),
+    updateCourse: PropTypes.func.isRequired,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
@@ -23,7 +42,7 @@ class EditCourse extends Component {
             <h3>Edit Course</h3>
           </div>
           <EditCourseForm
-            info={ this.props.course }
+            course={ this.props.course }
             onSubmit={ this.props.updateCourse }
           />
         </div>

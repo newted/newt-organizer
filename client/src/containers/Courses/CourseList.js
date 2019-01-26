@@ -1,5 +1,6 @@
 /* This is the page that's rendered when you click on Courses on the Sidebar */
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'lodash'
@@ -10,6 +11,17 @@ import styles from './CourseList.module.css'
 import { BookIcon } from '../../utils/icons'
 
 class CourseList extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    programs: PropTypes.shape({
+      items: PropTypes.arrayOf(PropTypes.object)
+    }),
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   renderCards(programId, courses) {
     return _.map(courses, ({ _id, name }) => {
       return (
