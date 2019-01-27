@@ -43,7 +43,7 @@ module.exports = app => {
 
   // PUT request to edit assignment information
   app.put(
-    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
+    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId/edit",
     requireLogin,
     (req, res) => {
       const { programId, courseId, assignmentId } = req.params;

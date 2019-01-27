@@ -79,6 +79,9 @@ class AssignmentTable extends Component {
               <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
+                <Dropdown.Item>
+                  Edit
+                </Dropdown.Item>
                 <Dropdown.Item
                   onClick={
                     () => deleteAssignment(programId, courseId, object._id, history)
