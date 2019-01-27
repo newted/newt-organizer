@@ -41,6 +41,52 @@ module.exports = app => {
     }
   );
 
+  // PUT request to edit assignment information
+  app.put(
+    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
+    requireLogin,
+    (req, res) => {
+      const { programId, courseId, assignmentId } = req.params;
+
+      const { name, details, dateDue } = req.body;
+
+      // Mongoose does not support array filters out of the box, so need to run
+      // a custom query.
+      // API: https://docs.mongodb.com/manual/reference/operator/update/positional-filtered/#position-nested-arrays-filtered
+      // See: https://stackoverflow.com/questions/49597359/mongoose-find-and-update-in-nested-array
+      // and: https://stackoverflow.com/questions/48215167/node-js-mongoose-update-with-arrayfilters?rq=1
+      // Probably need to get rid of these multiple nested arrays because this
+      // is getting complicated
+      mongoose.connection.db.command({
+        update: Program.collection.name,
+        updates: [
+          {
+            q: {
+              _id: mongoose.Types.ObjectId(programId),
+              courses: {
+                $elemMatch: {
+                  _id: mongoose.Types.ObjectId(courseId),
+                  "assignments._id": mongoose.Types.ObjectId(assignmentId)
+                }
+              }
+            },
+            u: {
+              $set: {
+                "courses.$[outer].assignments.$[inner].name": name,
+                "courses.$[outer].assignments.$[inner].details": details,
+                "courses.$[outer].assignments.$[inner].dateDue": dateDue
+              }
+            },
+            arrayFilters: [
+              { "outer._id": mongoose.Types.ObjectId(courseId) },
+              { "inner._id": mongoose.Types.ObjectId(assignmentId) }
+            ]
+          }
+        ]
+      });
+    }
+  );
+
   // DELETE request to delete an assignment
   app.delete(
     "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
