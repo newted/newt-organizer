@@ -69,26 +69,22 @@ class CourseAssignmentList extends Component {
   closeDropdown = (event) => {
     const assignmentId = this.state.currentDropdownId
 
-    if (this._isMounted) {
-      if (!this.state.dropdownMenu.contains(event.target)) {
-        this.setState(prevState => ({
-          showDropdown: {
-            ...prevState.showDropdown,
-            [assignmentId]: false
-          },
-          currentDropdownId: null
-        }), () => {
-          document.removeEventListener('click', this.closeDropdown)
-        })
-      }
+    if (this._isMounted && !this.state.dropdownMenu.contains(event.target)) {
+      this.setState(prevState => ({
+        showDropdown: {
+          ...prevState.showDropdown,
+          [assignmentId]: false
+        },
+        currentDropdownId: null
+      }), () => {
+        document.removeEventListener('click', this.closeDropdown)
+      })
     }
   }
 
   setDropdownMenu = (event) => {
-    if (this._isMounted) {
-      if (event && !this.state.dropdownMenu) {
-        this.setState({ dropdownMenu: event })
-      }
+    if (this._isMounted && event && !this.state.dropdownMenu) {
+      this.setState({ dropdownMenu: event })
     }
   }
 

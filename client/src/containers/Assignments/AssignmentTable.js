@@ -81,7 +81,7 @@ class AssignmentTable extends Component {
               >
                 <Dropdown.Item
                   onClick={ () =>
-                    this.props.history.push(`/programs/${programId}/courses/${courseId}/assignments/${object._id}/edit`)
+                    history.push(`/programs/${programId}/courses/${courseId}/assignments/${object._id}/edit`)
                   }
                 >
                   Edit
