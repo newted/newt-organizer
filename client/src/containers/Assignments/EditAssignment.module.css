@@ -1,0 +1,14 @@
+.mainContainer {
+  composes: mainContainer from '../../styles/shared.css';
+}
+
+.contentContainer {
+  composes: contentContainer from '../../styles/shared.css';
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}

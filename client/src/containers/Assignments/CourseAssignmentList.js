@@ -34,41 +34,61 @@ class CourseAssignmentList extends Component {
     currentDropdownId: null // Passed to closeDropdown function so it knows
   }                         // which table row dropdown to close.
 
-  openDropdown = (assignmentId, event) => {
-    // console.log('Opening dropdown...')
-    this.setState(prevState => ({
-      showDropdown: {
-        ...prevState.showDropdown,
-        [assignmentId]: true
-      },
-      currentDropdownId: assignmentId
-    }), () => {
-      // console.log('Adding event listener')
-      document.addEventListener('click', this.closeDropdown)
-    })
+  // When clicking the Edit button, this component unmounts and when setState
+  // is called to set specific showDropdown to false and currentDropdownId to
+  // null, React throws an error:
+  // "Warning: Can’t call setState (or forceUpdate) on an unmounted component"
+  // To evade this (at least that's what this looks like), the _isMounted
+  // property is created to ensure setState is only run if the component is
+  // mounted.
+  // See: https://www.youtube.com/watch?v=8BNdxFzMeVg
+  _isMounted = false
+
+  componentDidMount() {
+    this._isMounted = true
   }
 
-  closeDropdown = (event) => {
-    // console.log('Closing dropdown...')
-    const assignmentId = this.state.currentDropdownId
+  componentWillUnmount() {
+    this._isMounted = false
+  }
 
-    if (!this.state.dropdownMenu.contains(event.target)) {
+  openDropdown = (assignmentId, event) => {
+    if (this._isMounted) {
       this.setState(prevState => ({
         showDropdown: {
           ...prevState.showDropdown,
-          [assignmentId]: false
+          [assignmentId]: true
         },
-        currentDropdownId: null
+        currentDropdownId: assignmentId
       }), () => {
-        // console.log('Removing event listener')
-        document.removeEventListener('click', this.closeDropdown)
+        document.addEventListener('click', this.closeDropdown)
       })
     }
   }
 
+  closeDropdown = (event) => {
+    const assignmentId = this.state.currentDropdownId
+
+    if (this._isMounted) {
+      if (!this.state.dropdownMenu.contains(event.target)) {
+        this.setState(prevState => ({
+          showDropdown: {
+            ...prevState.showDropdown,
+            [assignmentId]: false
+          },
+          currentDropdownId: null
+        }), () => {
+          document.removeEventListener('click', this.closeDropdown)
+        })
+      }
+    }
+  }
+
   setDropdownMenu = (event) => {
-    if (event && !this.state.dropdownMenu) {
-      this.setState({ dropdownMenu: event })
+    if (this._isMounted) {
+      if (event && !this.state.dropdownMenu) {
+        this.setState({ dropdownMenu: event })
+      }
     }
   }
 

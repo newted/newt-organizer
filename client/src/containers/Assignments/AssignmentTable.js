@@ -79,7 +79,11 @@ class AssignmentTable extends Component {
               <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
-                <Dropdown.Item>
+                <Dropdown.Item
+                  onClick={ () =>
+                    this.props.history.push(`/programs/${programId}/courses/${courseId}/assignments/${object._id}/edit`)
+                  }
+                >
                   Edit
                 </Dropdown.Item>
                 <Dropdown.Item

@@ -21,6 +21,7 @@ import CoursePage from './Courses/CoursePage'
 import EditCourse from './Courses/EditCourse'
 import CourseList from './Courses/CourseList'
 import AddAssignment from './Assignments/AddAssignment'
+import EditAssignment from './Assignments/EditAssignment'
 // Styling
 import styles from './App.module.css'
 
@@ -37,6 +38,10 @@ const AppContainer = () => (
         <Route
           path='/programs/:programId/courses/:courseId/assignments/add'
           component={ AddAssignment }
+        />
+        <Route
+          path='/programs/:programId/courses/:courseId/assignments/:assignmentId/edit'
+          component={ EditAssignment }
         />
         <Route
           path='/programs/:programId/courses/:courseId/edit'
