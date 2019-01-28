@@ -50,11 +50,14 @@ export const updateAssignment = (
   history
 ) => async dispatch => {
   try {
-    await axios.put(
-      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/edit`
-    )
-
+    // The custom mongoose command doesn't return anything, so need to redirect
+    // first. Needs fixing...
     history.push(`/programs/${programId}/courses/${courseId}`)
+
+    await axios.put(
+      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/edit`,
+      values
+    )
 
     dispatch(putAssignment())
   } catch (err) {

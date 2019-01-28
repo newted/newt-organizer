@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+// API
+import { updateAssignment } from '../../actions/assignments'
 // Components
 import EditAssignmentForm from './EditAssignmentForm'
 // Styling
@@ -13,7 +15,9 @@ class EditAssignment extends Component {
     if(!this.props.auth) {
       return <Redirect to='/' />
     }
-    
+
+    console.log(this.props.updateAssignment)
+
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -22,6 +26,7 @@ class EditAssignment extends Component {
           </div>
           <EditAssignmentForm
             assignment={ this.props.assignment }
+            onSubmit={ this.props.updateAssignment }
           />
         </div>
       </div>
@@ -63,4 +68,4 @@ function mapStateToProps({ auth, programs }, props) {
   }
 }
 
-export default connect(mapStateToProps)(EditAssignment)
+export default connect(mapStateToProps, { updateAssignment })(EditAssignment)
