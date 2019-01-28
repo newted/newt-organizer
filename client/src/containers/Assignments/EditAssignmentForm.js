@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
 import moment from 'moment'
@@ -19,7 +20,19 @@ const EditAssignmentForm = ({ assignment, onSubmit }) => {
 
   class EditAssignmentFormComponent extends Component {
     static propTypes = {
-
+      assignment: PropTypes.shape({
+        programId: PropTypes.string,
+        courseId: PropTypes.string,
+        completed: PropTypes.bool,
+        inProgress: PropTypes.bool,
+        dateCreated: PropTypes.string,
+        dateDue: PropTypes.string,
+        name: PropTypes.string,
+        _id: PropTypes.string
+      }).isRequired,
+      handleSubmit: PropTypes.func.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+      history: PropTypes.object
     }
 
     renderFields() {

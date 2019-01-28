@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // API
@@ -10,13 +11,32 @@ import EditAssignmentForm from './EditAssignmentForm'
 import styles from './EditAssignment.module.css'
 
 class EditAssignment extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    assignment: PropTypes.shape({
+      programId: PropTypes.string,
+      courseId: PropTypes.string,
+      completed: PropTypes.bool,
+      inProgress: PropTypes.bool,
+      dateCreated: PropTypes.string,
+      dateDue: PropTypes.string,
+      name: PropTypes.string,
+      _id: PropTypes.string
+    }),
+    updateAssignment: PropTypes.func.isRequired,
+    // Connect props
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if(!this.props.auth) {
       return <Redirect to='/' />
     }
 
-    console.log(this.props.updateAssignment)
+    console.log(this.props)
 
     return (
       <div className={ styles.mainContainer }>
