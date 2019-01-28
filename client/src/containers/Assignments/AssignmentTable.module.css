@@ -9,3 +9,7 @@
   color: #666;
   width: 20px;
 }
+
+.deleteBtn {
+  composes: deleteBtn from '../../styles/shared.css';
+}

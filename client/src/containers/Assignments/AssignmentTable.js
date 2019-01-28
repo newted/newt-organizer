@@ -6,7 +6,10 @@ import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 // Components
 import Dropdown from '../../components/Dropdown'
+import Modal from '../../components/Modal'
+import Button from '../../components/Button'
 // API
+import { fetchPrograms }  from '../../actions/programs'
 import { deleteAssignment } from '../../actions/assignments'
 // Styling
 import styles from './AssignmentTable.module.css'
@@ -29,6 +32,45 @@ class AssignmentTable extends Component {
     history: PropTypes.object,
   }
 
+  state = {
+    showModal: false,
+    currentAssignment: null
+  }
+
+  openModal = (assignmentId) => {
+    this.setState({
+      showModal: true,
+      currentAssignment: assignmentId
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+      currentAssignment: null
+    })
+  }
+
+  // Deleting assignment 
+  delete = async (assignmentId) => {
+    const {
+      data: { programId, courseId },
+      history,
+      deleteAssignment,
+      fetchPrograms
+    } = this.props
+
+    await deleteAssignment(programId, courseId, assignmentId, history)
+
+    // Get new data after deleting assignment
+    await fetchPrograms()
+
+    this.setState({
+      showModal: false,
+      currentAssignment: null
+    })
+  }
+
   renderTableHeader() {
     const { fieldsObj } = this.props
 
@@ -42,8 +84,7 @@ class AssignmentTable extends Component {
     const {
       data: { programId, courseId, assignments },
       fieldsObj,
-      history,
-      deleteAssignment
+      history
     } = this.props
 
     return _.map(assignments, object => {
@@ -88,7 +129,7 @@ class AssignmentTable extends Component {
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={
-                    () => deleteAssignment(programId, courseId, object._id, history)
+                    () => this.openModal(object._id)
                   }
                 >
                   Delete
@@ -119,6 +160,25 @@ class AssignmentTable extends Component {
               </tbody>
             </table>
         }
+        <Modal
+          showModal={ this.state.showModal }
+          handleClose={ this.closeModal }
+        >
+          <Modal.Body>
+            Are you sure you want to delete this assignment?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              type='button'
+              additionalClass={ styles.deleteBtn }
+              onClick={
+                () => this.delete(this.state.currentAssignment)
+              }
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     )
   }
@@ -149,4 +209,12 @@ function mapStateToProps(state, { data, fields, name }) {
   }
 }
 
-export default connect(mapStateToProps, { deleteAssignment })(withRouter(AssignmentTable))
+const mapDispatchToProps = {
+  deleteAssignment,
+  fetchPrograms
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AssignmentTable))
