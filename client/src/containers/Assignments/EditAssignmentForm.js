@@ -8,6 +8,7 @@ import assignmentFields from './assignmentFields'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import Button from '../../components/Button'
 import Field from '../../components/Field'
+import DateField from '../../components/DateField'
 // Styling
 import styles from './EditAssignmentForm.module.css'
 
@@ -24,7 +25,7 @@ const EditAssignmentForm = ({ assignment, onSubmit }) => {
     renderFields() {
       return _.map(assignmentFields, ({ label, name, required }) => {
         return <ReduxField
-          component={ Field }
+          component={ name === 'dateDue' ? DateField : Field }
           type='text'
           label={ label }
           name={ name }
