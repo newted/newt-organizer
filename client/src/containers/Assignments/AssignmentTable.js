@@ -87,14 +87,20 @@ class AssignmentTable extends Component {
 
   renderTableHeader() {
     const { fields } = this.props
+    console.log(fields)
 
-    return _.map(
-      Object.keys(fields),
-      label => <th key={ label }>{ label }</th>
+    return _.map(Object.keys(fields), label => (
+        <th
+          className={ label === 'Status' ? styles.center : null }
+          key={ label }
+        >
+          { label }
+        </th>
+      )
     )
   }
 
-  // Render each data cell in the table in the format based on its type. 
+  // Render each data cell in the table in the format based on its type.
   renderTableCell(name, object) {
     switch(name) {
       case 'status':
@@ -124,7 +130,9 @@ class AssignmentTable extends Component {
 
               // Add data to each cell
               return (
-                <td key={ object._id + name }>
+                <td
+                  className={ name === 'status' ? styles.center : null }
+                  key={ object._id + name }>
                   { this.renderTableCell(name, object) }
                 </td>
               )
