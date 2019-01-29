@@ -18,7 +18,7 @@ import { FaCircle } from 'react-icons/fa'
 
 // Red, green or grey circle to indicate whether assignment is incomplete,
 // complete, or in progress
-const StatusIcon = ({ completed, inProgress }) => {
+const StatusIcon = (completed, inProgress) => {
   const size = 11
 
   if (inProgress) {
