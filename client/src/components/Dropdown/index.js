@@ -22,15 +22,22 @@ class Dropdown extends Component {
   }
 
   renderDropdownItems(items) {
-    return items.map(item => (
+    return items.map(item => {
+      const dividerClass = [styles.item, styles.divider].join(' ')
+
+      // If the <Dropdown.Item> is empty, create a divider
+      return (
         <div
-          className={ styles.item }
+          className={ item.props.children ? styles.item : dividerClass }
           onClick={ item.props.onClick } // Specific onClick property of the item
-          key={ item.props.children}>
+          key={ item.props.children
+            ? item.props.children
+            : 'divider' + Math.random() } // Unique key for divider
+        >
             { item.props.children }
         </div>
       )
-    )
+    })
   }
 
   renderDropdownMenu() {

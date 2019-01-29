@@ -16,6 +16,8 @@ import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
 import { FaCircle } from 'react-icons/fa'
 
+// Red, green or grey circle to indicate whether assignment is incomplete,
+// complete, or in progress
 const StatusIcon = ({ completed, inProgress }) => {
   const size = 11
 
@@ -87,7 +89,6 @@ class AssignmentTable extends Component {
 
   renderTableHeader() {
     const { fields } = this.props
-    console.log(fields)
 
     return _.map(Object.keys(fields), label => (
         <th
@@ -150,6 +151,9 @@ class AssignmentTable extends Component {
               <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
+                <Dropdown.Item>Mark as In Progress</Dropdown.Item>
+                <Dropdown.Item>Mark as Complete</Dropdown.Item>
+                <Dropdown.Item></Dropdown.Item>
                 <Dropdown.Item
                   onClick={ () =>
                     history.push(`/programs/${programId}/courses/${courseId}/assignments/${object._id}/edit`)
