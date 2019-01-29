@@ -3,6 +3,7 @@ import axios from 'axios'
 export const CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT'
 export const UPDATE_ASSIGNMENT = 'UPDATE_COURSE'
 export const DELETE_ASSIGNMENT = 'DELETE_ASSIGNMENT'
+export const MARK_ASSIGNMENT_COMPLETE = 'MARK_ASSIGNMENT_COMPLETE'
 
 const createAssignment = () => {
   return {
@@ -19,6 +20,12 @@ const putAssignment = () => {
 const removeAssignment = () => {
   return {
     type: DELETE_ASSIGNMENT
+  }
+}
+
+const markAsComplete = () => {
+  return {
+    type: MARK_ASSIGNMENT_COMPLETE
   }
 }
 
@@ -81,5 +88,24 @@ export const deleteAssignment = (
     dispatch(removeAssignment())
   } catch (err) {
     console.log("Error while deleting the assignment", err);
+  }
+}
+
+export const completeAssignment = (
+  programId,
+  courseId,
+  assignmentId,
+  history
+) => async dispatch => {
+  try {
+    history.push(`/programs/${programId}/courses/${courseId}`)
+
+    await axios.put(
+      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/complete`
+    )
+
+    dispatch(markAsComplete())
+  } catch (err) {
+    console.log("Error while marking assignment as complete", err)
   }
 }
