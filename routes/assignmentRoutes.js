@@ -87,6 +87,41 @@ module.exports = app => {
     }
   );
 
+  // PUT request to mark an assignment as complete
+  app.put(
+    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId/complete",
+    requireLogin,
+    (req, res) => {
+      const { programId, courseId, assignmentId } = req.params;
+
+      mongoose.connection.db.command({
+        update: Program.collection.name,
+        updates: [
+          {
+            q: {
+              _id: mongoose.Types.ObjectId(programId),
+              courses: {
+                $elemMatch: {
+                  _id: mongoose.Types.ObjectId(courseId),
+                  "assignments._id": mongoose.Types.ObjectId(assignmentId)
+                }
+              }
+            },
+            u: {
+              $set: {
+                "courses.$[outer].assignments.$[inner].completed": true
+              }
+            },
+            arrayFilters: [
+              { "outer._id": mongoose.Types.ObjectId(courseId) },
+              { "inner._id": mongoose.Types.ObjectId(assignmentId) }
+            ]
+          }
+        ]
+      });
+    }
+  );
+
   // DELETE request to delete an assignment
   app.delete(
     "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
