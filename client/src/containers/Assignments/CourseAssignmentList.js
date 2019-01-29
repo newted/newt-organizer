@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import assignmentFields from './assignmentFields'
+import { assignmentTableFields } from './assignmentFields'
 // Components
 import Button from '../../components/Button'
 import AssignmentTable from './AssignmentTable'
@@ -110,7 +110,7 @@ class CourseAssignmentList extends Component {
           </Link>
         </div>
         <AssignmentTable
-          fields={ assignmentFields }
+          fields={ assignmentTableFields }
           data={ data }
           name='assignments'
           dropdownVisible={ this.state.showDropdown }

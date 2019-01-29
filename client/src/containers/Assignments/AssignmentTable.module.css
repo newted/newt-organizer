@@ -13,3 +13,7 @@
 .deleteBtn {
   composes: deleteBtn from '../../styles/shared.css';
 }
+
+.center {
+  text-align: center;
+}

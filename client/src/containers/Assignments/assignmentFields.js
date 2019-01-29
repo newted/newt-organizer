@@ -1,4 +1,4 @@
-export default [
+export const assignmentInputFields =  [
   {
     label: 'Name',
     name: 'name',
@@ -15,3 +15,10 @@ export default [
     required: true
   }
 ]
+
+export const assignmentTableFields = {
+  'Name': 'name',
+  'Details': 'details',
+  'Due Date': 'dateDue',
+  'Status': 'status'
+}

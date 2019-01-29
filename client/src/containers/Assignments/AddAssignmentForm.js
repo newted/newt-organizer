@@ -3,7 +3,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import { withRouter } from 'react-router-dom'
-import assignmentFields from './assignmentFields'
+import { assignmentInputFields } from './assignmentFields'
 // Components
 import Button from '../../components/Button'
 import Field from '../../components/Field'
@@ -21,7 +21,7 @@ class AddAssignmentForm extends Component {
   }
 
   renderFields() {
-    return _.map(assignmentFields, ({ label, name, required }) => {
+    return _.map(assignmentInputFields, ({ label, name, required }) => {
       return <ReduxField
         component={ name === 'dateDue' ? DateField : Field }
         type='text'
@@ -58,7 +58,7 @@ class AddAssignmentForm extends Component {
 function validate(values) {
   const errors = {}
 
-  _.each(assignmentFields, ({ name, required }) => {
+  _.each(assignmentInputFields, ({ name, required }) => {
     if(required && !values[name]) {
       errors[name] = 'You must provide a value.'
     }

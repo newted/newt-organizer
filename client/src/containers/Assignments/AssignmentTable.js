@@ -39,8 +39,7 @@ class AssignmentTable extends Component {
     }),
     deleteAssignment: PropTypes.func.isRequired,
     dropdownVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
-    fields: PropTypes.arrayOf(PropTypes.object),
-    fieldsObj: PropTypes.object.isRequired,
+    fields: PropTypes.object.isRequired,
     handleOpenDropdown: PropTypes.func.isRequired,
     name: PropTypes.string,
     setDropdownMenu: PropTypes.func.isRequired,
@@ -87,10 +86,10 @@ class AssignmentTable extends Component {
   }
 
   renderTableHeader() {
-    const { fieldsObj } = this.props
+    const { fields } = this.props
 
     return _.map(
-      Object.keys(fieldsObj),
+      Object.keys(fields),
       label => <th key={ label }>{ label }</th>
     )
   }
@@ -98,7 +97,7 @@ class AssignmentTable extends Component {
   renderTableBody() {
     const {
       data: { programId, courseId, assignments },
-      fieldsObj,
+      fields,
       history
     } = this.props
 
@@ -107,9 +106,17 @@ class AssignmentTable extends Component {
         // A table row for each object (assignment, etc.)
         <tr key={ object._id }>
           {
-            _.map(Object.keys(fieldsObj), label => {
+            _.map(Object.keys(fields), label => {
               // Getting the object key so that info can be accessed
-              const name = fieldsObj[label]
+              const name = fields[label]
+
+              if (name === 'status') {
+                return (
+                  <td key={ object._id + label }>
+                    { StatusIcon(object.completed, object.inProgress) }
+                  </td>
+                )
+              }
 
               // A table data field for each table header
               return (
@@ -122,10 +129,6 @@ class AssignmentTable extends Component {
               )
             })
           }
-          {/* Icon to show assignment status */}
-          <td>
-            { StatusIcon(object.completed, object.inProgress) }
-          </td>
           {/* Options icon */}
           <td className={ styles.options }>
             <Dropdown
@@ -202,27 +205,10 @@ class AssignmentTable extends Component {
   }
 }
 
-/* This function turns the fields array passed in as props into an object
-   of type [label]: [name]
-   The label is used to render the table headers
-   The name is used as the key to access that particular piece of information
-   from the data object also passed as a prop */
-function fieldsArrayToObject(fieldsArray) {
-  const fieldsObj = {}
-
-  fieldsArray.map(({ label, name }) => {
-    return fieldsObj[label] = name
-  })
-
-  return fieldsObj
-}
-
 function mapStateToProps(state, { data, fields, name }) {
-  const fieldsObj = fieldsArrayToObject(fields)
-
   return {
     data,
-    fieldsObj,
+    fields,
     name
   }
 }

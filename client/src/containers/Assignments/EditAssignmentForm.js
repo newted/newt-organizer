@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
 import moment from 'moment'
-import assignmentFields from './assignmentFields'
+import { assignmentInputFields } from './assignmentFields'
 // Components
 import { reduxForm, Form, Field as ReduxField } from 'redux-form'
 import Button from '../../components/Button'
@@ -36,7 +36,7 @@ const EditAssignmentForm = ({ assignment, onSubmit }) => {
     }
 
     renderFields() {
-      return _.map(assignmentFields, ({ label, name, required }) => {
+      return _.map(assignmentInputFields, ({ label, name, required }) => {
         return <ReduxField
           component={ name === 'dateDue' ? DateField : Field }
           type='text'
