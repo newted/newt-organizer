@@ -14,6 +14,21 @@ import { deleteAssignment } from '../../actions/assignments'
 // Styling
 import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
+import { FaCircle } from 'react-icons/fa'
+
+const StatusIcon = ({ completed, inProgress }) => {
+  const size = 11
+
+  if (inProgress) {
+    return <FaCircle color='#ccc' size={ size } />
+  }
+
+  if (completed) {
+    return <FaCircle color='#33ce57' size={ size } />
+  } else {
+    return <FaCircle color='#dc3545' size={ size } />
+  }
+}
 
 class AssignmentTable extends Component {
   static propTypes = {
@@ -51,7 +66,7 @@ class AssignmentTable extends Component {
     })
   }
 
-  // Deleting assignment 
+  // Deleting assignment
   delete = async (assignmentId) => {
     const {
       data: { programId, courseId },
@@ -88,7 +103,6 @@ class AssignmentTable extends Component {
     } = this.props
 
     return _.map(assignments, object => {
-      // console.log(object)
       return (
         // A table row for each object (assignment, etc.)
         <tr key={ object._id }>
@@ -108,6 +122,10 @@ class AssignmentTable extends Component {
               )
             })
           }
+          {/* Icon to show assignment status */}
+          <td>
+            { StatusIcon(object.completed, object.inProgress) }
+          </td>
           {/* Options icon */}
           <td className={ styles.options }>
             <Dropdown
