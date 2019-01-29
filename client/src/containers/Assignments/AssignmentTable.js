@@ -10,7 +10,7 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 // API
 import { fetchPrograms }  from '../../actions/programs'
-import { deleteAssignment } from '../../actions/assignments'
+import { deleteAssignment, completeAssignment } from '../../actions/assignments'
 // Styling
 import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
@@ -87,6 +87,20 @@ class AssignmentTable extends Component {
     })
   }
 
+  // Marking the assignment as complete
+  complete = (assignmentId) => {
+    const {
+      data: { programId, courseId },
+      history,
+      completeAssignment,
+      fetchPrograms
+    } = this.props
+
+    completeAssignment(programId, courseId, assignmentId, history)
+
+    fetchPrograms()
+  }
+
   renderTableHeader() {
     const { fields } = this.props
 
@@ -152,7 +166,11 @@ class AssignmentTable extends Component {
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
                 <Dropdown.Item>Mark as In Progress</Dropdown.Item>
-                <Dropdown.Item>Mark as Complete</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={ () => this.complete(object._id) }
+                >
+                  Mark as Complete
+                </Dropdown.Item>
                 <Dropdown.Item></Dropdown.Item>
                 <Dropdown.Item
                   onClick={ () =>
@@ -228,7 +246,8 @@ function mapStateToProps(state, { data, fields, name }) {
 
 const mapDispatchToProps = {
   deleteAssignment,
-  fetchPrograms
+  completeAssignment,
+  fetchPrograms,
 }
 
 export default connect(
