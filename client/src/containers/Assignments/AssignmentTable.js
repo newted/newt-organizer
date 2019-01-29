@@ -94,6 +94,18 @@ class AssignmentTable extends Component {
     )
   }
 
+  // Render each data cell in the table in the format based on its type. 
+  renderTableCell(name, object) {
+    switch(name) {
+      case 'status':
+        return StatusIcon(object.completed, object.inProgress)
+      case 'dateDue':
+        return object[name] && moment(object[name]).format('ddd, MMM Do')
+      default:
+        return object[name]
+      }
+  }
+
   renderTableBody() {
     const {
       data: { programId, courseId, assignments },
@@ -110,21 +122,10 @@ class AssignmentTable extends Component {
               // Getting the object key so that info can be accessed
               const name = fields[label]
 
-              if (name === 'status') {
-                return (
-                  <td key={ object._id + label }>
-                    { StatusIcon(object.completed, object.inProgress) }
-                  </td>
-                )
-              }
-
-              // A table data field for each table header
+              // Add data to each cell
               return (
-                <td key={ object._id + label }>
-                  { name === 'dateDue'
-                    ? object[name] && moment(object[name]).format('ddd, MMM Do')
-                    : object[name]
-                  }
+                <td key={ object._id + name }>
+                  { this.renderTableCell(name, object) }
                 </td>
               )
             })
