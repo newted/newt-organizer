@@ -10,7 +10,11 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 // API
 import { fetchPrograms }  from '../../actions/programs'
-import { deleteAssignment, completeAssignment } from '../../actions/assignments'
+import {
+  deleteAssignment,
+  completeAssignment,
+  markAssignmentAsInProgress
+} from '../../actions/assignments'
 // Styling
 import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
@@ -101,6 +105,20 @@ class AssignmentTable extends Component {
     fetchPrograms()
   }
 
+  // Marking an assignment as in progress
+  inProgress = (assignmentId) => {
+    const {
+      data: { programId, courseId },
+      history,
+      markAssignmentAsInProgress,
+      fetchPrograms
+    } = this.props
+
+    markAssignmentAsInProgress(programId, courseId, assignmentId, history)
+
+    fetchPrograms()
+  }
+
   renderTableHeader() {
     const { fields } = this.props
 
@@ -165,7 +183,11 @@ class AssignmentTable extends Component {
               <Dropdown.Menu
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
-                <Dropdown.Item>Mark as In Progress</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={ () => this.inProgress(object._id) }
+                >
+                  Mark as In Progress
+                </Dropdown.Item>
                 <Dropdown.Item
                   onClick={ () => this.complete(object._id) }
                 >
@@ -247,6 +269,7 @@ function mapStateToProps(state, { data, fields, name }) {
 const mapDispatchToProps = {
   deleteAssignment,
   completeAssignment,
+  markAssignmentAsInProgress,
   fetchPrograms,
 }
 
