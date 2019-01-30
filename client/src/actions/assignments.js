@@ -4,6 +4,7 @@ export const CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT'
 export const UPDATE_ASSIGNMENT = 'UPDATE_COURSE'
 export const DELETE_ASSIGNMENT = 'DELETE_ASSIGNMENT'
 export const MARK_ASSIGNMENT_COMPLETE = 'MARK_ASSIGNMENT_COMPLETE'
+export const MARK_ASSIGNMENT_IN_PROGRESS = 'MARK_ASSIGNMENT_IN_PROGRESS'
 
 const createAssignment = () => {
   return {
@@ -26,6 +27,12 @@ const removeAssignment = () => {
 const markAsComplete = () => {
   return {
     type: MARK_ASSIGNMENT_COMPLETE
+  }
+}
+
+const markAsInProgress = () => {
+  return {
+    type: MARK_ASSIGNMENT_IN_PROGRESS
   }
 }
 
@@ -107,5 +114,24 @@ export const completeAssignment = (
     dispatch(markAsComplete())
   } catch (err) {
     console.log("Error while marking assignment as complete", err)
+  }
+}
+
+export const markAssignmentAsInProgress = (
+  programId,
+  courseId,
+  assignmentId,
+  history
+) => async dispatch => {
+  try {
+    history.push(`/programs/${programId}/courses/${courseId}`)
+
+    await axios.put(
+      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/progress`
+    )
+
+    dispatch(markAsInProgress())
+  } catch (err) {
+    console.log("Error while marking assignment as in progress", err)
   }
 }
