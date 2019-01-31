@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
 const Program = mongoose.model("programs");
+const Course = mongoose.model("courses");
 
 module.exports = app => {
   // GET request to receive a list of courses for given program
@@ -20,34 +21,47 @@ module.exports = app => {
   });
 
   // POST request to create a course
-  app.post("/api/programs/:id/course", requireLogin, async (req, res) => {
-    const id = req.params.id;
+  app.post(
+    "/api/programs/:programId/course",
+    requireLogin,
+    async (req, res) => {
+      const { programId } = req.params;
 
-    // Get information from request body
-    const { name, shortname } = req.body;
+      // Get information from request body
+      const { name, shortname } = req.body;
 
-    const course = {
-      name,
-      shortname,
-      dateCreated: Date.now()
-    };
+      const course = new Course({
+        name,
+        shortname,
+        dateCreated: Date.now()
+      });
 
-    Program.findByIdAndUpdate(
-      id,
-      {
-        $push: {
-          courses: course
-        }
-      },
-      (error, program) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(program);
-        }
+      try {
+        await course.save();
+
+        Program.findByIdAndUpdate(
+          programId,
+          {
+            $push: {
+              courses: course._id
+            }
+          },
+          {
+            new: true
+          },
+          (error, program) => {
+            if (error) {
+              res.send(error);
+            } else {
+              res.send(program);
+            }
+          }
+        );
+      } catch (err) {
+        res.status(422).send(error);
       }
-    );
-  });
+    }
+  );
 
   // PUT request to edit information about a course in a program
   app.put(

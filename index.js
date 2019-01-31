@@ -8,6 +8,7 @@ const keys = require("./config/keys");
 // Require models
 require("./models/User");
 require("./models/Program");
+require("./models/Course");
 
 // Require passport (authentication)
 require("./services/passport");
