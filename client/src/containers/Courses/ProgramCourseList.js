@@ -66,6 +66,7 @@ function mapStateToProps({ programs, courses }, { programId }) {
     courseList.map(courseId => {
       if (courses.items[courseId]) {
         programCourses[courseId] = courses.items[courseId]
+        return
       }
     })
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -113,19 +112,11 @@ class CoursePage extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }, props) {
+function mapStateToProps({ auth, programs, courses }, props) {
   const { programId, courseId } = props.match.params
 
-  const program = _.filter(
-    programs.items,
-    program => program._id === programId
-  )[0]
-
-  const course = program
-    ? _.filter(
-        program.courses,
-        course => course._id === courseId
-      )[0]
+  const course = courses.items
+    ? courses.items[courseId]
     : null
 
   return {
