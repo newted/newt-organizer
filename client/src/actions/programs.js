@@ -20,9 +20,10 @@ const getPrograms = (payload) => {
   }
 }
 
-const putProgram = () => {
+const putProgram = (payload) => {
   return {
-    type: UPDATE_PROGRAM
+    type: UPDATE_PROGRAM,
+    payload
   }
 }
 
@@ -61,11 +62,12 @@ export const fetchPrograms = () => async dispatch => {
 
 export const updateProgram = (programId, values, history) => async dispatch => {
   try {
-    await axios.put(`/api/programs/${programId}/edit`, values)
+    // Request returns updated program
+    const res = await axios.put(`/api/programs/${programId}/edit`, values)
+
+    dispatch(putProgram(res.data))
 
     history.push('/programs')
-
-    dispatch(putProgram())
   } catch (err) {
     console.log("Error while updating program.")
   }

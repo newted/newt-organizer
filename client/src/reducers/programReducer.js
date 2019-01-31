@@ -1,4 +1,8 @@
-import { CREATE_PROGRAM, FETCH_PROGRAMS } from '../actions/programs'
+import {
+  CREATE_PROGRAM,
+  FETCH_PROGRAMS,
+  UPDATE_PROGRAM
+} from '../actions/programs'
 import { programsArrayToObject } from '../utils/reducerHelpers'
 
 export default function (
@@ -12,6 +16,7 @@ export default function (
       return {
         ...state,
         items: {
+          ...state.items,
           [action.payload._id]: action.payload
         }
       }
@@ -19,6 +24,14 @@ export default function (
       return {
         ...state,
         items: programsArrayToObject(action.payload)
+      }
+    case UPDATE_PROGRAM:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload._id]: action.payload
+        }
       }
     default:
       return state
