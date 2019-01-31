@@ -19,9 +19,10 @@ const getCourses = (payload) => {
   }
 }
 
-const putCourse = () => {
+const putCourse = (payload) => {
   return {
-    type: UPDATE_COURSE
+    type: UPDATE_COURSE,
+    payload
   }
 }
 
@@ -58,11 +59,11 @@ export const updateCourse = (
   history
 ) => async dispatch => {
   try {
-    await axios.put(`/api/programs/${programId}/courses/${courseId}/edit`, values)
+    const res = await axios.put(`/api/courses/${courseId}/edit`, values)
+
+    dispatch(putCourse(res.data))
 
     history.push(`/programs/${programId}`)
-
-    dispatch(putCourse())
   } catch (err) {
     console.log("Error while updating course.")
   }

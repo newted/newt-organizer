@@ -1,4 +1,8 @@
-import { CREATE_COURSE, FETCH_COURSES } from '../actions/courses'
+import {
+  CREATE_COURSE,
+  FETCH_COURSES,
+  UPDATE_COURSE
+} from '../actions/courses'
 import { dataArrayToObject } from '../utils/reducerHelpers'
 
 export default function (
@@ -20,6 +24,14 @@ export default function (
       return {
         ...state,
         items: Object.assign({}, state.items, dataArrayToObject(action.payload))
+      }
+    case UPDATE_COURSE:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload._id]: action.payload
+        }
       }
     default:
       return state
