@@ -33,7 +33,7 @@ module.exports = app => {
       // Add program to database
       await program.save();
 
-      res.sendStatus(201);
+      res.send(program);
     } catch (error) {
       res.status(422).send(error);
     }
