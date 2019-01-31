@@ -7,6 +7,10 @@ const QuizSchema = require("./Quiz");
 const courseSchema = new Schema({
   name: String,
   shortname: String,
+  programId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Program'
+  },
   announcements: [AnnouncementSchema],
   assignments: [AssignmentSchema],
   quizzes: [QuizSchema],
