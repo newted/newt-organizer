@@ -63,12 +63,11 @@ function mapStateToProps({ programs, courses }, { programId }) {
   const programCourses = {}
 
   if (courseList) {
-    courseList.map(courseId => {
-      if (courses.items[courseId]) {
-        programCourses[courseId] = courses.items[courseId]
-        return
-      }
-    })
+    courseList.map(courseId =>
+      courses.items[courseId]
+      ? programCourses[courseId] = courses.items[courseId]
+      : null
+    )
   }
 
   return {
