@@ -1,9 +1,13 @@
 import {
   CREATE_COURSE,
   FETCH_COURSES,
-  UPDATE_COURSE
+  UPDATE_COURSE,
+  DELETE_COURSE
 } from '../actions/courses'
-import { dataArrayToObject } from '../utils/reducerHelpers'
+import {
+  dataArrayToObject,
+  deleteItemFromObject
+} from '../utils/reducerHelpers'
 
 export default function (
   state = {
@@ -32,6 +36,11 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
+      }
+    case DELETE_COURSE:
+      return {
+        ...state,
+        items: deleteItemFromObject(state.items, action.payload.courseId)
       }
     default:
       return state

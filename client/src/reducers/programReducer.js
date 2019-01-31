@@ -4,7 +4,7 @@ import {
   UPDATE_PROGRAM,
   DELETE_PROGRAM
 } from '../actions/programs'
-import { CREATE_COURSE } from '../actions/courses'
+import { CREATE_COURSE, DELETE_COURSE } from '../actions/courses'
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -54,6 +54,19 @@ export default function (
               ...state.items[action.payload.programId].courses,
               action.payload.course._id
             ]
+          }
+        }
+      }
+    case DELETE_COURSE:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload.programId]: {
+            ...state.items[action.payload.programId],
+            courses: state.items[action.payload.programId].courses.filter(
+                id => id !== action.payload.courseId
+              )
           }
         }
       }

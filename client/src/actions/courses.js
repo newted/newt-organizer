@@ -26,9 +26,10 @@ const putCourse = (payload) => {
   }
 }
 
-const removeCourse = () => {
+const removeCourse = (payload) => {
   return {
-    type: DELETE_COURSE
+    type: DELETE_COURSE,
+    payload
   }
 }
 
@@ -75,11 +76,17 @@ export const deleteCourse = (
   history
 ) => async dispatch => {
   try {
-    await axios.delete(`/api/programs/${programId}/courses/${courseId}`)
+    const payload = {
+      programId,
+      courseId
+    }
+
+    // Dispatching before request because it won't respond with data.
+    dispatch(removeCourse(payload))
+
+    await axios.delete(`/api/programs/${programId}/courses/${courseId}/delete`)
 
     history.push(`/programs/${programId}`)
-
-    dispatch(removeCourse())
   } catch (err) {
     console.log("Error while deleting the course.")
   }
