@@ -40,16 +40,26 @@ module.exports = app => {
   });
 
   // PUT request to update program information
-  app.put("/api/programs/:id/edit", requireLogin, (req, res) => {
-    const id = req.params.id;
+  app.put("/api/programs/:programId/edit", requireLogin, (req, res) => {
+    const { programId } = req.params;
 
-    Program.findByIdAndUpdate(id, { $set: req.body }, (error, program) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(program);
+    // Update program information and return updated program
+    Program.findByIdAndUpdate(
+      programId,
+      {
+        $set: req.body
+      },
+      {
+        new: true
+      },
+      (error, program) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.send(program);
+        }
       }
-    });
+    );
   });
 
   // DELETE requires to delete a program
