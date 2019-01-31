@@ -30,6 +30,7 @@ module.exports = app => {
       // Get information from request body
       const { name, shortname } = req.body;
 
+      // Create Course object
       const course = new Course({
         name,
         shortname,
@@ -37,8 +38,10 @@ module.exports = app => {
       });
 
       try {
+        // Save course to Courses collection
         await course.save();
 
+        // Find Program and add course Id to the courses array
         Program.findByIdAndUpdate(
           programId,
           {
@@ -64,35 +67,27 @@ module.exports = app => {
   );
 
   // PUT request to edit information about a course in a program
-  app.put(
-    "/api/programs/:programId/courses/:courseId/edit",
-    requireLogin,
-    async (req, res) => {
-      const { programId, courseId } = req.params;
+  app.put("/api/courses/:courseId/edit", requireLogin, async (req, res) => {
+    const { courseId } = req.params;
 
-      const { name, shortname } = req.body;
-
-      Program.findOneAndUpdate(
-        {
-          _id: programId,
-          "courses._id": courseId
-        },
-        {
-          $set: {
-            "courses.$.name": name,
-            "courses.$.shortname": shortname
-          }
-        },
-        (error, program) => {
-          if (error) {
-            res.send(error);
-          } else {
-            res.send(program);
-          }
+    // Find course and update information
+    Course.findByIdAndUpdate(
+      courseId,
+      {
+        $set: req.body
+      },
+      {
+        new: true
+      },
+      (error, course) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.send(course);
         }
-      );
-    }
-  );
+      }
+    );
+  });
 
   // DELETE request to delete course from a program
   app.delete(
