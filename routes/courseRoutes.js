@@ -91,19 +91,28 @@ module.exports = app => {
 
   // DELETE request to delete course from a program
   app.delete(
-    "/api/programs/:programId/courses/:courseId",
+    "/api/programs/:programId/courses/:courseId/delete",
     requireLogin,
     (req, res) => {
       const { programId, courseId } = req.params;
 
+      // Delete course from Courses collection
+      Course.findByIdAndDelete(courseId, (error, course) => {
+        if (error) {
+          res.send(error);
+        }
+      });
+
+      // Remove course id from courses array in its program
       Program.findByIdAndUpdate(
         programId,
         {
           $pull: {
-            courses: {
-              _id: courseId
-            }
+            courses: courseId
           }
+        },
+        {
+          new: true
         },
         (error, program) => {
           if (error) {
