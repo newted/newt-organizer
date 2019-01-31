@@ -16,7 +16,7 @@ class ProgramList extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     programs: PropTypes.shape({
-      items: PropTypes.array
+      items: PropTypes.object
     }),
     fetchPrograms: PropTypes.func,
     // Connect props

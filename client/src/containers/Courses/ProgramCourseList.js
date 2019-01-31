@@ -18,9 +18,9 @@ class ProgramCourseList extends Component {
   }
 
   renderCards() {
-    const { programId, courses } = this.props
+    const { programId, programCourses } = this.props
 
-    return _.map(courses, ({ _id, name }) => {
+    return _.map(programCourses, ({ _id, name }) => {
       return (
         <Card
           path={ `/programs/${programId}/courses/${_id}` }
@@ -54,17 +54,25 @@ class ProgramCourseList extends Component {
   }
 }
 
-function mapStateToProps({ programs }, { programId }) {
-  const program = _.filter(
-    programs.items,
-    program => program._id === programId
-  )[0]
+function mapStateToProps({ programs, courses }, { programId }) {
+  const program = programs.items[programId]
+  const courseList = program
+  ? program.courses
+  : null
 
-  const courses = program.courses
+  const programCourses = {}
+
+  if (courseList) {
+    courseList.map(courseId => {
+      if (courses.items[courseId]) {
+        programCourses[courseId] = courses.items[courseId]
+      }
+    })
+  }
 
   return {
     programId,
-    courses
+    programCourses
   }
 }
 
