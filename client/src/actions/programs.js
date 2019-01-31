@@ -27,9 +27,10 @@ const putProgram = (payload) => {
   }
 }
 
-const removeProgram = () => {
+const removeProgram = (payload) => {
   return {
-    type: DELETE_PROGRAM
+    type: DELETE_PROGRAM,
+    payload
   }
 }
 
@@ -75,11 +76,12 @@ export const updateProgram = (programId, values, history) => async dispatch => {
 
 export const deleteProgram = (programId, history) => async dispatch => {
   try {
+    // Dispatching before request because it won't respond with data.
+    dispatch(removeProgram(programId))
+
     await axios.delete(`/api/programs/${programId}`)
 
     history.push('/programs')
-
-    dispatch(removeProgram())
   } catch (err) {
     console.log("Error while deleting program.")
   }

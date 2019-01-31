@@ -1,9 +1,13 @@
 import {
   CREATE_PROGRAM,
   FETCH_PROGRAMS,
-  UPDATE_PROGRAM
+  UPDATE_PROGRAM,
+  DELETE_PROGRAM
 } from '../actions/programs'
-import { programsArrayToObject } from '../utils/reducerHelpers'
+import {
+  programsArrayToObject,
+  deleteItemFromObject
+} from '../utils/reducerHelpers'
 
 export default function (
   state = {
@@ -32,6 +36,11 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
+      }
+    case DELETE_PROGRAM:
+      return {
+        ...state,
+        items: deleteItemFromObject(state.items, action.payload)
       }
     default:
       return state
