@@ -112,7 +112,7 @@ class CoursePage extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs, courses }, props) {
+function mapStateToProps({ auth, courses }, props) {
   const { programId, courseId } = props.match.params
 
   const course = courses.items

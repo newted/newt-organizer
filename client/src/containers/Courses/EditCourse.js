@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -43,6 +42,7 @@ class EditCourse extends Component {
           </div>
           <EditCourseForm
             course={ this.props.course }
+            programId={ this.props.programId }
             onSubmit={ this.props.updateCourse }
           />
         </div>
@@ -51,27 +51,17 @@ class EditCourse extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }, props) {
+function mapStateToProps({ auth, courses }, props) {
   const { programId, courseId } = props.match.params
-  const program = _.filter(
-    programs.items,
-    program => program._id === programId
-  )[0]
 
-  const course = program
-    ? _.filter(
-        program.courses,
-        course => course._id === courseId
-      )[0]
+  const course = courses.items
+    ? courses.items[courseId]
     : null
-
-  if (course) {
-    course.programId = programId
-  }
 
   return {
     auth,
-    course
+    course,
+    programId
   }
 }
 

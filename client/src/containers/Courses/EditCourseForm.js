@@ -12,7 +12,7 @@ import Field from '../../components/Field'
 import styles from './EditCourseForm.module.css'
 
 
-const EditCourseForm = ({ course, onSubmit }) => {
+const EditCourseForm = ({ course, programId, onSubmit }) => {
   if (!course) {
     return <LoadingBar />
   }
@@ -53,7 +53,7 @@ const EditCourseForm = ({ course, onSubmit }) => {
         <div className={ styles.formContainer }>
           <Form
             onSubmit={ handleSubmit(values =>
-              onSubmit(course.programId, course._id, values, history)
+              onSubmit(programId, course._id, values, history)
             ) }
           >
             { this.renderFields() }
