@@ -46,6 +46,7 @@ module.exports = app => {
       const course = new Course({
         name,
         shortname,
+        programId,
         dateCreated: Date.now()
       });
 
