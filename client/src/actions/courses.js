@@ -4,9 +4,10 @@ export const CREATE_COURSE = 'CREATE_COURSE'
 export const UPDATE_COURSE = 'UPDATE_COURSE'
 export const DELETE_COURSE = 'DELETE_COURSE'
 
-const createCourse = () => {
+const createCourse = (payload) => {
   return {
-    type: CREATE_COURSE
+    type: CREATE_COURSE,
+    payload
   }
 }
 
@@ -23,12 +24,17 @@ const removeCourse = () => {
 }
 
 export const submitCourse = (programId, values, history) => async dispatch => {
-  await axios.post(`/api/programs/${programId}/course`, values)
+  const res = await axios.post(`/api/programs/${programId}/course`, values)
+
+  const payload = {
+    course: res.data,
+    programId
+  }
+
+  dispatch(createCourse(payload))
 
   // Redirect to the program page
   history.push(`/programs/${programId}`)
-
-  dispatch(createCourse())
 }
 
 export const updateCourse = (

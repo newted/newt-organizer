@@ -61,17 +61,15 @@ module.exports = app => {
               courses: course._id
             }
           },
-          {
-            new: true
-          },
           (error, program) => {
             if (error) {
               res.send(error);
-            } else {
-              res.send(program);
             }
           }
         );
+
+        // Send the course that was created
+        res.send(course)
       } catch (err) {
         res.status(422).send(error);
       }

@@ -4,6 +4,7 @@ import {
   UPDATE_PROGRAM,
   DELETE_PROGRAM
 } from '../actions/programs'
+import { CREATE_COURSE } from '../actions/courses'
 import {
   programsArrayToObject,
   deleteItemFromObject
@@ -41,6 +42,20 @@ export default function (
       return {
         ...state,
         items: deleteItemFromObject(state.items, action.payload)
+      }
+    case CREATE_COURSE:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload.programId]: {
+            ...state.items[action.payload.programId],
+            courses: [
+              ...state.items[action.payload.programId].courses,
+              action.payload.course._id 
+            ]
+          }
+        }
       }
     default:
       return state
