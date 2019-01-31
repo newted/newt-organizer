@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
 import { deleteProgram, fetchPrograms }  from '../../actions/programs'
+import { fetchCourses } from '../../actions/courses'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
@@ -38,7 +39,7 @@ class ProgramPage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPrograms()
+    this.props.fetchCourses(this.props.programId)
   }
 
   openModal = () => {
@@ -126,13 +127,15 @@ function mapStateToProps({ auth, programs }, props) {
 
   return {
     auth,
-    program
+    program,
+    programId
   }
 }
 
 const mapDispatchToProps = {
   deleteProgram,
-  fetchPrograms
+  fetchPrograms,
+  fetchCourses
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgramPage)

@@ -1,7 +1,7 @@
-export function programsArrayToObject(programs) {
+export function dataArrayToObject(data) {
   const object = {}
 
-  programs.forEach(program => object[program._id] = program)
+  data.forEach(item => object[item._id] = item)
 
   return object
 }

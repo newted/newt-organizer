@@ -6,7 +6,7 @@ import {
 } from '../actions/programs'
 import { CREATE_COURSE } from '../actions/courses'
 import {
-  programsArrayToObject,
+  dataArrayToObject,
   deleteItemFromObject
 } from '../utils/reducerHelpers'
 
@@ -28,7 +28,7 @@ export default function (
     case FETCH_PROGRAMS:
       return {
         ...state,
-        items: programsArrayToObject(action.payload)
+        items: dataArrayToObject(action.payload)
       }
     case UPDATE_PROGRAM:
       return {
@@ -52,7 +52,7 @@ export default function (
             ...state.items[action.payload.programId],
             courses: [
               ...state.items[action.payload.programId].courses,
-              action.payload.course._id 
+              action.payload.course._id
             ]
           }
         }
