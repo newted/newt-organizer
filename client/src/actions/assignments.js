@@ -20,9 +20,10 @@ const putAssignment = (payload) => {
   }
 }
 
-const removeAssignment = () => {
+const removeAssignment = (payload) => {
   return {
-    type: DELETE_ASSIGNMENT
+    type: DELETE_ASSIGNMENT,
+    payload
   }
 }
 
@@ -83,13 +84,13 @@ export const deleteAssignment = (
   history
 ) => async dispatch => {
   try {
-    await axios.delete(
-      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}`
+    const res = await axios.delete(
+      `/api/courses/${courseId}/assignments/${assignmentId}`
     )
 
-    history.push(`/programs/${programId}/courses/${courseId}`)
+    dispatch(removeAssignment(res.data))
 
-    dispatch(removeAssignment())
+    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while deleting the assignment", err);
   }
