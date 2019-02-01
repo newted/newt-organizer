@@ -40,35 +40,14 @@ export default function (
         ...state,
         items: dataArrayToObject(action.payload)
       }
-    case UPDATE_COURSE:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.payload._id]: action.payload
-        }
-      }
     case DELETE_COURSE:
       return {
         ...state,
         items: deleteItemFromObject(state.items, action.payload.courseId)
       }
+    case UPDATE_COURSE:
     case CREATE_ASSIGNMENT:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.payload._id]: action.payload
-        }
-      }
     case UPDATE_ASSIGNMENT:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.payload._id]: action.payload
-        }
-      }
     case DELETE_ASSIGNMENT:
       return {
         ...state,
