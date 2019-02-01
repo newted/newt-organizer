@@ -45,8 +45,6 @@ module.exports = app => {
     requireLogin,
     (req, res) => {
       const { courseId, assignmentId } = req.params;
-      console.log(courseId, assignmentId);
-
       const { name, details, dateDue } = req.body;
 
       Course.findOneAndUpdate(
@@ -77,37 +75,33 @@ module.exports = app => {
 
   // PUT request to mark an assignment as complete
   app.put(
-    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId/complete",
+    "/api/courses/:courseId/assignments/:assignmentId/complete",
     requireLogin,
     (req, res) => {
-      const { programId, courseId, assignmentId } = req.params;
+      const { courseId, assignmentId } = req.params;
 
-      mongoose.connection.db.command({
-        update: Program.collection.name,
-        updates: [
-          {
-            q: {
-              _id: mongoose.Types.ObjectId(programId),
-              courses: {
-                $elemMatch: {
-                  _id: mongoose.Types.ObjectId(courseId),
-                  "assignments._id": mongoose.Types.ObjectId(assignmentId)
-                }
-              }
-            },
-            u: {
-              $set: {
-                "courses.$[outer].assignments.$[inner].completed": true,
-                "courses.$[outer].assignments.$[inner].inProgress": false
-              }
-            },
-            arrayFilters: [
-              { "outer._id": mongoose.Types.ObjectId(courseId) },
-              { "inner._id": mongoose.Types.ObjectId(assignmentId) }
-            ]
+      Course.findOneAndUpdate(
+        {
+          _id: courseId,
+          "assignments._id": assignmentId
+        },
+        {
+          $set: {
+            "assignments.$.inProgress": false,
+            "assignments.$.completed": true
           }
-        ]
-      });
+        },
+        {
+          new: true
+        },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
+        }
+      );
     }
   );
 
