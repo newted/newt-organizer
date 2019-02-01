@@ -9,6 +9,7 @@ import {
   CREATE_ASSIGNMENT,
   UPDATE_ASSIGNMENT,
   MARK_ASSIGNMENT_COMPLETE,
+  MARK_ASSIGNMENT_IN_PROGRESS,
   DELETE_ASSIGNMENT
 } from '../actions/assignments'
 import {
@@ -50,6 +51,7 @@ export default function (
     case CREATE_ASSIGNMENT:
     case UPDATE_ASSIGNMENT:
     case MARK_ASSIGNMENT_COMPLETE:
+    case MARK_ASSIGNMENT_IN_PROGRESS:
     case DELETE_ASSIGNMENT:
       return {
         ...state,

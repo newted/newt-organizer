@@ -34,9 +34,10 @@ const markAsComplete = (payload) => {
   }
 }
 
-const markAsInProgress = () => {
+const markAsInProgress = (payload) => {
   return {
-    type: MARK_ASSIGNMENT_IN_PROGRESS
+    type: MARK_ASSIGNMENT_IN_PROGRESS,
+    payload
   }
 }
 
@@ -123,13 +124,13 @@ export const markAssignmentAsInProgress = (
   history
 ) => async dispatch => {
   try {
-    history.push(`/programs/${programId}/courses/${courseId}`)
-
-    await axios.put(
-      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/progress`
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/progress`
     )
 
-    dispatch(markAsInProgress())
+    dispatch(markAsInProgress(res.data))
+
+    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while marking assignment as in progress", err)
   }
