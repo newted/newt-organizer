@@ -6,9 +6,10 @@ export const DELETE_ASSIGNMENT = 'DELETE_ASSIGNMENT'
 export const MARK_ASSIGNMENT_COMPLETE = 'MARK_ASSIGNMENT_COMPLETE'
 export const MARK_ASSIGNMENT_IN_PROGRESS = 'MARK_ASSIGNMENT_IN_PROGRESS'
 
-const createAssignment = () => {
+const createAssignment = (payload) => {
   return {
-    type: CREATE_ASSIGNMENT
+    type: CREATE_ASSIGNMENT,
+    payload
   }
 }
 
@@ -43,14 +44,11 @@ export const submitAssignment = (
   history
 ) => async dispatch => {
   try {
-    await axios.post(
-      `/api/programs/${programId}/courses/${courseId}/assignments/add`,
-      values
-    )
+    const res = await axios.post(`/api/courses/${courseId}/assignment`, values)
+
+    dispatch(createAssignment(res.data))
 
     history.push(`/programs/${programId}/courses/${courseId}`)
-
-    dispatch(createAssignment())
   } catch (err) {
     console.log("Error while creating assignment.")
   }
