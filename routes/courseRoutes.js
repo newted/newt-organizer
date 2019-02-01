@@ -32,6 +32,29 @@ module.exports = app => {
     );
   });
 
+  // GET request to receive all courses for all programs
+  // (Using POST is considered hacky -- GET requests can't have a request body
+  // but the other solution seems too complex at them moment)
+  // See: https://evertpot.com/dropbox-post-api/)
+  app.post("/api/programs/courses/all", requireLogin, async (req, res) => {
+    const { programIds } = req.body;
+
+    Course.find(
+      {
+        programId: {
+          $in: programIds
+        }
+      },
+      (error, courseList) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.send(courseList);
+        }
+      }
+    );
+  });
+
   // POST request to create a course
   app.post(
     "/api/programs/:programId/course",
@@ -70,7 +93,7 @@ module.exports = app => {
         );
 
         // Send the course that was created
-        res.send(course)
+        res.send(course);
       } catch (err) {
         res.status(422).send(error);
       }
