@@ -36,8 +36,6 @@ class EditAssignment extends Component {
       return <Redirect to='/' />
     }
 
-    console.log(this.props)
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -54,22 +52,13 @@ class EditAssignment extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }, props) {
+function mapStateToProps({ auth, courses }, props) {
   const { programId, courseId, assignmentId } = props.match.params
 
-  const program = _.filter(
-    programs.items,
-    program => program._id === programId
-  )[0]
-
-  const course = program
-    ? _.filter(
-        program.courses,
-        course => course._id === courseId
-      )[0]
+  const course = courses
+    ? courses.items[courseId]
     : null
 
-  // This is getting ridiculous...
   const assignment = course
     ? _.filter(
         course.assignments,

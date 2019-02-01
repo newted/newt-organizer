@@ -13,9 +13,10 @@ const createAssignment = (payload) => {
   }
 }
 
-const putAssignment = () => {
+const putAssignment = (payload) => {
   return {
-    type: UPDATE_ASSIGNMENT
+    type: UPDATE_ASSIGNMENT,
+    payload
   }
 }
 
@@ -62,16 +63,14 @@ export const updateAssignment = (
   history
 ) => async dispatch => {
   try {
-    // The custom mongoose command doesn't return anything, so need to redirect
-    // first. Needs fixing...
-    history.push(`/programs/${programId}/courses/${courseId}`)
-
-    await axios.put(
-      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/edit`,
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/edit`,
       values
     )
 
-    dispatch(putAssignment())
+    dispatch(putAssignment(res.data))
+
+    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while updating assignment", err)
   }

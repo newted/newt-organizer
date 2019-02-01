@@ -5,7 +5,7 @@ import {
   UPDATE_COURSE,
   DELETE_COURSE
 } from '../actions/courses'
-import { CREATE_ASSIGNMENT } from '../actions/assignments'
+import { CREATE_ASSIGNMENT, UPDATE_ASSIGNMENT } from '../actions/assignments'
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -57,6 +57,14 @@ export default function (
           [action.payload._id]: action.payload
         }
       }
+    case UPDATE_ASSIGNMENT:
+    return {
+      ...state,
+      items: {
+        ...state.items,
+        [action.payload._id]: action.payload
+      }
+    }
     default:
       return state
   }
