@@ -139,28 +139,31 @@ module.exports = app => {
 
   // DELETE request to delete an assignment
   app.delete(
-    "/api/programs/:programId/courses/:courseId/assignments/:assignmentId",
+    "/api/courses/:courseId/assignments/:assignmentId",
     requireLogin,
     (req, res) => {
-      const { programId, courseId, assignmentId } = req.params;
+      const { courseId, assignmentId } = req.params;
 
-      Program.findOneAndUpdate(
+      Course.findOneAndUpdate(
         {
-          _id: programId,
-          "courses._id": courseId
+          _id: courseId,
+          "assignments._id": assignmentId
         },
         {
           $pull: {
-            "courses.$.assignments": {
+            assignments: {
               _id: assignmentId
             }
           }
         },
-        (error, program) => {
+        {
+          new: true
+        },
+        (error, course) => {
           if (error) {
             res.send(error);
           } else {
-            res.send(program);
+            res.send(course);
           }
         }
       );
