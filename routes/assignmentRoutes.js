@@ -1,45 +1,43 @@
 const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
-const Program = mongoose.model("programs");
+const Course = mongoose.model("courses");
 
 module.exports = app => {
   // POST request to create an assignment
-  app.post(
-    "/api/programs/:programId/courses/:courseId/assignments/add",
-    requireLogin,
-    (req, res) => {
-      const { programId, courseId } = req.params;
+  app.post("/api/courses/:courseId/assignment", requireLogin, (req, res) => {
+    const { courseId } = req.params;
 
-      const { name, details, dateDue } = req.body;
+    const { name, details, dateDue } = req.body;
 
-      const assignment = {
-        name,
-        details,
-        dateDue,
-        dateCreated: Date.now()
-      };
+    const assignment = {
+      name,
+      details,
+      dateDue,
+      dateCreated: Date.now()
+    };
 
-      Program.findOneAndUpdate(
-        {
-          _id: programId,
-          "courses._id": courseId
-        },
-        {
-          $push: {
-            "courses.$.assignments": assignment
-          }
-        },
-        (error, program) => {
-          if (error) {
-            res.send(error);
-          } else {
-            res.send(program);
-          }
+    Course.findOneAndUpdate(
+      {
+        _id: courseId
+      },
+      {
+        $push: {
+          assignments: assignment
         }
-      );
-    }
-  );
+      },
+      {
+        new: true
+      },
+      (error, course) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.send(course);
+        }
+      }
+    );
+  });
 
   // PUT request to edit assignment information
   app.put(
