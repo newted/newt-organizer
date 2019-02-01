@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import LoadingBar from 'react-redux-loading'
 import _ from 'lodash'
 // Components
 import Card from '../../components/Card'
@@ -14,7 +15,7 @@ class CourseList extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     programs: PropTypes.shape({
-      items: PropTypes.arrayOf(PropTypes.object)
+      items: PropTypes.object
     }),
     // Connect props
     history: PropTypes.object,
@@ -22,24 +23,31 @@ class CourseList extends Component {
     match: PropTypes.object
   }
 
-  renderCards(programId, courses) {
-    return _.map(courses, ({ _id, name }) => {
-      return (
-        <Card
-          path={ `/programs/${programId}/courses/${_id}` }
-          title={ name }
-          icon={ BookIcon }
-          additionalClass={ styles.cardColor }
-          key={ _id }
-        />
-      )
-    })
+  renderCards(programId, courseList) {
+    const { courses } = this.props
+
+    if (_.isEmpty(courses.items)) {
+      return <LoadingBar />
+    } else {
+      return _.map(courseList, courseId => {
+        return (
+          <Card
+            path={ `/programs/${programId}/courses/${courseId}` }
+            title={ courses.items[courseId].name }
+            icon={ BookIcon }
+            additionalClass={ styles.cardColor }
+            key={ courseId }
+          />
+        )
+      })
+    }
   }
 
   renderCourseSections() {
     const { programs } = this.props
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
+      const courseList = courses
       if (courses.length > 0) {
         return (
           <div className={ styles.courseSection} key={ _id }>
@@ -55,7 +63,7 @@ class CourseList extends Component {
               </div>
             </div>
             <div className={ styles.cardContainer }>
-              { this.renderCards(_id, courses) }
+              { this.renderCards(_id, courseList) }
             </div>
           </div>
         )
@@ -84,10 +92,11 @@ class CourseList extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }) {
+function mapStateToProps({ auth, programs, courses }) {
   return {
     auth,
-    programs
+    programs,
+    courses
   }
 }
 
