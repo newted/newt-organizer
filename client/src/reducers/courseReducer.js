@@ -1,6 +1,7 @@
 import {
   CREATE_COURSE,
   FETCH_COURSES,
+  FETCH_ALL_COURSES,
   UPDATE_COURSE,
   DELETE_COURSE
 } from '../actions/courses'
@@ -28,6 +29,11 @@ export default function (
       return {
         ...state,
         items: Object.assign({}, state.items, dataArrayToObject(action.payload))
+      }
+    case FETCH_ALL_COURSES:
+      return {
+        ...state,
+        items: dataArrayToObject(action.payload)
       }
     case UPDATE_COURSE:
       return {

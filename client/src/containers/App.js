@@ -6,6 +6,7 @@ import LoadingBar from 'react-redux-loading'
 // API
 import { fetchUser } from '../actions/authedUser'
 import { fetchPrograms } from '../actions/programs'
+import { fetchAllCourses } from '../actions/courses'
 // Components
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
@@ -69,6 +70,7 @@ class App extends Component {
     await this.props.showLoading()
     await this.props.fetchUser()
     await this.props.fetchPrograms()
+    await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
     await this.props.hideLoading()
   }
 
@@ -98,9 +100,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
+function mapStateToProps({ auth, programs }) {
   return {
-    loading: auth === null
+    loading: auth === null,
+    programs
   }
 }
 
@@ -108,7 +111,8 @@ const mapDispatchToProps = {
   showLoading,
   hideLoading,
   fetchUser,
-  fetchPrograms
+  fetchPrograms,
+  fetchAllCourses
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

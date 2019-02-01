@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const CREATE_COURSE = 'CREATE_COURSE'
 export const FETCH_COURSES = 'FETCH_COURSES'
+export const FETCH_ALL_COURSES = 'FETCH_ALL_COURSES'
 export const UPDATE_COURSE = 'UPDATE_COURSE'
 export const DELETE_COURSE = 'DELETE_COURSE'
 
@@ -15,6 +16,13 @@ const createCourse = (payload) => {
 const getCourses = (payload) => {
   return {
     type: FETCH_COURSES,
+    payload
+  }
+}
+
+const getAllCourses = payload => {
+  return {
+    type: FETCH_ALL_COURSES,
     payload
   }
 }
@@ -51,6 +59,12 @@ export const fetchCourses = (programId) => async dispatch => {
   const res = await axios.get(`/api/programs/${programId}`)
 
   dispatch(getCourses(res.data))
+}
+
+export const fetchAllCourses = programIds => async dispatch => {
+  const res = await axios.post('/api/programs/courses/all', { programIds })
+
+  dispatch(getAllCourses(res.data))
 }
 
 export const updateCourse = (

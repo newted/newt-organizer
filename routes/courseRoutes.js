@@ -32,7 +32,7 @@ module.exports = app => {
     );
   });
 
-  // GET request to receive all courses for all programs
+  // Request to receive all courses for all programs
   // (Using POST is considered hacky -- GET requests can't have a request body
   // but the other solution seems too complex at them moment)
   // See: https://evertpot.com/dropbox-post-api/)
