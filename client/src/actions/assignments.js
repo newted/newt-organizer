@@ -27,9 +27,10 @@ const removeAssignment = (payload) => {
   }
 }
 
-const markAsComplete = () => {
+const markAsComplete = (payload) => {
   return {
-    type: MARK_ASSIGNMENT_COMPLETE
+    type: MARK_ASSIGNMENT_COMPLETE,
+    payload
   }
 }
 
@@ -103,13 +104,13 @@ export const completeAssignment = (
   history
 ) => async dispatch => {
   try {
-    history.push(`/programs/${programId}/courses/${courseId}`)
-
-    await axios.put(
-      `/api/programs/${programId}/courses/${courseId}/assignments/${assignmentId}/complete`
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/complete`
     )
 
-    dispatch(markAsComplete())
+    dispatch(markAsComplete(res.data))
+
+    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while marking assignment as complete", err)
   }
