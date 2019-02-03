@@ -22,6 +22,7 @@ import CoursePage from './Courses/CoursePage'
 import EditCourse from './Courses/EditCourse'
 import CourseList from './Courses/CourseList'
 import AddAssignment from './Assignments/AddAssignment'
+import AssignmentList from './Assignments/AssignmentList'
 import EditAssignment from './Assignments/EditAssignment'
 // Styling
 import styles from './App.module.css'
@@ -60,6 +61,7 @@ const AppContainer = () => (
         <Route path='/programs/:programId' component={ ProgramPage } />
         <Route path='/programs' component={ ProgramList } />
         <Route path='/courses' component={ CourseList } />
+        <Route path='/assignments' component={ AssignmentList } />
       </Switch>
     </section>
   </div>

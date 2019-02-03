@@ -20,8 +20,6 @@ class Dashboard extends Component {
       return <Redirect to='/' />
     }
 
-    console.log(this.props)
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
