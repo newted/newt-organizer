@@ -15,8 +15,6 @@ class Dashboard extends Component {
   }
 
   renderMessage() {
-    const { programs } = this.props
-
     const programLink = (
       <Link to="/programs" className={styles.link}>
         Programs
@@ -27,11 +25,15 @@ class Dashboard extends Component {
         Courses
       </Link>
     )
+    const constructionEmoji = (
+      <span role='img' aria-label='construction'>🚧</span>
+    )
 
-    if (Object.keys(programs.items).length > 0) {
+    if (Object.keys(this.props.programs.items).length > 0) {
       return (
-        <div className={ styles.message }>
-          This page is still under construction 🚧. Check out the { programLink } and { courseLink } pages.
+        <div className={styles.message}>
+          This page is still under construction { constructionEmoji }. Check out
+          the { programLink } and { courseLink } pages.
         </div>
       )
     } else {
