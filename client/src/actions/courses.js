@@ -62,9 +62,13 @@ export const fetchCourses = (programId) => async dispatch => {
 }
 
 export const fetchAllCourses = programIds => async dispatch => {
-  const res = await axios.post('/api/programs/courses/all', { programIds })
+  try {
+    const res = await axios.post('/api/programs/courses/all', { programIds })
 
-  dispatch(getAllCourses(res.data))
+    dispatch(getAllCourses(res.data))
+  } catch (err) {
+    console.log('Error fetching courses: ', err)
+  }
 }
 
 export const updateCourse = (
