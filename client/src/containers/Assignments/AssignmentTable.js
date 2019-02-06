@@ -74,13 +74,13 @@ class AssignmentTable extends Component {
   // Deleting assignment
   delete = async (assignmentId) => {
     const {
-      data: { programId, courseId },
+      data: { courseId },
       history,
       deleteAssignment,
       fetchPrograms
     } = this.props
 
-    await deleteAssignment(programId, courseId, assignmentId, history)
+    await deleteAssignment(courseId, assignmentId, history)
 
     // Get new data after deleting assignment
     await fetchPrograms()
@@ -94,13 +94,13 @@ class AssignmentTable extends Component {
   // Marking the assignment as complete
   complete = (assignmentId) => {
     const {
-      data: { programId, courseId },
+      data: { courseId },
       history,
       completeAssignment,
       fetchPrograms
     } = this.props
 
-    completeAssignment(programId, courseId, assignmentId, history)
+    completeAssignment(courseId, assignmentId, history)
 
     fetchPrograms()
   }
@@ -108,13 +108,13 @@ class AssignmentTable extends Component {
   // Marking an assignment as in progress
   inProgress = (assignmentId) => {
     const {
-      data: { programId, courseId },
+      data: { courseId },
       history,
       markAssignmentAsInProgress,
       fetchPrograms
     } = this.props
 
-    markAssignmentAsInProgress(programId, courseId, assignmentId, history)
+    markAssignmentAsInProgress(courseId, assignmentId, history)
 
     fetchPrograms()
   }

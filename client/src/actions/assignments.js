@@ -80,7 +80,6 @@ export const updateAssignment = (
 }
 
 export const deleteAssignment = (
-  programId,
   courseId,
   assignmentId,
   history
@@ -91,15 +90,12 @@ export const deleteAssignment = (
     )
 
     dispatch(removeAssignment(res.data))
-
-    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while deleting the assignment", err);
   }
 }
 
 export const completeAssignment = (
-  programId,
   courseId,
   assignmentId,
   history
@@ -110,15 +106,12 @@ export const completeAssignment = (
     )
 
     dispatch(markAsComplete(res.data))
-
-    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while marking assignment as complete", err)
   }
 }
 
 export const markAssignmentAsInProgress = (
-  programId,
   courseId,
   assignmentId,
   history
@@ -129,8 +122,6 @@ export const markAssignmentAsInProgress = (
     )
 
     dispatch(markAsInProgress(res.data))
-
-    history.push(`/programs/${programId}/courses/${courseId}`)
   } catch (err) {
     console.log("Error while marking assignment as in progress", err)
   }
