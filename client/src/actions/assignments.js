@@ -59,7 +59,6 @@ export const submitAssignment = (
 }
 
 export const updateAssignment = (
-  programId,
   courseId,
   assignmentId,
   values,
@@ -73,7 +72,7 @@ export const updateAssignment = (
 
     dispatch(putAssignment(res.data))
 
-    history.push(`/programs/${programId}/courses/${courseId}`)
+    history.goBack()
   } catch (err) {
     console.log("Error while updating assignment", err)
   }

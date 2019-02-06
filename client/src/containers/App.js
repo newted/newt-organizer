@@ -42,10 +42,6 @@ const AppContainer = () => (
           component={ AddAssignment }
         />
         <Route
-          path='/programs/:programId/courses/:courseId/assignments/:assignmentId/edit'
-          component={ EditAssignment }
-        />
-        <Route
           path='/programs/:programId/courses/:courseId/edit'
           component={ EditCourse }
         />
@@ -60,6 +56,10 @@ const AppContainer = () => (
         <Route path='/programs/:programId/edit' component={ EditProgram } />
         <Route path='/programs/:programId' component={ ProgramPage } />
         <Route path='/programs' component={ ProgramList } />
+        <Route
+          path='/courses/:courseId/assignments/:assignmentId/edit'
+          component={ EditAssignment }
+        />
         <Route path='/courses' component={ CourseList } />
         <Route path='/assignments' component={ AssignmentList } />
       </Switch>

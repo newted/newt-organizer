@@ -14,7 +14,6 @@ class EditAssignment extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     assignment: PropTypes.shape({
-      programId: PropTypes.string,
       courseId: PropTypes.string,
       completed: PropTypes.bool,
       inProgress: PropTypes.bool,
@@ -53,7 +52,7 @@ class EditAssignment extends Component {
 }
 
 function mapStateToProps({ auth, courses }, props) {
-  const { programId, courseId, assignmentId } = props.match.params
+  const { courseId, assignmentId } = props.match.params
 
   const course = courses
     ? courses.items[courseId]
@@ -67,7 +66,6 @@ function mapStateToProps({ auth, courses }, props) {
     : null
 
   if (assignment) {
-    assignment.programId = programId
     assignment.courseId = courseId
   }
 

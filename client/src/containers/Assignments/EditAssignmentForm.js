@@ -21,7 +21,6 @@ const EditAssignmentForm = ({ assignment, onSubmit }) => {
   class EditAssignmentFormComponent extends Component {
     static propTypes = {
       assignment: PropTypes.shape({
-        programId: PropTypes.string,
         courseId: PropTypes.string,
         completed: PropTypes.bool,
         inProgress: PropTypes.bool,
@@ -56,7 +55,6 @@ const EditAssignmentForm = ({ assignment, onSubmit }) => {
           <Form
             onSubmit={ handleSubmit(values =>
               onSubmit(
-                assignment.programId,
                 assignment.courseId,
                 assignment._id,
                 values,

@@ -39,7 +39,6 @@ const StatusIcon = (completed, inProgress) => {
 class AssignmentTable extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      programId: PropTypes.string.isRequired,
       assignments: PropTypes.arrayOf(PropTypes.object).isRequired
     }),
     deleteAssignment: PropTypes.func.isRequired,
@@ -145,7 +144,7 @@ class AssignmentTable extends Component {
 
   renderTableBody() {
     const {
-      data: { programId, assignments },
+      data: { assignments },
       fields,
       history
     } = this.props
@@ -195,7 +194,7 @@ class AssignmentTable extends Component {
                 <Dropdown.Item
                   onClick={ () =>
                     history.push(
-                      `/programs/${programId}/courses/${object.courseId}/assignments/${object._id}/edit`
+                      `/courses/${object.courseId}/assignments/${object._id}/edit`
                     )
                   }
                 >

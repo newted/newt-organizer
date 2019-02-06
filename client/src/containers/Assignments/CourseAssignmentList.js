@@ -92,7 +92,6 @@ class CourseAssignmentList extends Component {
     const { programId, courseId, assignments } = this.props
 
     const data = {
-      programId,
       assignments
     }
 
