@@ -90,10 +90,6 @@ class CourseAssignmentList extends Component {
   render() {
     const { courseId, assignments } = this.props
 
-    const data = {
-      assignments
-    }
-
     return (
       <div className={ styles.assignmentsContainer }>
         <div className={ styles.headerContainer }>
@@ -106,7 +102,7 @@ class CourseAssignmentList extends Component {
         </div>
         <AssignmentTable
           fields={ assignmentTableFields }
-          data={ data }
+          assignments={ assignments }
           name='assignments'
           dropdownVisible={ this.state.showDropdown }
           handleOpenDropdown={ this.openDropdown }

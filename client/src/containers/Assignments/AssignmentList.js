@@ -73,10 +73,6 @@ class AssignmentList extends Component {
   render() {
     const { assignments } = this.props
 
-    const data = {
-      assignments
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -86,7 +82,7 @@ class AssignmentList extends Component {
             </div>
             <AssignmentTable
               fields={ assignmentTableFields }
-              data={ data }
+              assignments={ assignments }
               name='allAssignments'
               dropdownVisible={ this.state.showDropdown }
               handleOpenDropdown={ this.openDropdown }

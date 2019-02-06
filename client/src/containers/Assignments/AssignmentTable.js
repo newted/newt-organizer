@@ -38,9 +38,7 @@ const StatusIcon = (completed, inProgress) => {
 
 class AssignmentTable extends Component {
   static propTypes = {
-    data: PropTypes.shape({
-      assignments: PropTypes.arrayOf(PropTypes.object).isRequired
-    }),
+    assignments: PropTypes.arrayOf(PropTypes.object).isRequired,
     deleteAssignment: PropTypes.func.isRequired,
     dropdownVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
     fields: PropTypes.object.isRequired,
@@ -144,7 +142,7 @@ class AssignmentTable extends Component {
 
   renderTableBody() {
     const {
-      data: { assignments },
+      assignments,
       fields,
       history
     } = this.props
@@ -216,7 +214,7 @@ class AssignmentTable extends Component {
   }
 
   render() {
-    const { data: { assignments }, name } = this.props
+    const { assignments, name } = this.props
 
     return (
       <div className={ styles.tableContainer }>
@@ -259,9 +257,9 @@ class AssignmentTable extends Component {
   }
 }
 
-function mapStateToProps(state, { data, fields, name }) {
+function mapStateToProps(state, { assignments, fields, name }) {
   return {
-    data,
+    assignments,
     fields,
     name
   }
