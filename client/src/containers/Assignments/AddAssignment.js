@@ -12,7 +12,6 @@ import styles from './AddAssignment.module.css'
 class AddAssignment extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    programId: PropTypes.string.isRequired,
     courseId: PropTypes.string.isRequired,
     submitAssignment: PropTypes.func.isRequired,
     // Connect stuff
@@ -34,7 +33,6 @@ class AddAssignment extends Component {
             <h3>Add a New Assignment</h3>
           </div>
           <AddAssignmentForm
-            programId={ this.props.programId }
             courseId={ this.props.courseId }
             onSubmit={ this.props.submitAssignment} />
         </div>
@@ -44,11 +42,10 @@ class AddAssignment extends Component {
 }
 
 function mapStateToProps({ auth }, props) {
-  const { programId, courseId } = props.match.params
+  const { courseId } = props.match.params
 
   return {
     auth,
-    programId,
     courseId
   }
 }

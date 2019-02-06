@@ -23,7 +23,6 @@ const initializeDropdownMenuState = (assignments) => {
 
 class CourseAssignmentList extends Component {
   static propTypes = {
-    programId: PropTypes.string.isRequired,
     courseId: PropTypes.string.isRequired,
     assignments: PropTypes.arrayOf(PropTypes.object).isRequired
   }
@@ -89,7 +88,7 @@ class CourseAssignmentList extends Component {
   }
 
   render() {
-    const { programId, courseId, assignments } = this.props
+    const { courseId, assignments } = this.props
 
     const data = {
       assignments
@@ -99,9 +98,7 @@ class CourseAssignmentList extends Component {
       <div className={ styles.assignmentsContainer }>
         <div className={ styles.headerContainer }>
           <h3 className={ styles.header }>Assignments</h3>
-          <Link
-            to={{ pathname: `/programs/${programId}/courses/${courseId}/assignments/add` }}
-          >
+          <Link to={{ pathname: `/courses/${courseId}/assignments/add` }}>
             <Button additionalClass={ styles.addBtn }>
               Add Assignment
             </Button>

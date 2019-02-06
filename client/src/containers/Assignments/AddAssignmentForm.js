@@ -13,7 +13,6 @@ import styles from './AddAssignmentForm.module.css'
 
 class AddAssignmentForm extends Component {
   static propTypes = {
-    programId: PropTypes.string.isRequired,
     courseId: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,  // React form submit func.
     onSubmit: PropTypes.func.isRequired,
@@ -34,12 +33,12 @@ class AddAssignmentForm extends Component {
   }
 
   render() {
-    const { programId, courseId, handleSubmit, onSubmit, history } = this.props
+    const { courseId, handleSubmit, onSubmit, history } = this.props
 
     return (
       <div className={ styles.formContainer }>
         <Form onSubmit={
-          handleSubmit(values => onSubmit(programId, courseId, values, history))
+          handleSubmit(values => onSubmit(courseId, values, history))
         }>
           { this.renderFields() }
           <Button

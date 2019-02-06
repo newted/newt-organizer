@@ -103,7 +103,6 @@ class CoursePage extends Component {
             </div>
           </div>
           <CourseAssignmentList
-            programId={ programId }
             courseId={ course._id }
             assignments={ course.assignments }
           />

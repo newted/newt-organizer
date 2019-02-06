@@ -42,7 +42,6 @@ const markAsInProgress = (payload) => {
 }
 
 export const submitAssignment = (
-  programId,
   courseId,
   values,
   history
@@ -52,7 +51,7 @@ export const submitAssignment = (
 
     dispatch(createAssignment(res.data))
 
-    history.push(`/programs/${programId}/courses/${courseId}`)
+    history.goBack()
   } catch (err) {
     console.log("Error while creating assignment.")
   }

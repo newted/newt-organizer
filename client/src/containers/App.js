@@ -38,10 +38,6 @@ const AppContainer = () => (
         <Route path='/dashboard' component={ Dashboard } />
         <Route path='/programs/new' component={ AddProgram } />
         <Route
-          path='/programs/:programId/courses/:courseId/assignments/add'
-          component={ AddAssignment }
-        />
-        <Route
           path='/programs/:programId/courses/:courseId/edit'
           component={ EditCourse }
         />
@@ -56,6 +52,10 @@ const AppContainer = () => (
         <Route path='/programs/:programId/edit' component={ EditProgram } />
         <Route path='/programs/:programId' component={ ProgramPage } />
         <Route path='/programs' component={ ProgramList } />
+        <Route
+          path='/courses/:courseId/assignments/add'
+          component={ AddAssignment }
+        />
         <Route
           path='/courses/:courseId/assignments/:assignmentId/edit'
           component={ EditAssignment }
