@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -118,6 +119,12 @@ function mapStateToProps({ auth, courses }, props) {
   const course = courses.items
     ? courses.items[courseId]
     : null
+
+  if (course) {
+    // Add courseId to each assignment. This will be used for assignment actions
+    // in the Assignment table
+    _.forEach(course.assignments, assignment => assignment['courseId'] = courseId)
+  }
 
   return {
     auth,

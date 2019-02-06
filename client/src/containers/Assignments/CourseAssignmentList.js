@@ -93,7 +93,6 @@ class CourseAssignmentList extends Component {
 
     const data = {
       programId,
-      courseId,
       assignments
     }
 

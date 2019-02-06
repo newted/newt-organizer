@@ -40,7 +40,6 @@ class AssignmentTable extends Component {
   static propTypes = {
     data: PropTypes.shape({
       programId: PropTypes.string.isRequired,
-      courseId: PropTypes.string.isRequired,
       assignments: PropTypes.arrayOf(PropTypes.object).isRequired
     }),
     deleteAssignment: PropTypes.func.isRequired,
@@ -54,12 +53,14 @@ class AssignmentTable extends Component {
 
   state = {
     showModal: false,
+    currentCourse: null,
     currentAssignment: null
   }
 
-  openModal = (assignmentId) => {
+  openModal = (courseId, assignmentId) => {
     this.setState({
       showModal: true,
+      currentCourse: courseId,
       currentAssignment: assignmentId
     })
   }
@@ -72,9 +73,8 @@ class AssignmentTable extends Component {
   }
 
   // Deleting assignment
-  delete = async (assignmentId) => {
+  delete = async (courseId, assignmentId) => {
     const {
-      data: { courseId },
       history,
       deleteAssignment,
       fetchPrograms
@@ -92,9 +92,8 @@ class AssignmentTable extends Component {
   }
 
   // Marking the assignment as complete
-  complete = (assignmentId) => {
+  complete = (courseId, assignmentId) => {
     const {
-      data: { courseId },
       history,
       completeAssignment,
       fetchPrograms
@@ -106,9 +105,8 @@ class AssignmentTable extends Component {
   }
 
   // Marking an assignment as in progress
-  inProgress = (assignmentId) => {
+  inProgress = (courseId, assignmentId) => {
     const {
-      data: { courseId },
       history,
       markAssignmentAsInProgress,
       fetchPrograms
@@ -147,7 +145,7 @@ class AssignmentTable extends Component {
 
   renderTableBody() {
     const {
-      data: { programId, courseId, assignments },
+      data: { programId, assignments },
       fields,
       history
     } = this.props
@@ -184,26 +182,28 @@ class AssignmentTable extends Component {
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
                 <Dropdown.Item
-                  onClick={ () => this.inProgress(object._id) }
+                  onClick={ () => this.inProgress(object.courseId, object._id) }
                 >
                   Mark as In Progress
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={ () => this.complete(object._id) }
+                  onClick={ () => this.complete(object.courseId, object._id) }
                 >
                   Mark as Complete
                 </Dropdown.Item>
                 <Dropdown.Item></Dropdown.Item>
                 <Dropdown.Item
                   onClick={ () =>
-                    history.push(`/programs/${programId}/courses/${courseId}/assignments/${object._id}/edit`)
+                    history.push(
+                      `/programs/${programId}/courses/${object.courseId}/assignments/${object._id}/edit`
+                    )
                   }
                 >
                   Edit
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={
-                    () => this.openModal(object._id)
+                    () => this.openModal(object.courseId, object._id)
                   }
                 >
                   Delete
@@ -246,7 +246,9 @@ class AssignmentTable extends Component {
               type='button'
               additionalClass={ styles.deleteBtn }
               onClick={
-                () => this.delete(this.state.currentAssignment)
+                () => this.delete(
+                  this.state.currentCourse, this.state.currentAssignment
+                )
               }
             >
               Delete
