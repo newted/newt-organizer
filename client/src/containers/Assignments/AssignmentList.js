@@ -100,6 +100,7 @@ function mapStateToProps({ courses }) {
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
+      assignment['courseId'] = course._id
       assignments.push(assignment)
     })
   })
