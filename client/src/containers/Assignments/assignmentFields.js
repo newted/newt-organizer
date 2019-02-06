@@ -22,3 +22,11 @@ export const assignmentTableFields = {
   'Due Date': 'dateDue',
   'Status': 'status'
 }
+
+export const allAssignmentTableFields = {
+  'Name': 'name',
+  'Course Name': 'courseName',
+  'Details': 'details',
+  'Due Date': 'dateDue',
+  'Status': 'status'
+}

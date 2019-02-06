@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { assignmentTableFields } from './assignmentFields'
+import { allAssignmentTableFields } from './assignmentFields'
 // Components
 import AssignmentTable from './AssignmentTable'
 // Styling
@@ -81,9 +81,9 @@ class AssignmentList extends Component {
               <h2>Your Assignments</h2>
             </div>
             <AssignmentTable
-              fields={ assignmentTableFields }
+              fields={ allAssignmentTableFields }
               assignments={ assignments }
-              name='allAssignments'
+              name='Assignments'
               dropdownVisible={ this.state.showDropdown }
               handleOpenDropdown={ this.openDropdown }
               setDropdownMenu={ this.setDropdownMenu }
@@ -101,6 +101,7 @@ function mapStateToProps({ courses }) {
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
       assignment['courseId'] = course._id
+      assignment['courseName'] = course.name
       assignments.push(assignment)
     })
   })
