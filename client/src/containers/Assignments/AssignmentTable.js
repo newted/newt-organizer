@@ -102,19 +102,6 @@ class AssignmentTable extends Component {
     fetchPrograms()
   }
 
-  // Marking an assignment as in progress
-  inProgress = (courseId, assignmentId) => {
-    const {
-      history,
-      markAssignmentAsInProgress,
-      fetchPrograms
-    } = this.props
-
-    markAssignmentAsInProgress(courseId, assignmentId, history)
-
-    fetchPrograms()
-  }
-
   renderTableHeader() {
     const { fields } = this.props
 
@@ -191,7 +178,13 @@ class AssignmentTable extends Component {
                   Mark as Incomplete
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={ () => this.inProgress(object.courseId, object._id) }
+                  onClick={ () =>
+                    this.props.markAssignmentAsInProgress(
+                      object.courseId,
+                      object._id,
+                      history
+                    )
+                  }
                 >
                   Mark as In Progress
                 </Dropdown.Item>
