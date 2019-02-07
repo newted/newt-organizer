@@ -13,7 +13,8 @@ import { fetchPrograms }  from '../../actions/programs'
 import {
   deleteAssignment,
   completeAssignment,
-  markAssignmentAsInProgress
+  markAssignmentAsInProgress,
+  markAssignmentAsIncomplete
 } from '../../actions/assignments'
 // Styling
 import styles from './AssignmentTable.module.css'
@@ -179,6 +180,17 @@ class AssignmentTable extends Component {
                 ref={ (element) => { this.props.setDropdownMenu(element) } }
               >
                 <Dropdown.Item
+                  onClick={ () =>
+                    this.props.markAssignmentAsIncomplete(
+                      object.courseId,
+                      object._id,
+                      history
+                    )
+                  }
+                >
+                  Mark as Incomplete
+                </Dropdown.Item>
+                <Dropdown.Item
                   onClick={ () => this.inProgress(object.courseId, object._id) }
                 >
                   Mark as In Progress
@@ -269,6 +281,7 @@ const mapDispatchToProps = {
   deleteAssignment,
   completeAssignment,
   markAssignmentAsInProgress,
+  markAssignmentAsIncomplete,
   fetchPrograms,
 }
 
