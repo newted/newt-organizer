@@ -5,6 +5,7 @@ export const UPDATE_ASSIGNMENT = 'UPDATE_COURSE'
 export const DELETE_ASSIGNMENT = 'DELETE_ASSIGNMENT'
 export const MARK_ASSIGNMENT_COMPLETE = 'MARK_ASSIGNMENT_COMPLETE'
 export const MARK_ASSIGNMENT_IN_PROGRESS = 'MARK_ASSIGNMENT_IN_PROGRESS'
+export const MARK_ASSIGNMENT_INCOMPLETE = 'MARK_ASSIGNMENT_INCOMPLETE'
 
 const createAssignment = (payload) => {
   return {
@@ -37,6 +38,13 @@ const markAsComplete = (payload) => {
 const markAsInProgress = (payload) => {
   return {
     type: MARK_ASSIGNMENT_IN_PROGRESS,
+    payload
+  }
+}
+
+const markAsIncomplete = (payload) => {
+  return {
+    type: MARK_ASSIGNMENT_INCOMPLETE,
     payload
   }
 }
@@ -122,5 +130,21 @@ export const markAssignmentAsInProgress = (
     dispatch(markAsInProgress(res.data))
   } catch (err) {
     console.log("Error while marking assignment as in progress", err)
+  }
+}
+
+export const markAssignmentAsIncomplete = (
+  courseId,
+  assignmentId,
+  history
+) => async dispatch => {
+  try {
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/incomplete`
+    )
+
+    dispatch(markAsIncomplete(res.data))
+  } catch (err) {
+    console.log("Error while marking assignment as incomplete", err)
   }
 }
