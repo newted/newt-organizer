@@ -16,14 +16,13 @@ class Dashboard extends Component {
 
   renderMessage() {
     const programLink = (
-      <Link to="/programs" className={styles.link}>
-        Programs
-      </Link>
+      <Link to="/programs" className={styles.link}>Programs</Link>
     )
     const courseLink = (
-      <Link to='/courses' className={ styles.link }>
-        Courses
-      </Link>
+      <Link to='/courses' className={ styles.link }>Courses</Link>
+    )
+    const assignmentLink = (
+      <Link to='/assignments' className={ styles.link }>Assignments</Link>
     )
     const constructionEmoji = (
       <span role='img' aria-label='construction'>🚧</span>
@@ -33,7 +32,7 @@ class Dashboard extends Component {
       return (
         <div className={styles.message}>
           This page is still under construction { constructionEmoji }. Check out
-          the { programLink } and { courseLink } pages.
+          the { programLink }, { courseLink }, and { assignmentLink } pages.
         </div>
       )
     } else {
