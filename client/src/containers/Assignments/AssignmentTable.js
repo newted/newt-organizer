@@ -89,19 +89,6 @@ class AssignmentTable extends Component {
     })
   }
 
-  // Marking the assignment as complete
-  complete = (courseId, assignmentId) => {
-    const {
-      history,
-      completeAssignment,
-      fetchPrograms
-    } = this.props
-
-    completeAssignment(courseId, assignmentId, history)
-
-    fetchPrograms()
-  }
-
   renderTableHeader() {
     const { fields } = this.props
 
@@ -189,7 +176,13 @@ class AssignmentTable extends Component {
                   Mark as In Progress
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={ () => this.complete(object.courseId, object._id) }
+                  onClick={ () =>
+                    this.props.completeAssignment(
+                      object.courseId,
+                      object._id,
+                      history
+                    )
+                  }
                 >
                   Mark as Complete
                 </Dropdown.Item>
