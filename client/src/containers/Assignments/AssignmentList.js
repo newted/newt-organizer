@@ -11,6 +11,7 @@ import styles from './AssignmentList.module.css'
 class AssignmentList extends Component {
   state = {
     showDropdown: initializeDropdownMenuState(this.props.assignments),
+    showCompleted: false,   // Doesn't show completed assignments by default
     dropdownMenu: null,
     currentDropdownId: null // Passed to closeDropdown function so it knows
   }                         // which table row dropdown to close.
@@ -75,6 +76,7 @@ class AssignmentList extends Component {
               fields={ allAssignmentTableFields }
               assignments={ assignments }
               name='Assignments'
+              showCompleted={ this.state.showCompleted }
               dropdownVisible={ this.state.showDropdown }
               handleOpenDropdown={ this.openDropdown }
               setDropdownMenu={ this.setDropdownMenu }

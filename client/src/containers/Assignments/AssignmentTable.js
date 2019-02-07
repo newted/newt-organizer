@@ -9,7 +9,6 @@ import Dropdown from '../../components/Dropdown'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 // API
-import { fetchPrograms }  from '../../actions/programs'
 import {
   deleteAssignment,
   completeAssignment,
@@ -46,6 +45,7 @@ class AssignmentTable extends Component {
     handleOpenDropdown: PropTypes.func.isRequired,
     name: PropTypes.string,
     setDropdownMenu: PropTypes.func.isRequired,
+    showCompleted: PropTypes.bool,
     history: PropTypes.object,
   }
 
@@ -74,8 +74,7 @@ class AssignmentTable extends Component {
   delete = async (courseId, assignmentId) => {
     const {
       history,
-      deleteAssignment,
-      fetchPrograms
+      deleteAssignment
     } = this.props
 
     await deleteAssignment(courseId, assignmentId, history)
@@ -113,11 +112,18 @@ class AssignmentTable extends Component {
   }
 
   renderTableBody() {
-    const {
-      assignments,
-      fields,
-      history
-    } = this.props
+    const { fields, showCompleted, history } = this.props
+
+    let assignments = this.props.assignments
+
+    // If showCompleted is false, then remove all assignments that are marked
+    // as complete before rendering.
+    // Show completed can be undefined. Thus explicitly checking if false.
+    if (showCompleted === false) {
+      assignments = assignments.filter(assignment =>
+        assignment.completed !== true
+      )
+    }
 
     return _.map(assignments, object => {
       return (
@@ -252,11 +258,12 @@ class AssignmentTable extends Component {
   }
 }
 
-function mapStateToProps(state, { assignments, fields, name }) {
+function mapStateToProps(state, { assignments, fields, name, showCompleted }) {
   return {
     assignments,
     fields,
-    name
+    name,
+    showCompleted
   }
 }
 
@@ -265,7 +272,6 @@ const mapDispatchToProps = {
   completeAssignment,
   markAssignmentAsInProgress,
   markAssignmentAsIncomplete,
-  fetchPrograms,
 }
 
 export default connect(
