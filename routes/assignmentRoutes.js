@@ -137,6 +137,38 @@ module.exports = app => {
     }
   );
 
+  // PUT request to mark an assignment as incomplete
+  app.put(
+    "/api/courses/:courseId/assignments/:assignmentId/incomplete",
+    requireLogin,
+    (req, res) => {
+      const { courseId, assignmentId } = req.params;
+
+      Course.findOneAndUpdate(
+        {
+          _id: courseId,
+          "assignments._id": assignmentId
+        },
+        {
+          $set: {
+            "assignments.$.completed": false,
+            "assignments.$.inProgress": false
+          }
+        },
+        {
+          new: true
+        },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
+        }
+      );
+    }
+  );
+
   // DELETE request to delete an assignment
   app.delete(
     "/api/courses/:courseId/assignments/:assignmentId",
