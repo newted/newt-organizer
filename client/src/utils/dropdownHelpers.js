@@ -1,6 +1,6 @@
 import React from 'react'
 
-const findByComponentType = (children, component) => {
+export const findByComponentType = (children, component) => {
   const result = []
   // This is the array of result since it's possible to have multiple instances
   // of the same sub-component
@@ -22,4 +22,15 @@ const findByComponentType = (children, component) => {
   return result[0]
 }
 
-export default findByComponentType
+// This function creates an object of [assignmentId]: null which is meant to
+// denote whether the dropdown for the table row for that particular assignment
+// is supposed to be visible or not.
+export const initializeDropdownMenuState = (assignments) => {
+  const dropdownMenuState = {}
+
+  assignments.map(assignment => {
+    return dropdownMenuState[assignment._id] = false
+  })
+
+  return dropdownMenuState
+}

@@ -5,7 +5,7 @@ import Button from '../Button'
 // Styling
 import styles from './Modal.module.css'
 // Helpers
-import findByComponentType from '../../utils/findByComponentType'
+import { findByComponentType } from '../../utils/dropdownHelpers'
 
 const Header = () => null
 const Body = () => null

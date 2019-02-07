@@ -2,20 +2,11 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { allAssignmentTableFields } from './assignmentFields'
+import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
 // Components
 import AssignmentTable from './AssignmentTable'
 // Styling
 import styles from './AssignmentList.module.css'
-
-const initializeDropdownMenuState = (assignments) => {
-  const dropdownMenuState = {}
-
-  assignments.map(assignment => {
-    return dropdownMenuState[assignment._id] = false
-  })
-
-  return dropdownMenuState
-}
 
 class AssignmentList extends Component {
   state = {

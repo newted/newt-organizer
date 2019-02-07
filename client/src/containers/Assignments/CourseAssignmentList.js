@@ -2,24 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { assignmentTableFields } from './assignmentFields'
+import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
 // Components
 import Button from '../../components/Button'
 import AssignmentTable from './AssignmentTable'
 // Styling
 import styles from './CourseAssignmentList.module.css'
-
-// This function creates an object of [assignmentId]: null which is meant to
-// denote whether the dropdown for the table row for that particular assignment
-// is supposed to be visible or not.
-const initializeDropdownMenuState = (assignments) => {
-  const dropdownMenuState = {}
-
-  assignments.map(assignment => {
-    return dropdownMenuState[assignment._id] = false
-  })
-
-  return dropdownMenuState
-}
 
 class CourseAssignmentList extends Component {
   static propTypes = {

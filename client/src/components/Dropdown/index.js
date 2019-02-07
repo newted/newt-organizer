@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 // Styling
 import styles from './Dropdown.module.css'
 // Helpers
-import findByComponentType from '../../utils/findByComponentType'
+import { findByComponentType } from '../../utils/dropdownHelpers'
 
 const Menu = () => null
 const Item = () => null
