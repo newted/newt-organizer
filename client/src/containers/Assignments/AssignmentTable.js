@@ -80,9 +80,6 @@ class AssignmentTable extends Component {
 
     await deleteAssignment(courseId, assignmentId, history)
 
-    // Get new data after deleting assignment
-    await fetchPrograms()
-
     this.setState({
       showModal: false,
       currentAssignment: null
