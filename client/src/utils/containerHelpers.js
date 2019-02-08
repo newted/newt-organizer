@@ -11,24 +11,17 @@ export const statusDueDateSort = (array) => {
     switch (true) {
       case a.completed && b.completed:
         return aDate - bDate
-      case a.completed && b.inProgress:
+      // If both a and b are completed, then everytime a is completed, make
+      // the index higher, and everytime b is completed, make `a's` index higher.
+      // That is, if a is completed or b is completed, move `a` further down the
+      // array.
+      case a.completed:
         return 1
-      case a.completed && !b.completed:
-        return 1
-      case a.inProgress && b.completed:
+      case b.completed:
         return -1
-      case a.inProgress && b.inProgress:
-        return aDate - bDate
-      case a.inProgress & !b.completed:
-        return aDate - bDate
-      case !a.completed && b.completed:
-        return -1
-      case !a.completed && b.inProgress:
-        return aDate - bDate
-      case !a.completed && !b.completed:
-        return aDate - bDate
+      // Otherwise, (for in progress and/or completed) sort by date
       default:
-        return 'Default'
+        return aDate - bDate
     }
   })
 }
