@@ -1,8 +1,8 @@
-.tableContainer {
+.container {
   border: 1px solid #ccc;
   border-radius: .5rem;
   padding: 1.5rem;
-  min-width: 350px;
+  min-width: 400px;
 }
 
 .options {

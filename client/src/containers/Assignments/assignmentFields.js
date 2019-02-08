@@ -17,16 +17,43 @@ export const assignmentInputFields =  [
 ]
 
 export const assignmentTableFields = {
-  'Name': 'name',
-  'Details': 'details',
-  'Due Date': 'dateDue',
-  'Status': 'status'
+  'Name': {
+    name: 'name',
+    width: '35%'
+  },
+  'Details': {
+    name: 'details',
+    width: '40%'
+  },
+  'Due Date': {
+    name: 'dateDue',
+    width: '20%'
+  },
+  'Status': {
+    name: 'status',
+    width: '5%'
+  }
 }
 
 export const allAssignmentTableFields = {
-  'Name': 'name',
-  'Course Name': 'courseName',
-  'Details': 'details',
-  'Due Date': 'dateDue',
-  'Status': 'status'
+  'Name': {
+    name: 'name',
+    width: '25%'
+  },
+  'Course Name': {
+    name: 'courseName',
+    width: '25%'
+  },
+  'Details': {
+    name: 'details',
+    width: '30%'
+  },
+  'Due Date': {
+    name: 'dateDue',
+    width: '15%'
+  },
+  'Status': {
+    name: 'status',
+    width: '5%'
+  }
 }

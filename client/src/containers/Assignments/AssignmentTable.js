@@ -91,6 +91,7 @@ class AssignmentTable extends Component {
     return _.map(Object.keys(fields), label => (
         <th
           className={ label === 'Status' ? styles.center : null }
+          style={{ width: fields[label].width }}
           key={ label }
         >
           { label }
@@ -132,7 +133,7 @@ class AssignmentTable extends Component {
           {
             _.map(Object.keys(fields), label => {
               // Getting the object key so that info can be accessed
-              const name = fields[label]
+              const name = fields[label].name || fields[label]
 
               // Add data to each cell
               return (
@@ -218,7 +219,7 @@ class AssignmentTable extends Component {
     const { assignments, name } = this.props
 
     return (
-      <div className={ styles.tableContainer }>
+      <div className={ styles.container }>
         { assignments.length === 0
           ? <div>{ `There are no ${name}.` }</div>
           : <table>
