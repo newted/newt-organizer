@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { assignmentTableFields } from './assignmentFields'
 import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
+import { statusDueDateSort } from '../../utils/containerHelpers'
 // Components
 import Button from '../../components/Button'
 import AssignmentTable from './AssignmentTable'
@@ -111,7 +112,7 @@ class CourseAssignmentList extends Component {
         </div>
         <AssignmentTable
           fields={ assignmentTableFields }
-          assignments={ assignments }
+          assignments={ statusDueDateSort(assignments) }
           name='assignments'
           showCompleted={ this.state.showCompleted }
           dropdownVisible={ this.state.showDropdown }
