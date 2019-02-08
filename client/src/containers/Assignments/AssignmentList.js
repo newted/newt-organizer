@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { allAssignmentTableFields } from './assignmentFields'
 import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
+import { statusDueDateSort } from '../../utils/containerHelpers'
 // Components
 import Button from '../../components/Button'
 import AssignmentTable from './AssignmentTable'
@@ -121,6 +122,9 @@ function mapStateToProps({ courses }) {
       assignments.push(assignment)
     })
   })
+
+  // Sort by status and due date
+  statusDueDateSort(assignments)
 
   return {
     assignments
