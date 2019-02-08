@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
 import { deleteCourse } from '../../actions/courses'
-import { fetchPrograms }  from '../../actions/programs'
 // Components
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
@@ -28,7 +27,6 @@ class CoursePage extends Component {
       _id: PropTypes.string
     }),
     deleteCourse: PropTypes.func.isRequired,
-    fetchPrograms: PropTypes.func,
     // Connect props
     history: PropTypes.object,
     location: PropTypes.object,
@@ -37,10 +35,6 @@ class CoursePage extends Component {
 
   state = {
     showModal: false,
-  }
-
-  componentDidMount() {
-    this.props.fetchPrograms()
   }
 
   openModal = () => {
@@ -132,9 +126,4 @@ function mapStateToProps({ auth, courses }, props) {
   }
 }
 
-const mapDispatchToProps = {
-  deleteCourse,
-  fetchPrograms
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoursePage)
+export default connect(mapStateToProps, { deleteCourse })(CoursePage)

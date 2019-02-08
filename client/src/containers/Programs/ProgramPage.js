@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
-import { deleteProgram, fetchPrograms }  from '../../actions/programs'
+import { deleteProgram }  from '../../actions/programs'
 import { fetchCourses } from '../../actions/courses'
 // Components
 import Button from '../../components/Button'
@@ -27,7 +27,6 @@ class ProgramPage extends Component {
       _user: PropTypes.string
     }),
     deleteProgram: PropTypes.func.isRequired,
-    fetchPrograms: PropTypes.func,
     // Connect props
     history: PropTypes.object,
     location: PropTypes.object,
@@ -134,7 +133,6 @@ function mapStateToProps({ auth, programs }, props) {
 
 const mapDispatchToProps = {
   deleteProgram,
-  fetchPrograms,
   fetchCourses
 }
 
