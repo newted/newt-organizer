@@ -18,3 +18,19 @@
   justify-content: space-between;
   margin-bottom: 2rem;
 }
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: .5rem;
+}
+
+.completedBtn:hover {
+  border: 1px solid #48d368;
+}

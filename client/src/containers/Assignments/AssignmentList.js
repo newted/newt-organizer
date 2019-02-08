@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { allAssignmentTableFields } from './assignmentFields'
 import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
 // Components
+import Button from '../../components/Button'
 import AssignmentTable from './AssignmentTable'
 // Styling
 import styles from './AssignmentList.module.css'
@@ -72,15 +73,24 @@ class AssignmentList extends Component {
             <div className={ styles.headerContainer }>
               <h2>Your Assignments</h2>
             </div>
-            <AssignmentTable
-              fields={ allAssignmentTableFields }
-              assignments={ assignments }
-              name='Assignments'
-              showCompleted={ this.state.showCompleted }
-              dropdownVisible={ this.state.showDropdown }
-              handleOpenDropdown={ this.openDropdown }
-              setDropdownMenu={ this.setDropdownMenu }
-            />
+            <div className={ styles.tableContainer }>
+              <div className={ styles.tableOptions }>
+                <Button
+                  additionalClass={ styles.completedBtn }
+                >
+                  Show Completed
+                </Button>
+              </div>
+              <AssignmentTable
+                fields={ allAssignmentTableFields }
+                assignments={ assignments }
+                name='Assignments'
+                showCompleted={ this.state.showCompleted }
+                dropdownVisible={ this.state.showDropdown }
+                handleOpenDropdown={ this.openDropdown }
+                setDropdownMenu={ this.setDropdownMenu }
+              />
+            </div>
           </div>
         </div>
       </div>
