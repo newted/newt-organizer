@@ -23,3 +23,16 @@
 .addBtn {
   composes: addBtn from '../../styles/shared.css';
 }
+
+.completedBtn {
+  margin-right: 1rem;
+}
+
+.completedBtn:hover {
+  border: 1px solid #48d368;
+}
+
+.selected {
+  border: 1px solid #48d368;
+  color: #48d368;
+}

@@ -17,6 +17,7 @@ class CourseAssignmentList extends Component {
 
   state = {
     showDropdown: initializeDropdownMenuState(this.props.assignments),
+    showCompleted: false,
     dropdownMenu: null,
     currentDropdownId: null // Passed to closeDropdown function so it knows
   }                         // which table row dropdown to close.
@@ -75,23 +76,44 @@ class CourseAssignmentList extends Component {
     }
   }
 
+  handleShowCompleted = (e) => {
+    e.preventDefault()
+
+    this.setState((prevState) => ({
+      showCompleted: !prevState.showCompleted
+    }))
+  }
+
   render() {
     const { courseId, assignments } = this.props
+    const { showCompleted } = this.state
 
     return (
       <div className={ styles.assignmentsContainer }>
         <div className={ styles.headerContainer }>
           <h3 className={ styles.header }>Assignments</h3>
-          <Link to={{ pathname: `/courses/${courseId}/assignments/add` }}>
-            <Button additionalClass={ styles.addBtn }>
-              Add Assignment
+          <div>
+            <Button
+              additionalClass={ showCompleted
+                ? [styles.completedBtn, styles.selected].join(' ')
+                : styles.completedBtn
+              }
+              onClick={ this.handleShowCompleted }
+            >
+              Show Completed
             </Button>
-          </Link>
+            <Link to={{ pathname: `/courses/${courseId}/assignments/add` }}>
+              <Button additionalClass={ styles.addBtn }>
+                Add Assignment
+              </Button>
+            </Link>
+          </div>
         </div>
         <AssignmentTable
           fields={ assignmentTableFields }
           assignments={ assignments }
           name='assignments'
+          showCompleted={ this.state.showCompleted }
           dropdownVisible={ this.state.showDropdown }
           handleOpenDropdown={ this.openDropdown }
           setDropdownMenu={ this.setDropdownMenu }
