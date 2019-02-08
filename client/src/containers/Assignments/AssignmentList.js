@@ -63,8 +63,17 @@ class AssignmentList extends Component {
     }
   }
 
+  handleShowCompleted = (e) => {
+    e.preventDefault()
+
+    this.setState((prevState) => ({
+      showCompleted: !prevState.showCompleted
+    }))
+  }
+
   render() {
     const { assignments } = this.props
+    const { showCompleted } = this.state
 
     return (
       <div className={ styles.mainContainer }>
@@ -76,7 +85,11 @@ class AssignmentList extends Component {
             <div className={ styles.tableContainer }>
               <div className={ styles.tableOptions }>
                 <Button
-                  additionalClass={ styles.completedBtn }
+                  additionalClass={ showCompleted
+                    ? [styles.completedBtn, styles.selected].join(' ')
+                    : styles.completedBtn
+                  }
+                  onClick={ this.handleShowCompleted }
                 >
                   Show Completed
                 </Button>
