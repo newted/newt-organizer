@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
 const Program = mongoose.model("programs");
+const Course = mongoose.model("courses");
 
 module.exports = app => {
   // GET request to receive a list of user's programs
@@ -63,10 +64,23 @@ module.exports = app => {
   });
 
   // DELETE requires to delete a program
-  app.delete("/api/programs/:id", requireLogin, async (req, res) => {
-    const id = req.params.id;
+  app.delete("/api/programs/:programId", requireLogin, async (req, res) => {
+    const { programId } = req.params;
 
-    await Program.findByIdAndDelete(id, (error, program) => {
+    // Delete courses that belong to the program being deleted
+    await Course.deleteMany(
+      {
+        programId: programId
+      },
+      error => {
+        if (error) {
+          res.send(error)
+        }
+      }
+    )
+
+    // Delete the program
+    await Program.findByIdAndDelete(programId, (error, program) => {
       if (error) {
         res.send(error);
       } else {
