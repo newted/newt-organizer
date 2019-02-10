@@ -36,6 +36,19 @@
   font-weight: 600;
 }
 
+.loginBtn {
+  background-color: #38ceff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #fff;
+}
+
+.loginBtn:hover {
+  background-color: #fff;
+  color: #38ceff;
+}
+
 .logoutBtn {
   background-color: #eee;
   border: 1px solid #666;
