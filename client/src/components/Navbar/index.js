@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 // Components
@@ -24,18 +24,26 @@ class Navbar extends Component {
         return (
           <div className={ styles.navbarBtns }>
             {/* If Landing page and logged in, show 'To Dashboard' link */}
-            { this.props.theme === 'landing' && (
-              <Link to='/dashboard'>
-                <div className={ styles.toDash }>
-                  Go to Dashboard
-                </div>
-              </Link>
-            )}
-            <a href="/api/logout">
-              <Button additionalClass={ styles.logoutBtn }>
-                Logout
-              </Button>
-            </a>
+            {
+              this.props.theme === 'landing'
+              ? <Fragment>
+                  <Link to='/dashboard'>
+                    <div className={ styles.toDash }>
+                      Go to Dashboard
+                    </div>
+                  </Link>
+                  <a href="/api/logout">
+                    <Button additionalClass={ styles.loginBtn }>
+                      Log out
+                    </Button>
+                  </a>
+                </Fragment>
+              : <a href="/api/logout">
+                  <Button additionalClass={ styles.logoutBtn }>
+                    Log out
+                  </Button>
+                </a>
+            }
           </div>
         )
     }
