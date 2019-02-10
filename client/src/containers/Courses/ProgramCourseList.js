@@ -13,7 +13,7 @@ import { BookIcon } from '../../utils/icons'
 class ProgramCourseList extends Component {
   static propTypes = {
     programId: PropTypes.string.isRequired,
-    courses: PropTypes.array,
+    programCourses: PropTypes.object.isRequired,
     dispatch: PropTypes.func
   }
 
@@ -33,8 +33,17 @@ class ProgramCourseList extends Component {
     })
   }
 
+  renderNoCourses() {
+    return (
+      <div className={ styles.message }>
+        This program doesn't have any courses (yet). To add a course, click on {" "}
+        the <span className={ styles.addCourse }>Add Courses</span> button.
+      </div>
+    )
+  }
+
   render() {
-    const { programId } = this.props
+    const { programId, programCourses } = this.props
 
     return (
       <div className={ styles.courseContainer }>
@@ -47,7 +56,11 @@ class ProgramCourseList extends Component {
           </Link>
         </div>
         <div className={ styles.cardContainer }>
-          { this.renderCards() }
+          {
+            Object.keys(programCourses).length > 0
+            ? this.renderCards()
+            : this.renderNoCourses()
+          }
         </div>
       </div>
     )
