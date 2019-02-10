@@ -10,7 +10,7 @@ const Landing = () => (
     <div className={ styles.container }>
       <div className={ styles.titleContainer }>
         <h1 className={ styles.title }>newt</h1>
-        <h3 className={ styles.subtitle }>Organizing your learning</h3>
+        <h3 className={ styles.subtitle }>Organize your learning</h3>
       </div>
     </div>
   </div>
