@@ -1,0 +1,29 @@
+.container {
+  min-height: calc(100vh - 64px);
+  width: 100%;
+  background-color: #38ceff;
+  display: flex;
+  justify-content: center;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6rem;
+}
+
+.title {
+  font-size: 9rem;
+  font-family: 'Righteous', cursive;
+  letter-spacing: .2rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font-size: 1.75rem;
+  color: #efefef;
+  margin-top: 3rem;
+}

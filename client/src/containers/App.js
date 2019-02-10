@@ -12,6 +12,7 @@ import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 // Containers
 import Landing from './Landing'
+import Login from './Login'
 import Dashboard from './Dashboard'
 import ProgramList from './Programs/ProgramList'
 import AddProgram from './Programs/AddProgram'
@@ -27,7 +28,12 @@ import EditAssignment from './Assignments/EditAssignment'
 // Styling
 import styles from './App.module.css'
 
-const LandingContainer = () => <Route exact path='/' component={ Landing } />
+const LandingContainer = () => (
+  <Switch>
+    <Route exact path='/' component={ Landing } />
+    <Route exact path='/login' component={ Login } />
+  </Switch>
+)
 
 const AppContainer = () => (
   <div className={ styles.appContainer }>
@@ -81,6 +87,7 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Route exact path='/' component={ LandingContainer } />
+          <Route exact path='/login' component={ LandingContainer } />
           <Route component={ AppContainer } />
         </Switch>
       </Fragment>
