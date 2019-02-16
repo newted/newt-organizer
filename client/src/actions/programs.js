@@ -38,13 +38,24 @@ const removeProgram = (payload) => {
 
 
 export const submitProgram = (values, history) => async dispatch => {
-  // Request returns the created program
-  const res = await axios.post('/api/programs', values)
+  try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
 
-  dispatch(createProgram(res.data))
+    // Request returns the created program
+    const res = await axios.post(
+      '/api/programs',
+      values,
+      { headers: { Authorization: idToken }}
+    )
 
-  // Redirect to programs page
-  history.push('/programs')
+    dispatch(createProgram(res.data))
+
+    // Redirect to programs page
+    history.push('/programs')
+  } catch (error) {
+    console.log("Error while creating program", error)
+  }
 }
 
 export const fetchPrograms = () => async dispatch => {

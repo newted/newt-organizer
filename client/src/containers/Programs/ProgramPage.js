@@ -37,9 +37,9 @@ class ProgramPage extends Component {
     showModal: false
   }
 
-  componentDidMount() {
-    this.props.fetchCourses(this.props.programId)
-  }
+  // componentDidMount() {
+  //   this.props.fetchCourses(this.props.programId)
+  // }
 
   openModal = () => {
     this.setState({ showModal: true })
