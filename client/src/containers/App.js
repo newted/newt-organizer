@@ -76,11 +76,25 @@ const AppContainer = () => (
 class App extends Component {
   componentDidMount() {
     this.props.showLoading()
-    this.props.isAuthenticated()
+    this.props.fetchUser()
       .then(() => this.props.fetchPrograms())
       .then(() => this.props.fetchAllCourses(Object.keys(this.props.programs.items)))
       .then(() => this.props.hideLoading())
       .catch((error) => this.props.hideLoading())
+  }
+
+  // After the first render, componentDidMount is invoked and if not
+  // authenticated, then this invokation makes sure that program data is fetched
+  // as soon as the user signs in. If the user is already signed in and just,
+  // say, refreshes the page, the data is fetched in componentDidMount and this
+  // won't run since the if statement condition returns false.
+  componentDidUpdate(prevProps) {
+    // If the auth object is not exactly the same and it's not false, fetch
+    // programs
+    if (!(typeof prevProps.auth === typeof this.props.auth) && isAuthenticated()) {
+      console.log('update')
+      this.props.fetchPrograms()
+    }
   }
 
   renderContent() {
@@ -113,6 +127,7 @@ class App extends Component {
 function mapStateToProps({ auth, programs }) {
   return {
     loading: auth === null,
+    auth,
     programs
   }
 }
@@ -121,7 +136,6 @@ const mapDispatchToProps = {
   showLoading,
   hideLoading,
   fetchUser,
-  isAuthenticated,
   fetchPrograms,
   fetchAllCourses
 }

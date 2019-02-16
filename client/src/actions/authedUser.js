@@ -10,13 +10,17 @@ const setAuthedUser = (payload) => {
   }
 }
 
-export const fetchUser = () => async dispatch => {
-  const res = await axios.get('/api/current_user')
+export function isAuthenticated() {
+  const user = firebase.auth().currentUser
 
-  dispatch(setAuthedUser(res.data))
+  if (user) {
+    return true
+  } else {
+    return false
+  }
 }
 
-export const isAuthenticated = () => async dispatch => {
+export const fetchUser = () => async dispatch => {
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -55,9 +59,9 @@ export const authenticateWithGoogle = (history) => async dispatch => {
 
       // Request to create user if doesn't exist, or send back existing user
       // from Mongo DB
-      const res = await axios.post('/api/create_user', userInfo)
+      await axios.post('/api/create_user', userInfo)
 
-      dispatch(setAuthedUser(res.data))
+      dispatch(setAuthedUser(userInfo))
 
       // Redirect to dashboard
       history.push('/dashboard')
