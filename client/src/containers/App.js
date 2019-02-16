@@ -79,7 +79,7 @@ class App extends Component {
     // await this.props.fetchUser()
     this.props.isAuthenticated()
     await this.props.fetchPrograms()
-    await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
+    // await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
     await this.props.hideLoading()
   }
 

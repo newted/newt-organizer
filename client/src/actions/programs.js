@@ -1,4 +1,5 @@
 import axios from 'axios'
+import firebase from '../config/firebase'
 import _ from 'lodash'
 
 export const CREATE_PROGRAM = 'CREATE_PROGRAM'
@@ -48,7 +49,14 @@ export const submitProgram = (values, history) => async dispatch => {
 
 export const fetchPrograms = () => async dispatch => {
   try {
-    const res = await axios.get('/api/programs')
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    // Send token to server through Authorization header
+    const res = await axios.get('/api/programs', {
+      headers: { Authorization: idToken }
+    })
+
     // Sort program by date it was created
     const programs = _.sortBy(
       res.data,
