@@ -58,3 +58,9 @@ export const authenticateWithGoogle = (history) => async dispatch => {
       console.log(error)
     })
 }
+
+export const signOut = () => async dispatch => {
+  await firebase.auth().signOut()
+
+  dispatch(setAuthedUser(false))
+}
