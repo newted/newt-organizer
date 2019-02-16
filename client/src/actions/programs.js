@@ -102,13 +102,18 @@ export const updateProgram = (programId, values, history) => async dispatch => {
 
 export const deleteProgram = (programId, history) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     // Dispatching before request because it won't respond with data.
     dispatch(removeProgram(programId))
 
-    await axios.delete(`/api/programs/${programId}`)
+    await axios.delete(`/api/programs/${programId}`, {
+      headers: { Authorization: idToken }
+    })
 
     history.push('/programs')
-  } catch (err) {
-    console.log("Error while deleting program.")
+  } catch (error) {
+    console.log("Error while deleting program.", error)
   }
 }
