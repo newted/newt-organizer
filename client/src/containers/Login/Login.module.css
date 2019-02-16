@@ -4,26 +4,46 @@
   background-color: #38ceff;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.titleContainer {
+.panel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 6rem;
+  background-color: #eee;
+  border-radius: .5rem;
+  width: 90%;
+  height: 300px;
+  min-width: 200px;
+  max-width: 500px;
 }
 
-.title {
-  font-size: 9rem;
-  font-family: 'Righteous', cursive;
-  letter-spacing: .2rem;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 0;
+.panelHeader {
+  margin: 2rem 0;
+  font-size: 1.5rem;
+  color: #666;
 }
 
-.subtitle {
-  font-size: 1.75rem;
-  color: #efefef;
-  margin-top: 3rem;
+.panelBody {
+  display: flex;
+  margin: 2rem 0;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.panelBody a {
+  width: 60%;
+}
+
+.loginBtn {
+  color: #666;
+  width: 100%;
+}
+
+.loginBtn:hover {
+  background-color: rgb(221,83,71,0.15);
+  color: #dd5347;  /* Gmail colour */
+  border-color: #dd5347;
 }

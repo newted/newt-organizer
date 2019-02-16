@@ -14,13 +14,11 @@ class Navbar extends Component {
         return
       case false:
         return (
-          <a href="/auth/google">
-            <Link to='/login'>
-              <Button additionalClass={ styles.loginBtn }>
-                Sign in
-              </Button>
-            </Link>
-          </a>
+          <Link to='/login'>
+            <Button additionalClass={ styles.loginBtn }>
+              Sign in
+            </Button>
+          </Link>
         )
       default:
         return (
