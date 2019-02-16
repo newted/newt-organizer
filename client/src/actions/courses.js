@@ -1,4 +1,5 @@
 import axios from 'axios'
+import firebase from '../config/firebase'
 
 export const CREATE_COURSE = 'CREATE_COURSE'
 export const FETCH_COURSES = 'FETCH_COURSES'
@@ -42,23 +43,43 @@ const removeCourse = (payload) => {
 }
 
 export const submitCourse = (programId, values, history) => async dispatch => {
-  const res = await axios.post(`/api/programs/${programId}/course`, values)
+  try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
 
-  const payload = {
-    course: res.data,
-    programId
+    const res = await axios.post(
+      `/api/programs/${programId}/course`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
+
+    const payload = {
+      course: res.data,
+      programId
+    }
+
+    dispatch(createCourse(payload))
+
+    // Redirect to the program page
+    history.push(`/programs/${programId}`)
+  } catch (error) {
+    console.log("Error while creating course", error)
   }
-
-  dispatch(createCourse(payload))
-
-  // Redirect to the program page
-  history.push(`/programs/${programId}`)
 }
 
 export const fetchCourses = (programId) => async dispatch => {
-  const res = await axios.get(`/api/programs/${programId}`)
+  try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
 
-  dispatch(getCourses(res.data))
+    const res = await axios.get(`/api/programs/${programId}`, {
+      headers: { Authorization: idToken }
+    })
+
+    dispatch(getCourses(res.data))
+  } catch (error) {
+    console.log("Error while fetching courses for this program:", error)
+  }
 }
 
 export const fetchAllCourses = programIds => async dispatch => {

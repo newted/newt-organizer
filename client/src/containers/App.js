@@ -74,13 +74,12 @@ const AppContainer = () => (
 )
 
 class App extends Component {
-  async componentDidMount() {
-    await this.props.showLoading()
-    // await this.props.fetchUser()
+  componentDidMount() {
+    this.props.showLoading()
     this.props.isAuthenticated()
-    await this.props.fetchPrograms()
+    this.props.fetchPrograms()
     // await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-    await this.props.hideLoading()
+    this.props.hideLoading()
   }
 
   renderContent() {
