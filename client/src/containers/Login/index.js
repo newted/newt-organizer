@@ -11,7 +11,7 @@ import styles from './Login.module.css'
 class Login extends Component {
   render() {
     const { history, authenticateWithGoogle } = this.props
-    
+
     return (
       <div>
         <Navbar theme='landing' />
@@ -21,18 +21,11 @@ class Login extends Component {
             <div className={ styles.panelBody }>
               <ul>
                 <li className={ styles.providerBtn }>
-                  <a href="/auth/google">
-                    <Button additionalClass={ `${styles.loginBtn} ${styles.googleBtn}` }>
-                      Sign In with Google
-                    </Button>
-                  </a>
-                </li>
-                <li className={ styles.providerBtn }>
                   <Button
-                    additionalClass={ `${styles.loginBtn} ${styles.firebaseBtn}` }
+                    additionalClass={ `${styles.loginBtn} ${styles.googleBtn}` }
                     onClick={ () => authenticateWithGoogle(history) }
                   >
-                    Sign In With Google - Firebase
+                    Sign In With Google
                   </Button>
                 </li>
               </ul>

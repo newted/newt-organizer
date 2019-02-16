@@ -50,9 +50,3 @@
   color: #dd5347;  /* Gmail colour */
   border-color: #dd5347;
 }
-
-.firebaseBtn:hover {
-  background-color: rgb(255, 202, 40, 0.15);
-  color: #ffa000;
-  border-color: #ffa000;
-}
