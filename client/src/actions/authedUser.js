@@ -16,7 +16,7 @@ export const fetchUser = () => async dispatch => {
   dispatch(setAuthedUser(res.data))
 }
 
-export const authenticateWithGoogle = () => async dispatch => {
+export const authenticateWithGoogle = (history) => async dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider()
 
@@ -36,6 +36,9 @@ export const authenticateWithGoogle = () => async dispatch => {
       const res = await axios.post('/api/create_user', userInfo)
 
       dispatch(setAuthedUser(res.data))
+
+      // Redirect to dashboard
+      history.push('/dashboard')
     })
     .catch(error => {
       console.log(error)
