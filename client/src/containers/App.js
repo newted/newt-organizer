@@ -78,7 +78,7 @@ class App extends Component {
     this.props.showLoading()
     this.props.isAuthenticated()
     this.props.fetchPrograms()
-    // await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
+    this.props.fetchAllCourses(Object.keys(this.props.programs.items))
     this.props.hideLoading()
   }
 

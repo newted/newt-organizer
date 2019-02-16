@@ -84,11 +84,18 @@ export const fetchCourses = (programId) => async dispatch => {
 
 export const fetchAllCourses = programIds => async dispatch => {
   try {
-    const res = await axios.post('/api/programs/courses/all', { programIds })
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    const res = await axios.post(
+      '/api/programs/courses/all',
+      { programIds },
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(getAllCourses(res.data))
-  } catch (err) {
-    console.log('Error fetching courses: ', err)
+  } catch (error) {
+    console.log('Error fetching all courses: ', error)
   }
 }
 
