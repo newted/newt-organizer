@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading'
 import LoadingBar from 'react-redux-loading'
 // API
-import { fetchUser } from '../actions/authedUser'
+import { fetchUser, isAuthenticated } from '../actions/authedUser'
 import { fetchPrograms } from '../actions/programs'
 import { fetchAllCourses } from '../actions/courses'
 // Components
@@ -76,7 +76,8 @@ const AppContainer = () => (
 class App extends Component {
   async componentDidMount() {
     await this.props.showLoading()
-    await this.props.fetchUser()
+    // await this.props.fetchUser()
+    this.props.isAuthenticated()
     await this.props.fetchPrograms()
     await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
     await this.props.hideLoading()
@@ -120,6 +121,7 @@ const mapDispatchToProps = {
   showLoading,
   hideLoading,
   fetchUser,
+  isAuthenticated,
   fetchPrograms,
   fetchAllCourses
 }

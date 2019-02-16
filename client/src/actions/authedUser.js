@@ -16,6 +16,20 @@ export const fetchUser = () => async dispatch => {
   dispatch(setAuthedUser(res.data))
 }
 
+export const isAuthenticated = () => async dispatch => {
+  await firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      dispatch(setAuthedUser({
+        _id: user.uid,
+        displayName: user.displayName,
+        email: user.email
+      }))
+    } else {
+      dispatch(setAuthedUser(false))
+    }
+  })
+}
+
 export const authenticateWithGoogle = (history) => async dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider()
