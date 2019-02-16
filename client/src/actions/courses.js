@@ -106,13 +106,20 @@ export const updateCourse = (
   history
 ) => async dispatch => {
   try {
-    const res = await axios.put(`/api/courses/${courseId}/edit`, values)
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    const res = await axios.put(
+      `/api/courses/${courseId}/edit`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(putCourse(res.data))
 
     history.push(`/programs/${programId}`)
-  } catch (err) {
-    console.log("Error while updating course.")
+  } catch (error) {
+    console.log("Error while updating course.", error)
   }
 }
 
@@ -122,6 +129,9 @@ export const deleteCourse = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const payload = {
       programId,
       courseId
@@ -130,7 +140,10 @@ export const deleteCourse = (
     // Dispatching before request because it won't respond with data.
     dispatch(removeCourse(payload))
 
-    await axios.delete(`/api/programs/${programId}/courses/${courseId}/delete`)
+    await axios.delete(
+      `/api/programs/${programId}/courses/${courseId}/delete`,
+      { headers: { Authorization: idToken }}
+    )
 
     history.push(`/programs/${programId}`)
   } catch (err) {
