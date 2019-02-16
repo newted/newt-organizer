@@ -1,4 +1,5 @@
 import axios from 'axios'
+import firebase from '../config/firebase'
 
 export const CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT'
 export const UPDATE_ASSIGNMENT = 'UPDATE_COURSE'
@@ -55,13 +56,20 @@ export const submitAssignment = (
   history
 ) => async dispatch => {
   try {
-    const res = await axios.post(`/api/courses/${courseId}/assignment`, values)
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    const res = await axios.post(
+      `/api/courses/${courseId}/assignment`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(createAssignment(res.data))
 
     history.goBack()
-  } catch (err) {
-    console.log("Error while creating assignment.")
+  } catch (error) {
+    console.log("Error while creating assignment.", error)
   }
 }
 
@@ -72,16 +80,20 @@ export const updateAssignment = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const res = await axios.put(
       `/api/courses/${courseId}/assignments/${assignmentId}/edit`,
-      values
+      values,
+      { headers: { Authorization: idToken }}
     )
 
     dispatch(putAssignment(res.data))
 
     history.goBack()
-  } catch (err) {
-    console.log("Error while updating assignment", err)
+  } catch (error) {
+    console.log("Error while updating assignment", error)
   }
 }
 
@@ -91,8 +103,12 @@ export const deleteAssignment = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const res = await axios.delete(
-      `/api/courses/${courseId}/assignments/${assignmentId}`
+      `/api/courses/${courseId}/assignments/${assignmentId}`,
+      { headers: { Authorization: idToken }}
     )
 
     dispatch(removeAssignment(res.data))
@@ -107,8 +123,13 @@ export const completeAssignment = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const res = await axios.put(
-      `/api/courses/${courseId}/assignments/${assignmentId}/complete`
+      `/api/courses/${courseId}/assignments/${assignmentId}/complete`,
+      null,
+      { headers: { Authorization: idToken }}
     )
 
     dispatch(markAsComplete(res.data))
@@ -123,13 +144,18 @@ export const markAssignmentAsInProgress = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const res = await axios.put(
-      `/api/courses/${courseId}/assignments/${assignmentId}/progress`
+      `/api/courses/${courseId}/assignments/${assignmentId}/progress`,
+      null,
+      { headers: { Authorization: idToken }}
     )
 
     dispatch(markAsInProgress(res.data))
-  } catch (err) {
-    console.log("Error while marking assignment as in progress", err)
+  } catch (error) {
+    console.log("Error while marking assignment as in progress", error)
   }
 }
 
@@ -139,12 +165,17 @@ export const markAssignmentAsIncomplete = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const res = await axios.put(
-      `/api/courses/${courseId}/assignments/${assignmentId}/incomplete`
+      `/api/courses/${courseId}/assignments/${assignmentId}/incomplete`,
+      null,
+      { headers: { Authorization: idToken }}
     )
 
     dispatch(markAsIncomplete(res.data))
-  } catch (err) {
-    console.log("Error while marking assignment as incomplete", err)
+  } catch (error) {
+    console.log("Error while marking assignment as incomplete", error)
   }
 }
