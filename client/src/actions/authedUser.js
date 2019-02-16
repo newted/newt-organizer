@@ -17,16 +17,22 @@ export const fetchUser = () => async dispatch => {
 }
 
 export const isAuthenticated = () => async dispatch => {
-  await firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      dispatch(setAuthedUser({
-        _id: user.uid,
-        displayName: user.displayName,
-        email: user.email
-      }))
-    } else {
-      dispatch(setAuthedUser(false))
-    }
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        resolve(
+          dispatch(
+            setAuthedUser({
+              _id: user.uid,
+              displayName: user.displayName,
+              email: user.email
+            })
+          )
+        )
+      } else {
+        resolve(dispatch(setAuthedUser(false)))
+      }
+    })
   })
 }
 

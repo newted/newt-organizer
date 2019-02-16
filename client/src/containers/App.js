@@ -77,9 +77,9 @@ class App extends Component {
   componentDidMount() {
     this.props.showLoading()
     this.props.isAuthenticated()
-    this.props.fetchPrograms()
-    this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-    this.props.hideLoading()
+      .then(() => this.props.fetchPrograms())
+      .then(() => this.props.fetchAllCourses(Object.keys(this.props.programs.items)))
+      .then(() => this.props.hideLoading())
   }
 
   renderContent() {
