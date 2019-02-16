@@ -80,6 +80,7 @@ class App extends Component {
       .then(() => this.props.fetchPrograms())
       .then(() => this.props.fetchAllCourses(Object.keys(this.props.programs.items)))
       .then(() => this.props.hideLoading())
+      .catch((error) => this.props.hideLoading())
   }
 
   renderContent() {

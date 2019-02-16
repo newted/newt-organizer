@@ -30,7 +30,9 @@ export const isAuthenticated = () => async dispatch => {
           )
         )
       } else {
-        resolve(dispatch(setAuthedUser(false)))
+        // resolve(dispatch(setAuthedUser(false)))
+        dispatch(setAuthedUser(false))
+        reject("Not authenticated.")
       }
     })
   })
