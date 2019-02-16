@@ -75,21 +75,28 @@ export const fetchPrograms = () => async dispatch => {
     )
 
     dispatch(getPrograms(programs))
-  } catch (err) {
-    console.log("Error while fetching programs.")
+  } catch (error) {
+    console.log("Error while fetching programs.", error)
   }
 }
 
 export const updateProgram = (programId, values, history) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     // Request returns updated program
-    const res = await axios.put(`/api/programs/${programId}/edit`, values)
+    const res = await axios.put(
+      `/api/programs/${programId}/edit`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(putProgram(res.data))
 
     history.push('/programs')
-  } catch (err) {
-    console.log("Error while updating program.")
+  } catch (error) {
+    console.log("Error while updating program.", error)
   }
 }
 
