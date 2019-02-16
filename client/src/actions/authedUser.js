@@ -21,10 +21,21 @@ export const authenticateWithGoogle = () => async dispatch => {
   const provider = new firebase.auth.GoogleAuthProvider()
 
   firebase.auth().signInWithPopup(provider)
-    .then(result => {
+    .then(async result => {
       const user = result.user
 
-      dispatch(setAuthedUser(user))
+      // Take only currently necessary info from user object
+      const userInfo = {
+        _id: user.uid,
+        displayName: user.displayName,
+        email: user.email
+      }
+
+      // Request to create user if doesn't exist, or send back existing user
+      // from Mongo DB
+      const res = await axios.post('/api/create_user', userInfo)
+
+      dispatch(setAuthedUser(res.data))
     })
     .catch(error => {
       console.log(error)
