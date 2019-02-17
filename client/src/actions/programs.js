@@ -2,10 +2,24 @@ import axios from 'axios'
 import firebase from '../config/firebase'
 import _ from 'lodash'
 
+export const REQUEST_PROGRAMS = 'REQUEST_PROGRAMS'
+export const RESOLVE_PROGRAMS = 'RESOLVE_PROGRAMS'
 export const CREATE_PROGRAM = 'CREATE_PROGRAM'
 export const FETCH_PROGRAMS = 'FETCH_PROGRAMS'
 export const UPDATE_PROGRAM = 'UPDATE_PROGRAM'
 export const DELETE_PROGRAM = 'DELETE_PROGRAM'
+
+const requestPrograms = () => {
+  return {
+    type: REQUEST_PROGRAMS
+  }
+}
+
+const resolvePrograms = () => {
+  return {
+    type: RESOLVE_PROGRAMS
+  }
+}
 
 const createProgram = (payload) => {
   return {
@@ -39,6 +53,7 @@ const removeProgram = (payload) => {
 
 export const submitProgram = (values, history) => async dispatch => {
   try {
+    dispatch(requestPrograms())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -54,12 +69,14 @@ export const submitProgram = (values, history) => async dispatch => {
     // Redirect to programs page
     history.push('/programs')
   } catch (error) {
+    dispatch(resolvePrograms())
     console.log("Error while creating program", error)
   }
 }
 
 export const fetchPrograms = () => async dispatch => {
   try {
+    dispatch(requestPrograms())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -76,12 +93,14 @@ export const fetchPrograms = () => async dispatch => {
 
     dispatch(getPrograms(programs))
   } catch (error) {
+    dispatch(resolvePrograms())
     console.log("Error while fetching programs.", error)
   }
 }
 
 export const updateProgram = (programId, values, history) => async dispatch => {
   try {
+    dispatch(requestPrograms())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -96,12 +115,14 @@ export const updateProgram = (programId, values, history) => async dispatch => {
 
     history.push('/programs')
   } catch (error) {
+    dispatch(resolvePrograms())
     console.log("Error while updating program.", error)
   }
 }
 
 export const deleteProgram = (programId, history) => async dispatch => {
   try {
+    dispatch(requestPrograms())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -114,6 +135,7 @@ export const deleteProgram = (programId, history) => async dispatch => {
 
     history.push('/programs')
   } catch (error) {
+    dispatch(resolvePrograms())
     console.log("Error while deleting program.", error)
   }
 }

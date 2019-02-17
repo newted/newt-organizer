@@ -1,4 +1,6 @@
 import {
+  REQUEST_PROGRAMS,
+  RESOLVE_PROGRAMS,
   CREATE_PROGRAM,
   FETCH_PROGRAMS,
   UPDATE_PROGRAM,
@@ -12,14 +14,26 @@ import {
 
 export default function (
   state = {
+    isFetching: false,
     items: {}
   },
   action
 ) {
   switch(action.type) {
+    case REQUEST_PROGRAMS:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case RESOLVE_PROGRAMS:
+      return {
+        ...state,
+        isFetching: false
+      }
     case CREATE_PROGRAM:
       return {
         ...state,
+        isFetching: false,
         items: {
           ...state.items,
           [action.payload._id]: action.payload
@@ -28,11 +42,13 @@ export default function (
     case FETCH_PROGRAMS:
       return {
         ...state,
+        isFetching: false,
         items: dataArrayToObject(action.payload)
       }
     case UPDATE_PROGRAM:
       return {
         ...state,
+        isFetching: false,
         items: {
           ...state.items,
           [action.payload._id]: action.payload
@@ -41,6 +57,7 @@ export default function (
     case DELETE_PROGRAM:
       return {
         ...state,
+        isFetching: false,
         items: deleteItemFromObject(state.items, action.payload)
       }
     case CREATE_COURSE:
