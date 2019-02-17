@@ -11,9 +11,7 @@ import styles from './Navbar.module.css'
 class Navbar extends Component {
   // Render Login or Logout based on authentication state
   renderButtons() {
-    switch(this.props.auth) {
-      case null:
-        return
+    switch(this.props.auth.exists) {
       case false:
         return (
           <Link to='/login'>

@@ -48,7 +48,7 @@ class CoursePage extends Component {
   render() {
     const { programId, course, history, deleteCourse } = this.props
     // Redirect to Landing page if not authenticated
-    if(!this.props.auth) {
+    if (!this.props.auth.exists) {
       return <Redirect to='/' />
     }
 

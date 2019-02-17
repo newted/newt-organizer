@@ -1,7 +1,15 @@
 import axios from 'axios'
 import firebase from '../config/firebase'
 
+export const REQUEST_SIGN_IN_USER = 'REQUEST_SIGN_IN_USER'
 export const SET_AUTHED_USER = 'SET_AUTHED_USER'
+export const REMOVE_AUTHED_USER = 'REMOVE_AUTHED_USER'
+
+const requestSignInUser = () => {
+  return {
+    type: REQUEST_SIGN_IN_USER
+  }
+}
 
 const setAuthedUser = (payload) => {
   return {
@@ -9,6 +17,13 @@ const setAuthedUser = (payload) => {
     payload
   }
 }
+
+const removeAuthedUser = () => {
+  return {
+    type: REMOVE_AUTHED_USER
+  }
+}
+
 
 export function isAuthenticated() {
   const user = firebase.auth().currentUser
@@ -22,6 +37,7 @@ export function isAuthenticated() {
 
 export const fetchUser = () => async dispatch => {
   return new Promise((resolve, reject) => {
+    dispatch(requestSignInUser())
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         resolve(
@@ -34,8 +50,7 @@ export const fetchUser = () => async dispatch => {
           )
         )
       } else {
-        // resolve(dispatch(setAuthedUser(false)))
-        dispatch(setAuthedUser(false))
+        dispatch(removeAuthedUser())
         reject("Not authenticated.")
       }
     })
@@ -45,6 +60,8 @@ export const fetchUser = () => async dispatch => {
 export const authenticateWithGoogle = (history) => async dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider()
+
+  dispatch(requestSignInUser())
 
   firebase.auth().signInWithPopup(provider)
     .then(async result => {
@@ -67,6 +84,7 @@ export const authenticateWithGoogle = (history) => async dispatch => {
       history.push('/dashboard')
     })
     .catch(error => {
+      dispatch(removeAuthedUser())
       console.log(error)
     })
 }
@@ -74,5 +92,5 @@ export const authenticateWithGoogle = (history) => async dispatch => {
 export const signOut = () => async dispatch => {
   await firebase.auth().signOut()
 
-  dispatch(setAuthedUser(false))
+  dispatch(removeAuthedUser())
 }

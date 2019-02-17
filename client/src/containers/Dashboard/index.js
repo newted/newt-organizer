@@ -14,6 +14,10 @@ class Dashboard extends Component {
     match: PropTypes.object
   }
 
+  componentDidMount() {
+
+  }
+
   renderMessage() {
     const programLink = (
       <Link to="/programs" className={styles.link}>Programs</Link>
@@ -47,7 +51,9 @@ class Dashboard extends Component {
 
   render() {
     // Redirect to Landing page if not authenticated
-    if(!this.props.auth) {
+    if (!this.props.auth.exists && !this.props.auth.isFetching) {
+      console.log(this.props.auth)
+      console.log('Redirecting...')
       return <Redirect to='/' />
     }
 

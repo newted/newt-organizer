@@ -92,7 +92,6 @@ class App extends Component {
     // If the auth object is not exactly the same and it's not false, fetch
     // programs
     if (!(typeof prevProps.auth === typeof this.props.auth) && isAuthenticated()) {
-      console.log('update')
       this.props.fetchPrograms()
     }
   }
@@ -126,7 +125,7 @@ class App extends Component {
 
 function mapStateToProps({ auth, programs }) {
   return {
-    loading: auth === null,
+    loading: auth.isFetching,
     auth,
     programs
   }
