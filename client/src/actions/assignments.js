@@ -1,5 +1,6 @@
 import axios from 'axios'
 import firebase from '../config/firebase'
+import { requestCourses, resolveCourses } from './courses'
 
 export const CREATE_ASSIGNMENT = 'CREATE_ASSIGNMENT'
 export const UPDATE_ASSIGNMENT = 'UPDATE_COURSE'
@@ -56,6 +57,7 @@ export const submitAssignment = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -69,6 +71,7 @@ export const submitAssignment = (
 
     history.goBack()
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while creating assignment.", error)
   }
 }
@@ -80,6 +83,7 @@ export const updateAssignment = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -93,6 +97,7 @@ export const updateAssignment = (
 
     history.goBack()
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while updating assignment", error)
   }
 }
@@ -103,6 +108,7 @@ export const deleteAssignment = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -113,6 +119,7 @@ export const deleteAssignment = (
 
     dispatch(removeAssignment(res.data))
   } catch (err) {
+    dispatch(resolveCourses())
     console.log("Error while deleting the assignment", err);
   }
 }
@@ -123,6 +130,7 @@ export const completeAssignment = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -134,6 +142,7 @@ export const completeAssignment = (
 
     dispatch(markAsComplete(res.data))
   } catch (err) {
+    dispatch(resolveCourses())
     console.log("Error while marking assignment as complete", err)
   }
 }
@@ -144,6 +153,7 @@ export const markAssignmentAsInProgress = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -155,6 +165,7 @@ export const markAssignmentAsInProgress = (
 
     dispatch(markAsInProgress(res.data))
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while marking assignment as in progress", error)
   }
 }
@@ -165,6 +176,7 @@ export const markAssignmentAsIncomplete = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -176,6 +188,7 @@ export const markAssignmentAsIncomplete = (
 
     dispatch(markAsIncomplete(res.data))
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while marking assignment as incomplete", error)
   }
 }

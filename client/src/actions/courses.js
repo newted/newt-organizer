@@ -1,11 +1,25 @@
 import axios from 'axios'
 import firebase from '../config/firebase'
 
+export const REQUEST_COURSES = 'REQUEST_COURSES'
+export const RESOLVE_COURSES = 'RESOLVE_COURSES'
 export const CREATE_COURSE = 'CREATE_COURSE'
 export const FETCH_COURSES = 'FETCH_COURSES'
 export const FETCH_ALL_COURSES = 'FETCH_ALL_COURSES'
 export const UPDATE_COURSE = 'UPDATE_COURSE'
 export const DELETE_COURSE = 'DELETE_COURSE'
+
+export const requestCourses = () => {
+  return {
+    type: REQUEST_COURSES
+  }
+}
+
+export const resolveCourses = () => {
+  return {
+    type: RESOLVE_COURSES
+  }
+}
 
 const createCourse = (payload) => {
   return {
@@ -42,8 +56,10 @@ const removeCourse = (payload) => {
   }
 }
 
+
 export const submitCourse = (programId, values, history) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -63,12 +79,14 @@ export const submitCourse = (programId, values, history) => async dispatch => {
     // Redirect to the program page
     history.push(`/programs/${programId}`)
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while creating course", error)
   }
 }
 
 export const fetchCourses = (programId) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -78,12 +96,14 @@ export const fetchCourses = (programId) => async dispatch => {
 
     dispatch(getCourses(res.data))
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while fetching courses for this program:", error)
   }
 }
 
 export const fetchAllCourses = programIds => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -95,6 +115,7 @@ export const fetchAllCourses = programIds => async dispatch => {
 
     dispatch(getAllCourses(res.data))
   } catch (error) {
+    dispatch(resolveCourses())
     console.log('Error fetching all courses: ', error)
   }
 }
@@ -106,6 +127,7 @@ export const updateCourse = (
   history
 ) => async dispatch => {
   try {
+    dispatch(requestCourses())
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true)
 
@@ -119,6 +141,7 @@ export const updateCourse = (
 
     history.push(`/programs/${programId}`)
   } catch (error) {
+    dispatch(resolveCourses())
     console.log("Error while updating course.", error)
   }
 }
