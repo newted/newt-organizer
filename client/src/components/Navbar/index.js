@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+// API
+import { signOut } from '../../actions/authedUser'
 // Components
 import Button from '../Button'
 // Styling
@@ -9,9 +11,7 @@ import styles from './Navbar.module.css'
 class Navbar extends Component {
   // Render Login or Logout based on authentication state
   renderButtons() {
-    switch(this.props.auth) {
-      case null:
-        return
+    switch(this.props.auth.exists) {
       case false:
         return (
           <Link to='/login'>
@@ -32,17 +32,19 @@ class Navbar extends Component {
                       Go to Dashboard
                     </div>
                   </Link>
-                  <a href="/api/logout">
-                    <Button additionalClass={ styles.loginBtn }>
-                      Log out
-                    </Button>
-                  </a>
-                </Fragment>
-              : <a href="/api/logout">
-                  <Button additionalClass={ styles.logoutBtn }>
+                  <Button
+                    additionalClass={ styles.loginBtn }
+                    onClick={ this.props.signOut }
+                  >
                     Log out
                   </Button>
-                </a>
+                </Fragment>
+              : <Button
+                  additionalClass={ styles.logoutBtn }
+                  onClick={ this.props.signOut }
+                >
+                  Log out
+                </Button>
             }
           </div>
         )
@@ -83,4 +85,4 @@ function mapStateToProps({ auth }, { theme }) {
   }
 }
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, { signOut })(Navbar)

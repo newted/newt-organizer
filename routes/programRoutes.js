@@ -9,7 +9,7 @@ module.exports = app => {
   app.get("/api/programs", requireLogin, async (req, res) => {
     // Database query to get user's programs
     const programs = await Program.find({
-      _user: req.user.id
+      _user: req.user.uid
     });
 
     // Send back user's programs
@@ -26,7 +26,7 @@ module.exports = app => {
       name,
       shortname,
       institution,
-      _user: req.user.id,
+      _user: req.user.uid,
       dateCreated: Date.now()
     });
 

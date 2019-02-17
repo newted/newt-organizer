@@ -1,10 +1,25 @@
 import axios from 'axios'
+import firebase from '../config/firebase'
 
+export const REQUEST_COURSES = 'REQUEST_COURSES'
+export const RESOLVE_COURSES = 'RESOLVE_COURSES'
 export const CREATE_COURSE = 'CREATE_COURSE'
 export const FETCH_COURSES = 'FETCH_COURSES'
 export const FETCH_ALL_COURSES = 'FETCH_ALL_COURSES'
 export const UPDATE_COURSE = 'UPDATE_COURSE'
 export const DELETE_COURSE = 'DELETE_COURSE'
+
+export const requestCourses = () => {
+  return {
+    type: REQUEST_COURSES
+  }
+}
+
+export const resolveCourses = () => {
+  return {
+    type: RESOLVE_COURSES
+  }
+}
 
 const createCourse = (payload) => {
   return {
@@ -41,33 +56,67 @@ const removeCourse = (payload) => {
   }
 }
 
+
 export const submitCourse = (programId, values, history) => async dispatch => {
-  const res = await axios.post(`/api/programs/${programId}/course`, values)
+  try {
+    dispatch(requestCourses())
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
 
-  const payload = {
-    course: res.data,
-    programId
+    const res = await axios.post(
+      `/api/programs/${programId}/course`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
+
+    const payload = {
+      course: res.data,
+      programId
+    }
+
+    dispatch(createCourse(payload))
+
+    // Redirect to the program page
+    history.push(`/programs/${programId}`)
+  } catch (error) {
+    dispatch(resolveCourses())
+    console.log("Error while creating course", error)
   }
-
-  dispatch(createCourse(payload))
-
-  // Redirect to the program page
-  history.push(`/programs/${programId}`)
 }
 
 export const fetchCourses = (programId) => async dispatch => {
-  const res = await axios.get(`/api/programs/${programId}`)
+  try {
+    dispatch(requestCourses())
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
 
-  dispatch(getCourses(res.data))
+    const res = await axios.get(`/api/programs/${programId}`, {
+      headers: { Authorization: idToken }
+    })
+
+    dispatch(getCourses(res.data))
+  } catch (error) {
+    dispatch(resolveCourses())
+    console.log("Error while fetching courses for this program:", error)
+  }
 }
 
 export const fetchAllCourses = programIds => async dispatch => {
   try {
-    const res = await axios.post('/api/programs/courses/all', { programIds })
+    dispatch(requestCourses())
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    const res = await axios.post(
+      '/api/programs/courses/all',
+      { programIds },
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(getAllCourses(res.data))
-  } catch (err) {
-    console.log('Error fetching courses: ', err)
+  } catch (error) {
+    dispatch(resolveCourses())
+    console.log('Error fetching all courses: ', error)
   }
 }
 
@@ -78,13 +127,22 @@ export const updateCourse = (
   history
 ) => async dispatch => {
   try {
-    const res = await axios.put(`/api/courses/${courseId}/edit`, values)
+    dispatch(requestCourses())
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
+    const res = await axios.put(
+      `/api/courses/${courseId}/edit`,
+      values,
+      { headers: { Authorization: idToken }}
+    )
 
     dispatch(putCourse(res.data))
 
     history.push(`/programs/${programId}`)
-  } catch (err) {
-    console.log("Error while updating course.")
+  } catch (error) {
+    dispatch(resolveCourses())
+    console.log("Error while updating course.", error)
   }
 }
 
@@ -94,6 +152,9 @@ export const deleteCourse = (
   history
 ) => async dispatch => {
   try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true)
+
     const payload = {
       programId,
       courseId
@@ -102,7 +163,10 @@ export const deleteCourse = (
     // Dispatching before request because it won't respond with data.
     dispatch(removeCourse(payload))
 
-    await axios.delete(`/api/programs/${programId}/courses/${courseId}/delete`)
+    await axios.delete(
+      `/api/programs/${programId}/courses/${courseId}/delete`,
+      { headers: { Authorization: idToken }}
+    )
 
     history.push(`/programs/${programId}`)
   } catch (err) {

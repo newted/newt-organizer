@@ -5,6 +5,8 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 import _ from 'lodash'
+// API
+import { fetchAllCourses } from '../../actions/courses'
 // Components
 import Card from '../../components/Card'
 // Styling
@@ -21,6 +23,10 @@ class CourseList extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.fetchAllCourses(Object.keys(this.props.programs.items))
   }
 
   renderCards(programId, courseList) {
@@ -73,7 +79,7 @@ class CourseList extends Component {
 
   render() {
     // Redirect to Landing page if not authenticated
-    if(!this.props.auth) {
+    if (!this.props.auth.exists) {
       return <Redirect to='/' />
     }
 
@@ -100,4 +106,4 @@ function mapStateToProps({ auth, programs, courses }) {
   }
 }
 
-export default connect(mapStateToProps)(CourseList)
+export default connect(mapStateToProps, { fetchAllCourses })(CourseList)

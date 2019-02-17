@@ -1,4 +1,6 @@
 import {
+  REQUEST_COURSES,
+  RESOLVE_COURSES,
   CREATE_COURSE,
   FETCH_COURSES,
   FETCH_ALL_COURSES,
@@ -20,14 +22,26 @@ import {
 
 export default function (
   state = {
+    isFetching: false,
     items: {}
   },
   action
 ) {
   switch(action.type) {
+    case REQUEST_COURSES:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case RESOLVE_COURSES:
+      return {
+        ...state,
+        isFetching: false
+      }
     case CREATE_COURSE:
       return {
         ...state,
+        isFetching: false,
         items: {
           ...state.items,
           [action.payload.course._id]: action.payload.course
@@ -36,16 +50,19 @@ export default function (
     case FETCH_COURSES:
       return {
         ...state,
+        isFetching: false,
         items: Object.assign({}, state.items, dataArrayToObject(action.payload))
       }
     case FETCH_ALL_COURSES:
       return {
         ...state,
+        isFetching: false,
         items: dataArrayToObject(action.payload)
       }
     case DELETE_COURSE:
       return {
         ...state,
+        isFetching: false,
         items: deleteItemFromObject(state.items, action.payload.courseId)
       }
     case UPDATE_COURSE:
@@ -57,6 +74,7 @@ export default function (
     case DELETE_ASSIGNMENT:
       return {
         ...state,
+        isFetching: false,
         items: {
           ...state.items,
           [action.payload._id]: action.payload

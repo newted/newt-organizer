@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { allAssignmentTableFields } from './assignmentFields'
 import { initializeDropdownMenuState } from '../../utils/dropdownHelpers'
 import { statusDueDateSort } from '../../utils/containerHelpers'
@@ -73,6 +74,11 @@ class AssignmentList extends Component {
   }
 
   render() {
+    // Redirect to Landing page if not authenticated
+    if (!this.props.auth.exists) {
+      return <Redirect to='/' />
+    }
+
     const { assignments } = this.props
     const { showCompleted } = this.state
 
@@ -112,7 +118,7 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ courses }) {
+function mapStateToProps({ courses, auth }) {
   const assignments = []
 
   _.forEach(courses.items, course => {
@@ -127,7 +133,8 @@ function mapStateToProps({ courses }) {
   statusDueDateSort(assignments)
 
   return {
-    assignments
+    assignments,
+    auth
   }
 }
 

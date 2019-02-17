@@ -13,6 +13,9 @@ require("./models/Course");
 // Require passport (authentication)
 require("./services/passport");
 
+// Require firebase admin initialization
+require("./services/firebase-admin");
+
 // Connect to MongoDB
 mongoose.connect(
   keys.mongoURI,

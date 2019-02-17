@@ -33,8 +33,6 @@ class ProgramForm extends Component {
   render() {
     const { handleSubmit, onSubmit, history } = this.props
 
-    console.log(this.props)
-
     return (
       <div className={ styles.formContainer }>
         <Form

@@ -22,7 +22,7 @@ class AddAssignment extends Component {
 
   render() {
     // Redirect to Landing page if not authenticated
-    if(!this.props.auth) {
+    if (!this.props.auth.exists) {
       return <Redirect to='/' />
     }
 

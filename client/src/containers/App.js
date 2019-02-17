@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading'
 import LoadingBar from 'react-redux-loading'
 // API
-import { fetchUser } from '../actions/authedUser'
+import { fetchUser, isAuthenticated } from '../actions/authedUser'
 import { fetchPrograms } from '../actions/programs'
 import { fetchAllCourses } from '../actions/courses'
 // Components
@@ -74,12 +74,27 @@ const AppContainer = () => (
 )
 
 class App extends Component {
-  async componentDidMount() {
-    await this.props.showLoading()
-    await this.props.fetchUser()
-    await this.props.fetchPrograms()
-    await this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-    await this.props.hideLoading()
+  componentDidMount() {
+    this.props.showLoading()
+    this.props.fetchUser()
+      .then(() => this.props.fetchPrograms())
+      .then(() => this.props.fetchAllCourses(Object.keys(this.props.programs.items)))
+      .then(() => this.props.hideLoading())
+      .catch((error) => this.props.hideLoading())
+  }
+
+  // After the first render, componentDidMount is invoked and if not
+  // authenticated, then this invokation makes sure that program data is fetched
+  // as soon as the user signs in. If the user is already signed in and just,
+  // say, refreshes the page, the data is fetched in componentDidMount and this
+  // won't run since the if statement condition returns false.
+  componentDidUpdate(prevProps) {
+    // If the previous auth state was non-existant (i.e. no authenticated user)
+    // and the current auth state exists (user authenticated), then fetch
+    // programs.
+    if (!prevProps.auth.exists && this.props.auth.exists && isAuthenticated()) {
+      this.props.fetchPrograms()
+    }
   }
 
   renderContent() {
@@ -111,7 +126,8 @@ class App extends Component {
 
 function mapStateToProps({ auth, programs }) {
   return {
-    loading: auth === null,
+    loading: auth.isFetching,
+    auth,
     programs
   }
 }

@@ -27,14 +27,17 @@
 
 .panelBody {
   display: flex;
-  margin: 2rem 0;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
 
-.panelBody a {
+.panelBody > ul {
   width: 60%;
+}
+
+.providerBtn {
+  margin: .5rem 0;
 }
 
 .loginBtn {
@@ -42,7 +45,7 @@
   width: 100%;
 }
 
-.loginBtn:hover {
+.googleBtn:hover {
   background-color: rgb(221,83,71,0.15);
   color: #dd5347;  /* Gmail colour */
   border-color: #dd5347;

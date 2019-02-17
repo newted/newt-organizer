@@ -12,7 +12,7 @@ const programSchema = new Schema({
     }
   ],
   _user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'User'
   },
   dateCreated: Date

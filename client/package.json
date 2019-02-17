@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "firebase": "^5.8.3",
     "http-proxy-middleware": "^0.19.1",
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
