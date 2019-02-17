@@ -61,10 +61,12 @@ export const authenticateWithGoogle = (history) => async dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider()
 
-  dispatch(requestSignInUser())
-
   firebase.auth().signInWithPopup(provider)
     .then(async result => {
+      // Move it after pop-up sign in flow is complete so the background is
+      // still the Login page (and not loading screen)
+      dispatch(requestSignInUser())
+
       const user = result.user
 
       // Take only currently necessary info from user object

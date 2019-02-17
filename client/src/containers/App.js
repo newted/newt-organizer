@@ -89,9 +89,10 @@ class App extends Component {
   // say, refreshes the page, the data is fetched in componentDidMount and this
   // won't run since the if statement condition returns false.
   componentDidUpdate(prevProps) {
-    // If the auth object is not exactly the same and it's not false, fetch
-    // programs
-    if (!(typeof prevProps.auth === typeof this.props.auth) && isAuthenticated()) {
+    // If the previous auth state was non-existant (i.e. no authenticated user)
+    // and the current auth state exists (user authenticated), then fetch
+    // programs.
+    if (!prevProps.auth.exists && this.props.auth.exists && isAuthenticated()) {
       this.props.fetchPrograms()
     }
   }
