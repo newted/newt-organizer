@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default (
-  <svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style={{ height: '18px', width: '18px', display: 'block', marginLeft: '1.5rem', marginRight: '1.5rem' }}>
+  <svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style={{ height: '20px', width: '20px', display: 'block', marginLeft: '1.5rem', marginRight: '1.5rem' }}>
     <g fill="none" fillRule="evenodd">
       <path d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z" fill="#EA4335"></path>
       <path d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z" fill="#4285F4"></path>
