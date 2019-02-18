@@ -57,76 +57,55 @@ export const fetchUser = () => async dispatch => {
   })
 }
 
-export const authenticateWithGoogle = (history) => async dispatch => {
+export const authenticateWithGoogle = (history) => dispatch =>{
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider()
 
-  firebase.auth().signInWithPopup(provider)
-    .then(async result => {
-      // Move it after pop-up sign in flow is complete so the background is
-      // still the Login page (and not loading screen)
-      dispatch(requestSignInUser())
-
-      const user = result.user
-
-      // Take only currently necessary info from user object
-      const userInfo = {
-        _id: user.uid,
-        displayName: user.displayName,
-        email: user.email
-      }
-
-      // Request to create user if doesn't exist, or send back existing user
-      // from Mongo DB
-      await axios.post('/api/create_user', userInfo)
-
-      dispatch(setAuthedUser(userInfo))
-
-      // Redirect to dashboard
-      history.push('/dashboard')
-    })
-    .catch(error => {
-      dispatch(removeAuthedUser())
-      console.log(error)
-    })
+  authenticateWithProvider(provider, history, dispatch)
 }
 
-export const authenticateWithGithub = (history) => async dispatch => {
+export const authenticateWithGithub = (history) => dispatch => {
   // Get GitHub Provider
   const provider = new firebase.auth.GithubAuthProvider()
 
-  firebase.auth().signInWithPopup(provider)
-    .then(async result => {
-      // Move it after pop-up sign in flow is complete so the background is
-      // still the Login page (and not loading screen)
-      dispatch(requestSignInUser())
-
-      const user = result.user
-
-      // Take only currently necessary info from user object
-      const userInfo = {
-        _id: user.uid,
-        displayName: user.displayName,
-        email: user.email
-      }
-
-      // Request to create user if doesn't exist, or send back existing user
-      // from Mongo DB
-      await axios.post('/api/create_user', userInfo)
-
-      dispatch(setAuthedUser(userInfo))
-
-      // Redirect to dashboard
-      history.push('/dashboard')
-    })
-    .catch(error => {
-      dispatch(removeAuthedUser())
-      console.log(error)
-    })
+  authenticateWithProvider(provider, history, dispatch)
 }
 
 export const signOut = () => async dispatch => {
   await firebase.auth().signOut()
 
   dispatch(removeAuthedUser())
+}
+
+// General function that uses Firebase authentication service (popup)
+// with a given auth provider
+async function authenticateWithProvider(provider, history, dispatch) {
+  firebase.auth().signInWithPopup(provider)
+    .then(async result => {
+      // Move it after pop-up sign in flow is complete so the background is
+      // still the Login page (and not loading screen)
+      dispatch(requestSignInUser())
+
+      const user = result.user
+
+      // Take only currently necessary info from user object
+      const userInfo = {
+        _id: user.uid,
+        displayName: user.displayName,
+        email: user.email
+      }
+
+      // Request to create user if doesn't exist, or send back existing user
+      // from Mongo DB
+      await axios.post('/api/create_user', userInfo)
+
+      dispatch(setAuthedUser(userInfo))
+
+      // Redirect to dashboard
+      history.push('/dashboard')
+    })
+    .catch(error => {
+      dispatch(removeAuthedUser())
+      console.log(error)
+    })
 }
