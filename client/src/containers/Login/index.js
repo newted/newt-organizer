@@ -7,6 +7,7 @@ import Button from '../../components/Button'
 import { authenticateWithGoogle } from '../../actions/authedUser'
 // Styling
 import styles from './Login.module.css'
+import googleLogo from '../../styles/googleLoginLogo'
 
 class Login extends Component {
   render() {
@@ -25,7 +26,10 @@ class Login extends Component {
                     additionalClass={ `${styles.loginBtn} ${styles.googleBtn}` }
                     onClick={ () => authenticateWithGoogle(history) }
                   >
-                    Sign In With Google
+                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                      { googleLogo }
+                      <div style={{ marginRight: '1.5rem' }}>Sign In With Google</div>
+                    </div>
                   </Button>
                 </li>
               </ul>
