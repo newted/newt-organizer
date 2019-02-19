@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Styling
 import styles from './Dashboard.module.css'
@@ -12,10 +12,6 @@ class Dashboard extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
-  }
-
-  componentDidMount() {
-
   }
 
   renderMessage() {
@@ -50,11 +46,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists && !this.props.auth.isFetching) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>

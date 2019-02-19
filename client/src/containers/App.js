@@ -10,6 +10,7 @@ import { fetchAllCourses } from '../actions/courses'
 // Components
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
+import PrivateRoute from '../components/PrivateRoute'
 // Containers
 import Landing from './Landing'
 import Login from './Login'
@@ -35,13 +36,13 @@ const LandingContainer = () => (
   </Switch>
 )
 
-const AppContainer = () => (
+const AppContainer = (auth) => (
   <div className={ styles.appContainer }>
     <Sidebar />
     <section className={ styles.pageContainer }>
       <Navbar />
       <Switch>
-        <Route path='/dashboard' component={ Dashboard } />
+        <PrivateRoute auth={ auth } path='/dashboard' component={ Dashboard } />
         <Route path='/programs/new' component={ AddProgram } />
         <Route
           path='/programs/:programId/courses/:courseId/edit'
@@ -103,7 +104,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={ LandingContainer } />
           <Route exact path='/login' component={ LandingContainer } />
-          <Route component={ AppContainer } />
+          <Route render={ () => AppContainer(this.props.auth) } />
         </Switch>
       </Fragment>
     )
