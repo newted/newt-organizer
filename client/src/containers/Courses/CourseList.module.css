@@ -58,3 +58,17 @@
 .cardColor {
   background-color: #ff8f6b;
 }
+
+.message {
+  padding: 1.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  margin: 1rem 2%;
+  min-width: 350px;
+}
+
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+}

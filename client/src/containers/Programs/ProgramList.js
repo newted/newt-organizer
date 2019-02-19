@@ -46,6 +46,15 @@ class ProgramList extends Component {
     })
   }
 
+  renderNoContent() {
+    return (
+      <div className={ styles.message }>
+        There are no programs to display. To add a program, click on the {" "}
+        <span className={ styles.addProgram }>Add Program</span> button.
+      </div>
+    )
+  }
+
   render() {
     // Redirect to Landing page if not authenticated
     if (!this.props.auth.exists) {
@@ -64,7 +73,11 @@ class ProgramList extends Component {
             </Link>
           </div>
           <div className={ styles.cardContainer }>
-            { this.renderCards() }
+            {
+              Object.keys(this.props.programs.items).length > 0
+              ? this.renderCards()
+              : this.renderNoContent()
+            }
           </div>
         </div>
       </div>

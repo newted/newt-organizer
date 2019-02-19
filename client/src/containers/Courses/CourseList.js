@@ -49,38 +49,66 @@ class CourseList extends Component {
     }
   }
 
+  renderNoContent() {
+    const programLink = (
+      <Link to="/programs" className={styles.link}>Programs</Link>
+    )
+
+    if (Object.keys(this.props.programs.items).length === 0) {
+      return (
+        <div className={ styles.message }>
+          You aren't in any programs. Go to the { programLink } page from the
+          sidebar to create a Program.
+        </div>
+      )
+    }
+
+    return (
+      <div className={ styles.message }>
+        There are no courses to display. Add a course in any of your {" "}
+        { programLink } to see your courses listed here.
+      </div>
+    )
+  }
+
   renderCourseSections() {
     const { programs } = this.props
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
       const courseList = courses
-      if (courses.length > 0) {
-        return (
-          <div className={ styles.courseSection} key={ _id }>
-            <div className={ styles.headings }>
-              <Link
-                to={ `/programs/${_id}` }
-                className={ styles.header }
-              >
-                { name }
-              </Link>
-              <div className={ styles.institution }>
-                { institution }
-              </div>
-            </div>
-            <div className={ styles.cardContainer }>
-              { this.renderCards(_id, courseList) }
+      // if (courses.length > 0) {
+      return (
+        <div className={ styles.courseSection} key={ _id }>
+          <div className={ styles.headings }>
+            <Link
+              to={ `/programs/${_id}` }
+              className={ styles.header }
+            >
+              { name }
+            </Link>
+            <div className={ styles.institution }>
+              { institution }
             </div>
           </div>
-        )
-      }
+          <div className={ styles.cardContainer }>
+            { this.renderCards(_id, courseList) }
+          </div>
+        </div>
+      )
+      // }
     })
   }
 
   render() {
+    const { auth, programs, courses } = this.props
     // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
+    if (!auth.exists) {
       return <Redirect to='/' />
+    }
+
+    // Need to get a better loading mechanism
+    if (auth.isFetching || programs.isFetching || courses.isFetching) {
+      return <LoadingBar />
     }
 
     return (
@@ -90,7 +118,11 @@ class CourseList extends Component {
             <h2>Your Courses</h2>
           </div>
           <div className={ styles.coursesContainer }>
-            { this.renderCourseSections() }
+            {
+              Object.keys(courses.items).length > 0
+              ? this.renderCourseSections()
+              : this.renderNoContent()
+            }
           </div>
         </div>
       </div>

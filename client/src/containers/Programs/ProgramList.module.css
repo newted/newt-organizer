@@ -31,3 +31,17 @@
     justify-content: flex-start;
   }
 }
+
+.message {
+  padding: 1.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  margin: 1rem 2%;
+  min-width: 350px;
+}
+
+.addProgram {
+  color: #33ce57;
+  font-weight: 600;
+}
