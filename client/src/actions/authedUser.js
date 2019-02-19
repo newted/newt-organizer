@@ -106,6 +106,9 @@ async function authenticateWithProvider(provider, history, dispatch) {
     })
     .catch(error => {
       dispatch(removeAuthedUser())
-      console.log(error)
+      if (error.code === "auth/account-exists-with-different-credential") {
+        alert("Account with the same email already exists with a different provider." +
+        "\nSign in using the provider associated with this email address.")
+      }
     })
 }
