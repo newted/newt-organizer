@@ -23,6 +23,12 @@
   padding: .75rem;
 }
 
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .addBtn {
   background-color: #33ce57;
   border-color: #48d368;

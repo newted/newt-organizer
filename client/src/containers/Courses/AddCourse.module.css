@@ -7,8 +7,6 @@
 }
 
 .headerContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  composes: headerContainer from '../../styles/shared.css';
   margin-bottom: 1rem;
 }

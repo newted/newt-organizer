@@ -75,26 +75,26 @@ class CourseList extends Component {
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
       const courseList = courses
-      // if (courses.length > 0) {
-      return (
-        <div className={ styles.courseSection} key={ _id }>
-          <div className={ styles.headings }>
-            <Link
-              to={ `/programs/${_id}` }
-              className={ styles.header }
-            >
-              { name }
-            </Link>
-            <div className={ styles.institution }>
-              { institution }
+      if (courses.length > 0) {
+        return (
+          <div className={ styles.courseSection} key={ _id }>
+            <div className={ styles.headings }>
+              <Link
+                to={ `/programs/${_id}` }
+                className={ styles.header }
+              >
+                { name }
+              </Link>
+              <div className={ styles.institution }>
+                { institution }
+              </div>
+            </div>
+            <div className={ styles.cardContainer }>
+              { this.renderCards(_id, courseList) }
             </div>
           </div>
-          <div className={ styles.cardContainer }>
-            { this.renderCards(_id, courseList) }
-          </div>
-        </div>
-      )
-      // }
+        )
+      }
     })
   }
 

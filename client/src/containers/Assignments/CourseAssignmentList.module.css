@@ -5,11 +5,9 @@
 }
 
 .headerContainer {
-  display: flex;
-  justify-content: space-between;
+  composes: headerContainer from '../../styles/shared.css';
   padding: .25rem 0;
   margin-bottom: .5rem;
-  /* border-bottom: 1px solid #ddd; */
 }
 
 .header {
