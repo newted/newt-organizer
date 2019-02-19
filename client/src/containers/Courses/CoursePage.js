@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
@@ -15,7 +15,6 @@ import styles from './CoursePage.module.css'
 
 class CoursePage extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     programId: PropTypes.string.isRequired,
     course: PropTypes.shape({
       announcements: PropTypes.array,
@@ -47,10 +46,6 @@ class CoursePage extends Component {
 
   render() {
     const { programId, course, history, deleteCourse } = this.props
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
 
     if (!course) {
       return <LoadingBar />
@@ -106,7 +101,7 @@ class CoursePage extends Component {
   }
 }
 
-function mapStateToProps({ auth, courses }, props) {
+function mapStateToProps({ courses }, props) {
   const { programId, courseId } = props.match.params
 
   const course = courses.items
@@ -120,7 +115,6 @@ function mapStateToProps({ auth, courses }, props) {
   }
 
   return {
-    auth,
     programId,
     course
   }

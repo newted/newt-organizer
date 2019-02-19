@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // API
 import { updateAssignment } from '../../actions/assignments'
@@ -12,7 +11,6 @@ import styles from './EditAssignment.module.css'
 
 class EditAssignment extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     assignment: PropTypes.shape({
       courseId: PropTypes.string,
       completed: PropTypes.bool,
@@ -30,11 +28,6 @@ class EditAssignment extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -51,7 +44,7 @@ class EditAssignment extends Component {
   }
 }
 
-function mapStateToProps({ auth, courses }, props) {
+function mapStateToProps({ courses }, props) {
   const { courseId, assignmentId } = props.match.params
 
   const course = courses
@@ -70,7 +63,6 @@ function mapStateToProps({ auth, courses }, props) {
   }
 
   return {
-    auth,
     assignment
   }
 }

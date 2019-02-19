@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
 import AddCourseForm from './AddCourseForm'
@@ -11,7 +10,6 @@ import styles from './AddCourse.module.css'
 
 class AddCourse extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     programId: PropTypes.string.isRequired,
     submitCourse: PropTypes.func.isRequired,
     // Connect props
@@ -21,11 +19,6 @@ class AddCourse extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -42,11 +35,10 @@ class AddCourse extends Component {
   }
 }
 
-function mapStateToProps({ auth }, props) {
+function mapStateToProps(state, props) {
   const { programId } = props.match.params
 
   return {
-    auth,
     programId
   }
 }

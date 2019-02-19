@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 // API
 import { fetchPrograms } from '../../actions/programs'
@@ -14,7 +14,6 @@ import { UniversityIcon } from '../../utils/icons'
 
 class ProgramList extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     programs: PropTypes.shape({
       items: PropTypes.object
     }),
@@ -56,11 +55,6 @@ class ProgramList extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -85,9 +79,8 @@ class ProgramList extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }) {
+function mapStateToProps({ programs }) {
   return {
-    auth,
     programs
   }
 }

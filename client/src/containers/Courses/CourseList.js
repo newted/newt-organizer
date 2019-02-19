@@ -1,7 +1,7 @@
 /* This is the page that's rendered when you click on Courses on the Sidebar */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 import _ from 'lodash'
@@ -15,7 +15,6 @@ import { BookIcon } from '../../utils/icons'
 
 class CourseList extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     programs: PropTypes.shape({
       items: PropTypes.object
     }),
@@ -100,17 +99,6 @@ class CourseList extends Component {
   }
 
   render() {
-    const { auth, programs, courses } = this.props
-    // Redirect to Landing page if not authenticated
-    if (!auth.exists) {
-      return <Redirect to='/' />
-    }
-
-    // Need to get a better loading mechanism
-    if (auth.isFetching || programs.isFetching || courses.isFetching) {
-      return <LoadingBar />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -119,7 +107,7 @@ class CourseList extends Component {
           </div>
           <div className={ styles.coursesContainer }>
             {
-              Object.keys(courses.items).length > 0
+              Object.keys(this.props.courses.items).length > 0
               ? this.renderCourseSections()
               : this.renderNoContent()
             }
@@ -130,9 +118,8 @@ class CourseList extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs, courses }) {
+function mapStateToProps({ programs, courses }) {
   return {
-    auth,
     programs,
     courses
   }

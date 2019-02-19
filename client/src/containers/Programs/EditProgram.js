@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // API
 import { updateProgram } from '../../actions/programs'
@@ -12,7 +11,6 @@ import styles from './EditProgram.module.css'
 
 class EditProgram extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     program: PropTypes.shape({
       courses: PropTypes.array,
       dateCreated: PropTypes.string,
@@ -29,11 +27,6 @@ class EditProgram extends Component {
     match: PropTypes.object
   }
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -50,7 +43,7 @@ class EditProgram extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }, props) {
+function mapStateToProps({ programs }, props) {
   const { programId } = props.match.params
   const program = _.filter(
     programs.items,
@@ -58,7 +51,6 @@ function mapStateToProps({ auth, programs }, props) {
   )[0]
 
   return {
-    auth,
     program
   }
 }

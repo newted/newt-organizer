@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 // API
@@ -16,7 +16,6 @@ import styles from './ProgramPage.module.css'
 
 class ProgramPage extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     program: PropTypes.shape({
       courses: PropTypes.array,
       dateCreated: PropTypes.string,
@@ -100,11 +99,6 @@ class ProgramPage extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     if (!this.props.program) {
       return <LoadingBar />
     }
@@ -117,7 +111,7 @@ class ProgramPage extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }, props) {
+function mapStateToProps({ programs }, props) {
   const { programId } = props.match.params
   const program = _.filter(
     programs.items,
@@ -125,7 +119,6 @@ function mapStateToProps({ auth, programs }, props) {
   )[0]
 
   return {
-    auth,
     program,
     programId
   }

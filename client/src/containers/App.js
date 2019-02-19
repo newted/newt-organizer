@@ -42,33 +42,43 @@ const AppContainer = (auth) => (
     <section className={ styles.pageContainer }>
       <Navbar />
       <Switch>
-        <PrivateRoute auth={ auth } path='/dashboard' component={ Dashboard } />
-        <Route path='/programs/new' component={ AddProgram } />
-        <Route
+        <PrivateRoute path='/dashboard' component={ Dashboard } auth={ auth }  />
+        {/* Programs based Routes */}
+        <PrivateRoute path='/programs/new' component={ AddProgram } auth={ auth } />
+        <PrivateRoute
           path='/programs/:programId/courses/:courseId/edit'
           component={ EditCourse }
+          auth={ auth }
         />
-        <Route
+        <PrivateRoute
           exact path='/programs/:programId/courses/add'
           component={ AddCourse }
+          auth={ auth }
         />
-        <Route
+        <PrivateRoute
           path='/programs/:programId/courses/:courseId'
           component={ CoursePage }
+          auth={ auth }
         />
-        <Route path='/programs/:programId/edit' component={ EditProgram } />
-        <Route path='/programs/:programId' component={ ProgramPage } />
-        <Route path='/programs' component={ ProgramList } />
-        <Route
+        <PrivateRoute
+          path='/programs/:programId/edit'
+          component={ EditProgram }
+          auth={ auth }
+        />
+        <PrivateRoute path='/programs/:programId' component={ ProgramPage } auth={ auth } />
+        <PrivateRoute path='/programs' component={ ProgramList } auth={ auth } />
+        <PrivateRoute
           path='/courses/:courseId/assignments/add'
           component={ AddAssignment }
+          auth={ auth }
         />
-        <Route
+        <PrivateRoute
           path='/courses/:courseId/assignments/:assignmentId/edit'
           component={ EditAssignment }
+          auth={ auth }
         />
-        <Route path='/courses' component={ CourseList } />
-        <Route path='/assignments' component={ AssignmentList } />
+        <PrivateRoute path='/courses' component={ CourseList } auth={ auth } />
+        <PrivateRoute path='/assignments' component={ AssignmentList } auth={ auth } />
       </Switch>
     </section>
   </div>

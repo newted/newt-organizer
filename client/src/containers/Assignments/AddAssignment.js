@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
 import AddAssignmentForm from './AddAssignmentForm'
@@ -11,7 +10,6 @@ import styles from './AddAssignment.module.css'
 
 class AddAssignment extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     courseId: PropTypes.string.isRequired,
     submitAssignment: PropTypes.func.isRequired,
     // Connect stuff
@@ -21,11 +19,6 @@ class AddAssignment extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -41,11 +34,10 @@ class AddAssignment extends Component {
   }
 }
 
-function mapStateToProps({ auth }, props) {
+function mapStateToProps(state, props) {
   const { courseId } = props.match.params
 
   return {
-    auth,
     courseId
   }
 }

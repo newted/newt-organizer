@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
 import AddProgramForm from './AddProgramForm'
@@ -11,7 +10,6 @@ import styles from './AddProgram.module.css'
 
 class AddProgram extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired,
     submitProgram: PropTypes.func.isRequired,
     // Connect props
     history: PropTypes.object,
@@ -20,11 +18,6 @@ class AddProgram extends Component {
   }
 
   render() {
-    // Redirect to Landing page if not authenticated
-    if (!this.props.auth.exists) {
-      return <Redirect to='/' />
-    }
-
     return (
       <div className={ styles.mainContainer }>
         <div className={ styles.contentContainer }>
@@ -40,8 +33,4 @@ class AddProgram extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth }
-}
-
-export default connect(mapStateToProps, { submitProgram })(AddProgram)
+export default connect(null, { submitProgram })(AddProgram)
