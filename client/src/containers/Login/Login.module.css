@@ -10,17 +10,19 @@
 .panel {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-around;
   align-items: center;
   background-color: #eee;
   border-radius: .5rem;
   width: 90%;
-  height: 300px;
+  min-height: 350px;
+  padding: 2rem;
   min-width: 200px;
   max-width: 500px;
 }
 
 .panelHeader {
-  margin: 2rem 0;
   font-size: 1.5rem;
   color: #666;
 }
@@ -43,7 +45,7 @@
 }
 
 .providerBtn {
-  margin: .5rem 0;
+  margin-bottom: .5rem;
 }
 
 .loginBtn {
@@ -73,4 +75,18 @@
   width: 20px;
   display: block;
   margin: 0 1.5rem;
+}
+
+.divider {
+  margin: 1.5rem 0;
+}
+
+.demoBtn {
+  width: 40%;
+}
+
+.demoBtn:hover {
+  background-color: rgb(0,123,255,.15);
+  color: #007bff;
+  border-color: #007bff;
 }

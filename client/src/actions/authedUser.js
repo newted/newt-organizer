@@ -11,7 +11,7 @@ const requestSignInUser = () => {
   }
 }
 
-const setAuthedUser = (payload) => {
+export const setAuthedUser = (payload) => {
   return {
     type: SET_AUTHED_USER,
     payload

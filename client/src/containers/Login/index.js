@@ -8,6 +8,7 @@ import {
   authenticateWithGoogle,
   authenticateWithGithub
 } from '../../actions/authedUser'
+import { signInDemoUser } from '../../actions/demo'
 // Styling
 import styles from './Login.module.css'
 import googleLogo from '../../styles/googleLoginLogo'
@@ -18,7 +19,8 @@ class Login extends Component {
     const {
       history,
       authenticateWithGoogle,
-      authenticateWithGithub
+      authenticateWithGithub,
+      signInDemoUser
     } = this.props
 
     return (
@@ -52,6 +54,13 @@ class Login extends Component {
                   </Button>
                 </li>
               </ul>
+              <div className={ styles.divider }>OR</div>
+              <Button
+                additionalClass={ styles.demoBtn }
+                onClick={ () => signInDemoUser(history) }
+              >
+                View Demo
+              </Button>
             </div>
           </div>
         </div>
@@ -62,7 +71,8 @@ class Login extends Component {
 
 const mapDispatchToProps = {
   authenticateWithGoogle,
-  authenticateWithGithub
+  authenticateWithGithub,
+  signInDemoUser
 }
 
 export default connect(null, mapDispatchToProps)(Login)

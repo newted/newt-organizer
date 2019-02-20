@@ -6,6 +6,7 @@ import {
   UPDATE_PROGRAM,
   DELETE_PROGRAM
 } from '../actions/programs'
+import { GET_DEMO_PROGRAMS } from '../actions/demo'
 import { CREATE_COURSE, DELETE_COURSE } from '../actions/courses'
 import {
   dataArrayToObject,
@@ -86,6 +87,11 @@ export default function (
               )
           }
         }
+      }
+    case GET_DEMO_PROGRAMS:
+      return {
+        ...state,
+        items: action.payload
       }
     default:
       return state

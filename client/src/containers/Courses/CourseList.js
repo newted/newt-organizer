@@ -75,6 +75,7 @@ class CourseList extends Component {
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
       const courseList = courses
+      console.log(courses)
       if (courses.length > 0) {
         return (
           <div className={ styles.courseSection} key={ _id }>

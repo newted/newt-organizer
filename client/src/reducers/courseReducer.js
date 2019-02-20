@@ -15,6 +15,7 @@ import {
   MARK_ASSIGNMENT_INCOMPLETE,
   DELETE_ASSIGNMENT
 } from '../actions/assignments'
+import { GET_DEMO_COURSES } from '../actions/demo'
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -79,6 +80,11 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
+      }
+    case GET_DEMO_COURSES:
+      return {
+        ...state,
+        items: action.payload
       }
     default:
       return state

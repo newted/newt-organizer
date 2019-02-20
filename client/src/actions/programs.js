@@ -9,7 +9,7 @@ export const FETCH_PROGRAMS = 'FETCH_PROGRAMS'
 export const UPDATE_PROGRAM = 'UPDATE_PROGRAM'
 export const DELETE_PROGRAM = 'DELETE_PROGRAM'
 
-const requestPrograms = () => {
+export const requestPrograms = () => {
   return {
     type: REQUEST_PROGRAMS
   }
