@@ -1,0 +1,44 @@
+.card {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  width: 100%;
+  min-height: 90px;
+  margin: .75rem 0;
+}
+
+.cardVisual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+  background-color: #eee;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 85%;
+  padding: .5rem .75rem;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+}
+
+.headers {
+  display: flex;
+}
+
+.title {
+  margin-right: 1rem;
+}
+
+.subtitle {
+  color: #bbb;
+}
+
+.details {
+  font-size: .95rem;
+}
