@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 // Components
 import Timeline from './Timeline'
+// API
+import { fetchAllCourses } from '../../actions/courses'
 // Styling
 import styles from './Dashboard.module.css'
 
@@ -14,6 +16,10 @@ class Dashboard extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.fetchAllCourses(Object.keys(this.props.programs.items))
   }
 
   renderContent() {
@@ -52,4 +58,4 @@ function mapStateToProps({ auth, programs }) {
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToProps, { fetchAllCourses })(Dashboard)

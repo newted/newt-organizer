@@ -30,30 +30,35 @@ class Timeline extends Component {
   renderCards() {
     const { assignments } = this.props
 
-    return _.map(assignments, ({ _id, name, courseName, details, dateDue }) => (
-      <Fragment key={ _id }>
-        { this.renderDate(dateDue) }
-        <TimelineCard
-          title={ name }
-          course={ courseName }
-          details={ details }
-          key={ _id }
-        />
-      </Fragment>
-    ))
+    return _.map(
+      assignments,
+      ({ _id, name, courseName, details, dateDue, courseId, programId }) => (
+        <Fragment key={_id}>
+          {this.renderDate(dateDue)}
+          <TimelineCard
+            title={name}
+            course={courseName}
+            details={details}
+            programId={programId}
+            courseId={courseId}
+            key={_id}
+          />
+        </Fragment>
+      )
+    )
   }
 
   render() {
     return (
       <div className={ styles.container }>
         <div className={ styles.agendaContainer }>
-          <h3 className={ styles.header }>Your Upcoming Week</h3>
+          <h3 className={ styles.header }>Your Upcoming Schedule</h3>
           <div className={ styles.timeline }>
             { this.renderCards() }
           </div>
         </div>
         <div className={ styles.prevWeekContainer }>
-          <h3 className={ styles.header }>Previous Week</h3>
+          <h3 className={ styles.header }>Previous Weeks</h3>
           <div className={ styles.prevWeek }>
           </div>
         </div>
@@ -67,7 +72,9 @@ function mapStateToProps({ courses, programs }) {
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
-      assignment['courseName'] = courses.items[course._id].name
+      assignment['courseName'] = course.name
+      assignment['courseId'] = course._id
+      assignment['programId'] = course.programId
       assignments.push(assignment)
     })
   })

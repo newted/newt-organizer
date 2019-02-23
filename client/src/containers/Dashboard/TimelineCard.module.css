@@ -39,6 +39,11 @@
   color: #bbb;
 }
 
+.subtitle:hover {
+  color: #999;
+  border-bottom: 1px solid #999;
+}
+
 .details {
   font-size: .95rem;
 }
