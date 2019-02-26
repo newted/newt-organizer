@@ -27,11 +27,11 @@ class Timeline extends Component {
     }
   }
 
-  renderCards() {
-    const { assignments } = this.props
+  renderUpcomingAssignments() {
+    const { upcomingAssignments } = this.props
 
     return _.map(
-      assignments,
+      upcomingAssignments,
       ({ _id, name, courseName, details, dateDue, courseId, programId }) => (
         <Fragment key={_id}>
           {this.renderDate(dateDue)}
@@ -54,7 +54,7 @@ class Timeline extends Component {
         <div className={ styles.agendaContainer }>
           <h3 className={ styles.header }>Your Upcoming Schedule</h3>
           <div className={ styles.timeline }>
-            { this.renderCards() }
+            { this.renderUpcomingAssignments() }
           </div>
         </div>
         <div className={ styles.prevWeekContainer }>
@@ -68,22 +68,37 @@ class Timeline extends Component {
 }
 
 function mapStateToProps({ courses, programs }) {
-  const assignments = []
+  const upcomingAssignments = []
+  const prevAssignments = []
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
+      const today = Date.now()
+
       assignment['courseName'] = course.name
       assignment['courseId'] = course._id
       assignment['programId'] = course.programId
-      assignments.push(assignment)
+      // Add assignment to upcoming list only if the due date is after
+      // today's date.
+      if (new Date(assignment.dateDue) > today) {
+        upcomingAssignments.push(assignment)
+      }
+
+      // Add assignment to previous week list if the difference between today's
+      // date and the due date is 1 (it's a simplified version. In the future
+      // I'll group them by weeks (> 1 && < 7, > 7 && < 14, etc.)).
+      if (moment().diff(assignment.dateDue, 'days') >= 1) {
+        prevAssignments.push(assignment)
+      }
     })
   })
 
   // Sort by due date
-  assignments.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
+  upcomingAssignments.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
 
   return {
-    assignments
+    upcomingAssignments,
+    prevAssignments
   }
 }
 
