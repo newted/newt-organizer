@@ -20,12 +20,25 @@
 
 .cardBody {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  color: #444;
+  justify-content: space-between;
   width: 85%;
   padding: .5rem .75rem;
   border-top-right-radius: .5rem;
   border-bottom-right-radius: .5rem;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.cardStatus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
 }
 
 .headers {
@@ -33,7 +46,6 @@
 }
 
 .title {
-  color: #444;
   margin-right: 1rem;
 }
 
@@ -48,6 +60,14 @@
 }
 
 .details {
-  color: #444;
   font-size: .95rem;
+}
+
+.check {
+  color: #666;
+  cursor: pointer;
+}
+
+.check:hover {
+  color: #48d368;
 }

@@ -18,23 +18,7 @@ import {
 // Styling
 import styles from './AssignmentTable.module.css'
 import { FiMoreVertical } from 'react-icons/fi'
-import { FaCircle } from 'react-icons/fa'
-
-// Red, green or grey circle to indicate whether assignment is incomplete,
-// complete, or in progress
-const StatusIcon = (completed, inProgress) => {
-  const size = 11
-
-  if (inProgress) {
-    return <FaCircle color='#ccc' size={ size } />
-  }
-
-  if (completed) {
-    return <FaCircle color='#33ce57' size={ size } />
-  } else {
-    return <FaCircle color='#dc3545' size={ size } />
-  }
-}
+import { StatusIcon } from '../../utils/icons'
 
 class AssignmentTable extends Component {
   static propTypes = {
