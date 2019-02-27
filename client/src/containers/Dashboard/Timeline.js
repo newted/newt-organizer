@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import { connect } from 'react-redux'
+// API
+import { completeAssignment } from '../../actions/assignments'
 // Components
 import TimelineCard from './TimelineCard'
 // Styling
@@ -28,20 +30,15 @@ class Timeline extends Component {
   }
 
   renderUpcomingAssignments() {
-    const { upcomingAssignments } = this.props
+    const { upcomingAssignments, completeAssignment } = this.props
 
-    return _.map(
-      upcomingAssignments,
-      ({ _id, name, courseName, details, dateDue, courseId, programId }) => (
-        <Fragment key={_id}>
-          {this.renderDate(dateDue)}
+    return _.map(upcomingAssignments, assignment => (
+        <Fragment key={ assignment._id }>
+          { this.renderDate(assignment.dateDue) }
           <TimelineCard
-            title={name}
-            course={courseName}
-            details={details}
-            programId={programId}
-            courseId={courseId}
-            key={_id}
+            assignment={ assignment }
+            completeAssignment={ completeAssignment }
+            key={ assignment._id }
           />
         </Fragment>
       )
@@ -102,4 +99,4 @@ function mapStateToProps({ courses, programs }) {
   }
 }
 
-export default connect(mapStateToProps)(Timeline)
+export default connect(mapStateToProps, { completeAssignment })(Timeline)

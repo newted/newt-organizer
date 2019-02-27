@@ -7,6 +7,10 @@
   margin: .75rem 0;
 }
 
+.completedCard {
+  border-color: #48d368;
+}
+
 .cardVisual {
   display: flex;
   justify-content: center;
@@ -16,6 +20,11 @@
   border-bottom-left-radius: .5rem;
   border-right: 1px solid #ccc;
   background-color: #eee;
+}
+
+.completedCardVisual {
+  border-right-color: #48d368;
+  background-color: rgb(51,206,87,.8);
 }
 
 .cardBody {
@@ -69,5 +78,9 @@
 }
 
 .check:hover {
+  color: #48d368;
+}
+
+.completedCheck {
   color: #48d368;
 }
