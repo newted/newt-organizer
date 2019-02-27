@@ -33,16 +33,15 @@ class Timeline extends Component {
     const { upcomingAssignments, completeAssignment } = this.props
 
     return _.map(upcomingAssignments, assignment => (
-        <Fragment key={ assignment._id }>
-          { this.renderDate(assignment.dateDue) }
-          <TimelineCard
-            assignment={ assignment }
-            completeAssignment={ completeAssignment }
-            key={ assignment._id }
-          />
-        </Fragment>
-      )
-    )
+      <Fragment key={ assignment._id }>
+        { this.renderDate(assignment.dateDue) }
+        <TimelineCard
+          assignment={ assignment }
+          completeAssignment={ completeAssignment }
+          key={ assignment._id }
+        />
+      </Fragment>
+    ))
   }
 
   render() {
@@ -70,21 +69,27 @@ function mapStateToProps({ courses, programs }) {
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
-      const today = Date.now()
-
       assignment['courseName'] = course.name
       assignment['courseId'] = course._id
       assignment['programId'] = course.programId
-      // Add assignment to upcoming list only if the due date is after
-      // today's date.
-      if (new Date(assignment.dateDue) > today) {
+
+      // Difference in week number between current week and week number that
+      // the assignment due date is in. 0 means it's the same week of year.
+      // Positive number means it's the weeks before, and negative number means
+      // it's the weeks after.
+      const weekDiff = moment().week() - moment(assignment.dateDue).week()
+
+      // Add assignment to upcoming list only if it is in the same week of year
+      // or one week ahead than the current week (within the next two weeks),
+      // with week of year being number of weeks since Jan 1st.
+      if (weekDiff === 0 || weekDiff === -1) {
         upcomingAssignments.push(assignment)
       }
 
-      // Add assignment to previous week list if the difference between today's
-      // date and the due date is 1 (it's a simplified version. In the future
-      // I'll group them by weeks (> 1 && < 7, > 7 && < 14, etc.)).
-      if (moment().diff(assignment.dateDue, 'days') >= 1) {
+      // Add assignment to previous week list if it is a lower week number than
+      // the current week (i.e. the week has passed).
+      // In the future I'll group them by weeks.
+      if (weekDiff > 0) {
         prevAssignments.push(assignment)
       }
     })

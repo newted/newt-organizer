@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom'
 import styles from './TimelineCard.module.css'
 import { FiFileText, FiCheckSquare } from 'react-icons/fi'
 
-const TimelineCard = ({ assignment, completeAssignment }) => (
-  <div className={ assignment.completed
+const TimelineCard = ({
+  assignment: { _id, name, courseId, programId, courseName, details, completed },
+  completeAssignment
+}) => (
+  <div className={ completed
     ? `${styles.card} ${styles.completedCard}`
     : styles.card
   }>
-    <div className={ assignment.completed
+    <div className={ completed
       ? `${styles.cardVisual} ${styles.completedCardVisual}`
       : styles.cardVisual
     }>
@@ -18,29 +21,27 @@ const TimelineCard = ({ assignment, completeAssignment }) => (
     <div className={ styles.cardBody }>
       <div className={ styles.cardText }>
         <div className={ styles.headers }>
-          <h4 className={ styles.title }>{ assignment.name }</h4>
+          <h4 className={ styles.title }>{ name }</h4>
           <div style={{ color: '#bbb', marginRight: '.5rem' }}>&mdash;</div>
-          <Link to={{ pathname: `/programs/${assignment.programId}/courses/${assignment.courseId}`}}>
-            <h4 className={ styles.subtitle }>{ assignment.courseName }</h4>
+          <Link to={{ pathname: `/programs/${programId}/courses/${courseId}`}}>
+            <h4 className={ styles.subtitle }>{ courseName }</h4>
           </Link>
         </div>
-        <div className={ styles.details }>{ assignment.details }</div>
+        <div className={ styles.details }>{ details }</div>
       </div>
       <div className={ styles.cardStatus }>
         <div
           style={{ height: '25px' }}
-          onClick={() => completeAssignment(assignment.courseId, assignment._id)}>
+          onClick={() => completeAssignment(courseId, _id)}>
           <FiCheckSquare
             size={ 25 }
-            className={ assignment.completed
+            className={ completed
               ? `${styles.check} ${styles.completedCheck}`
               : styles.check
             }
           />
         </div>
-        { assignment.completed && (
-            <div style={{ marginLeft: '.5rem' }}>Done!</div>
-        )}
+        { completed && <div style={{ marginLeft: '.5rem' }}>Done!</div> }
       </div>
     </div>
   </div>
