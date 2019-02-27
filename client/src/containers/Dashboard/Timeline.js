@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { completeAssignment } from '../../actions/assignments'
 // Components
 import TimelineCard from './TimelineCard'
+import PrevWeekCard from './PrevWeekCard'
 // Styling
 import styles from './Timeline.module.css'
 
@@ -44,6 +45,35 @@ class Timeline extends Component {
     ))
   }
 
+  renderPrevAssignments() {
+    const { prevAssignments } = this.props
+    // Initialize variables
+    const total = prevAssignments.length
+    let numCompleted = 0
+    let percentCompleted = ''
+
+    // For each assignment, if it has been completed, increment the number
+    // completed by 1
+    _.forEach(prevAssignments, ({ completed }) => {
+      if (completed) {
+        numCompleted += 1
+      }
+    })
+
+    // Calculate the percentage completed
+    if (total > 0) {
+      percentCompleted = Math.floor((numCompleted / total) * 100) + '%'
+    }
+  
+    return (
+      <PrevWeekCard
+        numCompleted={ numCompleted }
+        total={ total }
+        percentCompleted={ percentCompleted || '-' }
+      />
+    )
+  }
+
   render() {
     return (
       <div className={ styles.container }>
@@ -55,7 +85,9 @@ class Timeline extends Component {
         </div>
         <div className={ styles.prevWeekContainer }>
           <h3 className={ styles.header }>Previous Weeks</h3>
-          <div className={ styles.prevWeek }>
+          <div className={ styles.timeline }>
+            <h4 className={ styles.date }>{ '<Date Range>' }</h4>
+            { this.renderPrevAssignments() }
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 .card {
   display: flex;
   border: 1px solid #ccc;
+  box-sizing: border-box;
   border-radius: .5rem;
   width: 100%;
   min-height: 90px;
