@@ -47,31 +47,37 @@ class Timeline extends Component {
 
   renderPrevAssignments() {
     const { prevAssignments } = this.props
-    // Initialize variables
-    const total = prevAssignments.length
-    let numCompleted = 0
-    let percentCompleted = ''
 
-    // For each assignment, if it has been completed, increment the number
-    // completed by 1
-    _.forEach(prevAssignments, ({ completed }) => {
-      if (completed) {
-        numCompleted += 1
+    // Get number of assignments completed and percent completed for each
+    // week
+    return _.map(prevAssignments, (weekGroup, index) => {
+      // Initialize variables
+      const total = weekGroup.length
+      let numCompleted = 0
+      let percentCompleted = ''
+
+      if (total > 0) {
+        // For each assignment, if it has been completed, increment the number
+        // completed by 1
+        weekGroup.forEach(({ completed }) => {
+          if (completed) {
+            numCompleted += 1
+          }
+        })
+
+        // Calculate the percentage completed
+        percentCompleted = Math.round((numCompleted / total) * 100) + '%'
       }
-    })
 
-    // Calculate the percentage completed
-    if (total > 0) {
-      percentCompleted = Math.floor((numCompleted / total) * 100) + '%'
-    }
-  
-    return (
-      <PrevWeekCard
-        numCompleted={ numCompleted }
-        total={ total }
-        percentCompleted={ percentCompleted || '-' }
-      />
-    )
+      return (
+        <PrevWeekCard
+          key={ `week ${index + 1}`}
+          numCompleted={ numCompleted }
+          total={ total }
+          percentCompleted={ percentCompleted || '-' }
+        />
+      )
+    })
   }
 
   render() {
@@ -97,7 +103,10 @@ class Timeline extends Component {
 
 function mapStateToProps({ courses, programs }) {
   const upcomingAssignments = []
-  const prevAssignments = []
+  // Initialize as an array of arrays, the inner arrays each representing one
+  // week, so 3 weeks in total. Assignments will be grouped by the previous
+  // week, 2 weeks ago, and 3 weeks ago in that order.
+  const prevAssignments = [[], [], []]
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
@@ -119,10 +128,13 @@ function mapStateToProps({ courses, programs }) {
       }
 
       // Add assignment to previous week list if it is a lower week number than
-      // the current week (i.e. the week has passed).
-      // In the future I'll group them by weeks.
+      // the current week.
       if (weekDiff > 0) {
-        prevAssignments.push(assignment)
+        // Push assignment in descending order (most recent week
+        // comes first). This is done by the index being 1 less than the week
+        // difference. So if week diff is 1 (one week earlier), put the
+        // assignment in the 0th index array.
+        prevAssignments[weekDiff - 1].push(assignment)
       }
     })
   })
