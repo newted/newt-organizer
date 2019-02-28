@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 // Sort two objects first by status (incomplete, in progress, complete), and
 // then by due date. (Used in Assignment Table)
 // Essentially, the `Show Completed` button should render the completed
@@ -24,4 +26,34 @@ export const statusDueDateSort = (array) => {
         return aDate - bDate
     }
   })
+}
+
+// Initialize the array of objects that is used to organize the information
+// that goes into the Previous Weeks section in the Dashboard. There's 3
+// objects in the returned array, in descending order of previous 3 weeks. Each
+// object has a start and end date of that given week, as well as
+// the assignments that were done (or supposed to be done) that week.
+export const initializePrevAssignments = () => {
+  const prevWeeks = [
+    { startDate: "", endDate: "", assignments: [] },
+    { startDate: "", endDate: "", assignments: [] },
+    { startDate: "", endDate: "", assignments: [] }
+  ];
+
+  const currentWeek = moment().week();
+
+  // Initialize start and end date for each week
+  prevWeeks.forEach((week, index) => {
+    prevWeeks[index].startDate = moment()
+      .day(0)
+      .week(currentWeek - (index + 1))
+      .format("MMM Do")
+
+    prevWeeks[index].endDate = moment()
+      .day(6)
+      .week(currentWeek - (index + 1))
+      .format("MMM Do")
+  })
+
+  return prevWeeks
 }

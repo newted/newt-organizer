@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 import { connect } from 'react-redux'
+import { initializePrevAssignments } from '../../utils/containerHelpers'
 // API
 import { completeAssignment } from '../../actions/assignments'
 // Components
@@ -52,14 +53,14 @@ class Timeline extends Component {
     // week
     return _.map(prevAssignments, (weekGroup, index) => {
       // Initialize variables
-      const total = weekGroup.length
+      const total = weekGroup.assignments.length
       let numCompleted = 0
       let percentCompleted = ''
 
       if (total > 0) {
         // For each assignment, if it has been completed, increment the number
         // completed by 1
-        weekGroup.forEach(({ completed }) => {
+        _.forEach(weekGroup.assignments, ({ completed }) => {
           if (completed) {
             numCompleted += 1
           }
@@ -70,12 +71,17 @@ class Timeline extends Component {
       }
 
       return (
-        <PrevWeekCard
-          key={ `week ${index + 1}`}
-          numCompleted={ numCompleted }
-          total={ total }
-          percentCompleted={ percentCompleted || '-' }
-        />
+        <Fragment key={ `week ${index + 1}` }>
+          <h4 className={ styles.date }>
+            { weekGroup.startDate } &ndash; { weekGroup.endDate }
+          </h4>
+          <PrevWeekCard
+            key={ `week ${index + 1}`}
+            numCompleted={ numCompleted }
+            total={ total }
+            percentCompleted={ percentCompleted || '-' }
+          />
+        </Fragment>
       )
     })
   }
@@ -92,7 +98,6 @@ class Timeline extends Component {
         <div className={ styles.prevWeekContainer }>
           <h3 className={ styles.header }>Previous Weeks</h3>
           <div className={ styles.timeline }>
-            <h4 className={ styles.date }>{ '<Date Range>' }</h4>
             { this.renderPrevAssignments() }
           </div>
         </div>
@@ -101,12 +106,15 @@ class Timeline extends Component {
   }
 }
 
+
+
 function mapStateToProps({ courses, programs }) {
   const upcomingAssignments = []
-  // Initialize as an array of arrays, the inner arrays each representing one
-  // week, so 3 weeks in total. Assignments will be grouped by the previous
+  // Initialize as an array of 3 objects with each object representing one
+  // week, so 3 weeks in total. Each object has a startDate, endDate, and
+  // assignments field. Each object contains the information for the previous
   // week, 2 weeks ago, and 3 weeks ago in that order.
-  const prevAssignments = [[], [], []]
+  const prevAssignments = initializePrevAssignments()
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
@@ -134,7 +142,7 @@ function mapStateToProps({ courses, programs }) {
         // comes first). This is done by the index being 1 less than the week
         // difference. So if week diff is 1 (one week earlier), put the
         // assignment in the 0th index array.
-        prevAssignments[weekDiff - 1].push(assignment)
+        prevAssignments[weekDiff - 1].assignments.push(assignment)
       }
     })
   })
