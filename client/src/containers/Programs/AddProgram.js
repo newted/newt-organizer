@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 // Components
-import AddProgramForm from './AddProgramForm'
+import AddProgramForm from "./AddProgramForm";
 // API
-import { submitProgram } from '../../actions/programs'
+import { submitProgram } from "../../actions/programs";
 // Styling
-import styles from './AddProgram.module.css'
+import styles from "./AddProgram.module.css";
 
 class AddProgram extends Component {
   static propTypes = {
@@ -15,22 +15,27 @@ class AddProgram extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
-  }
+  };
 
   render() {
     return (
-      <div className={ styles.mainContainer }>
-        <div className={ styles.contentContainer }>
-          <div className={ styles.headerContainer }>
+      <div className={styles.mainContainer}>
+        <div className={styles.contentContainer}>
+          <div className={styles.headerContainer}>
             <h3>Add a New Program</h3>
           </div>
-          <AddProgramForm
-            onSubmit={ this.props.submitProgram }
-          />
+          <AddProgramForm onSubmit={this.props.submitProgram} />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default connect(null, { submitProgram })(AddProgram)
+const mapDispatchToProps = {
+  submitProgram
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddProgram);
