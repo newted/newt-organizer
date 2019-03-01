@@ -65,6 +65,19 @@ class Timeline extends Component {
   renderPrevAssignments() {
     const { prevAssignments } = this.props;
 
+    // If all 3 weeks have no assignments, display No Data message.
+    if (
+      prevAssignments[0].assignments.length === 0 &&
+      prevAssignments[1].assignments.length === 0 &&
+      prevAssignments[2].assignments.length === 0
+    ) {
+      return (
+        <div className={styles.date}>
+          No assignment data available for previous weeks.
+        </div>
+      );
+    }
+
     // Get number of assignments completed and percent completed for each
     // week
     return _.map(prevAssignments, (weekGroup, index) => {
@@ -84,21 +97,28 @@ class Timeline extends Component {
 
         // Calculate the percentage completed
         percentCompleted = Math.round((numCompleted / total) * 100) + "%";
-      }
 
-      return (
-        <Fragment key={`week ${index + 1}`}>
-          <h4 className={styles.date}>
-            {weekGroup.startDate} &ndash; {weekGroup.endDate}
-          </h4>
-          <PrevWeekCard
-            key={`week ${index + 1}`}
-            numCompleted={numCompleted}
-            total={total}
-            percentCompleted={percentCompleted || "-"}
-          />
-        </Fragment>
-      );
+        // Only returns a Card if the total number of assignments are greater
+        // than 0. This 3 weeks are initialized previously, this is so that
+        // a card isn't displayed if, for example, a user never created
+        // assignments for that week. A downside is that if a user doesn't
+        // create assignments in a given week in the middle of 2
+        // assignment-filled weeks, the week card won't show, instead of showing
+        // 0 / 0 completed. But that's for another day.
+        return (
+          <Fragment key={`week ${index + 1}`}>
+            <h4 className={styles.date}>
+              {weekGroup.startDate} &ndash; {weekGroup.endDate}
+            </h4>
+            <PrevWeekCard
+              key={`week ${index + 1}`}
+              numCompleted={numCompleted}
+              total={total}
+              percentCompleted={percentCompleted || "-"}
+            />
+          </Fragment>
+        );
+      }
     });
   }
 
