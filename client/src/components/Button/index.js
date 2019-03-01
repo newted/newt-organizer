@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 // Styling
-import styles from './Button.module.css'
+import styles from "./Button.module.css";
 
 const Button = ({ type, onClick, additionalClass, children }) => (
   <button
-    type={ type }
-    className={ `${styles.btn} ${additionalClass ? additionalClass : ''}` }
-    onClick={ onClick }
+    type={type}
+    className={`${styles.btn} ${additionalClass ? additionalClass : ""}`}
+    onClick={onClick}
   >
-    { children }
+    {children}
   </button>
-)
+);
 
-export default Button
+export default Button;

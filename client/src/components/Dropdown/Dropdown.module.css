@@ -14,10 +14,10 @@
   min-width: max-content;
   cursor: pointer;
   background-color: #fff;
-  box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
   border: 1px solid #ccc;
-  border-radius: .5rem;
-  transition: opacity .1s ease;
+  border-radius: 0.5rem;
+  transition: opacity 0.1s ease;
   z-index: 11;
 }
 
@@ -28,9 +28,9 @@
   border: none;
   height: auto;
   text-align: left;
-  padding: .75rem .5rem;
+  padding: 0.75rem 0.5rem;
   line-height: 1em;
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 400;
   box-shadow: none;
 }

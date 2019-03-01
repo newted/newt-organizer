@@ -1,14 +1,14 @@
 .btn {
   background-color: #fff;
   border: 1px solid #ccc;
-  padding: .5rem .75rem;
-  font-size: .9rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
   line-height: 1.25;
-  border-radius: .5rem;
-  transition: all .15s ease-in-out;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
 }
 
 .btn:hover {
-  transition: .15s ease-in-out;
+  transition: 0.15s ease-in-out;
   cursor: pointer;
 }
