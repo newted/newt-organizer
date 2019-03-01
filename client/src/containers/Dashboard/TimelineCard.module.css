@@ -2,10 +2,10 @@
   display: flex;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   width: 100%;
   min-height: 90px;
-  margin: .75rem 0;
+  margin: 0.75rem 0;
 }
 
 .completedCard {
@@ -17,15 +17,15 @@
   justify-content: center;
   align-items: center;
   width: 15%;
-  border-top-left-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   border-right: 1px solid #ccc;
   background-color: #eee;
 }
 
 .completedCardVisual {
   border-right-color: #48d368;
-  background-color: rgb(51,206,87,.8);
+  background-color: rgb(51, 206, 87, 0.8);
 }
 
 .cardBody {
@@ -33,9 +33,9 @@
   color: #444;
   justify-content: space-between;
   width: 85%;
-  padding: .5rem .75rem;
-  border-top-right-radius: .5rem;
-  border-bottom-right-radius: .5rem;
+  padding: 0.5rem 0.75rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .cardText {
@@ -70,7 +70,7 @@
 }
 
 .details {
-  font-size: .95rem;
+  font-size: 0.95rem;
 }
 
 .check {

@@ -1,9 +1,9 @@
 .mainContainer {
-  composes: mainContainer from '../../styles/shared.css';
+  composes: mainContainer from "../../styles/shared.css";
 }
 
 .contentContainer {
-  composes: contentContainer from '../../styles/shared.css';
+  composes: contentContainer from "../../styles/shared.css";
 }
 
 .header {
@@ -13,7 +13,7 @@
 .message {
   padding: 1.5rem;
   border: 1px solid #ccc;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   margin: 1rem 2%;
   min-width: 350px;
 }

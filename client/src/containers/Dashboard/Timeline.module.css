@@ -19,7 +19,7 @@
 
 .timeline {
   border: 1px solid #ccc;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   padding: 1rem;
   min-height: 500px;
 }
