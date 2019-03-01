@@ -1,20 +1,20 @@
 .mainContainer {
-  composes: mainContainer from '../../styles/shared.css';
+  composes: mainContainer from "../../styles/shared.css";
 }
 
 .contentContainer {
-  composes: contentContainer from '../../styles/shared.css';
+  composes: contentContainer from "../../styles/shared.css";
 }
 
 .headerContainer {
-  composes: headerContainer from '../../styles/shared.css';
+  composes: headerContainer from "../../styles/shared.css";
   margin: 1rem 2%;
 }
 
 .editBtn {
-  composes: editBtn from '../../styles/shared.css';
+  composes: editBtn from "../../styles/shared.css";
 }
 
 .deleteBtn {
-  composes: deleteBtn from '../../styles/shared.css';
+  composes: deleteBtn from "../../styles/shared.css";
 }

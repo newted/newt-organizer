@@ -1,121 +1,117 @@
 /* This is the page that's rendered when you click on Courses on the Sidebar */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import LoadingBar from 'react-redux-loading'
-import _ from 'lodash'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import LoadingBar from "react-redux-loading";
+import _ from "lodash";
 // API
-import { fetchAllCourses } from '../../actions/courses'
+import { fetchAllCourses } from "../../actions/courses";
 // Components
-import Card from '../../components/Card'
+import Card from "../../components/Card";
 // Styling
-import styles from './CourseList.module.css'
-import { BookIcon } from '../../utils/icons'
+import styles from "./CourseList.module.css";
+import { BookIcon } from "../../utils/icons";
 
 class CourseList extends Component {
   static propTypes = {
     programs: PropTypes.shape({
+      isFetching: PropTypes.bool,
       items: PropTypes.object
     }),
     // Connect props
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
-  }
+  };
 
   componentDidMount() {
-    this.props.fetchAllCourses(Object.keys(this.props.programs.items))
+    this.props.fetchAllCourses(Object.keys(this.props.programs.items));
   }
 
   renderCards(programId, courseList) {
-    const { courses } = this.props
+    const { courses } = this.props;
 
     if (_.isEmpty(courses.items)) {
-      return <LoadingBar />
+      return <LoadingBar />;
     } else {
       return _.map(courseList, courseId => {
         return (
           <Card
-            path={ `/programs/${programId}/courses/${courseId}` }
-            title={ courses.items[courseId].name }
-            icon={ BookIcon }
-            additionalClass={ styles.cardColor }
-            key={ courseId }
+            path={`/programs/${programId}/courses/${courseId}`}
+            title={courses.items[courseId].name}
+            icon={BookIcon}
+            additionalClass={styles.cardColor}
+            key={courseId}
           />
-        )
-      })
+        );
+      });
     }
   }
 
   renderNoContent() {
     const programLink = (
-      <Link to="/programs" className={styles.link}>Programs</Link>
-    )
+      <Link to="/programs" className={styles.link}>
+        Programs
+      </Link>
+    );
 
     if (Object.keys(this.props.programs.items).length === 0) {
       return (
-        <div className={ styles.message }>
-          You aren't in any programs. Go to the { programLink } page from the
+        <div className={styles.message}>
+          You aren't in any programs. Go to the {programLink} page from the
           sidebar to create a Program.
         </div>
-      )
+      );
     }
 
     return (
-      <div className={ styles.message }>
-        There are no courses to display. Add a course in any of your {" "}
-        { programLink } to see your courses listed here.
+      <div className={styles.message}>
+        There are no courses to display. Add a course in any of your{" "}
+        {programLink} to see your courses listed here.
       </div>
-    )
+    );
   }
 
   renderCourseSections() {
-    const { programs } = this.props
+    const { programs } = this.props;
 
     return _.map(programs.items, ({ _id, name, institution, courses }) => {
-      const courseList = courses
-      console.log(courses)
+      const courseList = courses;
+
       if (courses.length > 0) {
         return (
-          <div className={ styles.courseSection} key={ _id }>
-            <div className={ styles.headings }>
-              <Link
-                to={ `/programs/${_id}` }
-                className={ styles.header }
-              >
-                { name }
+          <div className={styles.courseSection} key={_id}>
+            <div className={styles.headings}>
+              <Link to={`/programs/${_id}`} className={styles.header}>
+                {name}
               </Link>
-              <div className={ styles.institution }>
-                { institution }
-              </div>
+              <div className={styles.institution}>{institution}</div>
             </div>
-            <div className={ styles.cardContainer }>
-              { this.renderCards(_id, courseList) }
+            <div className={styles.cardContainer}>
+              {this.renderCards(_id, courseList)}
             </div>
           </div>
-        )
+        );
       }
-    })
+    });
   }
 
   render() {
     return (
-      <div className={ styles.mainContainer }>
-        <div className={ styles.contentContainer }>
-          <div className={ styles.headerContainer }>
+      <div className={styles.mainContainer}>
+        <div className={styles.contentContainer}>
+          <div className={styles.headerContainer}>
             <h2>Your Courses</h2>
           </div>
-          <div className={ styles.coursesContainer }>
-            {
-              Object.keys(this.props.courses.items).length > 0
+          <div className={styles.coursesContainer}>
+            {Object.keys(this.props.courses.items).length > 0
               ? this.renderCourseSections()
-              : this.renderNoContent()
-            }
+              : this.renderNoContent()}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -123,7 +119,14 @@ function mapStateToProps({ programs, courses }) {
   return {
     programs,
     courses
-  }
+  };
 }
 
-export default connect(mapStateToProps, { fetchAllCourses })(CourseList)
+const mapDispatchToProps = {
+  fetchAllCourses
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseList);
