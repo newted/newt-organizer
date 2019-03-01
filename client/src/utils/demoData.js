@@ -1,5 +1,5 @@
 const programs = {
-  "P001": {
+  P001: {
     courses: ["C001", "C002"],
     dateCreated: "2019-02-18T21:25:23.916Z",
     institution: "Udacity",
@@ -7,7 +7,7 @@ const programs = {
     _id: "P001",
     _user: "demouser"
   },
-  "P002": {
+  P002: {
     courses: ["C003", "C004"],
     dateCreated: "2019-02-19T21:25:23.916Z",
     institution: "British Columbia Institute of Technology",
@@ -15,10 +15,10 @@ const programs = {
     _id: "P002",
     _user: "demouser"
   }
-}
+};
 
 const courses = {
-  "C001": {
+  C001: {
     assignments: [
       {
         completed: true,
@@ -53,7 +53,7 @@ const courses = {
     programId: "P001",
     _id: "C001"
   },
-  "C002": {
+  C002: {
     assignments: [
       {
         completed: false,
@@ -77,31 +77,30 @@ const courses = {
     programId: "P001",
     _id: "C002"
   },
-  "C003": {
+  C003: {
     assignments: [],
     dateCreated: "2019-02-20T21:25:23.916Z",
     name: "Fundamentals of Data Visualization",
     programId: "P002",
     _id: "C003"
   },
-  "C004": {
+  C004: {
     assignments: [],
     dateCreated: "2019-02-20T21:35:23.916Z",
     name: "Intro to Tableau",
     programId: "P002",
     _id: "C004"
-  },
-
-}
+  }
+};
 
 export function _getPrograms() {
   return new Promise((res, rej) => {
-    setTimeout(() => res({...programs}), 300)
-  })
+    setTimeout(() => res({ ...programs }), 300);
+  });
 }
 
 export function _getCourses() {
   return new Promise((res, rej) => {
-    setTimeout(() => res({...courses}), 300)
-  })
+    setTimeout(() => res({ ...courses }), 300);
+  });
 }

@@ -6,7 +6,7 @@ import {
   FETCH_ALL_COURSES,
   UPDATE_COURSE,
   DELETE_COURSE
-} from '../actions/courses'
+} from "../actions/courses";
 import {
   CREATE_ASSIGNMENT,
   UPDATE_ASSIGNMENT,
@@ -14,31 +14,31 @@ import {
   MARK_ASSIGNMENT_IN_PROGRESS,
   MARK_ASSIGNMENT_INCOMPLETE,
   DELETE_ASSIGNMENT
-} from '../actions/assignments'
-import { GET_DEMO_COURSES } from '../actions/demo'
+} from "../actions/assignments";
+import { GET_DEMO_COURSES } from "../actions/demo";
 import {
   dataArrayToObject,
   deleteItemFromObject
-} from '../utils/reducerHelpers'
+} from "../utils/reducerHelpers";
 
-export default function (
+export default function(
   state = {
     isFetching: false,
     items: {}
   },
   action
 ) {
-  switch(action.type) {
+  switch (action.type) {
     case REQUEST_COURSES:
       return {
         ...state,
         isFetching: true
-      }
+      };
     case RESOLVE_COURSES:
       return {
         ...state,
         isFetching: false
-      }
+      };
     case CREATE_COURSE:
       return {
         ...state,
@@ -47,25 +47,25 @@ export default function (
           ...state.items,
           [action.payload.course._id]: action.payload.course
         }
-      }
+      };
     case FETCH_COURSES:
       return {
         ...state,
         isFetching: false,
         items: Object.assign({}, state.items, dataArrayToObject(action.payload))
-      }
+      };
     case FETCH_ALL_COURSES:
       return {
         ...state,
         isFetching: false,
         items: dataArrayToObject(action.payload)
-      }
+      };
     case DELETE_COURSE:
       return {
         ...state,
         isFetching: false,
         items: deleteItemFromObject(state.items, action.payload.courseId)
-      }
+      };
     case UPDATE_COURSE:
     case CREATE_ASSIGNMENT:
     case UPDATE_ASSIGNMENT:
@@ -80,13 +80,13 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
-      }
+      };
     case GET_DEMO_COURSES:
       return {
         ...state,
         items: action.payload
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

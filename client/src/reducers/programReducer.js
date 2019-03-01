@@ -5,32 +5,32 @@ import {
   FETCH_PROGRAMS,
   UPDATE_PROGRAM,
   DELETE_PROGRAM
-} from '../actions/programs'
-import { GET_DEMO_PROGRAMS } from '../actions/demo'
-import { CREATE_COURSE, DELETE_COURSE } from '../actions/courses'
+} from "../actions/programs";
+import { GET_DEMO_PROGRAMS } from "../actions/demo";
+import { CREATE_COURSE, DELETE_COURSE } from "../actions/courses";
 import {
   dataArrayToObject,
   deleteItemFromObject
-} from '../utils/reducerHelpers'
+} from "../utils/reducerHelpers";
 
-export default function (
+export default function(
   state = {
     isFetching: false,
     items: {}
   },
   action
 ) {
-  switch(action.type) {
+  switch (action.type) {
     case REQUEST_PROGRAMS:
       return {
         ...state,
         isFetching: true
-      }
+      };
     case RESOLVE_PROGRAMS:
       return {
         ...state,
         isFetching: false
-      }
+      };
     case CREATE_PROGRAM:
       return {
         ...state,
@@ -39,13 +39,13 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
-      }
+      };
     case FETCH_PROGRAMS:
       return {
         ...state,
         isFetching: false,
         items: dataArrayToObject(action.payload)
-      }
+      };
     case UPDATE_PROGRAM:
       return {
         ...state,
@@ -54,13 +54,13 @@ export default function (
           ...state.items,
           [action.payload._id]: action.payload
         }
-      }
+      };
     case DELETE_PROGRAM:
       return {
         ...state,
         isFetching: false,
         items: deleteItemFromObject(state.items, action.payload)
-      }
+      };
     case CREATE_COURSE:
       return {
         ...state,
@@ -74,7 +74,7 @@ export default function (
             ]
           }
         }
-      }
+      };
     case DELETE_COURSE:
       return {
         ...state,
@@ -83,17 +83,17 @@ export default function (
           [action.payload.programId]: {
             ...state.items[action.payload.programId],
             courses: state.items[action.payload.programId].courses.filter(
-                id => id !== action.payload.courseId
-              )
+              id => id !== action.payload.courseId
+            )
           }
         }
-      }
+      };
     case GET_DEMO_PROGRAMS:
       return {
         ...state,
         items: action.payload
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

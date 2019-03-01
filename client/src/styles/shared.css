@@ -20,7 +20,7 @@
 .contentContainer {
   display: flex;
   flex-direction: column;
-  padding: .75rem;
+  padding: 0.75rem;
 }
 
 .headerContainer {
@@ -42,7 +42,7 @@
 
 .editBtn {
   width: 75px;
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
   color: #fff;
   background-color: #007bff;
   border: 1px solid #006fe6;
@@ -54,7 +54,7 @@
 
 .deleteBtn {
   width: 75px;
-  margin: 0 0 0 .5rem;
+  margin: 0 0 0 0.5rem;
   color: #fff;
   background-color: #dc3545;
   border: 1px solid #d32535;
