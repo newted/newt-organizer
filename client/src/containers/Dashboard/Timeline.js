@@ -41,16 +41,25 @@ class Timeline extends Component {
   renderUpcomingAssignments() {
     const { upcomingAssignments, completeAssignment } = this.props;
 
-    return _.map(upcomingAssignments, assignment => (
-      <Fragment key={assignment._id}>
-        {this.renderDate(assignment.dateDue)}
-        <TimelineCard
-          assignment={assignment}
-          completeAssignment={completeAssignment}
-          key={assignment._id}
-        />
-      </Fragment>
-    ));
+    if (upcomingAssignments.length > 0) {
+      return _.map(upcomingAssignments, assignment => (
+        <Fragment key={assignment._id}>
+          {this.renderDate(assignment.dateDue)}
+          <TimelineCard
+            assignment={assignment}
+            completeAssignment={completeAssignment}
+            key={assignment._id}
+          />
+        </Fragment>
+      ));
+    } else {
+      // If there are no assignments, return no content message
+      return (
+        <div className={styles.date}>
+          Set up assignments to see your Timeline here.
+        </div>
+      );
+    }
   }
 
   renderPrevAssignments() {
