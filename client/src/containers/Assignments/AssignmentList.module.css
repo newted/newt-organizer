@@ -1,9 +1,9 @@
 .mainContainer {
-  composes: mainContainer from '../../styles/shared.css';
+  composes: mainContainer from "../../styles/shared.css";
 }
 
 .contentContainer {
-  composes: contentContainer from '../../styles/shared.css';
+  composes: contentContainer from "../../styles/shared.css";
 }
 
 .assignmentsContainer {
@@ -13,7 +13,7 @@
 }
 
 .headerContainer {
-  composes: headerContainer from '../../styles/shared.css';
+  composes: headerContainer from "../../styles/shared.css";
   margin-bottom: 2rem;
 }
 
@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .completedBtn:hover {

@@ -1,6 +1,6 @@
 .container {
   border: 1px solid #ccc;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   padding: 1.5rem;
   min-width: 400px;
 }
@@ -11,7 +11,7 @@
 }
 
 .deleteBtn {
-  composes: deleteBtn from '../../styles/shared.css';
+  composes: deleteBtn from "../../styles/shared.css";
 }
 
 .center {

@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 // Components
-import AddAssignmentForm from './AddAssignmentForm'
+import AddAssignmentForm from "./AddAssignmentForm";
 // API
-import { submitAssignment } from '../../actions/assignments'
+import { submitAssignment } from "../../actions/assignments";
 // Styling
-import styles from './AddAssignment.module.css'
+import styles from "./AddAssignment.module.css";
 
 class AddAssignment extends Component {
   static propTypes = {
@@ -16,30 +16,38 @@ class AddAssignment extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
-  }
+  };
 
   render() {
     return (
-      <div className={ styles.mainContainer }>
-        <div className={ styles.contentContainer }>
-          <div className={ styles.headerContainer }>
+      <div className={styles.mainContainer}>
+        <div className={styles.contentContainer}>
+          <div className={styles.headerContainer}>
             <h3>Add a New Assignment</h3>
           </div>
           <AddAssignmentForm
-            courseId={ this.props.courseId }
-            onSubmit={ this.props.submitAssignment} />
+            courseId={this.props.courseId}
+            onSubmit={this.props.submitAssignment}
+          />
         </div>
       </div>
-    )
+    );
   }
 }
 
 function mapStateToProps(state, props) {
-  const { courseId } = props.match.params
+  const { courseId } = props.match.params;
 
   return {
     courseId
-  }
+  };
 }
 
-export default connect(mapStateToProps, { submitAssignment })(AddAssignment)
+const mapDispatchToProps = {
+  submitAssignment
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddAssignment);

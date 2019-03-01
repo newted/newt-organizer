@@ -5,9 +5,9 @@
 }
 
 .headerContainer {
-  composes: headerContainer from '../../styles/shared.css';
-  padding: .25rem 0;
-  margin-bottom: .5rem;
+  composes: headerContainer from "../../styles/shared.css";
+  padding: 0.25rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .header {
@@ -19,7 +19,7 @@
 }
 
 .addBtn {
-  composes: addBtn from '../../styles/shared.css';
+  composes: addBtn from "../../styles/shared.css";
 }
 
 .completedBtn {
