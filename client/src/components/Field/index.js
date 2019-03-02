@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 // Styling
 import styles from "./Field.module.css";
 
-export default ({ input, label, required, meta: { error, touched } }) => {
+const Field = ({ input, label, required, meta: { error, touched } }) => {
   return (
     <div className={styles.inputGroup}>
       <div>
@@ -14,3 +15,12 @@ export default ({ input, label, required, meta: { error, touched } }) => {
     </div>
   );
 };
+
+Field.propTypes = {
+  input: PropTypes.object,
+  label: PropTypes.string,
+  required: PropTypes.bool,
+  meta: PropTypes.object
+};
+
+export default Field;
