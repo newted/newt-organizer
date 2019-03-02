@@ -1,8 +1,5 @@
 module.exports = {
-  googleClientID: process.env.GOOGLE_CLIENT_ID,
-  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   mongoURI: process.env.MONGO_URI,
-  cookieKey: process.env.COOKIE_KEY,
   firebaseType: process.env.FIREBASE_TYPE,
   firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
   firebasePrivateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
