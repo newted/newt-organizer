@@ -90,7 +90,7 @@ class Timeline extends Component {
       // Initialize variables
       const total = weekGroup.assignments.length;
       let numCompleted = 0;
-      let percentCompleted = "";
+      let percentCompleted = "-";
 
       if (total > 0) {
         // For each assignment, if it has been completed, increment the number
@@ -103,28 +103,28 @@ class Timeline extends Component {
 
         // Calculate the percentage completed
         percentCompleted = Math.round((numCompleted / total) * 100) + "%";
-
-        // Only returns a Card if the total number of assignments are greater
-        // than 0. This 3 weeks are initialized previously, this is so that
-        // a card isn't displayed if, for example, a user never created
-        // assignments for that week. A downside is that if a user doesn't
-        // create assignments in a given week in the middle of 2
-        // assignment-filled weeks, the week card won't show, instead of showing
-        // 0 / 0 completed. But that's for another day.
-        return (
-          <Fragment key={`week ${index + 1}`}>
-            <h4 className={styles.date}>
-              {weekGroup.startDate} &ndash; {weekGroup.endDate}
-            </h4>
-            <PrevWeekCard
-              key={`week ${index + 1}`}
-              numCompleted={numCompleted}
-              total={total}
-              percentCompleted={percentCompleted || "-"}
-            />
-          </Fragment>
-        );
       }
+
+      // Always returns a card unless there were no assignments in all 3 prior
+      // weeks (the if statement above catches that).
+      // A downside is that if a user is a week in of using the account, after
+      // the first week the previous assignments will show 3 weeks prior as
+      // having no assignments, even though the account wasn't created then.
+      // A solution to this is to cross-check with user_account_creation_date,
+      // but that's not implemented yet so, for another day.
+      return (
+        <Fragment key={`week ${index + 1}`}>
+          <h4 className={styles.date}>
+            {weekGroup.startDate} &ndash; {weekGroup.endDate}
+          </h4>
+          <PrevWeekCard
+            key={`week ${index + 1}`}
+            numCompleted={numCompleted}
+            total={total}
+            percentCompleted={percentCompleted}
+          />
+        </Fragment>
+      );
     });
   }
 
@@ -152,7 +152,7 @@ function mapStateToProps({ courses, programs }) {
   // week, so 3 weeks in total. Each object has a startDate, endDate, and
   // assignments field. Each object contains the information for the previous
   // week, 2 weeks ago, and 3 weeks ago in that order.
-  const prevAssignments = initializePrevAssignments();
+  let prevAssignments = initializePrevAssignments();
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
