@@ -17,10 +17,6 @@ class Dashboard extends Component {
     match: PropTypes.object
   };
 
-  componentDidMount() {
-    this.props.fetchAllCourses(Object.keys(this.props.programs.items));
-  }
-
   renderContent() {
     const programLink = (
       <Link to="/programs" className={styles.link}>

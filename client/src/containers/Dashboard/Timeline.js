@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { initializePrevAssignments } from "../../utils/containerHelpers";
 // API
 import { completeAssignment } from "../../actions/assignments";
+import { fetchAllCourses } from "../../actions/courses";
 // Components
 import TimelineCard from "./TimelineCard";
 import PrevWeekCard from "./PrevWeekCard";
@@ -23,6 +24,11 @@ class Timeline extends Component {
       })
     )
   };
+
+  componentDidMount() {
+    this.props.fetchAllCourses(Object.keys(this.props.programs.items));
+  }
+
   // Variable to keep the last date used. When displaying the Timeline cards,
   // if two assignments are to be done/due on the same date, then it doesn't
   // make sense to render the same date twice. Instead, both assignments should
@@ -169,7 +175,7 @@ function mapStateToProps({ courses, programs }) {
 
       // Add assignment to previous week list if it is a lower week number than
       // the current week.
-      if (weekDiff > 0) {
+      if (weekDiff > 0 && weekDiff <= 3) {
         // Push assignment in descending order (most recent week
         // comes first). This is done by the index being 1 less than the week
         // difference. So if week diff is 1 (one week earlier), put the
@@ -183,13 +189,15 @@ function mapStateToProps({ courses, programs }) {
   upcomingAssignments.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
 
   return {
+    programs,
     upcomingAssignments,
     prevAssignments
   };
 }
 
 const mapDispatchToProps = {
-  completeAssignment
+  completeAssignment,
+  fetchAllCourses
 };
 
 export default connect(
