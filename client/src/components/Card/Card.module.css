@@ -11,6 +11,13 @@
   background-color: #eee;
 }
 
+/* For widescreen make cards in sets of 4 instead of 3 */
+@media screen and (min-width: 1800px) {
+  .card {
+    width: 18%;
+  }
+}
+
 .card:hover {
   cursor: pointer;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
