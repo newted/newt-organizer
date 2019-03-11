@@ -35,6 +35,16 @@ class CourseAssignmentList extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    // If all the assignments are complete, this sets the value of
+    // showCompleted to true, otherwise it's kept as false. This way if all the
+    // assignments are complete, the initial UI state is to show the completed
+    // assignments
+    this.setState(() => ({
+      showCompleted:
+        this.props.assignments.length > 0 &&
+        this.props.assignments.length ===
+          this.props.assignments.filter(({ completed }) => completed).length
+    }));
   }
 
   componentWillUnmount() {
