@@ -108,7 +108,9 @@ class CourseAssignmentList extends Component {
               }
               onClick={this.handleShowCompleted}
             >
-              Show Completed
+              {`Show Completed (${
+                assignments.filter(({ completed }) => completed).length
+              })`}
             </Button>
             <Link to={{ pathname: `/courses/${courseId}/assignments/add` }}>
               <Button additionalClass={styles.addBtn}>Add Assignment</Button>

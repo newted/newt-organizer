@@ -79,7 +79,7 @@ class AssignmentList extends Component {
   };
 
   render() {
-    const { assignments } = this.props;
+    const { assignments, numCompleted } = this.props;
     const { showCompleted } = this.state;
 
     return (
@@ -99,7 +99,7 @@ class AssignmentList extends Component {
                   }
                   onClick={this.handleShowCompleted}
                 >
-                  Show Completed
+                  {`Show Completed (${numCompleted})`}
                 </Button>
               </div>
               <AssignmentTable
@@ -130,11 +130,14 @@ function mapStateToProps({ courses }) {
     });
   });
 
+  const numCompleted = assignments.filter(({ completed }) => completed).length;
+
   // Sort by status and due date
   statusDueDateSort(assignments);
 
   return {
-    assignments
+    assignments,
+    numCompleted
   };
 }
 
