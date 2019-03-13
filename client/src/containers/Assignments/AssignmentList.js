@@ -44,6 +44,7 @@ class AssignmentList extends Component {
         prevState => ({
           showDropdown: {
             ...prevState.showDropdown,
+            [prevState.currentDropdownId]: false, // Close the previous dropdown so multiple aren't open
             [assignmentId]: true
           },
           currentDropdownId: assignmentId
