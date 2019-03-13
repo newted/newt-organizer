@@ -5,7 +5,7 @@ import { toggleSidebar } from "../../actions/sidebar";
 import sidebarFields from "./sidebarFields";
 // Styling
 import styles from "./Sidebar.module.css";
-import { FiChevronLeft } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 class Sidebar extends Component {
   // Render sidebar links based on fields provided
@@ -15,7 +15,7 @@ class Sidebar extends Component {
         <NavLink to={route} activeClassName={styles.activeNav}>
           <div className={styles.navlinkRow}>
             {icon}
-            <div>{name}</div>
+            {!this.props.sidebar.isCollapsed && <div>{name}</div>}
           </div>
         </NavLink>
       </li>
@@ -24,7 +24,13 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <aside className={styles.sidebar}>
+      <aside
+        className={
+          this.props.sidebar.isCollapsed
+            ? `${styles.sidebar} ${styles.collapsedSidebar}`
+            : `${styles.sidebar} ${styles.expandedSidebar}`
+        }
+      >
         <div className={styles.sidebarNavlinks}>
           <ul>{this.renderNavlinks()}</ul>
         </div>
@@ -33,7 +39,11 @@ class Sidebar extends Component {
             className={styles.collapseIcon}
             onClick={() => this.props.toggleSidebar()}
           >
-            <FiChevronLeft size={25} />
+            {this.props.sidebar.isCollapsed ? (
+              <FiChevronRight size={25} />
+            ) : (
+              <FiChevronLeft size={25} />
+            )}
           </div>
         </div>
       </aside>

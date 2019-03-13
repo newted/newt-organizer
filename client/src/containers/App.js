@@ -36,10 +36,16 @@ const LandingContainer = () => (
   </Switch>
 );
 
-const AppContainer = auth => (
+const AppContainer = (auth, sidebar) => (
   <div className={styles.appContainer}>
     <Sidebar />
-    <section className={styles.pageContainer}>
+    <section
+      className={
+        sidebar.isCollapsed
+          ? `${styles.pageContainer} ${styles.collapsed}`
+          : `${styles.pageContainer} ${styles.expanded}`
+      }
+    >
       <Navbar />
       <Switch>
         <PrivateRoute path="/dashboard" component={Dashboard} auth={auth} />
@@ -128,7 +134,9 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={LandingContainer} />
           <Route exact path="/login" component={LandingContainer} />
-          <Route render={() => AppContainer(this.props.auth)} />
+          <Route
+            render={() => AppContainer(this.props.auth, this.props.sidebar)}
+          />
         </Switch>
       </Fragment>
     );
@@ -146,11 +154,12 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ auth, programs }) {
+function mapStateToProps({ auth, programs, sidebar }) {
   return {
     loading: auth.isFetching,
     auth,
-    programs
+    programs,
+    sidebar
   };
 }
 

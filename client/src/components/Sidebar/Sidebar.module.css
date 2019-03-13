@@ -3,9 +3,16 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  width: 18%;
-  min-width: 200px;
   background: #38ceff; /* lightBlue */
+  transition: width 0.5s;
+}
+
+.expandedSidebar {
+  width: 250px;
+}
+
+.collapsedSidebar {
+  width: 68px;
 }
 
 .sidebarNavlinks {
@@ -18,6 +25,10 @@
 .navlinkRow {
   display: flex;
   padding: 0.5rem 1rem;
+}
+
+.collapsedNavlinkRow {
+  justify-content: center;
 }
 
 .navlinkRow:hover {
@@ -35,19 +46,13 @@
 .collapse {
   display: flex;
   justify-content: flex-end;
-  padding: 0 1rem 2rem 1rem;
+  padding: 0 21.5px 2rem 21.5px; /* Centering hack because transitions/animations are a bitch */
 }
 
 .collapseIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
 }
 
 .collapseIcon:hover {
-  background-color: #85e1ff;
+  color: white;
 }
