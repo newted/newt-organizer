@@ -1,5 +1,7 @@
 .sidebar {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100vh;
   width: 18%;
   min-width: 200px;
@@ -9,7 +11,7 @@
 .sidebarNavlinks {
   display: flex;
   flex-direction: column;
-  padding: 3.5rem 0 1rem 0;
+  padding: 59px 0 1rem 0; /* 59px is height of navbar */
   width: 100%;
 }
 
@@ -28,4 +30,24 @@
 
 .icon {
   padding: 0 0.5rem;
+}
+
+.collapse {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1rem 2rem 1rem;
+}
+
+.collapseIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.collapseIcon:hover {
+  background-color: #85e1ff;
 }

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { toggleSidebar } from "../../actions/sidebar";
 import sidebarFields from "./sidebarFields";
 // Styling
 import styles from "./Sidebar.module.css";
+import { FiChevronLeft } from "react-icons/fi";
 
 class Sidebar extends Component {
   // Render sidebar links based on fields provided
@@ -25,9 +28,32 @@ class Sidebar extends Component {
         <div className={styles.sidebarNavlinks}>
           <ul>{this.renderNavlinks()}</ul>
         </div>
+        <div className={styles.collapse}>
+          <div
+            className={styles.collapseIcon}
+            onClick={() => this.props.toggleSidebar()}
+          >
+            <FiChevronLeft size={25} />
+          </div>
+        </div>
       </aside>
     );
   }
 }
 
-export default Sidebar;
+function mapStateToProps({ sidebar }) {
+  return {
+    sidebar
+  };
+}
+
+const mapDispatchToProps = {
+  toggleSidebar
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Sidebar)
+);
