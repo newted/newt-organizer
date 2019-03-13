@@ -12,7 +12,7 @@ export const statusDueDateSort = array => {
 
     switch (true) {
       case a.completed && b.completed:
-        return aDate - bDate;
+        return bDate - aDate;
       // If both a and b are completed, then everytime a is completed, make
       // the index higher, and everytime b is completed, make `a's` index higher.
       // That is, if a is completed or b is completed, move `a` further down the
