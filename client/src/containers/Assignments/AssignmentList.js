@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { allAssignmentTableFields } from "./assignmentFields";
-import { initializeDropdownMenuState } from "../../utils/dropdownHelpers";
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Components
 import Button from "../../components/Button";
@@ -12,7 +11,7 @@ import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
-    showDropdown: initializeDropdownMenuState(this.props.assignments),
+    showDropdown: {}, // Object for multiple assignment dropdowns
     showCompleted: false, // Doesn't show completed assignments by default
     currentDropdownId: null // Passed to closeDropdown function so it knows which table row dropdown to close.
   };

@@ -21,16 +21,3 @@ export const findByComponentType = (children, component) => {
   // sub-component we’re looking for we put it in the result array
   return result[0];
 };
-
-// This function creates an object of [assignmentId]: null which is meant to
-// denote whether the dropdown for the table row for that particular assignment
-// is supposed to be visible or not.
-export const initializeDropdownMenuState = assignments => {
-  const dropdownMenuState = {};
-
-  assignments.map(assignment => {
-    return (dropdownMenuState[assignment._id] = false);
-  });
-
-  return dropdownMenuState;
-};

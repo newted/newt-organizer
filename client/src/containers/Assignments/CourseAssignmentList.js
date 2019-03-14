@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { assignmentTableFields } from "./assignmentFields";
-import { initializeDropdownMenuState } from "../../utils/dropdownHelpers";
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Components
 import Button from "../../components/Button";
@@ -17,10 +16,10 @@ class CourseAssignmentList extends Component {
   };
 
   state = {
-    showDropdown: initializeDropdownMenuState(this.props.assignments),
+    showDropdown: {}, // Object for multiple assignment dropdowns
     showCompleted: false,
-    currentDropdownId: null // Passed to closeDropdown function so it knows
-  }; // which table row dropdown to close.
+    currentDropdownId: null // Passed to closeDropdown function so it knows which table row dropdown to close.
+  };
 
   // When clicking the Edit button, this component unmounts and when setState
   // is called to set specific showDropdown to false and currentDropdownId to
