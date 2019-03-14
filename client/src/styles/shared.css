@@ -35,36 +35,34 @@
 }
 
 .addBtn {
-  background-color: #33ce57;
-  border-color: #48d368;
+  background-color: var(--lightGreen);
+  border-color: var(--lightGreen-btn-border);
   color: white;
   font-weight: 500;
 }
 
 .addBtn:hover {
-  background-color: #5dd879;
+  background-color: var(--lightGreen-btn-hover);
 }
 
-.editBtn {
-  width: 75px;
-  margin: 0 0.5rem 0 0;
-  color: #fff;
-  background-color: #007bff;
-  border: 1px solid #006fe6;
+.submitBtn {
+  background-color: var(--blue);
+  border: 1px solid var(--blue-btn-border);
+  color: white;
+  font-weight: 500;
 }
 
-.editBtn:hover {
-  background-color: #3395ff;
+.submitBtn:hover {
+  background-color: var(--blue-btn-hover);
 }
 
 .deleteBtn {
-  width: 75px;
-  margin: 0 0 0 0.5rem;
-  color: #fff;
-  background-color: #dc3545;
-  border: 1px solid #d32535;
+  background-color: var(--red);
+  border: 1px solid var(--red-btn-border);
+  color: white;
+  font-weight: 500;
 }
 
 .deleteBtn:hover {
-  background-color: #e4606d;
+  background-color: var(--red-btn-hover);
 }

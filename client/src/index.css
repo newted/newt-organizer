@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css?family=Muli:300,400,600,700");
 
+/* Colours */
+:root {
+  --lightGreen: #33ce57;
+  --lightGreen-btn-border: #48d368;
+  --lightGreen-btn-hover: #5dd879;
+  --blue: #007bff;
+  --blue-btn-border: #006fe6;
+  --blue-btn-hover: #3395ff;
+  --red: #dc3545;
+  --red-btn-border: #d32535;
+  --red-btn-hover: #e4606d;
+}
+
+/* HTML elements */
 body {
   box-sizing: border-box;
   margin: 0;
