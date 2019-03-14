@@ -21,6 +21,19 @@
   justify-content: space-between;
 }
 
+.formContainer {
+  padding: 0 2%;
+  width: 50%;
+  min-width: 500px;
+}
+
+@media screen and (max-width: 800px) {
+  .formContainer {
+    width: 100%;
+    min-width: 400px;
+  }
+}
+
 .addBtn {
   background-color: #33ce57;
   border-color: #48d368;

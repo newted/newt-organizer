@@ -1,13 +1,5 @@
 .formContainer {
-  width: 50%;
-  min-width: 500px;
-}
-
-@media screen and (max-width: 800px) {
-  .formContainer {
-    width: 100%;
-    min-width: 400px;
-  }
+  composes: formContainer from "../../styles/shared.css";
 }
 
 .submitBtn {

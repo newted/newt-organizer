@@ -4,5 +4,4 @@
 
 .headerContainer {
   composes: headerContainer from "../../styles/shared.css";
-  margin-bottom: 1rem;
 }
