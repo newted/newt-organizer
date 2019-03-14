@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 // API
 import { signOut } from "../../actions/authedUser";
 // Components
 import Button from "../Button";
+import Dropdown from "../Dropdown";
 // Styling
 import styles from "./Navbar.module.css";
+import { FiUser } from "react-icons/fi";
 
 class Navbar extends Component {
   static propTypes = {
@@ -18,6 +20,63 @@ class Navbar extends Component {
     }),
     theme: PropTypes.string,
     signOut: PropTypes.func
+  };
+
+  state = {
+    showDropdown: false,
+    dropdownMenu: null
+  };
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  // So the dropdown is removed before signing out so there isn't a 'memory
+  // leak' error thrown.
+  componentWillUnmount() {
+    this.setState(
+      () => ({
+        showDropdown: false
+      }),
+      () => document.removeEventListener("click", this.closeDropdown)
+    );
+  }
+
+  openDropdown = event => {
+    if (this._isMounted) {
+      this.setState(
+        () => ({
+          showDropdown: true
+        }),
+        () => document.addEventListener("click", this.closeDropdown)
+      );
+    }
+  };
+
+  closeDropdown = event => {
+    if (this._isMounted) {
+      this.setState(
+        () => ({
+          showDropdown: false
+        }),
+        () => document.removeEventListener("click", this.closeDropdown)
+      );
+    }
+  };
+
+  setDropdownMenu = event => {
+    if (this._isMounted && event && !this.state.dropdownMenu) {
+      this.setState(() => ({
+        dropdownMenu: event
+      }));
+    }
+  };
+
+  redirectToProfile = (event) => {
+    this.closeDropdown(event)
+    this.props.history.push("/profile");
   };
 
   // Render Login or Logout based on authentication state
@@ -46,12 +105,24 @@ class Navbar extends Component {
                 </Button>
               </Fragment>
             ) : (
-              <Button
-                additionalClass={styles.logoutBtn}
-                onClick={this.props.signOut}
-              >
-                Log out
-              </Button>
+              <div className={styles.userIcon}>
+                <Dropdown
+                  visible={this.state.showDropdown}
+                  handleOpen={event => this.openDropdown(event)}
+                >
+                  <FiUser size={22} />
+                  <Dropdown.Menu ref={element => this.setDropdownMenu(element)}>
+                    <Dropdown.Item
+                      onClick={(event) => this.redirectToProfile(event)}
+                    >
+                      Profile
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={this.props.signOut}>
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             )}
           </div>
         );
@@ -69,6 +140,7 @@ class Navbar extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <nav className={`${styles.navbarContainer} ${this.renderNavbarColor()}`}>
         <div className={styles.navbar}>
@@ -98,7 +170,9 @@ const mapDispatchToProps = {
   signOut
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Navbar)
+);

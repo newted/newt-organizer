@@ -58,3 +58,9 @@
   background-color: #fff;
   border-color: #0396ff;
 }
+
+.userIcon {
+  display: flex;
+  align-items: center;
+  height: 22px;
+}
