@@ -49,7 +49,7 @@
 }
 
 .cardColor {
-  background-color: #ff8f6b;
+  background-color: var(--salmon);
 }
 
 .message {

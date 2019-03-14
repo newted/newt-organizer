@@ -11,7 +11,7 @@
 }
 
 .cardColor {
-  background-color: #ffcd38;
+  background-color: var(--yellow);
 }
 
 .cardContainer {

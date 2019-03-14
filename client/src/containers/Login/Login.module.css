@@ -1,7 +1,7 @@
 .container {
   min-height: calc(100vh - 64px);
   width: 100%;
-  background-color: #38ceff;
+  background-color: var(--newtBlue);
   display: flex;
   justify-content: center;
   align-items: center;

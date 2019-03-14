@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  background: #38ceff; /* lightBlue */
+  background: var(--newtBlue); /* lightBlue */
   transition: width 0.5s;
 }
 

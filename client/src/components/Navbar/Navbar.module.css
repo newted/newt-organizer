@@ -7,7 +7,7 @@
 }
 
 .lightBlueNavbar {
-  background-color: #38ceff;
+  background-color: var(--newtBlue);
   color: white;
 }
 
@@ -28,7 +28,7 @@
   color: white;
   font-weight: 500;
   font-size: 1.1rem;
-  border: 2px solid #38ceff;
+  border: 2px solid var(--newtBlue);
 }
 
 .toDash:hover {
@@ -37,7 +37,7 @@
 }
 
 .loginBtn {
-  background-color: #38ceff;
+  background-color: var(--newtBlue);
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
@@ -46,7 +46,7 @@
 
 .loginBtn:hover {
   background-color: #fff;
-  color: #38ceff;
+  color: var(--newtBlue);
 }
 
 .userIcon {
