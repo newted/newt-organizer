@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  margin: 1rem 2%;
+  padding: 1rem 2%;
 }
 
 .agendaContainer {

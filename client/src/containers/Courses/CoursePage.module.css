@@ -4,7 +4,6 @@
 
 .headerContainer {
   composes: headerContainer from "../../styles/shared.css";
-  margin: 1rem 2%;
 }
 
 .editBtn {

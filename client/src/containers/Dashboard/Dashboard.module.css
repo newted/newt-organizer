@@ -2,8 +2,8 @@
   composes: mainContainer from "../../styles/shared.css";
 }
 
-.header {
-  margin: 1rem 2%;
+.headerContainer {
+  composes: headerContainer from "../../styles/shared.css";
 }
 
 .message {

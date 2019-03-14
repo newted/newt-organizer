@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -52,7 +52,7 @@ class ProgramPage extends Component {
     const { program, history, deleteProgram } = this.props;
 
     return (
-      <div>
+      <Fragment>
         <div className={styles.headerContainer}>
           <div className={styles.headings}>
             <h2 className={styles.header}>{this.props.program.name}</h2>
@@ -87,7 +87,7 @@ class ProgramPage extends Component {
           </div>
         </div>
         <ProgramCourseList programId={program._id} />
-      </div>
+      </Fragment>
     );
   }
 

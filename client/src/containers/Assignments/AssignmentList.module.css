@@ -10,12 +10,12 @@
 
 .headerContainer {
   composes: headerContainer from "../../styles/shared.css";
-  margin-bottom: 2rem;
 }
 
 .tableContainer {
   display: flex;
   flex-direction: column;
+  padding: 1rem 2%;
 }
 
 .tableOptions {
