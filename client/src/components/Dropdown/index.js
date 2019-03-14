@@ -12,6 +12,7 @@ class Dropdown extends Component {
   static propTypes = {
     visible: PropTypes.bool,
     handleOpen: PropTypes.func.isRequired,
+    style: PropTypes.object,
     children: PropTypes.arrayOf(PropTypes.object)
   };
 
@@ -62,7 +63,11 @@ class Dropdown extends Component {
 
   render() {
     return (
-      <div className={styles.dropdown} onClick={this.props.handleOpen}>
+      <div
+        className={styles.dropdown}
+        style={this.props.style}
+        onClick={this.props.handleOpen}
+      >
         {this.props.children[0]} {/*Renders the icon or Dropdown name */}
         {this.renderDropdownMenu()}
       </div>

@@ -18,7 +18,7 @@
 .sidebarNavlinks {
   display: flex;
   flex-direction: column;
-  padding: 59px 0 1rem 0; /* 59px is height of navbar */
+  padding: 54px 0 1rem 0; /* 54px is height of navbar */
   width: 100%;
 }
 

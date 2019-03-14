@@ -88,6 +88,7 @@ class Navbar extends Component {
                 <Dropdown
                   visible={this.state.showDropdown}
                   handleOpen={event => this.openDropdown(event)}
+                  style={{ height: "22px" }}
                 >
                   <FiUser size={22} />
                   <Dropdown.Menu>
