@@ -1,0 +1,16 @@
+.mainContainer {
+  composes: mainContainer from "../../styles/shared.css";
+}
+
+.contentContainer {
+  composes: contentContainer from "../../styles/shared.css";
+}
+
+.header {
+  margin: 1rem 2%;
+}
+
+.container {
+  display: flex;
+  margin: 1rem 2%;
+}

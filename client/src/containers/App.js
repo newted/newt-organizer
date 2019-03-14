@@ -15,6 +15,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import Landing from "./Landing";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import Profile from "./Profile";
 import ProgramList from "./Programs/ProgramList";
 import AddProgram from "./Programs/AddProgram";
 import ProgramPage from "./Programs/ProgramPage";
@@ -49,6 +50,7 @@ const AppContainer = (auth, sidebar) => (
       <Navbar />
       <Switch>
         <PrivateRoute path="/dashboard" component={Dashboard} auth={auth} />
+        <PrivateRoute path='/profile' component={Profile} auth={auth} />
         {/* Programs based Routes */}
         <PrivateRoute path="/programs/new" component={AddProgram} auth={auth} />
         <PrivateRoute
