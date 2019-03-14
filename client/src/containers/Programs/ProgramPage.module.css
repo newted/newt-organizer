@@ -17,7 +17,7 @@
 
 .institution {
   margin: 0 0 0 2%;
-  color: #bbb;
+  color: var(--grey-2);
 }
 
 .editBtn {

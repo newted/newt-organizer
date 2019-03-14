@@ -13,7 +13,7 @@
 .header {
   display: flex;
   align-items: flex-end;
-  color: #444;
+  color: var(--darkGrey);
   font-size: 1.2rem;
   font-weight: 600;
 }
@@ -27,10 +27,10 @@
 }
 
 .completedBtn:hover {
-  border: 1px solid #48d368;
+  border: 1px solid var(--lightGreen-btn-border);
 }
 
 .selected {
-  border: 1px solid #48d368;
-  color: #48d368;
+  border: 1px solid var(--lightGreen-btn-border);
+  color: var(--lightGreen-btn-border);
 }

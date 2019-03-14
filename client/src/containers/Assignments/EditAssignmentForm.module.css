@@ -5,10 +5,10 @@
 .updateBtn {
   width: 125px;
   color: #fff;
-  background-color: #007bff;
-  border: 1px solid #006fe6;
+  background-color: var(--blue);
+  border: 1px solid var(--blue-btn-border);
 }
 
 .updateBtn:hover {
-  background-color: #3395ff;
+  background-color: var(--blue-btn-hover);
 }

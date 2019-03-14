@@ -1,6 +1,6 @@
 .btn {
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
   line-height: 1.25;

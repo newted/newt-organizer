@@ -2,6 +2,13 @@
 
 /* Colours */
 :root {
+  --off-black: #222;
+  --darkGrey: #444;
+  --darkGrey-2: #666;
+  --grey: #999;
+  --grey-2: #aaa;
+  --lightGrey: #ccc;
+  --lightGrey-2: #eee;
   --lightGreen: #33ce57;
   --lightGreen-btn-border: #48d368;
   --lightGreen-btn-hover: #5dd879;
@@ -47,7 +54,7 @@ input {
   background-color: #fff;
   background-image: none;
   background-clip: padding-box;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -90,7 +97,7 @@ td {
 }
 
 tr {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--lightGrey);
 }
 
 tr:last-child {
@@ -98,5 +105,5 @@ tr:last-child {
 }
 
 tbody > tr:hover {
-  background-color: #eee;
+  background-color: var(--lightGrey-2);
 }

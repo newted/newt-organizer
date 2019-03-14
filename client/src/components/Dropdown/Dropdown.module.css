@@ -16,7 +16,7 @@
   cursor: pointer;
   background-color: #fff;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
   transition: opacity 0.1s ease;
   z-index: 11;
@@ -37,7 +37,7 @@
 }
 
 .item:hover {
-  background-color: #eee;
+  background-color: var(--lightGrey-2);
 }
 
 .displayNone {

@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   box-sizing: border-box;
   border-radius: 0.5rem;
   width: 100%;
@@ -9,7 +9,7 @@
 }
 
 .completedCard {
-  border-color: #48d368;
+  border-color: var(--lightGreen-btn-border);
 }
 
 .cardVisual {
@@ -19,18 +19,18 @@
   width: 15%;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-  border-right: 1px solid #ccc;
-  background-color: #eee;
+  border-right: 1px solid var(--lightGrey);
+  background-color: var(--lightGrey-2);
 }
 
 .completedCardVisual {
-  border-right-color: #48d368;
+  border-right-color: var(--lightGreen-btn-border);
   background-color: rgb(51, 206, 87, 0.8);
 }
 
 .cardBody {
   display: flex;
-  color: #444;
+  color: var(--darkGrey);
   justify-content: space-between;
   width: 85%;
   padding: 0.5rem 0.75rem;
@@ -60,13 +60,13 @@
 }
 
 .subtitle {
-  color: #bbb;
+  color: var(--grey-2);
   border-bottom: 1px solid #fff; /* White border so elements don't shift on hover's border */
 }
 
 .subtitle:hover {
-  color: #999;
-  border-bottom: 1px solid #999;
+  color: var(--grey);
+  border-bottom: 1px solid var(--grey);
 }
 
 .details {
@@ -74,14 +74,14 @@
 }
 
 .check {
-  color: #666;
+  color: var(--darkGrey-2);
   cursor: pointer;
 }
 
 .check:hover {
-  color: #48d368;
+  color: var(--lightGreen-btn-border);
 }
 
 .completedCheck {
-  color: #48d368;
+  color: var(--lightGreen-btn-border);
 }

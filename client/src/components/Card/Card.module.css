@@ -8,7 +8,7 @@
   padding: 1.5%;
   border-radius: 1rem;
   box-shadow: 0 10px 40px -10px rgba(0, 64, 128, 0.35);
-  background-color: #eee;
+  background-color: var(--lightGrey-2);
 }
 
 /* For widescreen make cards in sets of 4 instead of 3 */
@@ -46,7 +46,8 @@
 
 .subtitle {
   font-size: 1rem;
-  color: #555;
+  font-weight: 500;
+  color: var(--darkGrey-2);
   text-align: center;
   margin: 0.5rem 0;
 }

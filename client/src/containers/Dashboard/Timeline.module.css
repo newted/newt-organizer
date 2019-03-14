@@ -11,14 +11,14 @@
 }
 
 .header {
-  color: #444;
+  color: var(--darkGrey);
   font-size: 1.2rem;
   font-weight: 600;
   padding-bottom: 1rem;
 }
 
 .timeline {
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
   padding: 1rem;
   min-height: 500px;
@@ -26,7 +26,7 @@
 }
 
 .date {
-  color: #555;
+  color: var(--darkGrey-2);
 }
 
 .prevWeekContainer {

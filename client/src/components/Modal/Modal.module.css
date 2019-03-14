@@ -22,7 +22,7 @@
   height: auto;
   top: 50%;
   left: 50%;
-  border: 1px solid #eee;
+  border: 1px solid var(--lightGrey-2);
   border-radius: 0.5rem;
   transform: translate(-50%, -50%);
 }
@@ -56,7 +56,7 @@
 
 .modalCloseBtn {
   margin-right: 0.5rem;
-  background-color: #ccc;
+  background-color: var(--lightGrey);
   border: 1px solid #bfbfbf;
 }
 

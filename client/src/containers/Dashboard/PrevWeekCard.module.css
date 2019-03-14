@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   box-sizing: border-box;
   border-radius: 0.5rem;
   width: 100%;
@@ -19,7 +19,7 @@
 
 .cardBody {
   display: flex;
-  color: #444;
+  color: var(--darkGrey);
   justify-content: space-between;
   align-items: center;
   width: 60%;

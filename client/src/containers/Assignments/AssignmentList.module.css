@@ -26,10 +26,10 @@
 }
 
 .completedBtn:hover {
-  border: 1px solid #48d368;
+  border: 1px solid var(--lightGreen-btn-border);
 }
 
 .selected {
-  border: 1px solid #48d368;
-  color: #48d368;
+  border: 1px solid var(--lightGreen-btn-border);
+  color: var(--lightGreen-btn-border);
 }

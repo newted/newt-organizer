@@ -25,13 +25,13 @@
 .message {
   padding: 1.5rem;
   width: 100%;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
   margin: 1rem 2%;
   min-width: 350px;
 }
 
 .addCourse {
-  color: #33ce57;
+  color: var(--lightGreen);
   font-weight: 600;
 }
