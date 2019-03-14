@@ -32,15 +32,8 @@ class Navbar extends Component {
     this._isMounted = true;
   }
 
-  // So the dropdown is removed before signing out so there isn't a 'memory
-  // leak' error thrown.
   componentWillUnmount() {
-    this.setState(
-      () => ({
-        showDropdown: false
-      }),
-      () => document.removeEventListener("click", this.closeDropdown)
-    );
+    this._isMounted = false;
   }
 
   openDropdown = event => {
@@ -55,12 +48,14 @@ class Navbar extends Component {
   };
 
   closeDropdown = () => {
-    this.setState(
-      () => ({
-        showDropdown: false
-      }),
-      () => document.removeEventListener("click", this.closeDropdown)
-    );
+    if (this._isMounted) {
+      this.setState(
+        () => ({
+          showDropdown: false
+        }),
+        () => document.removeEventListener("click", this.closeDropdown)
+      );
+    }
   };
 
   // Render Login or Logout based on authentication state

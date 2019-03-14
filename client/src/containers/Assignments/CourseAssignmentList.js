@@ -53,13 +53,25 @@ class CourseAssignmentList extends Component {
   openDropdown = (assignmentId, event) => {
     if (this._isMounted) {
       this.setState(
-        prevState => ({
-          showDropdown: {
-            ...prevState.showDropdown,
-            [assignmentId]: true
-          },
-          currentDropdownId: assignmentId
-        }),
+        prevState =>
+          // If currentDropdownId exists (is not null), then close that dropdown
+          // so that multiple aren't open.
+          prevState.currentDropdownId
+            ? {
+                showDropdown: {
+                  ...prevState.showDropdown,
+                  [prevState.currentDropdownId]: false, // Close the previous dropdown so multiple aren't open
+                  [assignmentId]: true
+                },
+                currentDropdownId: assignmentId
+              }
+            : {
+                showDropdown: {
+                  ...prevState.showDropdown,
+                  [assignmentId]: true
+                },
+                currentDropdownId: assignmentId
+              },
         () => {
           document.addEventListener("click", this.closeDropdown);
         }
