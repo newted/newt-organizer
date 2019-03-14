@@ -3,13 +3,13 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   _id: String,
-  googleId: String,
   displayName: String,
   name: {
     familyName: String,
     givenName: String
   },
-  email: String
+  email: String,
+  dateCreated: Date
 });
 
 mongoose.model("users", userSchema);

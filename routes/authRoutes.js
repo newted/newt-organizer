@@ -3,6 +3,22 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
 module.exports = app => {
+  // Fetch user given user ID
+  app.get("/api/user/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+      const user = await User.findById(userId);
+      if (user) {
+        res.send(user)
+      } else {
+        res.sendStatus(404)
+      }
+    } catch (error) {
+      res.send(error)
+    }
+  });
+
   // Create user if does not exist, otherwise send existing user info
   app.post("/api/create_user", async (req, res) => {
     const { _id, displayName, email } = req.body;
@@ -18,17 +34,19 @@ module.exports = app => {
       const familyName = displayName.split(" ")[1];
 
       // No existing user, create a new user
-      const user = await new User({
+      await new User({
         _id,
         displayName,
         email,
         name: {
           familyName,
           givenName
-        }
+        },
+        dateCreated: Date.now()
       }).save();
 
-      res.send(user);
+      const newUser = await User.findOne({ _id })
+      res.send(newUser);
     }
   });
 };

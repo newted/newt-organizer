@@ -39,15 +39,16 @@ export const fetchUser = () => async dispatch => {
     dispatch(requestSignInUser());
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        resolve(
-          dispatch(
-            setAuthedUser({
-              _id: user.uid,
-              displayName: user.displayName,
-              email: user.email
-            })
-          )
-        );
+        // Make request to get user from database
+        axios
+          .get(`/api/user/${user.uid}`)
+          .then(res => {
+            resolve(dispatch(setAuthedUser(res.data)));
+          })
+          .catch(error => {
+            dispatch(removeAuthedUser());
+            reject("User doesn't exist on database.");
+          });
       } else {
         dispatch(removeAuthedUser());
         reject("Not authenticated.");
@@ -98,9 +99,9 @@ async function authenticateWithProvider(provider, history, dispatch) {
 
       // Request to create user if doesn't exist, or send back existing user
       // from Mongo DB
-      await axios.post("/api/create_user", userInfo);
+      const res = await axios.post("/api/create_user", userInfo);
 
-      dispatch(setAuthedUser(userInfo));
+      dispatch(setAuthedUser(res.data));
 
       // Redirect to dashboard
       history.push("/dashboard");

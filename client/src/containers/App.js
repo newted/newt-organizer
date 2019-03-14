@@ -104,14 +104,25 @@ const AppContainer = (auth, sidebar) => (
 class App extends Component {
   componentDidMount() {
     this.props.showLoading();
-    this.props
-      .fetchUser()
-      .then(() => this.props.fetchPrograms())
-      .then(() =>
-        this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-      )
-      .then(() => this.props.hideLoading())
-      .catch(error => this.props.hideLoading());
+    // If user already exists (if coming after signing in), don't fetch again
+    if (this.props.auth.exists) {
+      this.props
+        .fetchPrograms()
+        .then(() =>
+          this.props.fetchAllCourses(Object.keys(this.props.programs.items))
+        )
+        .then(() => this.props.hideLoading())
+        .catch(error => this.props.hideLoading());
+    } else {
+      this.props
+        .fetchUser()
+        .then(() => this.props.fetchPrograms())
+        .then(() =>
+          this.props.fetchAllCourses(Object.keys(this.props.programs.items))
+        )
+        .then(() => this.props.hideLoading())
+        .catch(error => this.props.hideLoading());
+    }
   }
 
   // After the first render, componentDidMount is invoked and if not
