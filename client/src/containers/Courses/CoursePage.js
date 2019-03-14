@@ -53,47 +53,45 @@ class CoursePage extends Component {
 
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h2>{course.name}</h2>
-            <div>
-              <Link
-                to={{
-                  pathname: `/programs/${programId}/courses/${course._id}/edit`
-                }}
-              >
-                <Button additionalClass={styles.editBtn}>Edit</Button>
-              </Link>
-              <Button
-                additionalClass={styles.deleteBtn}
-                onClick={this.openModal}
-              >
-                Delete
-              </Button>
-              <Modal
-                showModal={this.state.showModal}
-                handleClose={this.closeModal}
-              >
-                <Modal.Body>
-                  Are you sure you want to delete this course?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    type="button"
-                    additionalClass={styles.deleteBtn}
-                    onClick={() => deleteCourse(programId, course._id, history)}
-                  >
-                    Delete
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
+        <div className={styles.headerContainer}>
+          <h2>{course.name}</h2>
+          <div>
+            <Link
+              to={{
+                pathname: `/programs/${programId}/courses/${course._id}/edit`
+              }}
+            >
+              <Button additionalClass={styles.editBtn}>Edit</Button>
+            </Link>
+            <Button
+              additionalClass={styles.deleteBtn}
+              onClick={this.openModal}
+            >
+              Delete
+            </Button>
+            <Modal
+              showModal={this.state.showModal}
+              handleClose={this.closeModal}
+            >
+              <Modal.Body>
+                Are you sure you want to delete this course?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  type="button"
+                  additionalClass={styles.deleteBtn}
+                  onClick={() => deleteCourse(programId, course._id, history)}
+                >
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
-          <CourseAssignmentList
-            courseId={course._id}
-            assignments={course.assignments}
-          />
         </div>
+        <CourseAssignmentList
+          courseId={course._id}
+          assignments={course.assignments}
+        />
       </div>
     );
   }

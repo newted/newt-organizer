@@ -57,18 +57,16 @@ class ProgramList extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h2>Programs</h2>
-            <Link to="/programs/new">
-              <Button additionalClass={styles.addBtn}>Add Program</Button>
-            </Link>
-          </div>
-          <div className={styles.cardContainer}>
-            {Object.keys(this.props.programs.items).length > 0
-              ? this.renderCards()
-              : this.renderNoContent()}
-          </div>
+        <div className={styles.headerContainer}>
+          <h2>Programs</h2>
+          <Link to="/programs/new">
+            <Button additionalClass={styles.addBtn}>Add Program</Button>
+          </Link>
+        </div>
+        <div className={styles.cardContainer}>
+          {Object.keys(this.props.programs.items).length > 0
+            ? this.renderCards()
+            : this.renderNoContent()}
         </div>
       </div>
     );

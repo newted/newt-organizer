@@ -29,15 +29,13 @@ class EditProgram extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h3>Edit Program</h3>
-          </div>
-          <EditProgramForm
-            program={this.props.program}
-            onSubmit={this.props.updateProgram}
-          />
+        <div className={styles.headerContainer}>
+          <h3>Edit Program</h3>
         </div>
+        <EditProgramForm
+          program={this.props.program}
+          onSubmit={this.props.updateProgram}
+        />
       </div>
     );
   }

@@ -29,16 +29,14 @@ class EditCourse extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h3>Edit Course</h3>
-          </div>
-          <EditCourseForm
-            course={this.props.course}
-            programId={this.props.programId}
-            onSubmit={this.props.updateCourse}
-          />
+        <div className={styles.headerContainer}>
+          <h3>Edit Course</h3>
         </div>
+        <EditCourseForm
+          course={this.props.course}
+          programId={this.props.programId}
+          onSubmit={this.props.updateCourse}
+        />
       </div>
     );
   }

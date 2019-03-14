@@ -21,15 +21,13 @@ class AddAssignment extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h3>Add a New Assignment</h3>
-          </div>
-          <AddAssignmentForm
-            courseId={this.props.courseId}
-            onSubmit={this.props.submitAssignment}
-          />
+        <div className={styles.headerContainer}>
+          <h3>Add a New Assignment</h3>
         </div>
+        <AddAssignmentForm
+          courseId={this.props.courseId}
+          onSubmit={this.props.submitAssignment}
+        />
       </div>
     );
   }

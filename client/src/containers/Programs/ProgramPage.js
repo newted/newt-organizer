@@ -52,7 +52,7 @@ class ProgramPage extends Component {
     const { program, history, deleteProgram } = this.props;
 
     return (
-      <div className={styles.contentContainer}>
+      <div>
         <div className={styles.headerContainer}>
           <div className={styles.headings}>
             <h2 className={styles.header}>{this.props.program.name}</h2>

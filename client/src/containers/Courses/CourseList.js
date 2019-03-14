@@ -100,15 +100,13 @@ class CourseList extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h2>Your Courses</h2>
-          </div>
-          <div className={styles.coursesContainer}>
-            {Object.keys(this.props.courses.items).length > 0
-              ? this.renderCourseSections()
-              : this.renderNoContent()}
-          </div>
+        <div className={styles.headerContainer}>
+          <h2>Your Courses</h2>
+        </div>
+        <div className={styles.coursesContainer}>
+          {Object.keys(this.props.courses.items).length > 0
+            ? this.renderCourseSections()
+            : this.renderNoContent()}
         </div>
       </div>
     );

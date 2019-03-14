@@ -2,10 +2,6 @@
   composes: mainContainer from "../../styles/shared.css";
 }
 
-.contentContainer {
-  composes: contentContainer from "../../styles/shared.css";
-}
-
 .assignmentsContainer {
   display: flex;
   flex-direction: column;

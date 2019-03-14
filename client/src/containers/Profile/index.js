@@ -6,10 +6,8 @@ class Profile extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <h2 className={styles.header}>Profile</h2>
-          <div className={styles.container}></div>
-        </div>
+        <h2 className={styles.header}>Profile</h2>
+        <div className={styles.container}></div>
       </div>
     );
   }

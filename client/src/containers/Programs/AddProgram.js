@@ -20,12 +20,10 @@ class AddProgram extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h3>Add a New Program</h3>
-          </div>
-          <AddProgramForm onSubmit={this.props.submitProgram} />
+        <div className={styles.headerContainer}>
+          <h3>Add a New Program</h3>
         </div>
+        <AddProgramForm onSubmit={this.props.submitProgram} />
       </div>
     );
   }

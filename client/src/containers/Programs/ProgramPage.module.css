@@ -2,10 +2,6 @@
   composes: mainContainer from "../../styles/shared.css";
 }
 
-.contentContainer {
-  composes: contentContainer from "../../styles/shared.css";
-}
-
 .headerContainer {
   composes: headerContainer from "../../styles/shared.css";
   margin: 1rem 2%;

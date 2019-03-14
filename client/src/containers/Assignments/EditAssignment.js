@@ -30,15 +30,13 @@ class EditAssignment extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.headerContainer}>
-            <h3>Edit Assignment</h3>
-          </div>
-          <EditAssignmentForm
-            assignment={this.props.assignment}
-            onSubmit={this.props.updateAssignment}
-          />
+        <div className={styles.headerContainer}>
+          <h3>Edit Assignment</h3>
         </div>
+        <EditAssignmentForm
+          assignment={this.props.assignment}
+          onSubmit={this.props.updateAssignment}
+        />
       </div>
     );
   }

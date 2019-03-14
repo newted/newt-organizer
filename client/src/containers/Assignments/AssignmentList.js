@@ -98,33 +98,31 @@ class AssignmentList extends Component {
 
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <div className={styles.assignmentsContainer}>
-            <div className={styles.headerContainer}>
-              <h2>Your Assignments</h2>
+        <div className={styles.assignmentsContainer}>
+          <div className={styles.headerContainer}>
+            <h2>Your Assignments</h2>
+          </div>
+          <div className={styles.tableContainer}>
+            <div className={styles.tableOptions}>
+              <Button
+                additionalClass={
+                  showCompleted
+                    ? [styles.completedBtn, styles.selected].join(" ")
+                    : styles.completedBtn
+                }
+                onClick={this.handleShowCompleted}
+              >
+                {`Show Completed (${numCompleted})`}
+              </Button>
             </div>
-            <div className={styles.tableContainer}>
-              <div className={styles.tableOptions}>
-                <Button
-                  additionalClass={
-                    showCompleted
-                      ? [styles.completedBtn, styles.selected].join(" ")
-                      : styles.completedBtn
-                  }
-                  onClick={this.handleShowCompleted}
-                >
-                  {`Show Completed (${numCompleted})`}
-                </Button>
-              </div>
-              <AssignmentTable
-                fields={allAssignmentTableFields}
-                assignments={assignments}
-                name="Assignments"
-                showCompleted={this.state.showCompleted}
-                dropdownVisible={this.state.showDropdown}
-                handleOpenDropdown={this.openDropdown}
-              />
-            </div>
+            <AssignmentTable
+              fields={allAssignmentTableFields}
+              assignments={assignments}
+              name="Assignments"
+              showCompleted={this.state.showCompleted}
+              dropdownVisible={this.state.showDropdown}
+              handleOpenDropdown={this.openDropdown}
+            />
           </div>
         </div>
       </div>

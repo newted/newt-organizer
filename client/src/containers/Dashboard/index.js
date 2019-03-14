@@ -39,10 +39,8 @@ class Dashboard extends Component {
   render() {
     return (
       <div className={styles.mainContainer}>
-        <div className={styles.contentContainer}>
-          <h2 className={styles.header}>Dashboard</h2>
-          {this.renderContent()}
-        </div>
+        <h2 className={styles.header}>Dashboard</h2>
+        {this.renderContent()}
       </div>
     );
   }
