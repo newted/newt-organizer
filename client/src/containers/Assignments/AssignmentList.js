@@ -14,7 +14,6 @@ class AssignmentList extends Component {
   state = {
     showDropdown: initializeDropdownMenuState(this.props.assignments),
     showCompleted: false, // Doesn't show completed assignments by default
-    dropdownMenu: null,
     currentDropdownId: null // Passed to closeDropdown function so it knows which table row dropdown to close.
   };
 
@@ -59,26 +58,18 @@ class AssignmentList extends Component {
   closeDropdown = event => {
     const assignmentId = this.state.currentDropdownId;
 
-    if (this._isMounted && !this.state.dropdownMenu.contains(event.target)) {
-      this.setState(
-        prevState => ({
-          showDropdown: {
-            ...prevState.showDropdown,
-            [assignmentId]: false
-          },
-          currentDropdownId: null
-        }),
-        () => {
-          document.removeEventListener("click", this.closeDropdown);
-        }
-      );
-    }
-  };
-
-  setDropdownMenu = event => {
-    if (this._isMounted && event && !this.state.dropdownMenu) {
-      this.setState({ dropdownMenu: event });
-    }
+    this.setState(
+      prevState => ({
+        showDropdown: {
+          ...prevState.showDropdown,
+          [assignmentId]: false
+        },
+        currentDropdownId: null
+      }),
+      () => {
+        document.removeEventListener("click", this.closeDropdown);
+      }
+    );
   };
 
   handleShowCompleted = e => {
@@ -120,7 +111,6 @@ class AssignmentList extends Component {
                 showCompleted={this.state.showCompleted}
                 dropdownVisible={this.state.showDropdown}
                 handleOpenDropdown={this.openDropdown}
-                setDropdownMenu={this.setDropdownMenu}
               />
             </div>
           </div>

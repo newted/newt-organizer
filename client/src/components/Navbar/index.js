@@ -23,8 +23,7 @@ class Navbar extends Component {
   };
 
   state = {
-    showDropdown: false,
-    dropdownMenu: null
+    showDropdown: false
   };
 
   _isMounted = false;
@@ -55,28 +54,13 @@ class Navbar extends Component {
     }
   };
 
-  closeDropdown = event => {
-    if (this._isMounted) {
-      this.setState(
-        () => ({
-          showDropdown: false
-        }),
-        () => document.removeEventListener("click", this.closeDropdown)
-      );
-    }
-  };
-
-  setDropdownMenu = event => {
-    if (this._isMounted && event && !this.state.dropdownMenu) {
-      this.setState(() => ({
-        dropdownMenu: event
-      }));
-    }
-  };
-
-  redirectToProfile = (event) => {
-    this.closeDropdown(event)
-    this.props.history.push("/profile");
+  closeDropdown = () => {
+    this.setState(
+      () => ({
+        showDropdown: false
+      }),
+      () => document.removeEventListener("click", this.closeDropdown)
+    );
   };
 
   // Render Login or Logout based on authentication state
@@ -111,9 +95,9 @@ class Navbar extends Component {
                   handleOpen={event => this.openDropdown(event)}
                 >
                   <FiUser size={22} />
-                  <Dropdown.Menu ref={element => this.setDropdownMenu(element)}>
+                  <Dropdown.Menu>
                     <Dropdown.Item
-                      onClick={(event) => this.redirectToProfile(event)}
+                      onClick={() => this.props.history.push("/profile")}
                     >
                       Profile
                     </Dropdown.Item>
@@ -140,7 +124,6 @@ class Navbar extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <nav className={`${styles.navbarContainer} ${this.renderNavbarColor()}`}>
         <div className={styles.navbar}>

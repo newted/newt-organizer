@@ -28,7 +28,6 @@ class AssignmentTable extends Component {
     fields: PropTypes.object.isRequired,
     handleOpenDropdown: PropTypes.func.isRequired,
     name: PropTypes.string,
-    setDropdownMenu: PropTypes.func.isRequired,
     showCompleted: PropTypes.bool,
     history: PropTypes.object
   };
@@ -133,11 +132,7 @@ class AssignmentTable extends Component {
               }
             >
               <FiMoreVertical />
-              <Dropdown.Menu
-                ref={element => {
-                  this.props.setDropdownMenu(element);
-                }}
-              >
+              <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() =>
                     this.props.markAssignmentAsIncomplete(
