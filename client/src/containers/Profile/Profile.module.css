@@ -3,7 +3,7 @@
 }
 
 .headerContainer {
-  composes: headerContainer from '../../styles/shared.css'
+  composes: headerContainer from "../../styles/shared.css";
 }
 
 .container {
@@ -17,16 +17,17 @@
 }
 
 .subheading {
+  padding: 0 0.4rem;
   color: var(--grey);
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
 
 .option {
-  padding: .4rem;
+  padding: 0.4rem;
   color: var(--darkGrey);
-  margin-bottom: .75rem;
-  border-radius: .25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
 }
 
 .option:hover {
@@ -48,7 +49,14 @@
   width: 80%;
   min-height: 500px;
   margin-left: 2rem;
+  padding: 2.5rem;
   border: 1px solid var(--lightGrey);
-  border-radius: .5rem;
-  box-shadow: 0 7px 14px 0 rgba(60,66,87, 0.1),0 3px 6px 0 rgba(0, 0, 0, .07);
+  border-radius: 0.5rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.contentHeader {
+  color: var(--darkGrey);
+  margin-bottom: 1.5rem;
 }

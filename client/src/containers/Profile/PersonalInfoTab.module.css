@@ -1,0 +1,9 @@
+.form {
+  width: 50%;
+  color: var(--darkGrey-2);
+}
+
+.submitBtn {
+  composes: submitBtn from "../../styles/shared.css";
+  width: 125px;
+}

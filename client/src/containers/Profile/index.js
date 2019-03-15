@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+// Components
+import PersonalInfoTab from "./PersonalInfoTab";
 // Styling
 import styles from "./Profile.module.css";
 
@@ -21,13 +23,24 @@ class Profile extends Component {
     }));
   };
 
+  renderContent() {
+    switch (this.state.activeTab) {
+      case "Personal Information":
+        return <PersonalInfoTab />;
+      case "Statistics":
+        return <div>[Statistics Content]</div>;
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <div className={styles.mainContainer}>
         <h2 className={styles.headerContainer}>Profile</h2>
         <div className={styles.container}>
           <div className={styles.optionsContainer}>
-            <h3 className={styles.subheading}>Account</h3>
+            <h2 className={styles.subheading}>Account</h2>
             <div
               className={this.renderOptionClass("Personal Information")}
               onClick={e => this.handleTabChange(e)}
@@ -41,7 +54,10 @@ class Profile extends Component {
               Statistics
             </div>
           </div>
-          <div className={styles.contentContainer} />
+          <div className={styles.contentContainer}>
+            <h3 className={styles.contentHeader}>{this.state.activeTab}</h3>
+            {this.renderContent()}
+          </div>
         </div>
       </div>
     );
