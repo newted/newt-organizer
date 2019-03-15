@@ -27,6 +27,7 @@
 .option {
   padding: 0.4rem;
   color: var(--darkGrey);
+  font-weight: 500;
   margin-bottom: 0.75rem;
   border-radius: 0.25rem;
 }
