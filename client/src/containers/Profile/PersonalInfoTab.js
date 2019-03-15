@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 // Styling
 import styles from "./PersonalInfoTab.module.css";
 
-const PersonalInfoTab = ({ userInfo }) => {
+const PersonalInfoTab = ({ userInfo, onSubmit }) => {
   class PersonalInfoForm extends Component {
     renderFields() {
       return _.map(infoFields, ({ name, label, required }) => (
@@ -28,7 +28,9 @@ const PersonalInfoTab = ({ userInfo }) => {
         <div>
           <Form
             className={styles.form}
-            onSubmit={this.props.handleSubmit(values => console.log(values))}
+            onSubmit={this.props.handleSubmit(values =>
+              this.props.onSubmit(this.props.userInfo._id, values)
+            )}
           >
             {this.renderFields()}
             <Button additionalClass={styles.submitBtn} type="submit">
@@ -62,7 +64,7 @@ const PersonalInfoTab = ({ userInfo }) => {
     form: "personalInfoForm"
   })(PersonalInfoForm);
 
-  return <PersonalInfoForm />;
+  return <PersonalInfoForm userInfo={userInfo} onSubmit={onSubmit} />;
 };
 
 export default PersonalInfoTab;

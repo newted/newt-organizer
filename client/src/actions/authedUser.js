@@ -57,6 +57,21 @@ export const fetchUser = () => async dispatch => {
   });
 };
 
+export const updateUser = (userId, values) => async dispatch => {
+  try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+
+    const res = await axios.put(`/api/user/${userId}/edit`, values, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch(setAuthedUser(res.data));
+  } catch (error) {
+    console.log("Error while updating user info: ", error);
+  }
+};
+
 export const authenticateWithGoogle = history => dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider();

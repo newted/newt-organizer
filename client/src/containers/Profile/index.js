@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+// API
+import { updateUser } from "../../actions/authedUser";
 // Components
 import PersonalInfoTab from "./PersonalInfoTab";
 // Styling
@@ -27,7 +29,12 @@ class Profile extends Component {
   renderContent() {
     switch (this.state.activeTab) {
       case "Personal Information":
-        return <PersonalInfoTab userInfo={this.props.userInfo} />;
+        return (
+          <PersonalInfoTab
+            userInfo={this.props.userInfo}
+            onSubmit={this.props.updateUser}
+          />
+        );
       case "Statistics":
         return <div>[Statistics Content]</div>;
       default:
@@ -71,4 +78,9 @@ function mapStateToProps({ auth: { item } }) {
   return { userInfo };
 }
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = { updateUser };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
