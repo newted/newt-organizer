@@ -2,11 +2,53 @@
   composes: mainContainer from "../../styles/shared.css";
 }
 
-.header {
-  margin: 1rem 2%;
+.headerContainer {
+  composes: headerContainer from '../../styles/shared.css'
 }
 
 .container {
   display: flex;
-  margin: 1rem 2%;
+  padding: 1rem 2%;
+}
+
+.optionsContainer {
+  width: 20%;
+  min-height: 500px;
+}
+
+.subheading {
+  color: var(--grey);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.option {
+  padding: .4rem;
+  color: var(--darkGrey);
+  margin-bottom: .75rem;
+  border-radius: .25rem;
+}
+
+.option:hover {
+  background-color: var(--lightGrey-2);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--salmon);
+  color: white;
+}
+
+.active:hover {
+  background-color: var(--salmon);
+  color: white;
+}
+
+.contentContainer {
+  width: 80%;
+  min-height: 500px;
+  margin-left: 2rem;
+  border: 1px solid var(--lightGrey);
+  border-radius: .5rem;
+  box-shadow: 0 7px 14px 0 rgba(60,66,87, 0.1),0 3px 6px 0 rgba(0, 0, 0, .07);
 }
