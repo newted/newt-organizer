@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 // Components
 import PersonalInfoTab from "./PersonalInfoTab";
 // Styling
@@ -26,7 +27,7 @@ class Profile extends Component {
   renderContent() {
     switch (this.state.activeTab) {
       case "Personal Information":
-        return <PersonalInfoTab />;
+        return <PersonalInfoTab userInfo={this.props.userInfo} />;
       case "Statistics":
         return <div>[Statistics Content]</div>;
       default:
@@ -64,4 +65,10 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+function mapStateToProps({ auth: { item } }) {
+  const userInfo = item;
+
+  return { userInfo };
+}
+
+export default connect(mapStateToProps)(Profile);
