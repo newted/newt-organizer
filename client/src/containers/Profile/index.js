@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { updateUser } from "../../actions/authedUser";
 // Components
 import PersonalInfoTab from "./PersonalInfoTab";
+import StatisticsTab from "./StatisticsTab";
 // Styling
 import styles from "./Profile.module.css";
 
@@ -36,7 +37,7 @@ class Profile extends Component {
           />
         );
       case "Statistics":
-        return <div>[Statistics Content]</div>;
+        return <StatisticsTab />;
       default:
         return null;
     }

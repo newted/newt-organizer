@@ -1,0 +1,20 @@
+.statsTable {
+  color: var(--darkGrey);
+}
+
+.statsTable > tbody > tr {
+  border-bottom: 1px solid var(--lightGrey-2);
+}
+
+.statsTable >tbody > tr:hover {
+  background-color: white;
+}
+
+.stat {
+  width: 35%;
+  font-weight: 500;
+}
+
+.value {
+  width: 65%;
+}
