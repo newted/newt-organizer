@@ -94,7 +94,7 @@ module.exports = app => {
 
         // Send the course that was created
         res.send(course);
-      } catch (err) {
+      } catch (error) {
         res.status(422).send(error);
       }
     }

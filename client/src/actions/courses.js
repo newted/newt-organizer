@@ -27,18 +27,18 @@ export const createCourse = (programId, values, history) => async dispatch => {
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
+    // Make request to create course
     const res = await axios.post(`/api/programs/${programId}/course`, values, {
       headers: { Authorization: idToken }
     });
 
-    const payload = {
-      course: res.data,
-      programId
-    };
-
+    // Dispatch data to store
     dispatch({
       type: CREATE_COURSE,
-      payload
+      payload: {
+        course: res.data,
+        programId
+      }
     });
 
     // Redirect to the program page
@@ -49,16 +49,19 @@ export const createCourse = (programId, values, history) => async dispatch => {
   }
 };
 
+// Function to fetch courses for a given program
 export const fetchCourses = programId => async dispatch => {
   try {
     dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
+    // Make request to fetch courses for a given program
     const res = await axios.get(`/api/programs/${programId}`, {
       headers: { Authorization: idToken }
     });
 
+    // Dispatch data to store
     dispatch({
       type: FETCH_COURSES,
       payload: res.data
@@ -69,18 +72,21 @@ export const fetchCourses = programId => async dispatch => {
   }
 };
 
+// Function to fetch all courses for all programs
 export const fetchAllCourses = programIds => async dispatch => {
   try {
     dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
+    // Make request to fetch all courses
     const res = await axios.post(
       "/api/programs/courses/all",
       { programIds },
       { headers: { Authorization: idToken } }
     );
 
+    // Dispatch data to store
     dispatch({
       type: FETCH_ALL_COURSES,
       payload: res.data
@@ -91,6 +97,7 @@ export const fetchAllCourses = programIds => async dispatch => {
   }
 };
 
+// Function to update course information
 export const updateCourse = (
   programId,
   courseId,
@@ -102,15 +109,18 @@ export const updateCourse = (
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
+    // Request to update course
     const res = await axios.put(`/api/courses/${courseId}/edit`, values, {
       headers: { Authorization: idToken }
     });
 
+    // Dispatch data to store
     dispatch({
       type: UPDATE_COURSE,
       payload: res.data
     });
 
+    // Redirect to course page
     history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
     dispatch(resolveCourses());
@@ -118,6 +128,7 @@ export const updateCourse = (
   }
 };
 
+// Function to delete course
 export const deleteCourse = (
   programId,
   courseId,
@@ -127,24 +138,24 @@ export const deleteCourse = (
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
-    const payload = {
-      programId,
-      courseId
-    };
-
     // Dispatching before request because it won't respond with data.
     dispatch({
       type: DELETE_COURSE,
-      payload
+      payload: {
+        programId,
+        courseId
+      }
     });
 
+    // Make request to delete course
     await axios.delete(
       `/api/programs/${programId}/courses/${courseId}/delete`,
       { headers: { Authorization: idToken } }
     );
 
+    // Redirect to program page
     history.push(`/programs/${programId}`);
-  } catch (err) {
-    console.log("Error while deleting the course.");
+  } catch (error) {
+    console.log("Error while deleting the course.", error);
   }
 };

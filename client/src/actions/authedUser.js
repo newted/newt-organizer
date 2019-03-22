@@ -34,9 +34,14 @@ export function isAuthenticated() {
   }
 }
 
+// Function to check if the user is authenticated through Firebase and then
+// get their data from the database.
 export const fetchUser = () => async dispatch => {
+  // Returns a Promise so that other requests (like fetching app data) can
+  // occur after this resolves.
   return new Promise((resolve, reject) => {
     dispatch(requestSignInUser());
+    // Request to Firebase to check if user authenticated
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // Make request to get user from database
@@ -45,6 +50,7 @@ export const fetchUser = () => async dispatch => {
           .then(res => {
             resolve(dispatch(setAuthedUser(res.data)));
           })
+          // On error remove user
           .catch(error => {
             dispatch(removeAuthedUser());
             reject("User doesn't exist on database.");
@@ -57,11 +63,13 @@ export const fetchUser = () => async dispatch => {
   });
 };
 
+// Function to update a user's personal information
 export const updateUser = (userId, values) => async dispatch => {
   try {
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
+    // Make request to update user information
     const res = await axios.put(`/api/user/${userId}/edit`, values, {
       headers: { Authorization: idToken }
     });
@@ -72,23 +80,22 @@ export const updateUser = (userId, values) => async dispatch => {
   }
 };
 
+// Function to authenticate with Google
 export const authenticateWithGoogle = history => dispatch => {
   // Get Google Provider
   const provider = new firebase.auth.GoogleAuthProvider();
-
   authenticateWithProvider(provider, history, dispatch);
 };
 
+// Function to authenticate with Google
 export const authenticateWithGithub = history => dispatch => {
   // Get GitHub Provider
   const provider = new firebase.auth.GithubAuthProvider();
-
   authenticateWithProvider(provider, history, dispatch);
 };
 
 export const signOut = () => async dispatch => {
   await firebase.auth().signOut();
-
   dispatch(removeAuthedUser());
 };
 

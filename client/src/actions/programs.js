@@ -21,6 +21,7 @@ const resolvePrograms = () => {
   };
 };
 
+// Function to create a program
 export const createProgram = (values, history) => async dispatch => {
   try {
     dispatch(requestPrograms());
@@ -32,6 +33,7 @@ export const createProgram = (values, history) => async dispatch => {
       headers: { Authorization: idToken }
     });
 
+    // Dispatch data to store
     dispatch({
       type: CREATE_PROGRAM,
       payload: res.data
@@ -45,6 +47,7 @@ export const createProgram = (values, history) => async dispatch => {
   }
 };
 
+// Function to fetch programs
 export const fetchPrograms = () => async dispatch => {
   try {
     dispatch(requestPrograms());
@@ -62,6 +65,7 @@ export const fetchPrograms = () => async dispatch => {
       ({ dateCreated }) => new Date(dateCreated)
     );
 
+    // Dispatch data to store
     dispatch({
       type: FETCH_PROGRAMS,
       payload: programs
@@ -72,6 +76,7 @@ export const fetchPrograms = () => async dispatch => {
   }
 };
 
+// Function to update a program
 export const updateProgram = (programId, values, history) => async dispatch => {
   try {
     dispatch(requestPrograms());
@@ -83,11 +88,13 @@ export const updateProgram = (programId, values, history) => async dispatch => {
       headers: { Authorization: idToken }
     });
 
+    // Dispatch data to store
     dispatch({
       type: UPDATE_PROGRAM,
       payload: res.data
     });
 
+    // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
     dispatch(resolvePrograms());
@@ -95,6 +102,7 @@ export const updateProgram = (programId, values, history) => async dispatch => {
   }
 };
 
+// Function to delete a program
 export const deleteProgram = (programId, history) => async dispatch => {
   try {
     dispatch(requestPrograms());
@@ -107,10 +115,12 @@ export const deleteProgram = (programId, history) => async dispatch => {
       payload: programId
     });
 
+    // Request to delete a program
     await axios.delete(`/api/programs/${programId}`, {
       headers: { Authorization: idToken }
     });
 
+    // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
     dispatch(resolvePrograms());
