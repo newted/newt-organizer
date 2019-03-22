@@ -21,42 +21,7 @@ export const resolveCourses = () => {
   };
 };
 
-const createCourse = payload => {
-  return {
-    type: CREATE_COURSE,
-    payload
-  };
-};
-
-const getCourses = payload => {
-  return {
-    type: FETCH_COURSES,
-    payload
-  };
-};
-
-const getAllCourses = payload => {
-  return {
-    type: FETCH_ALL_COURSES,
-    payload
-  };
-};
-
-const putCourse = payload => {
-  return {
-    type: UPDATE_COURSE,
-    payload
-  };
-};
-
-const removeCourse = payload => {
-  return {
-    type: DELETE_COURSE,
-    payload
-  };
-};
-
-export const submitCourse = (programId, values, history) => async dispatch => {
+export const createCourse = (programId, values, history) => async dispatch => {
   try {
     dispatch(requestCourses());
     // Get current user token
@@ -71,7 +36,10 @@ export const submitCourse = (programId, values, history) => async dispatch => {
       programId
     };
 
-    dispatch(createCourse(payload));
+    dispatch({
+      type: CREATE_COURSE,
+      payload
+    });
 
     // Redirect to the program page
     history.push(`/programs/${programId}`);
@@ -91,7 +59,10 @@ export const fetchCourses = programId => async dispatch => {
       headers: { Authorization: idToken }
     });
 
-    dispatch(getCourses(res.data));
+    dispatch({
+      type: FETCH_COURSES,
+      payload: res.data
+    });
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error while fetching courses for this program:", error);
@@ -110,7 +81,10 @@ export const fetchAllCourses = programIds => async dispatch => {
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(getAllCourses(res.data));
+    dispatch({
+      type: FETCH_ALL_COURSES,
+      payload: res.data
+    });
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error fetching all courses: ", error);
@@ -132,9 +106,12 @@ export const updateCourse = (
       headers: { Authorization: idToken }
     });
 
-    dispatch(putCourse(res.data));
+    dispatch({
+      type: UPDATE_COURSE,
+      payload: res.data
+    });
 
-    history.push(`/programs/${programId}`);
+    history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error while updating course.", error);
@@ -156,7 +133,10 @@ export const deleteCourse = (
     };
 
     // Dispatching before request because it won't respond with data.
-    dispatch(removeCourse(payload));
+    dispatch({
+      type: DELETE_COURSE,
+      payload
+    });
 
     await axios.delete(
       `/api/programs/${programId}/courses/${courseId}/delete`,
