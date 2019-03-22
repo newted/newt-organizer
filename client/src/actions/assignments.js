@@ -9,47 +9,6 @@ export const MARK_ASSIGNMENT_COMPLETE = "MARK_ASSIGNMENT_COMPLETE";
 export const MARK_ASSIGNMENT_IN_PROGRESS = "MARK_ASSIGNMENT_IN_PROGRESS";
 export const MARK_ASSIGNMENT_INCOMPLETE = "MARK_ASSIGNMENT_INCOMPLETE";
 
-const createAssignment = payload => {
-  return {
-    type: CREATE_ASSIGNMENT,
-    payload
-  };
-};
-
-const putAssignment = payload => {
-  return {
-    type: UPDATE_ASSIGNMENT,
-    payload
-  };
-};
-
-const removeAssignment = payload => {
-  return {
-    type: DELETE_ASSIGNMENT,
-    payload
-  };
-};
-
-const markAsComplete = payload => {
-  return {
-    type: MARK_ASSIGNMENT_COMPLETE,
-    payload
-  };
-};
-
-const markAsInProgress = payload => {
-  return {
-    type: MARK_ASSIGNMENT_IN_PROGRESS,
-    payload
-  };
-};
-
-const markAsIncomplete = payload => {
-  return {
-    type: MARK_ASSIGNMENT_INCOMPLETE,
-    payload
-  };
-};
 
 export const submitAssignment = (
   courseId,
@@ -67,7 +26,10 @@ export const submitAssignment = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(createAssignment(res.data));
+    dispatch({
+      type: CREATE_ASSIGNMENT,
+      payload: res.data
+    });
 
     history.goBack();
   } catch (error) {
@@ -93,7 +55,10 @@ export const updateAssignment = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(putAssignment(res.data));
+    dispatch({
+      type: UPDATE_ASSIGNMENT,
+      payload: res.data
+    });
 
     history.goBack();
   } catch (error) {
@@ -117,7 +82,10 @@ export const deleteAssignment = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(removeAssignment(res.data));
+    dispatch({
+      type: DELETE_ASSIGNMENT,
+      payload: res.data
+    });
   } catch (err) {
     dispatch(resolveCourses());
     console.log("Error while deleting the assignment", err);
@@ -140,7 +108,10 @@ export const completeAssignment = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(markAsComplete(res.data));
+    dispatch({
+      type: MARK_ASSIGNMENT_COMPLETE,
+      payload: res.data
+    });
   } catch (err) {
     dispatch(resolveCourses());
     console.log("Error while marking assignment as complete", err);
@@ -163,7 +134,10 @@ export const markAssignmentAsInProgress = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(markAsInProgress(res.data));
+    dispatch({
+      type: MARK_ASSIGNMENT_IN_PROGRESS,
+      payload: res.data
+    });
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error while marking assignment as in progress", error);
@@ -186,7 +160,10 @@ export const markAssignmentAsIncomplete = (
       { headers: { Authorization: idToken } }
     );
 
-    dispatch(markAsIncomplete(res.data));
+    dispatch({
+      type: MARK_ASSIGNMENT_INCOMPLETE,
+      payload: res.data
+    });
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error while marking assignment as incomplete", error);
