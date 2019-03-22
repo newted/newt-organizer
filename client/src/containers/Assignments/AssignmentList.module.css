@@ -1,5 +1,7 @@
 .mainContainer {
   composes: mainContainer from "../../styles/shared.css";
+  min-height: calc(100vh - 54px);
+  box-sizing: border-box;
 }
 
 .assignmentsContainer {
