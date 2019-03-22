@@ -14,7 +14,8 @@ const TimelineCard = ({
     details,
     completed
   },
-  completeAssignment
+  onComplete,
+  onIncomplete
 }) => (
   <div
     className={
@@ -44,7 +45,9 @@ const TimelineCard = ({
       <div className={styles.cardStatus}>
         <div
           style={{ height: "25px" }}
-          onClick={() => completeAssignment(courseId, _id)}
+          onClick={() =>
+            completed ? onIncomplete(courseId, _id) : onComplete(courseId, _id)
+          }
         >
           <FiCheckSquare
             size={25}

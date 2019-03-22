@@ -69,8 +69,7 @@ export const updateAssignment = (
 
 export const deleteAssignment = (
   courseId,
-  assignmentId,
-  history
+  assignmentId
 ) => async dispatch => {
   try {
     dispatch(requestCourses());
@@ -94,8 +93,7 @@ export const deleteAssignment = (
 
 export const markAssignmentAsComplete = (
   courseId,
-  assignmentId,
-  history
+  assignmentId
 ) => async dispatch => {
   try {
     dispatch(requestCourses());
@@ -120,8 +118,7 @@ export const markAssignmentAsComplete = (
 
 export const markAssignmentAsInProgress = (
   courseId,
-  assignmentId,
-  history
+  assignmentId
 ) => async dispatch => {
   try {
     dispatch(requestCourses());
@@ -146,8 +143,7 @@ export const markAssignmentAsInProgress = (
 
 export const markAssignmentAsIncomplete = (
   courseId,
-  assignmentId,
-  history
+  assignmentId
 ) => async dispatch => {
   try {
     dispatch(requestCourses());
