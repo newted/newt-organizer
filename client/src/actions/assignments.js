@@ -10,7 +10,7 @@ export const MARK_ASSIGNMENT_IN_PROGRESS = "MARK_ASSIGNMENT_IN_PROGRESS";
 export const MARK_ASSIGNMENT_INCOMPLETE = "MARK_ASSIGNMENT_INCOMPLETE";
 
 
-export const submitAssignment = (
+export const createAssignment = (
   courseId,
   values,
   history
@@ -92,7 +92,7 @@ export const deleteAssignment = (
   }
 };
 
-export const completeAssignment = (
+export const markAssignmentAsComplete = (
   courseId,
   assignmentId,
   history

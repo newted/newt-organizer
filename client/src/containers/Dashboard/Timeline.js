@@ -5,7 +5,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { initializePrevAssignments } from "../../utils/containerHelpers";
 // API
-import { completeAssignment } from "../../actions/assignments";
+import { markAssignmentAsComplete } from "../../actions/assignments";
 import { fetchAllCourses } from "../../actions/courses";
 // Components
 import TimelineCard from "./TimelineCard";
@@ -45,7 +45,7 @@ class Timeline extends Component {
   };
 
   renderUpcomingAssignments() {
-    const { upcomingAssignments, completeAssignment } = this.props;
+    const { upcomingAssignments, markAssignmentAsComplete } = this.props;
 
     if (upcomingAssignments.length > 0) {
       return _.map(upcomingAssignments, assignment => (
@@ -53,7 +53,7 @@ class Timeline extends Component {
           {this.renderDate(assignment.dateDue)}
           <TimelineCard
             assignment={assignment}
-            completeAssignment={completeAssignment}
+            completeAssignment={markAssignmentAsComplete}
             key={assignment._id}
           />
         </Fragment>
@@ -196,7 +196,7 @@ function mapStateToProps({ courses, programs }) {
 }
 
 const mapDispatchToProps = {
-  completeAssignment,
+  markAssignmentAsComplete,
   fetchAllCourses
 };
 

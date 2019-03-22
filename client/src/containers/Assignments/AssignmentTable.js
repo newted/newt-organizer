@@ -11,7 +11,7 @@ import Button from "../../components/Button";
 // API
 import {
   deleteAssignment,
-  completeAssignment,
+  markAssignmentAsComplete,
   markAssignmentAsInProgress,
   markAssignmentAsIncomplete
 } from "../../actions/assignments";
@@ -157,7 +157,7 @@ class AssignmentTable extends Component {
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={() =>
-                    this.props.completeAssignment(
+                    this.props.markAssignmentAsComplete(
                       object.courseId,
                       object._id,
                       history
@@ -241,7 +241,7 @@ function mapStateToProps(state, { assignments, fields, name, showCompleted }) {
 
 const mapDispatchToProps = {
   deleteAssignment,
-  completeAssignment,
+  markAssignmentAsComplete,
   markAssignmentAsInProgress,
   markAssignmentAsIncomplete
 };

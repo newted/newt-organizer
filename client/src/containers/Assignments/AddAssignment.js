@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 // Components
 import AddAssignmentForm from "./AddAssignmentForm";
 // API
-import { submitAssignment } from "../../actions/assignments";
+import { createAssignment } from "../../actions/assignments";
 // Styling
 import styles from "./AddAssignment.module.css";
 
 class AddAssignment extends Component {
   static propTypes = {
     courseId: PropTypes.string.isRequired,
-    submitAssignment: PropTypes.func.isRequired,
+    createAssignment: PropTypes.func.isRequired,
     // Connect stuff
     history: PropTypes.object,
     location: PropTypes.object,
@@ -26,7 +26,7 @@ class AddAssignment extends Component {
         </div>
         <AddAssignmentForm
           courseId={this.props.courseId}
-          onSubmit={this.props.submitAssignment}
+          onSubmit={this.props.createAssignment}
         />
       </div>
     );
@@ -42,7 +42,7 @@ function mapStateToProps(state, props) {
 }
 
 const mapDispatchToProps = {
-  submitAssignment
+  createAssignment
 };
 
 export default connect(
