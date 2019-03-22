@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 // Components
 import AddProgramForm from "./AddProgramForm";
 // API
-import { submitProgram } from "../../actions/programs";
+import { createProgram } from "../../actions/programs";
 // Styling
 import styles from "./AddProgram.module.css";
 
 class AddProgram extends Component {
   static propTypes = {
-    submitProgram: PropTypes.func.isRequired,
+    createProgram: PropTypes.func.isRequired,
     // Connect props
     history: PropTypes.object,
     location: PropTypes.object,
@@ -23,14 +23,14 @@ class AddProgram extends Component {
         <div className={styles.headerContainer}>
           <h3>Add a New Program</h3>
         </div>
-        <AddProgramForm onSubmit={this.props.submitProgram} />
+        <AddProgramForm onSubmit={this.props.createProgram} />
       </div>
     );
   }
 }
 
 const mapDispatchToProps = {
-  submitProgram
+  createProgram
 }
 
 export default connect(

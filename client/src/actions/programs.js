@@ -21,35 +21,7 @@ const resolvePrograms = () => {
   };
 };
 
-const createProgram = payload => {
-  return {
-    type: CREATE_PROGRAM,
-    payload
-  };
-};
-
-const getPrograms = payload => {
-  return {
-    type: FETCH_PROGRAMS,
-    payload
-  };
-};
-
-const putProgram = payload => {
-  return {
-    type: UPDATE_PROGRAM,
-    payload
-  };
-};
-
-const removeProgram = payload => {
-  return {
-    type: DELETE_PROGRAM,
-    payload
-  };
-};
-
-export const submitProgram = (values, history) => async dispatch => {
+export const createProgram = (values, history) => async dispatch => {
   try {
     dispatch(requestPrograms());
     // Get current user token
@@ -60,7 +32,10 @@ export const submitProgram = (values, history) => async dispatch => {
       headers: { Authorization: idToken }
     });
 
-    dispatch(createProgram(res.data));
+    dispatch({
+      type: CREATE_PROGRAM,
+      payload: res.data
+    });
 
     // Redirect to programs page
     history.push("/programs");
@@ -87,7 +62,10 @@ export const fetchPrograms = () => async dispatch => {
       ({ dateCreated }) => new Date(dateCreated)
     );
 
-    dispatch(getPrograms(programs));
+    dispatch({
+      type: FETCH_PROGRAMS,
+      payload: programs
+    });
   } catch (error) {
     dispatch(resolvePrograms());
     console.log("Error while fetching programs.", error);
@@ -105,7 +83,10 @@ export const updateProgram = (programId, values, history) => async dispatch => {
       headers: { Authorization: idToken }
     });
 
-    dispatch(putProgram(res.data));
+    dispatch({
+      type: UPDATE_PROGRAM,
+      payload: res.data
+    });
 
     history.push("/programs");
   } catch (error) {
@@ -121,7 +102,10 @@ export const deleteProgram = (programId, history) => async dispatch => {
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
     // Dispatching before request because it won't respond with data.
-    dispatch(removeProgram(programId));
+    dispatch({
+      type: DELETE_PROGRAM,
+      payload: programId
+    });
 
     await axios.delete(`/api/programs/${programId}`, {
       headers: { Authorization: idToken }
