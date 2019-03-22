@@ -8,8 +8,10 @@ export const GET_DEMO_COURSES = "GET_DEMO_COURSES";
 export const signInDemoUser = history => async dispatch => {
   const user = {
     _id: "demouser",
-    firstName: "Demo",
-    lastName: "User",
+    name: {
+      givenName: "Demo",
+      familyName: "User"
+    },
     email: "demouser@newt.com"
   };
 
