@@ -11,12 +11,6 @@
   width: 20px;
 }
 
-.deleteBtn {
-  composes: deleteBtn from "../../styles/shared.css";
-  width: 75px;
-  margin: 0 0 0 0.5rem;
-}
-
 .center {
   text-align: center;
 }

@@ -12,3 +12,36 @@
   transition: 0.15s ease-in-out;
   cursor: pointer;
 }
+
+.primaryBtn {
+  background-color: var(--blue);
+  border: 1px solid var(--blue-btn-border);
+  color: white;
+  font-weight: 500;
+}
+
+.primaryBtn:hover {
+  background-color: var(--blue-btn-hover);
+}
+
+.successBtn {
+  background-color: var(--lightGreen);
+  border-color: var(--lightGreen-btn-border);
+  color: white;
+  font-weight: 500;
+}
+
+.successBtn:hover {
+  background-color: var(--lightGreen-btn-hover);
+}
+
+.dangerBtn {
+  background-color: var(--red);
+  border: 1px solid var(--red-btn-border);
+  color: white;
+  font-weight: 500;
+}
+
+.dangerBtn:hover {
+  background-color: var(--red-btn-hover);
+}

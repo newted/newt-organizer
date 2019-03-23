@@ -58,7 +58,7 @@ const EditCourseForm = ({ course, programId, onSubmit }) => {
             )}
           >
             {this.renderFields()}
-            <Button type="submit" additionalClass={styles.updateBtn}>
+            <Button type="submit" category="primary" style={{ width: "125px" }}>
               Update
             </Button>
           </Form>

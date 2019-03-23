@@ -9,10 +9,6 @@
   padding-bottom: 0;
 }
 
-.addBtn {
-  composes: addBtn from "../../styles/shared.css";
-}
-
 .cardColor {
   background-color: var(--salmon);
 }

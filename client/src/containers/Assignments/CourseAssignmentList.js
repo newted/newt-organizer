@@ -127,7 +127,7 @@ class CourseAssignmentList extends Component {
               })`}
             </Button>
             <Link to={{ pathname: `/courses/${courseId}/assignments/add` }}>
-              <Button additionalClass={styles.addBtn}>Add Assignment</Button>
+              <Button category="success">Add Assignment</Button>
             </Link>
           </div>
         </div>

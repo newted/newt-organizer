@@ -33,36 +33,3 @@
     min-width: 400px;
   }
 }
-
-.addBtn {
-  background-color: var(--lightGreen);
-  border-color: var(--lightGreen-btn-border);
-  color: white;
-  font-weight: 500;
-}
-
-.addBtn:hover {
-  background-color: var(--lightGreen-btn-hover);
-}
-
-.submitBtn {
-  background-color: var(--blue);
-  border: 1px solid var(--blue-btn-border);
-  color: white;
-  font-weight: 500;
-}
-
-.submitBtn:hover {
-  background-color: var(--blue-btn-hover);
-}
-
-.deleteBtn {
-  background-color: var(--red);
-  border: 1px solid var(--red-btn-border);
-  color: white;
-  font-weight: 500;
-}
-
-.deleteBtn:hover {
-  background-color: var(--red-btn-hover);
-}

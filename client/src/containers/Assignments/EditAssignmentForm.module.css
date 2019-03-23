@@ -1,14 +1,3 @@
 .formContainer {
   composes: formContainer from "../../styles/shared.css";
 }
-
-.updateBtn {
-  width: 125px;
-  color: #fff;
-  background-color: var(--blue);
-  border: 1px solid var(--blue-btn-border);
-}
-
-.updateBtn:hover {
-  background-color: var(--blue-btn-hover);
-}

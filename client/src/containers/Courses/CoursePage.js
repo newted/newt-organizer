@@ -61,10 +61,13 @@ class CoursePage extends Component {
                 pathname: `/programs/${programId}/courses/${course._id}/edit`
               }}
             >
-              <Button additionalClass={styles.editBtn}>Edit</Button>
+              <Button category="primary" additionalClass={styles.leftBtn}>
+                Edit
+              </Button>
             </Link>
             <Button
-              additionalClass={styles.deleteBtn}
+              category="danger"
+              additionalClass={styles.rightBtn}
               onClick={this.openModal}
             >
               Delete
@@ -78,8 +81,7 @@ class CoursePage extends Component {
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                  type="button"
-                  additionalClass={styles.deleteBtn}
+                  category="danger"
                   onClick={() => deleteCourse(programId, course._id, history)}
                 >
                   Delete
@@ -119,7 +121,7 @@ function mapStateToProps({ courses }, props) {
 
 const mapDispatchToProps = {
   deleteCourse
-}
+};
 
 export default connect(
   mapStateToProps,

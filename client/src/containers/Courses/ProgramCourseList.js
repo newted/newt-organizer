@@ -50,7 +50,7 @@ class ProgramCourseList extends Component {
         <div className={styles.headerContainer}>
           <h3>Courses</h3>
           <Link to={{ pathname: `/programs/${programId}/courses/add` }}>
-            <Button additionalClass={styles.addBtn}>Add Course</Button>
+            <Button category="success">Add Course</Button>
           </Link>
         </div>
         <div className={styles.cardContainer}>

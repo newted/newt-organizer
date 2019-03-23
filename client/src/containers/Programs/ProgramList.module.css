@@ -6,10 +6,6 @@
   composes: headerContainer from "../../styles/shared.css";
 }
 
-.addBtn {
-  composes: addBtn from "../../styles/shared.css";
-}
-
 .cardColor {
   background-color: var(--yellow);
 }

@@ -39,7 +39,11 @@ class ProgramForm extends Component {
       <div className={styles.formContainer}>
         <Form onSubmit={handleSubmit(values => onSubmit(values, history))}>
           {this.renderFields()}
-          <Button type="submit" additionalClass={styles.submitBtn}>
+          <Button
+            type="submit"
+            category="primary"
+            style={{ width: '125px' }}
+          >
             Submit
           </Button>
         </Form>

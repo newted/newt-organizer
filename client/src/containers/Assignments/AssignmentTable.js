@@ -212,8 +212,7 @@ class AssignmentTable extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              type="button"
-              additionalClass={styles.deleteBtn}
+              category="danger"
               onClick={() =>
                 this.delete(
                   this.state.currentCourse,

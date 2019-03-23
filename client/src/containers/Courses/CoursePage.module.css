@@ -8,15 +8,13 @@
   composes: headerContainer from "../../styles/shared.css";
 }
 
-.editBtn {
-  composes: submitBtn from "../../styles/shared.css";
+.leftBtn {
   width: 75px;
   margin: 0 0.5rem 0 0;
 
 }
 
-.deleteBtn {
-  composes: deleteBtn from "../../styles/shared.css";
+.rightBtn {
   width: 75px;
   margin: 0 0 0 0.5rem;
 }

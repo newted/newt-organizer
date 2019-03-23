@@ -43,7 +43,7 @@ class AddAssignmentForm extends Component {
           onSubmit={handleSubmit(values => onSubmit(courseId, values, history))}
         >
           {this.renderFields()}
-          <Button type="submit" additionalClass={styles.submitBtn}>
+          <Button type="submit" category="primary" style={{ width: "125px" }}>
             Submit
           </Button>
         </Form>

@@ -33,7 +33,7 @@ const PersonalInfoTab = ({ userInfo, onSubmit }) => {
             )}
           >
             {this.renderFields()}
-            <Button additionalClass={styles.submitBtn} type="submit">
+            <Button type="submit" category="primary" style={{ width: "125px" }}>
               Save
             </Button>
           </Form>

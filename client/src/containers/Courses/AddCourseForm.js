@@ -44,7 +44,7 @@ class AddCourseForm extends Component {
           )}
         >
           {this.renderFields()}
-          <Button type="submit" additionalClass={styles.submitBtn}>
+          <Button type="submit" category="primary" style={{ width: "125px" }}>
             Submit
           </Button>
         </Form>
