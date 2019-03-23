@@ -3,6 +3,7 @@ import firebase from "../config/firebase";
 
 export const REQUEST_COURSES = "REQUEST_COURSES";
 export const RESOLVE_COURSES = "RESOLVE_COURSES";
+export const REMOVE_COURSES = "REMOVE_COURSES";
 export const CREATE_COURSE = "CREATE_COURSE";
 export const FETCH_COURSES = "FETCH_COURSES";
 export const FETCH_ALL_COURSES = "FETCH_ALL_COURSES";

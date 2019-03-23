@@ -1,5 +1,7 @@
 import axios from "axios";
 import firebase from "../config/firebase";
+import { REMOVE_PROGRAMS } from "./programs";
+import { REMOVE_COURSES } from "./courses";
 
 export const REQUEST_SIGN_IN_USER = "REQUEST_SIGN_IN_USER";
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
@@ -97,6 +99,14 @@ export const authenticateWithGithub = history => dispatch => {
 export const signOut = () => async dispatch => {
   await firebase.auth().signOut();
   dispatch(removeAuthedUser());
+  // Remove programs
+  dispatch({
+    type: REMOVE_PROGRAMS
+  });
+  // Remove courses
+  dispatch({
+    type: REMOVE_COURSES
+  });
 };
 
 // General function that uses Firebase authentication service (popup)

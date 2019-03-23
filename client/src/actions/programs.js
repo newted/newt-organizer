@@ -4,6 +4,7 @@ import _ from "lodash";
 
 export const REQUEST_PROGRAMS = "REQUEST_PROGRAMS";
 export const RESOLVE_PROGRAMS = "RESOLVE_PROGRAMS";
+export const REMOVE_PROGRAMS = "REMOVE_PROGRAMS";
 export const CREATE_PROGRAM = "CREATE_PROGRAM";
 export const FETCH_PROGRAMS = "FETCH_PROGRAMS";
 export const UPDATE_PROGRAM = "UPDATE_PROGRAM";

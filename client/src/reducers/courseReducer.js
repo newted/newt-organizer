@@ -1,6 +1,7 @@
 import {
   REQUEST_COURSES,
   RESOLVE_COURSES,
+  REMOVE_COURSES,
   CREATE_COURSE,
   FETCH_COURSES,
   FETCH_ALL_COURSES,
@@ -38,6 +39,12 @@ export default function(
       return {
         ...state,
         isFetching: false
+      };
+    case REMOVE_COURSES:
+      return {
+        ...state,
+        isFetching: false,
+        items: {}
       };
     case CREATE_COURSE:
       return {

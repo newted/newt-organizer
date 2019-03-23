@@ -1,6 +1,7 @@
 import {
   REQUEST_PROGRAMS,
   RESOLVE_PROGRAMS,
+  REMOVE_PROGRAMS,
   CREATE_PROGRAM,
   FETCH_PROGRAMS,
   UPDATE_PROGRAM,
@@ -30,6 +31,12 @@ export default function(
       return {
         ...state,
         isFetching: false
+      };
+    case REMOVE_PROGRAMS:
+      return {
+        ...state,
+        isFetching: false,
+        items: {}
       };
     case CREATE_PROGRAM:
       return {
