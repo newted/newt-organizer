@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../../actions/sidebar";
@@ -14,7 +14,7 @@ class Sidebar extends Component {
       isCollapsed: PropTypes.bool.isRequired
     }),
     toggleSidebar: PropTypes.func.isRequired
-  }
+  };
 
   // Render sidebar links based on fields provided
   renderNavlinks() {
