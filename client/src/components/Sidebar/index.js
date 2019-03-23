@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../../actions/sidebar";
@@ -8,6 +9,13 @@ import styles from "./Sidebar.module.css";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 class Sidebar extends Component {
+  static propTypes = {
+    sidebar: PropTypes.shape({
+      isCollapsed: PropTypes.bool.isRequired
+    }),
+    toggleSidebar: PropTypes.func.isRequired
+  }
+
   // Render sidebar links based on fields provided
   renderNavlinks() {
     return sidebarFields.map(({ name, route, icon }) => (
