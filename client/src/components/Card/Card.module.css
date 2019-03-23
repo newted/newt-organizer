@@ -5,7 +5,7 @@
   min-width: 200px;
   min-height: 100px;
   margin: 2%;
-  padding: 1.5%;
+  padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 10px 40px -10px rgba(0, 64, 128, 0.35);
   background-color: var(--lightGrey-2);
