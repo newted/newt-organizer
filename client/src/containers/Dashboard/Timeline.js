@@ -18,6 +18,13 @@ import styles from "./Timeline.module.css";
 
 class Timeline extends Component {
   static propTypes = {
+    programs: PropTypes.shape({
+      isFetching: PropTypes.bool,
+      items: PropTypes.object
+    }),
+    sidebar: PropTypes.shape({
+      isCollapsed: PropTypes.bool
+    }),
     upcomingAssignments: PropTypes.arrayOf(PropTypes.object),
     prevAssignments: PropTypes.arrayOf(
       PropTypes.shape({
@@ -138,7 +145,14 @@ class Timeline extends Component {
 
   render() {
     return (
-      <div className={styles.container}>
+      <div
+        // Different responsive class for different sidebar state
+        className={
+          this.props.sidebar.isCollapsed
+            ? `${styles.container} ${styles.collapsedSidebar}`
+            : `${styles.container} ${styles.expandedSidebar}`
+        }
+      >
         <div className={styles.agendaContainer}>
           <h3 className={styles.header}>Your Upcoming Schedule</h3>
           <div className={styles.timeline}>
@@ -154,7 +168,7 @@ class Timeline extends Component {
   }
 }
 
-function mapStateToProps({ courses, programs }) {
+function mapStateToProps({ courses, programs, sidebar }) {
   const upcomingAssignments = [];
   // Initialize as an array of 3 objects with each object representing one
   // week, so 3 weeks in total. Each object has a startDate, endDate, and
@@ -198,6 +212,7 @@ function mapStateToProps({ courses, programs }) {
 
   return {
     programs,
+    sidebar,
     upcomingAssignments,
     prevAssignments
   };
