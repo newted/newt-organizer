@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import LoadingBar from "react-redux-loading";
+import courseFields from "./courseFields";
 // API
 import { updateCourse } from "../../actions/courses";
 // Components
-import EditCourseForm from "./EditCourseForm";
+import Form from "../../components/Form";
 // Styling
 import styles from "./EditCourse.module.css";
 
@@ -27,15 +29,29 @@ class EditCourse extends Component {
   };
 
   render() {
+    if (!this.props.course) {
+      return <LoadingBar />;
+    }
+
+    const {
+      programId,
+      course: { _id, name, shortname },
+      history
+    } = this.props;
+    const initialValues = { name, shortname };
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h3>Edit Course</h3>
         </div>
-        <EditCourseForm
-          course={this.props.course}
-          programId={this.props.programId}
-          onSubmit={this.props.updateCourse}
+        <Form
+          formName="EditCourseForm"
+          formFields={courseFields}
+          initialValues={initialValues}
+          onSubmit={values =>
+            this.props.updateCourse(programId, _id, values, history)
+          }
         />
       </div>
     );
