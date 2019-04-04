@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import courseFields from "./courseFields";
 // Components
-import AddCourseForm from "./AddCourseForm";
+import Form from "../../components/Form";
 // API
 import { createCourse } from "../../actions/courses";
 // Styling
@@ -24,9 +25,16 @@ class AddCourse extends Component {
         <div className={styles.headerContainer}>
           <h3>Add a New Course</h3>
         </div>
-        <AddCourseForm
-          programId={this.props.programId}
-          onSubmit={this.props.createCourse}
+        <Form
+          formName="AddCourseForm"
+          formFields={courseFields}
+          onSubmit={values =>
+            this.props.createCourse(
+              this.props.programId,
+              values,
+              this.props.history
+            )
+          }
         />
       </div>
     );
