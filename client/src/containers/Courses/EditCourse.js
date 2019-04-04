@@ -12,15 +12,15 @@ import styles from "./EditCourse.module.css";
 
 class EditCourse extends Component {
   static propTypes = {
+    programId: PropTypes.string.isRequired,
     course: PropTypes.shape({
-      announcements: PropTypes.array,
-      assignments: PropTypes.array,
-      dateCreated: PropTypes.string,
+      id: PropTypes.string,
+      exists: PropTypes.bool
+    }).isRequired,
+    initialValues: PropTypes.shape({
       name: PropTypes.string,
-      quizzes: PropTypes.array,
-      shortname: PropTypes.string,
-      _id: PropTypes.string
-    }),
+      shortname: PropTypes.string
+    }).isRequired,
     updateCourse: PropTypes.func.isRequired,
     // Connect props
     history: PropTypes.object,
@@ -29,16 +29,16 @@ class EditCourse extends Component {
   };
 
   render() {
-    if (!this.props.course) {
-      return <LoadingBar />;
-    }
-
     const {
       programId,
-      course: { _id, name, shortname },
+      course,
+      initialValues,
       history
     } = this.props;
-    const initialValues = { name, shortname };
+
+    if (!course.exists) {
+      return <LoadingBar />;
+    }
 
     return (
       <div className={styles.mainContainer}>
@@ -50,7 +50,7 @@ class EditCourse extends Component {
           formFields={courseFields}
           initialValues={initialValues}
           onSubmit={values =>
-            this.props.updateCourse(programId, _id, values, history)
+            this.props.updateCourse(programId, course.id, values, history)
           }
         />
       </div>
@@ -62,10 +62,19 @@ function mapStateToProps({ courses }, props) {
   const { programId, courseId } = props.match.params;
 
   const course = courses.items ? courses.items[courseId] : null;
+  const courseExists = course ? true : false
+  const initialValues = {
+    name: course ? course.name : null,
+    shortname: course ? course.shortname : null
+  }
 
   return {
-    course,
-    programId
+    programId,
+    course: {
+      id: courseId,
+      exists: courseExists
+    },
+    initialValues
   };
 }
 

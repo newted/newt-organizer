@@ -106,7 +106,6 @@ export const updateCourse = (
   history
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
