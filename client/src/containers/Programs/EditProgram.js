@@ -13,15 +13,13 @@ import styles from "./EditProgram.module.css";
 
 class EditProgram extends Component {
   static propTypes = {
-    program: PropTypes.shape({
-      courses: PropTypes.array,
-      dateCreated: PropTypes.string,
-      institution: PropTypes.string,
+    programId: PropTypes.string.isRequired,
+    programExists: PropTypes.bool.isRequired,
+    initialValues: PropTypes.shape({
       name: PropTypes.string,
       shortname: PropTypes.string,
-      _id: PropTypes.string,
-      _user: PropTypes.string
-    }),
+      institution: PropTypes.string
+    }).isRequired,
     updateProgram: PropTypes.func.isRequired,
     // Connect props
     history: PropTypes.object,
@@ -30,16 +28,17 @@ class EditProgram extends Component {
   };
 
   render() {
-    if (!this.props.program) {
+    const {
+      programId,
+      programExists,
+      initialValues,
+      updateProgram,
+      history
+    } = this.props;
+
+    if (!programExists) {
       return <LoadingBar />;
     }
-
-    const { _id, name, shortname, institution } = this.props.program;
-    const initialValues = {
-      name,
-      shortname,
-      institution
-    };
 
     return (
       <div className={styles.mainContainer}>
@@ -50,9 +49,7 @@ class EditProgram extends Component {
           formName="EditProgramForm"
           formFields={programFields}
           initialValues={initialValues}
-          onSubmit={values =>
-            this.props.updateProgram(_id, values, this.props.history)
-          }
+          onSubmit={values => updateProgram(programId, values, history)}
         />
       </div>
     );
@@ -67,7 +64,13 @@ function mapStateToProps({ programs }, props) {
   )[0];
 
   return {
-    program
+    programId,
+    programExists: program ? true : false,
+    initialValues: {
+      name: program ? program.name : null,
+      shortname: program ? program.shortname : null,
+      institution: program ? program.institution : null
+    }
   };
 }
 

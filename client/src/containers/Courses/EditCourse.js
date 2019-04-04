@@ -13,10 +13,8 @@ import styles from "./EditCourse.module.css";
 class EditCourse extends Component {
   static propTypes = {
     programId: PropTypes.string.isRequired,
-    course: PropTypes.shape({
-      id: PropTypes.string,
-      exists: PropTypes.bool
-    }).isRequired,
+    courseId: PropTypes.string.isRequired,
+    courseExists: PropTypes.bool.isRequired,
     initialValues: PropTypes.shape({
       name: PropTypes.string,
       shortname: PropTypes.string
@@ -31,12 +29,14 @@ class EditCourse extends Component {
   render() {
     const {
       programId,
-      course,
+      courseId,
+      courseExists,
       initialValues,
+      updateCourse,
       history
     } = this.props;
 
-    if (!course.exists) {
+    if (!courseExists) {
       return <LoadingBar />;
     }
 
@@ -50,7 +50,7 @@ class EditCourse extends Component {
           formFields={courseFields}
           initialValues={initialValues}
           onSubmit={values =>
-            this.props.updateCourse(programId, course.id, values, history)
+            updateCourse(programId, courseId, values, history)
           }
         />
       </div>
@@ -60,21 +60,16 @@ class EditCourse extends Component {
 
 function mapStateToProps({ courses }, props) {
   const { programId, courseId } = props.match.params;
-
   const course = courses.items ? courses.items[courseId] : null;
-  const courseExists = course ? true : false
-  const initialValues = {
-    name: course ? course.name : null,
-    shortname: course ? course.shortname : null
-  }
 
   return {
     programId,
-    course: {
-      id: courseId,
-      exists: courseExists
-    },
-    initialValues
+    courseId,
+    courseExists: course ? true : false,
+    initialValues: {
+      name: course ? course.name : null,
+      shortname: course ? course.shortname : null
+    }
   };
 }
 

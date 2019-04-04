@@ -80,7 +80,6 @@ export const fetchPrograms = () => async dispatch => {
 // Function to update a program
 export const updateProgram = (programId, values, history) => async dispatch => {
   try {
-    dispatch(requestPrograms());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
