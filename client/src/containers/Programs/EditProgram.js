@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import LoadingBar from "react-redux-loading";
+import programFields from "./programFields";
 // API
 import { updateProgram } from "../../actions/programs";
 // Components
-import EditProgramForm from "./EditProgramForm";
+import Form from "../../components/Form";
 // Styling
 import styles from "./EditProgram.module.css";
 
@@ -26,15 +28,31 @@ class EditProgram extends Component {
     location: PropTypes.object,
     match: PropTypes.object
   };
+
   render() {
+    if (!this.props.program) {
+      return <LoadingBar />;
+    }
+
+    const { _id, name, shortname, institution } = this.props.program;
+    const initialValues = {
+      name,
+      shortname,
+      institution
+    };
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h3>Edit Program</h3>
         </div>
-        <EditProgramForm
-          program={this.props.program}
-          onSubmit={this.props.updateProgram}
+        <Form
+          formName="EditProgramForm"
+          formFields={programFields}
+          initialValues={initialValues}
+          onSubmit={values =>
+            this.props.updateProgram(_id, values, this.props.history)
+          }
         />
       </div>
     );
