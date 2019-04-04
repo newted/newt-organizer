@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import infoFields from "./infoFields";
 // API
 import { updateUser } from "../../actions/authedUser";
 // Components
-import PersonalInfoTab from "./PersonalInfoTab";
+import Form from "../../components/Form";
 import StatisticsTab from "./StatisticsTab";
 // Styling
 import styles from "./Profile.module.css";
@@ -31,9 +32,14 @@ class Profile extends Component {
     switch (this.state.activeTab) {
       case "Personal Information":
         return (
-          <PersonalInfoTab
-            userInfo={this.props.userInfo}
-            onSubmit={this.props.updateUser}
+          <Form
+            formName="PersonalInfoForm"
+            formFields={infoFields}
+            initialValues={this.props.initialValues}
+            onSubmit={values =>
+              this.props.updateUser(this.props.userId, values)
+            }
+            buttonText="Save"
           />
         );
       case "Statistics":
@@ -74,9 +80,13 @@ class Profile extends Component {
 }
 
 function mapStateToProps({ auth: { item } }) {
-  const userInfo = item;
-
-  return { userInfo };
+  return {
+    userId: item._id,
+    initialValues: {
+      firstName: item.name.givenName,
+      lastName: item.name.familyName
+    }
+  };
 }
 
 const mapDispatchToProps = { updateUser };

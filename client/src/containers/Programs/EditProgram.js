@@ -50,6 +50,7 @@ class EditProgram extends Component {
           formFields={programFields}
           initialValues={initialValues}
           onSubmit={values => updateProgram(programId, values, history)}
+          buttonText="Update"
         />
       </div>
     );

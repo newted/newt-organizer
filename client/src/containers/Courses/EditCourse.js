@@ -52,6 +52,7 @@ class EditCourse extends Component {
           onSubmit={values =>
             updateCourse(programId, courseId, values, history)
           }
+          buttonText="Update"
         />
       </div>
     );

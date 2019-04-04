@@ -9,7 +9,13 @@ import styles from "./Form.module.css";
 // Helpers
 import { initializeInputValues, basicValidation } from "./helpers";
 
-const Form = ({ formName, formFields, initialValues, onSubmit }) => {
+const Form = ({
+  formName,
+  formFields,
+  initialValues,
+  onSubmit,
+  buttonText="Submit"
+}) => {
   class FormikForm extends Component {
     // Create input fields based on formFields array.
     renderFields() {
@@ -20,7 +26,7 @@ const Form = ({ formName, formFields, initialValues, onSubmit }) => {
         handleChange,
         handleBlur,
         formFields
-      } = this.props
+      } = this.props;
 
       return _.map(formFields, ({ label, name, required }) => {
         // At some point, extract this as another component (edit Field
@@ -55,7 +61,7 @@ const Form = ({ formName, formFields, initialValues, onSubmit }) => {
         <form className={styles.formContainer} onSubmit={handleSubmit}>
           {this.renderFields()}
           <Button type="submit" category="primary" style={{ width: "125px" }}>
-            Submit
+            {buttonText}
           </Button>
         </form>
       );
@@ -76,7 +82,7 @@ const Form = ({ formName, formFields, initialValues, onSubmit }) => {
       try {
         onSubmit(values);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
 
       setSubmitting(false);
@@ -93,6 +99,6 @@ Form.propTypes = {
   formFields: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
   initialValues: PropTypes.object
-}
+};
 
 export default Form;
