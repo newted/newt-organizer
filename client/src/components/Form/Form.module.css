@@ -1,3 +1,12 @@
 .formContainer {
-  composes: formContainer from "../../styles/shared.css";
+  padding: 0 2%;
+  width: 50%;
+  min-width: 500px;
+}
+
+@media screen and (max-width: 800px) {
+  .formContainer {
+    width: 100%;
+    min-width: 400px;
+  }
 }
