@@ -25,7 +25,6 @@ const resolvePrograms = () => {
 // Function to create a program
 export const createProgram = (values, history) => async dispatch => {
   try {
-    dispatch(requestPrograms());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 

@@ -25,3 +25,21 @@ export const basicValidation = (values, formFields) => {
 
   return errors;
 }
+
+// The Datepicker component throws an error if the value passed is of type
+// string (the initial value of the input, unless otherwise specified, is an
+// empty string for Formik). To avoid this annoying error, this function takes
+// the value and for the input type of "datepicker", if there isn't a value
+// (i.e empty string), it returns null. For normal input just return empty
+// string (or whatever the value is).
+export const parseValue = (values, inputType, name) => {
+  if (inputType === "datepicker") {
+    if (values[name]) {
+      return values[name]
+    } else {
+      return null
+    }
+  }
+
+  return values[name]
+}

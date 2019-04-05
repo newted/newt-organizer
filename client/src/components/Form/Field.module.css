@@ -4,6 +4,8 @@
 }
 
 .inputGroup {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
 }
 
@@ -11,14 +13,9 @@
   margin-right: 0.5rem;
 }
 
-.tag {
+.optional {
   font-size: 0.8rem;
   color: #aaa;
-}
-
-.dateContainer {
-  display: flex;
-  flex-direction: column;
 }
 
 .error {
