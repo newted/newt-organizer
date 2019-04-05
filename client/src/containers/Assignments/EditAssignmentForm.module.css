@@ -1,3 +1,0 @@
-.formContainer {
-  composes: formContainer from "../../styles/shared.css";
-}
