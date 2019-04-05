@@ -12,7 +12,8 @@ export const assignmentInputFields = [
   {
     label: "Due Date",
     name: "dateDue",
-    required: true
+    required: true,
+    type: "datepicker"
   }
 ];
 

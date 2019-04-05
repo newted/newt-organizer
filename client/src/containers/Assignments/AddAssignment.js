@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { assignmentInputFields } from "./assignmentFields";
 // Components
-import AddAssignmentForm from "./AddAssignmentForm";
+import Form from "../../components/Form";
 // API
 import { createAssignment } from "../../actions/assignments";
 // Styling
@@ -19,14 +20,17 @@ class AddAssignment extends Component {
   };
 
   render() {
+    const { courseId, history, createAssignment } = this.props;
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h3>Add a New Assignment</h3>
         </div>
-        <AddAssignmentForm
-          courseId={this.props.courseId}
-          onSubmit={this.props.createAssignment}
+        <Form
+          formName="AddAssignment"
+          formFields={assignmentInputFields}
+          onSubmit={values => createAssignment(courseId, values, history)}
         />
       </div>
     );

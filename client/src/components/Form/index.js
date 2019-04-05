@@ -4,8 +4,10 @@ import PropTypes from "prop-types";
 import { withFormik } from "formik";
 // Components
 import Button from "../Button";
+import DatePicker from "react-datepicker";
 // Styling
 import styles from "./Form.module.css";
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 // Helpers
 import { initializeInputValues, basicValidation } from "./helpers";
 
@@ -14,7 +16,7 @@ const Form = ({
   formFields,
   initialValues,
   onSubmit,
-  buttonText="Submit"
+  buttonText = "Submit"
 }) => {
   class FormikForm extends Component {
     // Create input fields based on formFields array.
@@ -25,10 +27,13 @@ const Form = ({
         errors,
         handleChange,
         handleBlur,
-        formFields
+        formFields,
+        setFieldValue,
+        setFieldTouched
       } = this.props;
 
-      return _.map(formFields, ({ label, name, required }) => {
+      return _.map(formFields, ({ label, name, required, type }) => {
+        const inputType = type || "text";
         // At some point, extract this as another component (edit Field
         // component, which is currently designed for reduxForm).
         return (
@@ -37,15 +42,26 @@ const Form = ({
               <label className={styles.label}>{label}</label>
               {!required && <span className={styles.optional}>Optional</span>}
             </div>
-            <input
-              type="text"
-              className={styles.input}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values[name]}
-              name={name}
-              key={name}
-            />
+            {inputType === "datepicker" ? (
+              <DatePicker
+                dateFormat="MMM d, yyyy"
+                selected={values[name] ? values[name] : null}
+                placeholderText="Select date"
+                className={styles.input}
+                onChange={e => setFieldValue(name, e)}
+                onBlur={e => setFieldTouched(name)}
+              />
+            ) : (
+              <input
+                type="text"
+                className={styles.input}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values[name]}
+                name={name}
+                key={name}
+              />
+            )}
             {touched[name] && errors[name] && (
               <small className={styles.error}>{errors[name]}</small>
             )}
