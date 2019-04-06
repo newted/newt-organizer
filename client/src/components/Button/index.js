@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styles from "./Button.module.css";
 
 const Button = ({
-  type,
+  type="button",
   onClick,
   category,
   style,
