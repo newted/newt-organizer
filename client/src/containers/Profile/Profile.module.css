@@ -15,6 +15,7 @@
   padding: 2.5rem 0;
   width: 20%;
   min-height: 500px;
+  min-width: 125px;
 }
 
 .subheading {
