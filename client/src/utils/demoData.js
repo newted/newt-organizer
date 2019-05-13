@@ -86,7 +86,7 @@ const courses = {
         _id: "A004"
       },
       {
-        completed: false,
+        completed: true,
         dateCreated: "2019-02-20T21:25:55.205Z",
         dateDue: prevDueDater(4),
         inProgress: false,
@@ -102,7 +102,7 @@ const courses = {
   C003: {
     assignments: [
       {
-        completed: false,
+        completed: true,
         dateCreated: "2019-02-20T21:25:48.205Z",
         dateDue: prevDueDater(3),
         details: "John Green investigates the dawn of human civilization.",

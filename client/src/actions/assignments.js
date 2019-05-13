@@ -1,4 +1,5 @@
 import axios from "axios";
+import keys from "../config/keys";
 import firebase from "../config/firebase";
 import { requestCourses, resolveCourses } from "./courses";
 
@@ -74,10 +75,7 @@ export const updateAssignment = (
 };
 
 // Function to delete an assignment on database
-export const deleteAssignment = (
-  courseId,
-  assignmentId
-) => async dispatch => {
+export const deleteAssignment = (courseId, assignmentId) => async dispatch => {
   try {
     dispatch(requestCourses());
     // Get current user token
@@ -183,3 +181,22 @@ export const markAssignmentAsIncomplete = (
     console.log("Error while marking assignment as incomplete", error);
   }
 };
+
+// YouTube API trial
+async function getPlaylistVideos() {
+  const baseURL = "https://www.googleapis.com/youtube/v3/playlistItems";
+  const params = {
+    playlistId: "PLBDA2E52FB1EF80C9",
+    key: keys.youtubeApiKey,
+    part: "snippet"
+  };
+
+  try {
+    const res = await axios.get(baseURL, { params: params });
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// getPlaylistVideos();
