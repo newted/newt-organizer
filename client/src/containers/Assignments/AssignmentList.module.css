@@ -12,16 +12,19 @@
 }
 
 .listContainer {
-  border: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding-right: 1rem;
   width: 30%;
   min-height: 500px;
+  max-height: calc(100vh - 200px); /* Rough estimate */
+  overflow: auto;
   min-width: 125px;
 }
 
 .contentContainer {
   width: 70%;
   min-height: 500px;
-  margin-left: 2rem;
+  margin-left: 1rem;
   padding: 2.5rem;
   border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;

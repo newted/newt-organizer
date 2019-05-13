@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { statusDueDateSort } from "../../utils/containerHelpers";
+// Components
+import AssignmentCard from "./AssignmentCard";
 // Styling
 import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
-    showCompleted: false, // Doesn't show completed assignments by default
+    showCompleted: false // Doesn't show completed assignments by default
   };
 
   componentDidMount() {
@@ -32,19 +34,23 @@ class AssignmentList extends Component {
   };
 
   renderAssignmentList() {
-    const { assignments } = this.props
-    return _.map(assignments, ({ name, _id }) => (
-      <h4 key={_id}>{name}</h4>
-    ))
+    const { assignments } = this.props;
+    return _.map(assignments, assignment => (
+      <AssignmentCard key={assignment._id} assignment={assignment} />
+    ));
   }
 
   render() {
+    const { assignments } = this.props;
+
     return (
       <div className={styles.mainContainer}>
         <h2 className={styles.headerContainer}>Your Assignments</h2>
         <div className={styles.container}>
-          <div className={styles.listContainer}>{ this.renderAssignmentList() }</div>
-          <div className={styles.contentContainer}></div>
+          <div className={styles.listContainer}>
+            {this.renderAssignmentList()}
+          </div>
+          <div className={styles.contentContainer} />
         </div>
       </div>
     );

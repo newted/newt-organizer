@@ -35,26 +35,3 @@ export const assignmentTableFields = {
     width: "5%"
   }
 };
-
-export const allAssignmentTableFields = {
-  Name: {
-    name: "name",
-    width: "25%"
-  },
-  "Course Name": {
-    name: "courseName",
-    width: "25%"
-  },
-  Details: {
-    name: "details",
-    width: "30%"
-  },
-  "Due Date": {
-    name: "dateDue",
-    width: "15%"
-  },
-  Status: {
-    name: "status",
-    width: "5%"
-  }
-};
