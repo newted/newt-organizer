@@ -3,20 +3,45 @@ import React from "react";
 import styles from "./AssignmentCard.module.css";
 import { FiFileText } from "react-icons/fi";
 
-const AssignmentCard = ({ assignment: { name, courseName, completed } }) => (
-  <div
-    className={
-      completed ? `${styles.card} ${styles.completedCard}` : styles.card
+// This feels like a lot of code just to set the card class, and there's
+// probably a better way to do this, but this function essentially chooses the
+// CSS classes from a combination of two states: active and completed. Two areas
+// where this is used is the card as a whole, and the card visual (the little
+// box on the left side of the card).
+function setCardClass(active, completed, cardVisual = false) {
+  let cardStyle = [styles.card];
+  let cardVisualStyle = [styles.cardVisual];
+
+  if (completed) {
+    if (!cardVisual) {
+      cardStyle.push(styles.completedCard);
+    } else {
+      cardVisualStyle.push(styles.completedCardVisual);
     }
+  }
+
+  if (active) {
+    if (!cardVisual) {
+      cardStyle.push(styles.activeCard);
+    } else {
+      cardVisualStyle.push(styles.activeCardVisual);
+    }
+  }
+
+  return cardVisual ? cardVisualStyle.join(" ") : cardStyle.join(" ");
+}
+
+const AssignmentCard = ({
+  assignment: { _id, name, courseName, completed },
+  handleClick,
+  active
+}) => (
+  <div
+    className={setCardClass(active, completed)}
+    onClick={() => handleClick(_id)}
   >
-    <div
-      className={
-        completed
-          ? `${styles.cardVisual} ${styles.completedCardVisual}`
-          : styles.cardVisual
-      }
-    >
-      <FiFileText size={30} color="#555" />
+    <div className={setCardClass(active, completed, true)}>
+      <FiFileText size={30} color="#666" />
     </div>
     <div className={styles.cardBody}>
       <h4>{name}</h4>

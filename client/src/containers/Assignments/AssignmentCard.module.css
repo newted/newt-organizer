@@ -5,11 +5,28 @@
   border-radius: 0.5rem;
   width: 100%;
   min-height: 70px;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 5px 12px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.3s ease-out;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: none;
+  border: 2px solid var(--darkGrey-2);
+}
+
+.card:hover .cardVisual {
+  border-right: 2px solid var(--darkGrey-2);
 }
 
 .completedCard {
   border-color: var(--lightGreen-btn-border);
+}
+
+.activeCard {
+  border: 2px solid var(--darkGrey-2);
 }
 
 .cardVisual {
@@ -21,6 +38,17 @@
   border-bottom-left-radius: 0.5rem;
   border-right: 1px solid var(--lightGrey);
   background-color: var(--lightGrey-2);
+}
+
+.activeCardVisual {
+  border-right: 2px solid var(--darkGrey-2);
+}
+
+@media only screen and (max-width: 1130px) {
+  .cardVisual {
+    width: 0;
+    border: 0;
+  }
 }
 
 .completedCardVisual {

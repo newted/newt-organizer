@@ -9,7 +9,8 @@ import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
-    showCompleted: false // Doesn't show completed assignments by default
+    showCompleted: false, // Doesn't show completed assignments by default
+    currentAssignment: ""
   };
 
   componentDidMount() {
@@ -33,10 +34,19 @@ class AssignmentList extends Component {
     }));
   };
 
+  handleCardClick = assignmentId => {
+    this.setState({ currentAssignment: assignmentId });
+  };
+
   renderAssignmentList() {
     const { assignments } = this.props;
     return _.map(assignments, assignment => (
-      <AssignmentCard key={assignment._id} assignment={assignment} />
+      <AssignmentCard
+        key={assignment._id}
+        assignment={assignment}
+        handleClick={this.handleCardClick}
+        active={assignment._id === this.state.currentAssignment ? true : false }
+      />
     ));
   }
 
@@ -50,7 +60,9 @@ class AssignmentList extends Component {
           <div className={styles.listContainer}>
             {this.renderAssignmentList()}
           </div>
-          <div className={styles.contentContainer} />
+          <div className={styles.contentContainer}>
+            {this.state.currentAssignment}
+          </div>
         </div>
       </div>
     );
