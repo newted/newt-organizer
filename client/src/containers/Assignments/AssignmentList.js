@@ -2,17 +2,19 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from 'moment'
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Components
 import AssignmentCard from "./AssignmentCard";
 // Styling
 import styles from "./AssignmentList.module.css";
+import { FiCheckSquare } from 'react-icons/fi'
 
 class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment:
-      this.props.assignments.length > 0 ? this.props.assignments[0]._id : ""
+      this.props.assignments.length > 0 ? this.props.assignments[0] : ""
   };
 
   componentDidMount() {
@@ -35,7 +37,7 @@ class AssignmentList extends Component {
       this.props.assignments.length > 0 &&
       prevProps.assignments.length === 0
     ) {
-      this.setState({ currentAssignment: this.props.assignments[0]._id });
+      this.setState({ currentAssignment: this.props.assignments[0] });
     }
   }
 
@@ -47,8 +49,8 @@ class AssignmentList extends Component {
     }));
   };
 
-  handleCardClick = assignmentId => {
-    this.setState({ currentAssignment: assignmentId });
+  handleCardClick = assignment => {
+    this.setState({ currentAssignment: assignment });
   };
 
   // Function to render list of assignment cards
@@ -60,13 +62,17 @@ class AssignmentList extends Component {
         key={assignment._id}
         assignment={assignment}
         handleClick={this.handleCardClick}
-        active={assignment._id === this.state.currentAssignment ? true : false}
+        active={
+          assignment._id === this.state.currentAssignment._id ? true : false
+        }
       />
     ));
   }
 
   renderContent() {
     const { assignments, isFetching } = this.props;
+    const { currentAssignment } = this.state;
+    console.log(currentAssignment);
 
     if (assignments.length > 0 && !isFetching) {
       return (
@@ -75,7 +81,16 @@ class AssignmentList extends Component {
             {this.renderAssignmentList()}
           </div>
           <div className={styles.contentContainer}>
-            {this.state.currentAssignment}
+            <div className={styles.contentHeaderContainer}>
+              <h3 className={styles.contentHeader}>{currentAssignment.name}</h3>
+              <div className={styles.headerInfo}>
+                <h4 className={styles.date}>Due on {moment(currentAssignment.dateDue).format("MMMM DD")}</h4>
+                <FiCheckSquare size={26} color="#555" />
+              </div>
+            </div>
+            <div className={styles.contentContainerBody}>
+              <p>{currentAssignment.details}</p>
+            </div>
           </div>
         </Fragment>
       );

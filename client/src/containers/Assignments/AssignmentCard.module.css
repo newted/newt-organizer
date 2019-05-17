@@ -49,6 +49,10 @@
     width: 0;
     border: 0;
   }
+
+  .card:hover .cardVisual {
+    border-right: 0;
+  }
 }
 
 .completedCardVisual {

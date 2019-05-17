@@ -32,20 +32,20 @@ function setCardClass(active, completed, cardVisual = false) {
 }
 
 const AssignmentCard = ({
-  assignment: { _id, name, courseName, completed },
+  assignment,
   handleClick,
   active
 }) => (
   <div
-    className={setCardClass(active, completed)}
-    onClick={() => handleClick(_id)}
+    className={setCardClass(active, assignment.completed)}
+    onClick={() => handleClick(assignment)}
   >
-    <div className={setCardClass(active, completed, true)}>
+    <div className={setCardClass(active, assignment.completed, true)}>
       <FiFileText size={30} color="#666" />
     </div>
     <div className={styles.cardBody}>
-      <h4>{name}</h4>
-      <div className={styles.subtitle}>{courseName}</div>
+      <h4>{assignment.name}</h4>
+      <div className={styles.subtitle}>{assignment.courseName}</div>
     </div>
   </div>
 );
