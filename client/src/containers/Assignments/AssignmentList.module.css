@@ -12,7 +12,7 @@
 }
 
 .listContainer {
-  border-right: 1px solid #ccc;
+  border-right: 1px solid var(--grey-2);
   border-top-left-radius: .5rem;
   border-bottom-left-radius: .5rem;
   padding-right: 1rem;
@@ -44,4 +44,16 @@
 .selected {
   border: 1px solid var(--lightGreen-btn-border);
   color: var(--lightGreen-btn-border);
+}
+
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.message {
+  padding: 1.5rem;
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  min-width: 350px;
 }

@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Components
@@ -50,6 +51,7 @@ class AssignmentList extends Component {
     this.setState({ currentAssignment: assignmentId });
   };
 
+  // Function to render list of assignment cards
   renderAssignmentList() {
     const { assignments } = this.props;
 
@@ -63,25 +65,59 @@ class AssignmentList extends Component {
     ));
   }
 
-  render() {
-    return (
-      <div className={styles.mainContainer}>
-        <h2 className={styles.headerContainer}>Your Assignments</h2>
-        <div className={styles.container}>
+  renderContent() {
+    const { assignments, isFetching } = this.props;
+
+    if (assignments.length > 0 && !isFetching) {
+      return (
+        <Fragment>
           <div className={styles.listContainer}>
             {this.renderAssignmentList()}
           </div>
           <div className={styles.contentContainer}>
             {this.state.currentAssignment}
           </div>
+        </Fragment>
+      );
+    } else if (isFetching) {
+      // UI for when assignments are loading.
+      return <div>Loading...</div>;
+    } else {
+      // UI for when there are no assignments.
+      const coursesLink = (
+        <Link to="/courses" className={styles.link}>
+          Courses
+        </Link>
+      );
+
+      return (
+        <div className={styles.message}>
+          You currently have no assignments. Add an assignment from one of the
+          courses on the {coursesLink} page.
         </div>
+      );
+    }
+  }
+
+  render() {
+    const { assignments, isFetching } = this.props;
+
+    return (
+      <div className={styles.mainContainer}>
+        <h2 className={styles.headerContainer}>Your Assignments</h2>
+        <div className={styles.container}>{this.renderContent()}</div>
       </div>
     );
   }
 }
 
-function mapStateToProps({ courses }) {
+function mapStateToProps({ programs, courses }) {
   const assignments = [];
+  // This way of setting isFetching seems logical, but for a brief moment,
+  // between the 'FETCH_PROGRAMS' and 'REQUEST_COURSES' reducers, it evaluates
+  // to false, which (sometimes) briefly flashes the No Assignments message on
+  // screen.
+  const isFetching = programs.isFetching || courses.isFetching;
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
@@ -98,6 +134,7 @@ function mapStateToProps({ courses }) {
 
   return {
     assignments,
+    isFetching,
     numCompleted
   };
 }
