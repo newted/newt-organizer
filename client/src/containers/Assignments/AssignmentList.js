@@ -10,7 +10,8 @@ import styles from "./AssignmentList.module.css";
 class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
-    currentAssignment: ""
+    currentAssignment:
+      this.props.assignments.length > 0 ? this.props.assignments[0]._id : ""
   };
 
   componentDidMount() {
@@ -24,6 +25,17 @@ class AssignmentList extends Component {
         this.props.assignments.length ===
           this.props.assignments.filter(({ completed }) => completed).length
     }));
+  }
+
+  // Set the initial current assignment to the first one if/when the props are
+  // loaded
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.assignments.length > 0 &&
+      prevProps.assignments.length === 0
+    ) {
+      this.setState({ currentAssignment: this.props.assignments[0]._id });
+    }
   }
 
   handleShowCompleted = e => {
@@ -40,19 +52,18 @@ class AssignmentList extends Component {
 
   renderAssignmentList() {
     const { assignments } = this.props;
+
     return _.map(assignments, assignment => (
       <AssignmentCard
         key={assignment._id}
         assignment={assignment}
         handleClick={this.handleCardClick}
-        active={assignment._id === this.state.currentAssignment ? true : false }
+        active={assignment._id === this.state.currentAssignment ? true : false}
       />
     ));
   }
 
   render() {
-    const { assignments } = this.props;
-
     return (
       <div className={styles.mainContainer}>
         <h2 className={styles.headerContainer}>Your Assignments</h2>
