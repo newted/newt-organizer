@@ -1,0 +1,51 @@
+.contentContainer {
+  width: 70%;
+  min-height: 500px;
+  min-width: 500px;
+  margin-left: 1rem;
+  padding: 2.5rem;
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.contentHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.contentHeader {
+  color: var(--off-black);
+}
+
+.headerInfo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.contentContainerBody {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.25rem;
+}
+
+.date {
+  color: var(--darkGrey-2);
+  margin-right: 1.25rem;
+}
+
+.check {
+  color: var(--darkGrey-2);
+  cursor: pointer;
+}
+
+.check:hover {
+  color: var(--lightGreen-btn-border);
+}
+
+.completedCheck {
+  color: var(--lightGreen-btn-border);
+}

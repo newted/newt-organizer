@@ -40,6 +40,11 @@
   background-color: var(--lightGrey-2);
 }
 
+.completedCardVisual {
+  border-right-color: var(--lightGreen-btn-border);
+  background-color: rgb(51, 206, 87, 0.8);
+}
+
 .activeCardVisual {
   border-right: 2px solid var(--darkGrey-2);
 }
@@ -53,11 +58,6 @@
   .card:hover .cardVisual {
     border-right: 0;
   }
-}
-
-.completedCardVisual {
-  border-right-color: var(--lightGreen-btn-border);
-  background-color: rgb(51, 206, 87, 0.8);
 }
 
 .cardBody {

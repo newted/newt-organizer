@@ -2,13 +2,17 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import moment from 'moment'
 import { statusDueDateSort } from "../../utils/containerHelpers";
+// API
+import {
+  markAssignmentAsComplete,
+  markAssignmentAsIncomplete
+} from "../../actions/assignments";
 // Components
 import AssignmentCard from "./AssignmentCard";
+import AssignmentContent from "./AssignmentContent";
 // Styling
 import styles from "./AssignmentList.module.css";
-import { FiCheckSquare } from 'react-icons/fi'
 
 class AssignmentList extends Component {
   state = {
@@ -70,28 +74,25 @@ class AssignmentList extends Component {
   }
 
   renderContent() {
-    const { assignments, isFetching } = this.props;
+    const {
+      assignments,
+      isFetching,
+      markAssignmentAsComplete,
+      markAssignmentAsIncomplete
+    } = this.props;
     const { currentAssignment } = this.state;
-    console.log(currentAssignment);
 
-    if (assignments.length > 0 && !isFetching) {
+    if (assignments.length > 0) {
       return (
         <Fragment>
           <div className={styles.listContainer}>
             {this.renderAssignmentList()}
           </div>
-          <div className={styles.contentContainer}>
-            <div className={styles.contentHeaderContainer}>
-              <h3 className={styles.contentHeader}>{currentAssignment.name}</h3>
-              <div className={styles.headerInfo}>
-                <h4 className={styles.date}>Due on {moment(currentAssignment.dateDue).format("MMMM DD")}</h4>
-                <FiCheckSquare size={26} color="#555" />
-              </div>
-            </div>
-            <div className={styles.contentContainerBody}>
-              <p>{currentAssignment.details}</p>
-            </div>
-          </div>
+          <AssignmentContent
+            assignment={currentAssignment}
+            onComplete={markAssignmentAsComplete}
+            onIncomplete={markAssignmentAsIncomplete}
+          />
         </Fragment>
       );
     } else if (isFetching) {
@@ -154,4 +155,12 @@ function mapStateToProps({ programs, courses }) {
   };
 }
 
-export default connect(mapStateToProps)(AssignmentList);
+const mapDispatchToProps = {
+  markAssignmentAsComplete,
+  markAssignmentAsIncomplete
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AssignmentList);
