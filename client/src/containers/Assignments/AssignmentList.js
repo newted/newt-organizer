@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { statusDueDateSort } from "../../utils/containerHelpers";
+import { statusDueDateSort, isEquivalent } from "../../utils/containerHelpers";
 // API
 import {
   markAssignmentAsComplete,
@@ -42,6 +42,23 @@ class AssignmentList extends Component {
       prevProps.assignments.length === 0
     ) {
       this.setState({ currentAssignment: this.props.assignments[0] });
+    }
+
+    // This next bit is to check if the assignment information has changed in
+    // any way. Not a huge fan of this solution but so far seems to more or less
+    // remove the check mark not updating bug. Essentially just filters the
+    // (new) assignment list with the currentAssignment id (maybe an object of
+    // assignments will work better?), and checks if each values are the same.
+    // If not, update the currentAssignment.
+    const changedAssignment = this.props.assignments.filter(
+      ({ _id }) => _id === prevState.currentAssignment._id
+    );
+
+    if (
+      changedAssignment.length === 1 &&
+      !isEquivalent(prevState.currentAssignment, changedAssignment[0])
+    ) {
+      this.setState({ currentAssignment: changedAssignment[0] });
     }
   }
 

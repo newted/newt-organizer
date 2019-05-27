@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Righteous");
 
 .container {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 72px);
   width: 100%;
   background-color: var(--newtBlue);
   display: flex;
