@@ -11,14 +11,14 @@ import {
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
+import Button from "../../components/Button";
 // Styling
 import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
-    currentAssignment:
-      this.props.assignments.length > 0 ? this.props.assignments[0] : ""
+    currentAssignment: ""
   };
 
   componentDidMount() {
@@ -76,7 +76,17 @@ class AssignmentList extends Component {
 
   // Function to render list of assignment cards
   renderAssignmentList() {
-    const { assignments } = this.props;
+    let { assignments } = this.props;
+    const { showCompleted } = this.state;
+
+    // If showCompleted is false, then remove all assignments that are marked
+    // as complete before rendering.
+    // Show completed can be undefined. Thus explicitly checking if false.
+    if (showCompleted === false) {
+      assignments = assignments.filter(
+        assignment => assignment.completed !== true
+      );
+    }
 
     return _.map(assignments, assignment => (
       <AssignmentCard
@@ -133,11 +143,24 @@ class AssignmentList extends Component {
   }
 
   render() {
-    const { assignments, isFetching } = this.props;
+    const { numCompleted } = this.props
+    const { showCompleted } = this.state;
 
     return (
       <div className={styles.mainContainer}>
-        <h2 className={styles.headerContainer}>Your Assignments</h2>
+        <div className={styles.headerContainer}>
+          <h2>Your Assignments</h2>
+          <Button
+            additionalClass={
+              showCompleted
+                ? [styles.completedBtn, styles.selected].join(" ")
+                : styles.completedBtn
+            }
+            onClick={this.handleShowCompleted}
+          >
+            {`Show Completed (${numCompleted})`}
+          </Button>
+        </div>
         <div className={styles.container}>{this.renderContent()}</div>
       </div>
     );
