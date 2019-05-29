@@ -1,10 +1,18 @@
 import React from "react";
 import moment from "moment";
+// Components
+import Dropdown from "../../components/Dropdown";
 // Styling
 import styles from "./AssignmentContent.module.css";
-import { FiCheckSquare } from "react-icons/fi";
+import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
-const AssignmentContent = ({ assignment, onComplete, onIncomplete }) => (
+const AssignmentContent = ({
+  assignment,
+  onComplete,
+  onIncomplete,
+  dropdownVisible,
+  handleOpenDropdown
+}) => (
   <div className={styles.contentContainer}>
     <div className={styles.contentHeaderContainer}>
       <h3 className={styles.contentHeader}>{assignment.name}</h3>
@@ -29,6 +37,13 @@ const AssignmentContent = ({ assignment, onComplete, onIncomplete }) => (
             }
           />
         </span>
+        <Dropdown visible={dropdownVisible} handleOpen={handleOpenDropdown}>
+          <FiMoreVertical size={18} />
+          <Dropdown.Menu>
+            <Dropdown.Item>Edit</Dropdown.Item>
+            <Dropdown.Item>Delete</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     </div>
     <div className={styles.contentContainerBody}>

@@ -13,12 +13,12 @@
 
 .listContainer {
   border-right: 1px solid var(--grey-2);
-  border-top-left-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   padding-right: 1rem;
   width: 30%;
-  min-height: 500px;
-  max-height: calc(100vh - 200px); /* Rough estimate */
+  min-height: 600px;
+  height: calc(100vh - 200px); /* Rough estimate */
   overflow: auto;
   min-width: 125px;
   box-shadow: inset 0 10px 10px -7px rgba(0, 0, 0, 0.07),

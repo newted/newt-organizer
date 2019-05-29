@@ -18,7 +18,8 @@ import styles from "./AssignmentList.module.css";
 class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
-    currentAssignment: ""
+    currentAssignment: "",
+    showDropdown: false
   };
 
   componentDidMount() {
@@ -61,6 +62,20 @@ class AssignmentList extends Component {
       this.setState({ currentAssignment: changedAssignment[0] });
     }
   }
+
+  openDropdown = e => {
+    this.setState(
+      () => ({ showDropdown: true }),
+      () => document.addEventListener("click", this.closeDropdown)
+    );
+  };
+
+  closeDropdown = e => {
+    this.setState(
+      () => ({ showDropdown: false }),
+      () => document.removeEventListener("click", this.closeDropdown)
+    );
+  };
 
   handleShowCompleted = e => {
     e.preventDefault();
@@ -107,7 +122,7 @@ class AssignmentList extends Component {
       markAssignmentAsComplete,
       markAssignmentAsIncomplete
     } = this.props;
-    const { currentAssignment } = this.state;
+    const { currentAssignment, showDropdown } = this.state;
 
     if (assignments.length > 0) {
       return (
@@ -119,6 +134,8 @@ class AssignmentList extends Component {
             assignment={currentAssignment}
             onComplete={markAssignmentAsComplete}
             onIncomplete={markAssignmentAsIncomplete}
+            dropdownVisible={showDropdown}
+            handleOpenDropdown={this.openDropdown}
           />
         </Fragment>
       );
@@ -143,7 +160,7 @@ class AssignmentList extends Component {
   }
 
   render() {
-    const { numCompleted } = this.props
+    const { numCompleted } = this.props;
     const { showCompleted } = this.state;
 
     return (
