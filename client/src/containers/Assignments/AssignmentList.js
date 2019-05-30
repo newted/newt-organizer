@@ -22,7 +22,10 @@ class AssignmentList extends Component {
     showDropdown: false
   };
 
+  _isMounted = false;
+
   componentDidMount() {
+    this._isMounted = true;
     // If all the assignments are complete, this sets the value of
     // showCompleted to true, otherwise it's kept as false. This way if all the
     // assignments are complete, the initial UI state is to show the completed
@@ -63,18 +66,26 @@ class AssignmentList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false
+  }
+
   openDropdown = e => {
-    this.setState(
-      () => ({ showDropdown: true }),
-      () => document.addEventListener("click", this.closeDropdown)
-    );
+    if (this._isMounted) {
+      this.setState(
+        () => ({ showDropdown: true }),
+        () => document.addEventListener("click", this.closeDropdown)
+      );
+    }
   };
 
   closeDropdown = e => {
-    this.setState(
-      () => ({ showDropdown: false }),
-      () => document.removeEventListener("click", this.closeDropdown)
-    );
+    if (this._isMounted) {
+      this.setState(
+        () => ({ showDropdown: false }),
+        () => document.removeEventListener("click", this.closeDropdown)
+      );
+    }
   };
 
   handleShowCompleted = e => {
