@@ -2,7 +2,7 @@
   width: 70%;
   box-sizing: border-box;
   min-height: 500px;
-  min-width: 600px;
+  min-width: 500px;
   margin-left: 1rem;
   padding: 2.5rem;
   border: 1px solid var(--lightGrey);

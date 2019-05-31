@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { assignmentInputFields } from "./assignmentFields";
 // Components
 import Form from "../../components/Form";
+import Button from "../../components/Button";
 // API
 import { createAssignment } from "../../actions/assignments";
 // Styling
@@ -19,13 +20,52 @@ class AddAssignment extends Component {
     match: PropTypes.object
   };
 
+  state = {
+    activeForm: "Default"
+  };
+
+  handleFormChange = e => {
+    const formName = e.target.innerHTML;
+
+    this.setState(() => ({
+      activeForm: formName
+    }));
+  };
+
   render() {
     const { courseId, history, createAssignment } = this.props;
+    const { activeForm } = this.state;
 
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h3>Add a New Assignment</h3>
+        </div>
+        <div className={styles.formOptions}>
+          <Button
+            additionalClass={
+              activeForm === "Default"
+                ? `${styles.formOptionBtn} ${styles.defaultFormBtn} ${
+                    styles.activeDefaultFormBtn
+                  }`
+                : `${styles.formOptionBtn} ${styles.defaultFormBtn}`
+            }
+            onClick={this.handleFormChange}
+          >
+            Default
+          </Button>
+          <Button
+            additionalClass={
+              activeForm === "YouTube"
+                ? `${styles.formOptionBtn} ${styles.youtubeFormBtn} ${
+                    styles.activeYoutubeFormBtn
+                  }`
+                : `${styles.formOptionBtn} ${styles.youtubeFormBtn}`
+            }
+            onClick={this.handleFormChange}
+          >
+            YouTube
+          </Button>
         </div>
         <Form
           formName="AddAssignment"
