@@ -6,7 +6,10 @@ import { assignmentInputFields, youtubeInputFields } from "./assignmentFields";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 // API
-import { createAssignment } from "../../actions/assignments";
+import {
+  createAssignment,
+  getYoutubeVideoInfo
+} from "../../actions/assignments";
 // Styling
 import styles from "./AddAssignment.module.css";
 
@@ -42,7 +45,7 @@ class AddAssignment extends Component {
           formName="AddAssignment"
           formFields={youtubeInputFields}
           buttonText="Next"
-          onSubmit={values => console.log(values)}
+          onSubmit={values => console.log(getYoutubeVideoInfo(values.videoLink))}
         />
       );
     }
@@ -57,7 +60,6 @@ class AddAssignment extends Component {
   }
 
   render() {
-    const { courseId, history, createAssignment } = this.props;
     const { activeForm } = this.state;
 
     return (
