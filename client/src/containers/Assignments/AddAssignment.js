@@ -24,7 +24,9 @@ class AddAssignment extends Component {
   };
 
   state = {
-    activeForm: "Default"
+    activeForm: "Default",
+    onConfirmationPage: false,
+    videoInfo: null
   };
 
   handleFormChange = e => {
@@ -35,19 +37,49 @@ class AddAssignment extends Component {
     }));
   };
 
+  handleGoToConfirmationPage = async values => {
+    try {
+      const { data } = await getYoutubeVideoInfo(values.videoLink)
+      const videoInfo = data.items[0]
+
+      this.setState(() => ({
+        onConfirmationPage: true,
+        videoInfo
+      }))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleGoBackToForm = () => {
+    this.setState(() => ({
+      onConfirmationPage: false,
+      videoInfo: null
+    }))
+  }
+
   renderForm() {
     const { courseId, history, createAssignment } = this.props;
-    const { activeForm } = this.state;
+    const { activeForm, onConfirmationPage, videoInfo } = this.state;
 
     if (activeForm === "YouTube") {
-      return (
-        <Form
-          formName="AddAssignment"
-          formFields={youtubeInputFields}
-          buttonText="Next"
-          onSubmit={values => console.log(getYoutubeVideoInfo(values.videoLink))}
-        />
-      );
+      if (onConfirmationPage) {
+        return (
+          <div>
+            <p>{videoInfo.id}</p>
+            <Button onClick={this.handleGoBackToForm}>Back</Button>
+          </div>
+        )
+      } else {
+        return (
+          <Form
+            formName="AddAssignment"
+            formFields={youtubeInputFields}
+            buttonText="Next"
+            onSubmit={values => this.handleGoToConfirmationPage(values)}
+          />
+        );
+      }
     }
 
     return (
