@@ -17,6 +17,14 @@ export const assignmentInputFields = [
   }
 ];
 
+export const youtubeInputFields = [
+  {
+    label: "Video Link",
+    name: "videoLink",
+    required: true
+  }
+]
+
 export const assignmentTableFields = {
   Name: {
     name: "name",

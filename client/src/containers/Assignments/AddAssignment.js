@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { assignmentInputFields } from "./assignmentFields";
+import { assignmentInputFields, youtubeInputFields } from "./assignmentFields";
 // Components
 import Form from "../../components/Form";
 import Button from "../../components/Button";
@@ -31,6 +31,30 @@ class AddAssignment extends Component {
       activeForm: formName
     }));
   };
+
+  renderForm() {
+    const { courseId, history, createAssignment } = this.props;
+    const { activeForm } = this.state;
+
+    if (activeForm === "YouTube") {
+      return (
+        <Form
+          formName="AddAssignment"
+          formFields={youtubeInputFields}
+          buttonText="Next"
+          onSubmit={values => console.log(values)}
+        />
+      );
+    }
+
+    return (
+      <Form
+        formName="AddAssignment"
+        formFields={assignmentInputFields}
+        onSubmit={values => createAssignment(courseId, values, history)}
+      />
+    );
+  }
 
   render() {
     const { courseId, history, createAssignment } = this.props;
@@ -67,11 +91,7 @@ class AddAssignment extends Component {
             YouTube
           </Button>
         </div>
-        <Form
-          formName="AddAssignment"
-          formFields={assignmentInputFields}
-          onSubmit={values => createAssignment(courseId, values, history)}
-        />
+        {this.renderForm()}
       </div>
     );
   }
