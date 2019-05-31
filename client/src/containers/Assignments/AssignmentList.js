@@ -6,12 +6,14 @@ import { statusDueDateSort, isEquivalent } from "../../utils/containerHelpers";
 // API
 import {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete
+  markAssignmentAsIncomplete,
+  deleteAssignment
 } from "../../actions/assignments";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 // Styling
 import styles from "./AssignmentList.module.css";
 
@@ -19,7 +21,8 @@ class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment: "",
-    showDropdown: false
+    showDropdown: false,
+    showModal: false
   };
 
   _isMounted = false;
@@ -34,7 +37,9 @@ class AssignmentList extends Component {
       showCompleted:
         this.props.assignments.length > 0 &&
         this.props.assignments.length ===
-          this.props.assignments.filter(({ completed }) => completed).length
+          this.props.assignments.filter(({ completed }) => completed).length,
+      currentAssignment:
+        this.props.assignments.length > 0 ? this.props.assignments[0] : ""
     }));
   }
 
@@ -44,6 +49,17 @@ class AssignmentList extends Component {
     if (
       this.props.assignments.length > 0 &&
       prevProps.assignments.length === 0
+    ) {
+      this.setState({ currentAssignment: this.props.assignments[0] });
+    }
+
+    // If the length of the assignments array has changed, i.e. if an assignment
+    // has been deleted or added, initialize with the first assignment. (Can
+    // probably be combined with the previous if statement, just easier to read/
+    // understand this way).
+    if (
+      this.props.assignments.length > 0 &&
+      prevProps.assignments.length !== this.props.assignments.length
     ) {
       this.setState({ currentAssignment: this.props.assignments[0] });
     }
@@ -67,7 +83,7 @@ class AssignmentList extends Component {
   }
 
   componentWillUnmount() {
-    this._isMounted = false
+    this._isMounted = false;
   }
 
   openDropdown = e => {
@@ -86,6 +102,26 @@ class AssignmentList extends Component {
         () => document.removeEventListener("click", this.closeDropdown)
       );
     }
+  };
+
+  openModal = () => {
+    this.setState({
+      showModal: true
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    });
+  };
+
+  delete = async (courseId, assignmentId) => {
+    const { history, deleteAssignment } = this.props;
+
+    await deleteAssignment(courseId, assignmentId, history);
+
+    this.closeModal();
   };
 
   handleShowCompleted = e => {
@@ -147,6 +183,7 @@ class AssignmentList extends Component {
             onIncomplete={markAssignmentAsIncomplete}
             dropdownVisible={showDropdown}
             handleOpenDropdown={this.openDropdown}
+            handleOpenModal={this.openModal}
           />
         </Fragment>
       );
@@ -172,7 +209,7 @@ class AssignmentList extends Component {
 
   render() {
     const { numCompleted } = this.props;
-    const { showCompleted } = this.state;
+    const { showCompleted, currentAssignment } = this.state;
 
     return (
       <div className={styles.mainContainer}>
@@ -190,6 +227,21 @@ class AssignmentList extends Component {
           </Button>
         </div>
         <div className={styles.container}>{this.renderContent()}</div>
+        <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
+          <Modal.Body>
+            Are you sure you want to delete this assignment?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              category="danger"
+              onClick={() =>
+                this.delete(currentAssignment.courseId, currentAssignment._id)
+              }
+            >
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -225,7 +277,8 @@ function mapStateToProps({ programs, courses }) {
 
 const mapDispatchToProps = {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete
+  markAssignmentAsIncomplete,
+  deleteAssignment
 };
 
 export default connect(

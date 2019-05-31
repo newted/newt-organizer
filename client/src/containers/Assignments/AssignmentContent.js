@@ -15,6 +15,7 @@ class AssignmentContent extends Component {
       onIncomplete,
       dropdownVisible,
       handleOpenDropdown,
+      handleOpenModal,
       history
     } = this.props;
 
@@ -61,7 +62,13 @@ class AssignmentContent extends Component {
                 >
                   Edit
                 </Dropdown.Item>
-                <Dropdown.Item>Delete</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() =>
+                    handleOpenModal(assignment.courseId)
+                  }
+                >
+                  Delete
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
