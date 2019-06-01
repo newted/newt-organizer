@@ -5,6 +5,7 @@ import { assignmentInputFields, youtubeInputFields } from "./assignmentFields";
 // Components
 import Form from "../../components/Form";
 import Button from "../../components/Button";
+import AddAssignmentConfirmation from "./AddAssignmentConfirmation";
 // API
 import {
   createAssignment,
@@ -39,24 +40,24 @@ class AddAssignment extends Component {
 
   handleGoToConfirmationPage = async values => {
     try {
-      const { data } = await getYoutubeVideoInfo(values.videoLink)
-      const videoInfo = data.items[0]
+      const { data } = await getYoutubeVideoInfo(values.videoLink);
+      const videoInfo = data.items[0];
 
       this.setState(() => ({
         onConfirmationPage: true,
         videoInfo
-      }))
+      }));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   handleGoBackToForm = () => {
     this.setState(() => ({
       onConfirmationPage: false,
       videoInfo: null
-    }))
-  }
+    }));
+  };
 
   renderForm() {
     const { courseId, history, createAssignment } = this.props;
@@ -65,15 +66,15 @@ class AddAssignment extends Component {
     if (activeForm === "YouTube") {
       if (onConfirmationPage) {
         return (
-          <div>
-            <p>{videoInfo.id}</p>
-            <Button onClick={this.handleGoBackToForm}>Back</Button>
-          </div>
-        )
+          <AddAssignmentConfirmation
+            videoInfo={videoInfo}
+            handleGoBackToForm={this.handleGoBackToForm}
+          />
+        );
       } else {
         return (
           <Form
-            formName="AddAssignment"
+            formName="PreviewAssignment"
             formFields={youtubeInputFields}
             buttonText="Next"
             onSubmit={values => this.handleGoToConfirmationPage(values)}
