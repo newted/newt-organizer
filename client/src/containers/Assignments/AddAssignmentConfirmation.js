@@ -25,6 +25,8 @@ class AddAssignmentConfirmation extends Component {
     }
   };
 
+  _requiredFields = ["name", "dateDue"];
+
   handleDatepickerChange = date => {
     this.setState(prevState => ({
       ...prevState,
@@ -50,7 +52,6 @@ class AddAssignmentConfirmation extends Component {
 
   handleBlur = (e, fieldName) => {
     const name = fieldName || e.target.name;
-    const required = ["name", "dateDue"];
 
     this.setState(prevState => ({
       ...prevState,
@@ -61,7 +62,8 @@ class AddAssignmentConfirmation extends Component {
     }));
 
     if (
-      (required.includes(name) && this.state.values[name] === null) ||
+      (this._requiredFields.includes(name) &&
+        this.state.values[name] === null) ||
       this.state.values[name].length === 0
     ) {
       this.setState(prevState => ({
@@ -82,8 +84,48 @@ class AddAssignmentConfirmation extends Component {
     }
   };
 
+  // This is some real wack validation but it seems to work and I'm too lazy to
+  // redo.
+  validate = () => {
+    let count = 0
+    this._requiredFields.forEach(fieldName => {
+      if (this.state.values[fieldName] === null || this.state.values[fieldName].length === 0) {
+        count += 1
+        this.setState(prevState => ({
+          ...prevState,
+          touched: {
+            ...prevState.touched,
+            [fieldName]: true
+          },
+          errors: {
+            ...prevState.errors,
+            [fieldName]: true
+          }
+        }))
+      }
+    })
+
+    if (count > 0) {
+      return false
+    }
+
+    return true
+  }
+
+  handleConfirmation = () => {
+    const isValidated = this.validate()
+
+    if (isValidated) {
+      console.log(this.state.values)
+    } else {
+      console.log('All fields have not been completed')
+    }
+
+  };
+
   render() {
     const { videoInfo, handleGoBackToForm } = this.props;
+    console.log(this.state)
 
     return (
       <div className={styles.container}>
@@ -154,7 +196,7 @@ class AddAssignmentConfirmation extends Component {
             Back
           </Button>
           <Button
-            onClick={() => console.log(this.state.values)}
+            onClick={this.handleConfirmation}
             category="primary"
             style={{ marginLeft: "0.5rem", width: "125px" }}
           >
