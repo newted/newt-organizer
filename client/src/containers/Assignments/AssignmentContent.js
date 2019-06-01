@@ -63,9 +63,7 @@ class AssignmentContent extends Component {
                   Edit
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={() =>
-                    handleOpenModal(assignment.courseId)
-                  }
+                  onClick={() => handleOpenModal(assignment.courseId)}
                 >
                   Delete
                 </Dropdown.Item>
@@ -74,7 +72,23 @@ class AssignmentContent extends Component {
           </div>
         </div>
         <div className={styles.contentContainerBody}>
-          <p>{assignment.details}</p>
+          {assignment.source === "youtube" && (
+            <div className={styles.videoContainer}>
+              <iframe
+                id="ytplayer"
+                type="text/html"
+                title={assignment.name}
+                width="640"
+                height="360"
+                src={`https://www.youtube.com/embed/${
+                  assignment.videoInfo.videoId
+                }`}
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>
+          )}
+          <p className={styles.details}>{assignment.details}</p>
         </div>
       </div>
     );
