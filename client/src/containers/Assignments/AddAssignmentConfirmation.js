@@ -12,11 +12,22 @@ class AddAssignmentConfirmation extends Component {
       name: this.props.videoInfo.snippet.title,
       details: this.props.videoInfo.snippet.description,
       dateDue: null
+    },
+    touched: {
+      name: false,
+      details: false,
+      dateDue: false
+    },
+    errors: {
+      name: false,
+      details: false,
+      dateDue: false
     }
   };
 
   handleDatepickerChange = date => {
     this.setState(prevState => ({
+      ...prevState,
       values: {
         ...prevState.values,
         dateDue: date
@@ -29,11 +40,46 @@ class AddAssignmentConfirmation extends Component {
     const value = e.target.value;
 
     this.setState(prevState => ({
+      ...prevState,
       values: {
         ...prevState.values,
         [name]: value
       }
     }));
+  };
+
+  handleBlur = (e, fieldName) => {
+    const name = fieldName || e.target.name;
+    const required = ["name", "dateDue"];
+
+    this.setState(prevState => ({
+      ...prevState,
+      touched: {
+        ...prevState.touched,
+        [name]: true
+      }
+    }));
+
+    if (
+      (required.includes(name) && this.state.values[name] === null) ||
+      this.state.values[name].length === 0
+    ) {
+      this.setState(prevState => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          [name]: true
+        }
+      }));
+    } else {
+      this.setState(prevState => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          [name]: false
+        }
+      }));
+    }
   };
 
   render() {
@@ -58,7 +104,13 @@ class AddAssignmentConfirmation extends Component {
                   value={this.state.values.name}
                   className={styles.input}
                   onChange={this.handleInputChange}
+                  onBlur={this.handleBlur}
                 />
+                {this.state.touched.name && this.state.errors.name && (
+                  <small className={styles.error}>
+                    You must provide a value.
+                  </small>
+                )}
               </div>
               <div className={styles.inputGroup}>
                 <label>Due Date</label>
@@ -69,17 +121,27 @@ class AddAssignmentConfirmation extends Component {
                   placeholderText="Select date"
                   className={styles.input}
                   onChange={this.handleDatepickerChange}
+                  onBlur={e => this.handleBlur(e, "dateDue")}
                 />
+                {this.state.touched.dateDue && this.state.errors.dateDue && (
+                  <small className={styles.error}>
+                    You must provide a value.
+                  </small>
+                )}
               </div>
             </div>
             <div className={styles.inputGroup} style={{ width: "70%" }}>
-              <label>Details</label>
+              <div>
+                <label style={{ marginRight: ".5rem" }}>Details</label>
+                <span className={styles.optional}>Optional</span>
+              </div>
               <input
                 name="details"
                 type="text"
                 value={this.state.values.details}
                 className={styles.input}
                 onChange={this.handleInputChange}
+                onBlur={this.handleBlur}
               />
             </div>
           </form>
