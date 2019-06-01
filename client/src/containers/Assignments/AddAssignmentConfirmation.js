@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import DatePicker from "react-datepicker";
 // Components
 import Button from "../../components/Button";
+// API
+import { createYoutubeAssignment } from "../../actions/assignments";
 // Styling
 import styles from "./AddAssignmentConfirmation.module.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
@@ -25,8 +29,12 @@ class AddAssignmentConfirmation extends Component {
     }
   };
 
+  // Lists fields that are required. Used when updating errors based on null/
+  // empty values. If it's not required then no need to create that error.
   _requiredFields = ["name", "dateDue"];
 
+  // Specific handler for the Datepicker (because it does not use name - or that
+  // does not seem to work)
   handleDatepickerChange = date => {
     this.setState(prevState => ({
       ...prevState,
@@ -37,6 +45,7 @@ class AddAssignmentConfirmation extends Component {
     }));
   };
 
+  // Update state based on input changes
   handleInputChange = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -50,9 +59,11 @@ class AddAssignmentConfirmation extends Component {
     }));
   };
 
+  // Update touched and error properties when input field is clicked.
   handleBlur = (e, fieldName) => {
     const name = fieldName || e.target.name;
 
+    // Update touched property in state
     this.setState(prevState => ({
       ...prevState,
       touched: {
@@ -61,6 +72,8 @@ class AddAssignmentConfirmation extends Component {
       }
     }));
 
+    // If the field is required and the values are empty or null, set the error
+    // property for that field to true. Otherwise set it as false.
     if (
       (this._requiredFields.includes(name) &&
         this.state.values[name] === null) ||
@@ -86,11 +99,18 @@ class AddAssignmentConfirmation extends Component {
 
   // This is some real wack validation but it seems to work and I'm too lazy to
   // redo.
+  // First check if the required fields are empty. If they are, then set that
+  // field's touched and empty property to true so that the error message can
+  // pop up. Return false if there is even 1 time where this occurs. Only return
+  // true if there are no null/empty values for the required fields.
   validate = () => {
-    let count = 0
+    let count = 0;
     this._requiredFields.forEach(fieldName => {
-      if (this.state.values[fieldName] === null || this.state.values[fieldName].length === 0) {
-        count += 1
+      if (
+        this.state.values[fieldName] === null ||
+        this.state.values[fieldName].length === 0
+      ) {
+        count += 1;
         this.setState(prevState => ({
           ...prevState,
           touched: {
@@ -101,31 +121,53 @@ class AddAssignmentConfirmation extends Component {
             ...prevState.errors,
             [fieldName]: true
           }
-        }))
+        }));
       }
-    })
+    });
 
     if (count > 0) {
-      return false
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
+  // Sends the create request if the validation requirements are met. If not,
+  // the field error messages will pop up through the validation function,
+  // hinting at the missing fields.
   handleConfirmation = () => {
-    const isValidated = this.validate()
+    const isValidated = this.validate();
 
     if (isValidated) {
-      console.log(this.state.values)
-    } else {
-      console.log('All fields have not been completed')
-    }
+      const { values } = this.state;
+      const {
+        courseId,
+        videoInfo,
+        createYoutubeAssignment,
+        history
+      } = this.props;
 
+      let info = {
+        videoId: videoInfo.id,
+        channelId: videoInfo.snippet.channelId,
+        datePublished: videoInfo.snippet.publishedAt,
+        thumbnails: {
+          maxres: {
+            url: videoInfo.snippet.thumbnails.maxres.url,
+            width: videoInfo.snippet.thumbnails.maxres.width,
+            height: videoInfo.snippet.thumbnails.maxres.height
+          }
+        }
+      };
+
+      createYoutubeAssignment(courseId, values, info, history);
+    } else {
+      console.log("All fields have not been completed");
+    }
   };
 
   render() {
     const { videoInfo, handleGoBackToForm } = this.props;
-    console.log(this.state)
 
     return (
       <div className={styles.container}>
@@ -208,4 +250,11 @@ class AddAssignmentConfirmation extends Component {
   }
 }
 
-export default AddAssignmentConfirmation;
+const mapDispatchToProps = {
+  createYoutubeAssignment
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(AddAssignmentConfirmation));

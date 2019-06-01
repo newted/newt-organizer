@@ -67,6 +67,7 @@ class AddAssignment extends Component {
       if (onConfirmationPage) {
         return (
           <AddAssignmentConfirmation
+            courseId={courseId}
             videoInfo={videoInfo}
             handleGoBackToForm={this.handleGoBackToForm}
           />

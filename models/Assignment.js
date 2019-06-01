@@ -13,7 +13,24 @@ const assignmentSchema = new Schema({
     default: false
   },
   dateCreated: Date,
-  dateDue: Date
+  dateDue: Date,
+  source: {
+    type: String,
+    enum: ["manual", "youtube"],
+    default: "manual"
+  },
+  videoInfo: {
+    videoId: String,
+    channelId: String,
+    datePublished: Date,
+    thumbnails: {
+      maxres: {
+        url: String,
+        width: Number,
+        height: Number
+      }
+    }
+  }
 });
 
 module.exports = assignmentSchema;

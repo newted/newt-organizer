@@ -42,6 +42,45 @@ export const createAssignment = (
   }
 };
 
+// Function to create a YouTube-based assignment on database (should merge with
+// general createAssignment later).
+export const createYoutubeAssignment = (
+  courseId,
+  values,
+  videoInfo,
+  history
+) => async dispatch => {
+  try {
+    dispatch(requestCourses());
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+
+    let data = {
+      values,
+      videoInfo
+    };
+
+    // Make request to create assignment with authorization header
+    const res = await axios.post(
+      `/api/courses/${courseId}/youtubeAssignment`,
+      data,
+      { headers: { Authorization: idToken } }
+    );
+
+    // Dispatch data to store
+    dispatch({
+      type: CREATE_ASSIGNMENT,
+      payload: res.data
+    });
+
+    // Redirect to previous page
+    history.goBack();
+  } catch (error) {
+    dispatch(resolveCourses());
+    console.log("Error while creating assignment.", error);
+  }
+};
+
 // Function to update an assignment on database.
 export const updateAssignment = (
   courseId,
@@ -204,18 +243,18 @@ async function getPlaylistVideos() {
 // See: https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 export async function getYoutubeVideoInfo(videoUrl) {
   try {
-    let videoId = videoUrl.split('v=')[1]
-    videoId = videoId.split('&')[0]
-    const baseURL = "https://www.googleapis.com/youtube/v3/videos"
+    let videoId = videoUrl.split("v=")[1];
+    videoId = videoId.split("&")[0];
+    const baseURL = "https://www.googleapis.com/youtube/v3/videos";
     const params = {
       id: videoId,
       part: "snippet",
       key: keys.youtubeApiKey
-    }
+    };
 
-    return await axios.get(baseURL, { params })
+    return await axios.get(baseURL, { params });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
