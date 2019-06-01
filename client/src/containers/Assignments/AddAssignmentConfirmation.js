@@ -219,7 +219,7 @@ class AddAssignmentConfirmation extends Component {
                 <label style={{ marginRight: ".5rem" }}>Details</label>
                 <span className={styles.optional}>Optional</span>
               </div>
-              <input
+              <textarea
                 name="details"
                 type="text"
                 value={this.state.values.details}
