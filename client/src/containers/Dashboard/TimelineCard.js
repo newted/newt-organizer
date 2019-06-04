@@ -36,15 +36,15 @@ const TimelineCard = ({
     <div className={styles.cardBody}>
       <div className={styles.cardText}>
         <div className={styles.headers}>
-          <h4 className={styles.title}>{name}</h4>
+          <Link to={{ pathname: "/assignments", hash: `#${_id}` }}>
+            <h4 className={styles.title}>{name}</h4>
+          </Link>
           <div style={{ color: "#bbb", marginRight: ".5rem" }}>&mdash;</div>
           <Link to={{ pathname: `/programs/${programId}/courses/${courseId}` }}>
             <h4 className={styles.subtitle}>{courseName}</h4>
           </Link>
         </div>
-        <div className={styles.details}>
-          {shortenText(details, 150)}
-        </div>
+        <div className={styles.details}>{shortenText(details, 150)}</div>
       </div>
       <div className={styles.cardStatus}>
         <div

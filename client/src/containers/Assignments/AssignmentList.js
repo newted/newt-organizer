@@ -19,7 +19,8 @@ import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
-    showCompleted: false, // Doesn't show completed assignments by default
+    showCompleted: false, // Doesn't show completed assignments by default,
+    assignmentHash: "",
     currentAssignment: "",
     showDropdown: false,
     showModal: false
@@ -29,23 +30,61 @@ class AssignmentList extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    // If all the assignments are complete, this sets the value of
-    // showCompleted to true, otherwise it's kept as false. This way if all the
-    // assignments are complete, the initial UI state is to show the completed
-    // assignments
-    this.setState(() => ({
-      showCompleted:
-        this.props.assignments.length > 0 &&
-        this.props.assignments.length ===
-          this.props.assignments.filter(({ completed }) => completed).length,
-      currentAssignment:
-        this.props.assignments.length > 0 ? this.props.assignments[0] : ""
-    }));
+
+    // The first check is to see if there's a URL hash that indicates whether
+    // an assignment link has been clicked. If there is, then add the id to
+    // state, and if the assignments have loaded, set currentAssignment in state
+    // to the assignment with that id. If there's no hash, then set the
+    // active assignment to the first one.
+    // See: https://github.com/ReactTraining/react-router/issues/394#issuecomment-128148470
+    window.location.hash = window.decodeURIComponent(window.location.hash);
+    if (window.location.hash) {
+      // If all the assignments are complete, this sets the value of
+      // showCompleted to true, otherwise it's kept as false. This way if all the
+      // assignments are complete, the initial UI state is to show the completed
+      // assignments
+      this.setState({
+        showCompleted:
+          this.props.assignments.length > 0 &&
+          this.props.assignments.length ===
+            this.props.assignments.filter(({ completed }) => completed).length,
+        assignmentHash: window.location.hash.substr(1),
+        currentAssignment:
+          this.props.assignments.length > 0
+            ? this.props.assignments.filter(
+                ({ _id }) => _id === window.location.hash.substr(1)
+              )[0]
+            : ""
+      });
+    } else {
+      this.setState(() => ({
+        showCompleted:
+          this.props.assignments.length > 0 &&
+          this.props.assignments.length ===
+            this.props.assignments.filter(({ completed }) => completed).length,
+        currentAssignment:
+          this.props.assignments.length > 0 ? this.props.assignments[0] : ""
+      }));
+    }
   }
 
   // Set the initial current assignment to the first one if/when the props are
   // loaded
   componentDidUpdate(prevProps, prevState) {
+    // If there's a hash and the current assignment hasn't already been set,
+    // then set the current assignment to that one.
+    if (
+      this.props.assignments.length > 0 &&
+      prevState.assignmentHash.length > 0 &&
+      prevState.currentAssignment === ""
+    ) {
+      this.setState({
+        currentAssignment: this.props.assignments.filter(
+          ({ _id }) => _id === prevState.assignmentHash
+        )[0]
+      });
+    }
+
     if (
       this.props.assignments.length > 0 &&
       prevProps.assignments.length === 0
@@ -247,7 +286,7 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ programs, courses }) {
+function mapStateToProps({ programs, courses }, props) {
   const assignments = [];
   // This way of setting isFetching seems logical, but for a brief moment,
   // between the 'FETCH_PROGRAMS' and 'REQUEST_COURSES' reducers, it evaluates

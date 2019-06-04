@@ -59,6 +59,10 @@
   margin-right: 1rem;
 }
 
+.title:hover {
+  border-bottom: 1px solid black;
+}
+
 .subtitle {
   color: var(--grey-2);
   border-bottom: 1px solid #fff; /* White border so elements don't shift on hover's border */
