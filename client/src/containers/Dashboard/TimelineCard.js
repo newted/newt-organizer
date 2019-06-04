@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 // Styling
 import styles from "./TimelineCard.module.css";
 import { FiFileText, FiCheckSquare } from "react-icons/fi";
+// Helpers
+import { shortenText } from "../../utils/containerHelpers";
 
 const TimelineCard = ({
   assignment: {
@@ -40,7 +42,9 @@ const TimelineCard = ({
             <h4 className={styles.subtitle}>{courseName}</h4>
           </Link>
         </div>
-        <div className={styles.details}>{details}</div>
+        <div className={styles.details}>
+          {shortenText(details, 150)}
+        </div>
       </div>
       <div className={styles.cardStatus}>
         <div
