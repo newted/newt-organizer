@@ -16,12 +16,15 @@ const Field = ({ input, label, name, required, touched, error }) => {
         input.type === "datepicker"
         ? (
           <DatePicker
-            dateFormat="MMM d, yyyy"
+            dateFormat="MMM d, yyyy h:mm aa"
             selected={input.value}
             placeholderText="Select date"
             className={styles.input}
             onChange={e => input.setFieldValue(name, e)}
             onBlur={() => input.setFieldTouched(name, true)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={30}
           />
         ) : (
           <input

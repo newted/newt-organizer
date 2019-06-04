@@ -95,8 +95,7 @@ export function shortenText(text, maxCharacters) {
     return text
   }
 
-  const lastLetter = text[maxCharacters];
-  const punctuation = [" ", ".", ",", ";"];
+  const punctuation = [" ", ".", ",", ";", "?", "/", "-"];
 
   // If the next character after the max character is part of punctuation, then
   // that means the word ends on the last character. If it does not, keep

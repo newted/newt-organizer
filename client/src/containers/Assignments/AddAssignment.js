@@ -70,8 +70,6 @@ class AddAssignment extends Component {
       videoInfo
     } = this.state;
 
-    console.log(this.state)
-
     if (activeForm === "YouTube") {
       if (onConfirmationPage) {
         return (
