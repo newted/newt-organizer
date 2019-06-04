@@ -26,6 +26,7 @@ class AddAssignment extends Component {
 
   state = {
     activeForm: "Default",
+    inputtedUrl: "",
     onConfirmationPage: false,
     videoInfo: null
   };
@@ -44,6 +45,7 @@ class AddAssignment extends Component {
       const videoInfo = data.items[0];
 
       this.setState(() => ({
+        inputtedUrl: values.videoLink,
         onConfirmationPage: true,
         videoInfo
       }));
@@ -61,7 +63,14 @@ class AddAssignment extends Component {
 
   renderForm() {
     const { courseId, history, createAssignment } = this.props;
-    const { activeForm, onConfirmationPage, videoInfo } = this.state;
+    const {
+      activeForm,
+      inputtedUrl,
+      onConfirmationPage,
+      videoInfo
+    } = this.state;
+
+    console.log(this.state)
 
     if (activeForm === "YouTube") {
       if (onConfirmationPage) {
@@ -78,6 +87,7 @@ class AddAssignment extends Component {
             formName="PreviewAssignment"
             formFields={youtubeInputFields}
             buttonText="Next"
+            initialValues={inputtedUrl.length > 0 ? { videoLink: inputtedUrl } : null}
             onSubmit={values => this.handleGoToConfirmationPage(values)}
           />
         );
