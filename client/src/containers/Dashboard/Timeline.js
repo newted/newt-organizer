@@ -47,10 +47,12 @@ class Timeline extends Component {
 
   // Display (or don't display) the due/to-do date
   renderDate = date => {
-    if (date !== this.currentDate) {
+    const formattedDate = moment(date).format("MMM DD");
+
+    if (formattedDate !== this.currentDate) {
       // Update the current date
-      this.currentDate = date;
-      return <h4 className={styles.date}>{moment(date).format("MMM DD")}</h4>;
+      this.currentDate = formattedDate;
+      return <h4 className={styles.date}>{formattedDate}</h4>;
     }
   };
 
@@ -65,12 +67,17 @@ class Timeline extends Component {
       return _.map(upcomingAssignments, assignment => (
         <Fragment key={assignment._id}>
           {this.renderDate(assignment.dateDue)}
-          <TimelineCard
-            assignment={assignment}
-            onComplete={markAssignmentAsComplete}
-            onIncomplete={markAssignmentAsIncomplete}
-            key={assignment._id}
-          />
+          <div className={styles.cardGroup}>
+            <div className={styles.time}>
+              {moment(assignment.dateDue).format("hh:mm A")}
+            </div>
+            <TimelineCard
+              assignment={assignment}
+              onComplete={markAssignmentAsComplete}
+              onIncomplete={markAssignmentAsIncomplete}
+              key={assignment._id}
+            />
+          </div>
         </Fragment>
       ));
     } else {

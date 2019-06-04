@@ -3,9 +3,8 @@
   border: 1px solid var(--lightGrey);
   box-sizing: border-box;
   border-radius: 0.5rem;
-  width: 100%;
+  width: calc(100% - 60px); /* 60px is width of time div */
   min-height: 90px;
-  margin: 0.75rem 0;
 }
 
 .completedCard {
