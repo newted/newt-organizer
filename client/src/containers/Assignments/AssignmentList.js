@@ -71,36 +71,29 @@ class AssignmentList extends Component {
   // Set the initial current assignment to the first one if/when the props are
   // loaded
   componentDidUpdate(prevProps, prevState) {
-    // If there's a hash and the current assignment hasn't already been set,
-    // then set the current assignment to that one.
-    if (
-      this.props.assignments.length > 0 &&
-      prevState.assignmentHash.length > 0 &&
-      prevState.currentAssignment === ""
-    ) {
-      this.setState({
-        currentAssignment: this.props.assignments.filter(
-          ({ _id }) => _id === prevState.assignmentHash
-        )[0]
-      });
-    }
+    // setState only needs to be called on updates if there's atleast one
+    // assignment, thus the initial overarching check.
+    if (this.props.assignments.length > 0) {
+      // First, check if there's a URL hash and the current assignment hasn't
+      // already been set, then set the current assignment to that one.
+      if (
+        prevState.assignmentHash.length > 0 &&
+        prevState.currentAssignment === ""
+      ) {
+        this.setState({
+          currentAssignment: this.props.assignments.filter(
+            ({ _id }) => _id === prevState.assignmentHash
+          )[0]
+        });
+      }
 
-    if (
-      this.props.assignments.length > 0 &&
-      prevProps.assignments.length === 0
-    ) {
-      this.setState({ currentAssignment: this.props.assignments[0] });
-    }
-
-    // If the length of the assignments array has changed, i.e. if an assignment
-    // has been deleted or added, initialize with the first assignment. (Can
-    // probably be combined with the previous if statement, just easier to read/
-    // understand this way).
-    if (
-      this.props.assignments.length > 0 &&
-      prevProps.assignments.length !== this.props.assignments.length
-    ) {
-      this.setState({ currentAssignment: this.props.assignments[0] });
+      // If not, check if the previous props were of length 0, which means the
+      // assignments were just loaded, or if any assignments have been added or
+      // deleted (i.e the previous props and current props will have different
+      // lengths). For both set the current assignment to the first one.
+      if (prevProps.assignments.length !== this.props.assignments.length) {
+        this.setState({ currentAssignment: this.props.assignments[0] });
+      }
     }
 
     // This next bit is to check if the assignment information has changed in
