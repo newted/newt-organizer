@@ -29,20 +29,37 @@
 
 .cardGroup {
   display: flex;
-  margin: 0.75rem 0;
 }
 
-.date,
+.date {
+  color: var(--darkGrey-2);
+  margin: .375rem 0;
+}
+
 .time {
   color: var(--darkGrey-2);
 }
 
 .time {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
   width: 60px;
   font-size: 0.8rem;
   margin-right: 0.75rem;
+}
+
+/* Timeline effect */
+.time::before, .time::after {
+  content: "";
+  height: calc(50% - 15px);
+  width: calc(50% - 1px);
+  border-right: 1px solid #ddd;
+}
+
+/* Remove line after last card */
+.cardGroup:last-child > .time::after {
+  border-right: 0;
 }
 
 .prevWeekContainer {
