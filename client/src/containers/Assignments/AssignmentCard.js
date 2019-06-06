@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // Styling
 import styles from "./AssignmentCard.module.css";
 import { FiFileText } from "react-icons/fi";
@@ -31,23 +32,21 @@ function setCardClass(active, completed, cardVisual = false) {
   return cardVisual ? cardVisualStyle.join(" ") : cardStyle.join(" ");
 }
 
-const AssignmentCard = ({
-  assignment,
-  handleClick,
-  active
-}) => (
-  <div
-    className={setCardClass(active, assignment.completed)}
-    onClick={() => handleClick(assignment)}
-  >
-    <div className={setCardClass(active, assignment.completed, true)}>
-      <FiFileText size={30} color="#666" />
+const AssignmentCard = ({ assignment, handleClick, active }) => (
+  <Link to={{ pathname: `/assignments/${assignment._id}` }}>
+    <div
+      className={setCardClass(active, assignment.completed)}
+      onClick={() => handleClick(assignment)}
+    >
+      <div className={setCardClass(active, assignment.completed, true)}>
+        <FiFileText size={30} color="#666" />
+      </div>
+      <div className={styles.cardBody}>
+        <h4>{assignment.name}</h4>
+        <div className={styles.subtitle}>{assignment.courseName}</div>
+      </div>
     </div>
-    <div className={styles.cardBody}>
-      <h4>{assignment.name}</h4>
-      <div className={styles.subtitle}>{assignment.courseName}</div>
-    </div>
-  </div>
+  </Link>
 );
 
 export default AssignmentCard;

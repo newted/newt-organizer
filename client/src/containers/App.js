@@ -50,7 +50,7 @@ const AppContainer = (auth, sidebar) => (
       <Navbar />
       <Switch>
         <PrivateRoute path="/dashboard" component={Dashboard} auth={auth} />
-        <PrivateRoute path='/profile' component={Profile} auth={auth} />
+        <PrivateRoute path="/profile" component={Profile} auth={auth} />
         {/* Programs based Routes */}
         <PrivateRoute path="/programs/new" component={AddProgram} auth={auth} />
         <PrivateRoute
@@ -94,7 +94,7 @@ const AppContainer = (auth, sidebar) => (
         <PrivateRoute path="/courses" component={CourseList} auth={auth} />
         {/* Assignments based Routes */}
         <PrivateRoute
-          path="/assignments"
+          path="/assignments/:assignmentId?"
           component={AssignmentList}
           auth={auth}
         />

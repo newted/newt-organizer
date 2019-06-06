@@ -90,9 +90,12 @@ export function isEquivalent(a, b) {
 // Reduces the text to a smaller size, while still making sure that it ends with
 // a full word.
 export function shortenText(text, maxCharacters) {
+  // If there's no text, return nothing.
+  if (!text) return;
+
   // If the text is smaller than the maximum size, return the text
   if (text.length < maxCharacters) {
-    return text
+    return text;
   }
 
   const punctuation = [" ", ".", ",", ";", "?", "/", "-"];
@@ -102,13 +105,13 @@ export function shortenText(text, maxCharacters) {
   // reducing the character count until you hit a blank space/punctuation, which
   // marks the end of the word.
   if (punctuation.includes(text[maxCharacters + 1])) {
-    return text.substr(0, maxCharacters) + '...';
+    return text.substr(0, maxCharacters) + "...";
   } else {
     let characterCount = maxCharacters;
     while (!punctuation.includes(text[characterCount])) {
       characterCount -= 1;
     }
 
-    return text.substr(0, characterCount) + '...';
+    return text.substr(0, characterCount) + "...";
   }
 }

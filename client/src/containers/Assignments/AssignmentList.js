@@ -19,8 +19,7 @@ import styles from "./AssignmentList.module.css";
 
 class AssignmentList extends Component {
   state = {
-    showCompleted: false, // Doesn't show completed assignments by default,
-    assignmentHash: "",
+    showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment: "",
     showDropdown: false,
     showModal: false
@@ -31,14 +30,9 @@ class AssignmentList extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    // The first check is to see if there's a URL hash that indicates whether
-    // an assignment link has been clicked. If there is, then add the id to
-    // state, and if the assignments have loaded, set currentAssignment in state
-    // to the assignment with that id. If there's no hash, then set the
-    // active assignment to the first one.
-    // See: https://github.com/ReactTraining/react-router/issues/394#issuecomment-128148470
-    window.location.hash = window.decodeURIComponent(window.location.hash);
-    if (window.location.hash) {
+    // If there's an assignmentId URL parameter, then set currentAssignment to
+    // that one, otherwise the first one (provided the assignments have loaded)
+    if (this.props.urlAssignmentId) {
       // If all the assignments are complete, this sets the value of
       // showCompleted to true, otherwise it's kept as false. This way if all the
       // assignments are complete, the initial UI state is to show the completed
@@ -48,11 +42,10 @@ class AssignmentList extends Component {
           this.props.assignments.length > 0 &&
           this.props.assignments.length ===
             this.props.assignments.filter(({ completed }) => completed).length,
-        assignmentHash: window.location.hash.substr(1),
         currentAssignment:
           this.props.assignments.length > 0
             ? this.props.assignments.filter(
-                ({ _id }) => _id === window.location.hash.substr(1)
+                ({ _id }) => _id === this.props.urlAssignmentId
               )[0]
             : ""
       });
@@ -73,44 +66,37 @@ class AssignmentList extends Component {
   componentDidUpdate(prevProps, prevState) {
     // setState only needs to be called on updates if there's atleast one
     // assignment, thus the initial overarching check.
-    if (this.props.assignments.length > 0) {
-      // First, check if there's a URL hash and the current assignment hasn't
-      // already been set, then set the current assignment to that one.
-      if (
-        prevState.assignmentHash.length > 0 &&
-        prevState.currentAssignment === ""
-      ) {
+    // Also check if the previous props are a different length to the current
+    // props, which means that assignments were just loaded, or an assignment
+    // has been added or deleted. If there's a URL id param, set the initial
+    // assignment as that one, otherwise the first one.
+    if (
+      this.props.assignments.length > 0 &&
+      prevProps.assignments.length !== this.props.assignments.length
+    ) {
+      if (this.props.urlAssignmentId) {
+        // The check to see if the filtered list is greater than zero is to
+        // account if an assignment has been deleted. Once it's deleted, the
+        // user is redirected back to the page if came from, but the
+        // assignment no longer exists so the filter will not result in
+        // anything. In that case initialize with the first one.
+        // (Better solution would be to redirect without id param after
+        // deleting)
         this.setState({
-          currentAssignment: this.props.assignments.filter(
-            ({ _id }) => _id === prevState.assignmentHash
-          )[0]
+          currentAssignment:
+            this.props.assignments.filter(
+              ({ _id }) => _id === this.props.urlAssignmentId
+            ).length > 0
+              ? this.props.assignments.filter(
+                  ({ _id }) => _id === this.props.urlAssignmentId
+                )[0]
+              : this.props.assignments[0]
+        });
+      } else {
+        this.setState({
+          currentAssignment: this.props.assignments[0]
         });
       }
-
-      // If not, check if the previous props were of length 0, which means the
-      // assignments were just loaded, or if any assignments have been added or
-      // deleted (i.e the previous props and current props will have different
-      // lengths). For both set the current assignment to the first one.
-      if (prevProps.assignments.length !== this.props.assignments.length) {
-        this.setState({ currentAssignment: this.props.assignments[0] });
-      }
-    }
-
-    // This next bit is to check if the assignment information has changed in
-    // any way. Not a huge fan of this solution but so far seems to more or less
-    // remove the check mark not updating bug. Essentially just filters the
-    // (new) assignment list with the currentAssignment id (maybe an object of
-    // assignments will work better?), and checks if each values are the same.
-    // If not, update the currentAssignment.
-    const changedAssignment = this.props.assignments.filter(
-      ({ _id }) => _id === prevState.currentAssignment._id
-    );
-
-    if (
-      changedAssignment.length === 1 &&
-      !isEquivalent(prevState.currentAssignment, changedAssignment[0])
-    ) {
-      this.setState({ currentAssignment: changedAssignment[0] });
     }
   }
 
@@ -280,6 +266,7 @@ class AssignmentList extends Component {
 }
 
 function mapStateToProps({ programs, courses }, props) {
+  const { assignmentId } = props.match.params;
   const assignments = [];
   // This way of setting isFetching seems logical, but for a brief moment,
   // between the 'FETCH_PROGRAMS' and 'REQUEST_COURSES' reducers, it evaluates
@@ -301,6 +288,7 @@ function mapStateToProps({ programs, courses }, props) {
   statusDueDateSort(assignments);
 
   return {
+    urlAssignmentId: assignmentId,
     assignments,
     isFetching,
     numCompleted

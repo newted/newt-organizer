@@ -36,7 +36,7 @@ const TimelineCard = ({
     <div className={styles.cardBody}>
       <div className={styles.cardText}>
         <div className={styles.headers}>
-          <Link to={{ pathname: "/assignments", hash: `#${_id}` }}>
+          <Link to={{ pathname: `/assignments/${_id}` }}>
             <h4 className={styles.title}>{name}</h4>
           </Link>
           <div style={{ color: "#bbb", marginRight: ".5rem" }}>&mdash;</div>
