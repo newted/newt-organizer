@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { statusDueDateSort, isEquivalent } from "../../utils/containerHelpers";
+import { statusDueDateSort } from "../../utils/containerHelpers";
 // API
 import {
   markAssignmentAsComplete,

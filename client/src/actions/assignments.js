@@ -222,7 +222,7 @@ export const markAssignmentAsIncomplete = (
 };
 
 // YouTube API trial
-async function getPlaylistVideos() {
+export async function getPlaylistVideos() {
   const baseURL = "https://www.googleapis.com/youtube/v3/playlistItems";
   const params = {
     playlistId: "PLBDA2E52FB1EF80C9",
@@ -259,3 +259,4 @@ export async function getYoutubeVideoInfo(videoUrl) {
 }
 
 // getPlaylistVideos();
+// console.log(getYoutubeVideoInfo('https://www.youtube.com/watch?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=2'))

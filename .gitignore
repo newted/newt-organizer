@@ -4,3 +4,8 @@ node_modules
 # Config
 dev.js
 serviceAccountKey.json
+
+# temp
+client/src/utils/contentData.js
+client/src/utils/knowledgeMap.js
+client/src/utils/learningMap.js
