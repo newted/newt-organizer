@@ -6,8 +6,8 @@ const LearningMap = mongoose.model("learningMaps");
 module.exports = app => {
   // POST request to create a learning map
   app.post("/api/learningMap", async (req, res) => {
+    // Get info from request body
     const { knowledgeMap } = req.body;
-    console.log(knowledgeMap)
 
     // Create Learning Map
     const learningMap = new LearningMap({
