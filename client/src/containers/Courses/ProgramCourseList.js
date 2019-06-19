@@ -54,7 +54,7 @@ class ProgramCourseList extends Component {
           </Link>
         </div>
         <div className={styles.cardContainer}>
-          {Object.keys(programCourses).length > 0
+          {!_.isEmpty(programCourses)
             ? this.renderCards()
             : this.renderNoCourses()}
         </div>

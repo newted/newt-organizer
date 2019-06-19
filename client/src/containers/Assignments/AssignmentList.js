@@ -14,6 +14,7 @@ import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Loader from '../../components/Loader'
 // Styling
 import styles from "./AssignmentList.module.css";
 
@@ -189,26 +190,7 @@ class AssignmentList extends Component {
     } = this.props;
     const { currentAssignment, showDropdown } = this.state;
 
-    if (assignments.length > 0) {
-      return (
-        <Fragment>
-          <div className={styles.listContainer}>
-            {this.renderAssignmentList()}
-          </div>
-          <AssignmentContent
-            assignment={currentAssignment}
-            onComplete={markAssignmentAsComplete}
-            onIncomplete={markAssignmentAsIncomplete}
-            dropdownVisible={showDropdown}
-            handleOpenDropdown={this.openDropdown}
-            handleOpenModal={this.openModal}
-          />
-        </Fragment>
-      );
-    } else if (isFetching) {
-      // UI for when assignments are loading.
-      return <div>Loading...</div>;
-    } else {
+    if (_.isEmpty(assignments)) {
       // UI for when there are no assignments.
       const coursesLink = (
         <Link to="/courses" className={styles.link}>
@@ -223,11 +205,31 @@ class AssignmentList extends Component {
         </div>
       );
     }
+
+    return (
+      <Fragment>
+        <div className={styles.listContainer}>
+          {this.renderAssignmentList()}
+        </div>
+        <AssignmentContent
+          assignment={currentAssignment}
+          onComplete={markAssignmentAsComplete}
+          onIncomplete={markAssignmentAsIncomplete}
+          dropdownVisible={showDropdown}
+          handleOpenDropdown={this.openDropdown}
+          handleOpenModal={this.openModal}
+        />
+      </Fragment>
+    );
   }
 
   render() {
-    const { numCompleted } = this.props;
+    const { numCompleted, isFetching, assignments } = this.props;
     const { showCompleted, currentAssignment } = this.state;
+
+    if (isFetching && _.isEmpty(assignments)) {
+      return <Loader />
+    }
 
     return (
       <div className={styles.mainContainer}>

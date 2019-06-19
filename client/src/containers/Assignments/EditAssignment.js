@@ -3,12 +3,12 @@ import _ from "lodash";
 import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 import { assignmentInputFields } from "./assignmentFields";
 // API
 import { updateAssignment } from "../../actions/assignments";
 // Components
 import Form from "../../components/Form";
+import Loader from '../../components/Loader';
 // Styling
 import styles from "./EditAssignment.module.css";
 
@@ -39,7 +39,7 @@ class EditAssignment extends Component {
     } = this.props;
 
     if (!assignmentExists) {
-      return <LoadingBar />;
+      return <Loader />;
     }
 
     return (
