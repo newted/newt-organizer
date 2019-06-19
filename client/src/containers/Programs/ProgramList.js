@@ -8,6 +8,7 @@ import { fetchPrograms } from "../../actions/programs";
 // Components
 import Button from "../../components/Button";
 import Card from "../../components/Card";
+import Loader from "../../components/Loader";
 // Styling
 import styles from "./ProgramList.module.css";
 import { UniversityIcon } from "../../utils/icons";
@@ -55,6 +56,12 @@ class ProgramList extends Component {
   }
 
   render() {
+    const { isFetching, items } = this.props.programs;
+    // Display loader if the items are fetching
+    if (isFetching && !Object.keys(items).length) {
+      return <Loader />;
+    }
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
@@ -81,7 +88,7 @@ function mapStateToProps({ programs }) {
 
 const mapDispatchToProps = {
   fetchPrograms
-}
+};
 
 export default connect(
   mapStateToProps,
