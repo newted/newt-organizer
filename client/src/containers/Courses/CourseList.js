@@ -3,12 +3,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 import _ from "lodash";
 // API
 import { fetchAllCourses } from "../../actions/courses";
 // Components
 import Card from "../../components/Card";
+import Loader from "../../components/Loader";
 // Styling
 import styles from "./CourseList.module.css";
 import { BookIcon } from "../../utils/icons";
@@ -32,21 +32,17 @@ class CourseList extends Component {
   renderCards(programId, courseList) {
     const { courses } = this.props;
 
-    if (_.isEmpty(courses.items)) {
-      return <LoadingBar />;
-    } else {
-      return _.map(courseList, courseId => {
-        return (
-          <Card
-            path={`/programs/${programId}/courses/${courseId}`}
-            title={courses.items[courseId].name}
-            icon={BookIcon}
-            additionalClass={styles.cardColor}
-            key={courseId}
-          />
-        );
-      });
-    }
+    return _.map(courseList, courseId => {
+      return (
+        <Card
+          path={`/programs/${programId}/courses/${courseId}`}
+          title={courses.items[courseId].name}
+          icon={BookIcon}
+          additionalClass={styles.cardColor}
+          key={courseId}
+        />
+      );
+    });
   }
 
   renderNoContent() {
@@ -56,7 +52,7 @@ class CourseList extends Component {
       </Link>
     );
 
-    if (Object.keys(this.props.programs.items).length === 0) {
+    if (_.isEmpty(this.props.programs.items)) {
       return (
         <div className={styles.message}>
           You aren't in any programs. Go to the {programLink} page from the
@@ -98,13 +94,24 @@ class CourseList extends Component {
   }
 
   render() {
+    const { programs, courses } = this.props;
+
+    // If either programs or courses is fetching and if either of the two is
+    // empty, display Loader UI.
+    if (
+      (programs.isFetching && _.isEmpty(programs.items)) ||
+      (courses.isFetching && _.isEmpty(courses.items))
+    ) {
+      return <Loader />;
+    }
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h2>Your Courses</h2>
         </div>
         <div className={styles.coursesContainer}>
-          {Object.keys(this.props.courses.items).length > 0
+          {!_.isEmpty(this.props.courses.items)
             ? this.renderCourseSections()
             : this.renderNoContent()}
         </div>
@@ -122,7 +129,7 @@ function mapStateToProps({ programs, courses }) {
 
 const mapDispatchToProps = {
   fetchAllCourses
-}
+};
 
 export default connect(
   mapStateToProps,

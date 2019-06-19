@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 import programFields from "./programFields";
 // API
 import { updateProgram } from "../../actions/programs";
 // Components
 import Form from "../../components/Form";
+import Loader from "../../components/Loader";
 // Styling
 import styles from "./EditProgram.module.css";
 
@@ -37,7 +37,7 @@ class EditProgram extends Component {
     } = this.props;
 
     if (!programExists) {
-      return <LoadingBar />;
+      return <Loader />;
     }
 
     return (

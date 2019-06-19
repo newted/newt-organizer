@@ -58,7 +58,7 @@ class ProgramList extends Component {
   render() {
     const { isFetching, items } = this.props.programs;
     // Display loader if the items are fetching
-    if (isFetching && !Object.keys(items).length) {
+    if (isFetching && _.isEmpty(items)) {
       return <Loader />;
     }
 
@@ -71,7 +71,7 @@ class ProgramList extends Component {
           </Link>
         </div>
         <div className={styles.cardContainer}>
-          {Object.keys(this.props.programs.items).length > 0
+          {!_.isEmpty(this.props.programs.items)
             ? this.renderCards()
             : this.renderNoContent()}
         </div>

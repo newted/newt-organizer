@@ -3,13 +3,13 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 // API
 import { deleteProgram } from "../../actions/programs";
 import { fetchCourses } from "../../actions/courses";
 // Components
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
 import ProgramCourseList from "../Courses/ProgramCourseList";
 // Styling
 import styles from "./ProgramPage.module.css";
@@ -97,8 +97,9 @@ class ProgramPage extends Component {
   }
 
   render() {
-    if (!this.props.program) {
-      return <LoadingBar />;
+    const { program } = this.props;
+    if (!program) {
+      return <Loader />;
     }
 
     return <div className={styles.mainContainer}>{this.renderContent()}</div>;

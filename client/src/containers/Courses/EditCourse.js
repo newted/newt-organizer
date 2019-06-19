@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 import courseFields from "./courseFields";
 // API
 import { updateCourse } from "../../actions/courses";
 // Components
 import Form from "../../components/Form";
+import Loader from "../../components/Loader";
 // Styling
 import styles from "./EditCourse.module.css";
 
@@ -37,7 +37,7 @@ class EditCourse extends Component {
     } = this.props;
 
     if (!courseExists) {
-      return <LoadingBar />;
+      return <Loader />;
     }
 
     return (

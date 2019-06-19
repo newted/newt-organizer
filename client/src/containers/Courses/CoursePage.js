@@ -3,12 +3,12 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
 // API
 import { deleteCourse } from "../../actions/courses";
 // Components
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
 import CourseAssignmentList from "../Assignments/CourseAssignmentList";
 // Styling
 import styles from "./CoursePage.module.css";
@@ -48,7 +48,7 @@ class CoursePage extends Component {
     const { programId, course, history, deleteCourse } = this.props;
 
     if (!course) {
-      return <LoadingBar />;
+      return <Loader />;
     }
 
     return (
