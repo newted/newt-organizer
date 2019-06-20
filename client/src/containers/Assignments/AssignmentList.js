@@ -184,7 +184,6 @@ class AssignmentList extends Component {
   renderContent() {
     const {
       assignments,
-      isFetching,
       markAssignmentAsComplete,
       markAssignmentAsIncomplete
     } = this.props;

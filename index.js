@@ -26,6 +26,7 @@ require("./routes/authRoutes")(app);
 require("./routes/programRoutes")(app);
 require("./routes/courseRoutes")(app);
 require("./routes/assignmentRoutes")(app);
+require("./routes/sharedRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets created after build process like

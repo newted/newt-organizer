@@ -41,7 +41,7 @@ class AddAssignment extends Component {
 
   handleGoToConfirmationPage = async values => {
     try {
-      const { data } = await getYoutubeVideoInfo(values.videoLink);
+      const data = await getYoutubeVideoInfo(values.videoLink);
       const videoInfo = data.items[0];
 
       this.setState(() => ({
@@ -85,7 +85,9 @@ class AddAssignment extends Component {
             formName="PreviewAssignment"
             formFields={youtubeInputFields}
             buttonText="Next"
-            initialValues={inputtedUrl.length > 0 ? { videoLink: inputtedUrl } : null}
+            initialValues={
+              inputtedUrl.length > 0 ? { videoLink: inputtedUrl } : null
+            }
             onSubmit={values => this.handleGoToConfirmationPage(values)}
           />
         );

@@ -221,42 +221,18 @@ export const markAssignmentAsIncomplete = (
   }
 };
 
-// YouTube API trial
-export async function getPlaylistVideos() {
-  const baseURL = "https://www.googleapis.com/youtube/v3/playlistItems";
-  const params = {
-    playlistId: "PLBDA2E52FB1EF80C9",
-    key: keys.youtubeApiKey,
-    part: "snippet"
-  };
-
-  try {
-    const res = await axios.get(baseURL, { params: params });
-    console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // This is a very basic Youtube URL parser which only does full links. A more
 // robust one will require regex to handle more types of URLs.
 // See: https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 export async function getYoutubeVideoInfo(videoUrl) {
-  try {
-    let videoId = videoUrl.split("v=")[1];
-    videoId = videoId.split("&")[0];
-    const baseURL = "https://www.googleapis.com/youtube/v3/videos";
-    const params = {
-      id: videoId,
-      part: "snippet",
-      key: keys.youtubeApiKey
-    };
+  let videoId = videoUrl.split("v=")[1];
+  videoId = videoId.split("&")[0];
 
-    return await axios.get(baseURL, { params });
+  try {
+    // Make request to server, which will make YouTube API request.
+    const res = await axios.get(`/api/youtube/videoInfo/${videoId}`);
+    return res.data;
   } catch (error) {
     console.log(error);
   }
 }
-
-// getPlaylistVideos();
-// console.log(getYoutubeVideoInfo('https://www.youtube.com/watch?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=2'))
