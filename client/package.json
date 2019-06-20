@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "firebase": "^5.8.3",
@@ -17,7 +17,6 @@
     "react-dom": "^16.7.0",
     "react-icons": "^3.2.2",
     "react-redux": "^6.0.0",
-    "react-redux-loading": "^1.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
     "react-test-renderer": "^16.8.6",

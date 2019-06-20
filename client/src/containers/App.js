@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { showLoading, hideLoading } from "react-redux-loading";
-import LoadingBar from "react-redux-loading";
 // API
 import { fetchUser, isAuthenticated } from "../actions/authedUser";
 import { fetchPrograms } from "../actions/programs";
@@ -11,6 +9,7 @@ import { fetchAllCourses } from "../actions/courses";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import PrivateRoute from "../components/PrivateRoute";
+import Loader from "../components/Loader";
 // Containers
 import Landing from "./Landing";
 import Login from "./Login";
@@ -105,7 +104,6 @@ const AppContainer = (auth, sidebar) => (
 
 class App extends Component {
   componentDidMount() {
-    this.props.showLoading();
     // If user already exists (if coming after signing in), don't fetch again
     if (this.props.auth.exists) {
       this.props
@@ -113,8 +111,7 @@ class App extends Component {
         .then(() =>
           this.props.fetchAllCourses(Object.keys(this.props.programs.items))
         )
-        .then(() => this.props.hideLoading())
-        .catch(error => this.props.hideLoading());
+        .catch(error => console.log(error));
     } else {
       this.props
         .fetchUser()
@@ -122,8 +119,7 @@ class App extends Component {
         .then(() =>
           this.props.fetchAllCourses(Object.keys(this.props.programs.items))
         )
-        .then(() => this.props.hideLoading())
-        .catch(error => this.props.hideLoading());
+        .catch(error => console.log(error));
     }
   }
 
@@ -158,10 +154,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Fragment>
-          <LoadingBar />
-          {this.props.loading === true ? null : this.renderContent()}
-        </Fragment>
+        {this.props.loading === true ? <Loader /> : this.renderContent()}
       </BrowserRouter>
     );
   }
@@ -177,8 +170,6 @@ function mapStateToProps({ auth, programs, sidebar }) {
 }
 
 const mapDispatchToProps = {
-  showLoading,
-  hideLoading,
   fetchUser,
   fetchPrograms,
   fetchAllCourses

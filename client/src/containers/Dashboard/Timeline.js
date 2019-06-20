@@ -47,6 +47,7 @@ class Timeline extends Component {
 
   // Display (or don't display) the due/to-do date
   renderDate = date => {
+    console.log('date:', this.currentDate)
     const formattedDate = moment(date).format("MMM DD");
 
     if (formattedDate !== this.currentDate) {

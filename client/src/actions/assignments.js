@@ -1,5 +1,4 @@
 import axios from "axios";
-import keys from "../config/keys";
 import firebase from "../config/firebase";
 import { requestCourses, resolveCourses } from "./courses";
 
