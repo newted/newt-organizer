@@ -10,6 +10,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import PrivateRoute from "../components/PrivateRoute";
 import Loader from "../components/Loader";
+import FourOhFour from "../components/404";
 // Containers
 import Landing from "./Landing";
 import Login from "./Login";
@@ -143,9 +144,20 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={LandingContainer} />
           <Route exact path="/login" component={LandingContainer} />
+          {/* If the paths are any of the ones in the array, render
+            AppContainer (i.e. the app stuff that needs the sidebar) */}
           <Route
+            path={[
+              "/dashboard",
+              "/programs",
+              "/courses",
+              "/assignments",
+              "/profile"
+            ]}
             render={() => AppContainer(this.props.auth, this.props.sidebar)}
           />
+          {/* If none of the paths match show the 404 page */}
+          <Route component={FourOhFour} />
         </Switch>
       </Fragment>
     );
