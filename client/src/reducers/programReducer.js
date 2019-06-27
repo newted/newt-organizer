@@ -1,5 +1,6 @@
 import {
   REQUEST_PROGRAMS,
+  REQUEST_FAILURE,
   RESOLVE_PROGRAMS,
   REMOVE_PROGRAMS,
   CREATE_PROGRAM,
@@ -17,7 +18,8 @@ import {
 export default function(
   state = {
     isFetching: false,
-    items: {}
+    items: {},
+    error: null
   },
   action
 ) {
@@ -27,6 +29,12 @@ export default function(
         ...state,
         isFetching: true
       };
+    case REQUEST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.message
+      }
     case RESOLVE_PROGRAMS:
       return {
         ...state,

@@ -3,6 +3,7 @@ import firebase from "../config/firebase";
 import _ from "lodash";
 
 export const REQUEST_PROGRAMS = "REQUEST_PROGRAMS";
+export const REQUEST_FAILURE = "REQUEST_FAILURE";
 export const RESOLVE_PROGRAMS = "RESOLVE_PROGRAMS";
 export const REMOVE_PROGRAMS = "REMOVE_PROGRAMS";
 export const CREATE_PROGRAM = "CREATE_PROGRAM";
@@ -13,6 +14,13 @@ export const DELETE_PROGRAM = "DELETE_PROGRAM";
 export const requestPrograms = () => {
   return {
     type: REQUEST_PROGRAMS
+  };
+};
+
+const requestFailure = message => {
+  return {
+    type: REQUEST_FAILURE,
+    message
   };
 };
 
@@ -71,7 +79,7 @@ export const fetchPrograms = () => async dispatch => {
       payload: programs
     });
   } catch (error) {
-    dispatch(resolvePrograms());
+    dispatch(requestFailure(error.message));
     console.log("Error while fetching programs.", error);
   }
 };
