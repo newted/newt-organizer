@@ -25,10 +25,6 @@ class ProgramList extends Component {
     match: PropTypes.object
   };
 
-  componentDidMount() {
-    this.props.fetchPrograms();
-  }
-
   renderCards() {
     const { programs } = this.props;
 

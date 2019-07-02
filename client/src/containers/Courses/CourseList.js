@@ -25,10 +25,6 @@ class CourseList extends Component {
     match: PropTypes.object
   };
 
-  componentDidMount() {
-    this.props.fetchAllCourses(Object.keys(this.props.programs.items));
-  }
-
   renderCards(programId, courseList) {
     const { courses } = this.props;
 

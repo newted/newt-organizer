@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
+import _ from "lodash";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 // API
-import { fetchUser, isAuthenticated } from "../actions/authedUser";
+import { fetchUser } from "../actions/authedUser";
 import { fetchPrograms } from "../actions/programs";
 import { fetchAllCourses } from "../actions/courses";
 // Components
@@ -105,37 +106,43 @@ const AppContainer = (auth, sidebar) => (
 
 class App extends Component {
   componentDidMount() {
-    // If user already exists (if coming after signing in), don't fetch again
-    if (this.props.auth.exists) {
-      this.props
-        .fetchPrograms()
-        .then(() =>
-          this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-        )
-        .catch(error => console.log(error));
-    } else {
-      this.props
-        .fetchUser()
-        .then(() => this.props.fetchPrograms())
-        .then(() =>
-          this.props.fetchAllCourses(Object.keys(this.props.programs.items))
-        )
-        .catch(error => console.log(error));
-    }
+    this.props
+      .fetchUser()
+      .then(() => this.props.fetchPrograms())
+      .then(programs => {
+        if (_.isEmpty(programs)) {
+          throw Error("no programs");
+        }
+        this.props.fetchAllCourses(programs.map(({ _id }) => _id));
+      })
+      .catch(error => console.log(error));
   }
 
-  // After the first render, componentDidMount is invoked and if not
-  // authenticated, then this invokation makes sure that program data is fetched
-  // as soon as the user signs in. If the user is already signed in and just,
-  // say, refreshes the page, the data is fetched in componentDidMount and this
-  // won't run since the if statement condition returns false.
+  // Using setTimeout feels very hacky and inelegant but it's seems to work
+  // better, atleast under some circumstances (faster than some threshold
+  // Internet speeds). Certainly not the right or best solution, but it does
+  // avoid the multiple fetching problem (without having to fetch inside every
+  // component). Still unsure which direction to go regarding fetching so let's
+  // see how this goes.
   componentDidUpdate(prevProps) {
-    // If the previous auth state was non-existant (i.e. no authenticated user)
-    // and the current auth state exists (user authenticated), then fetch
-    // programs.
-    if (!prevProps.auth.exists && this.props.auth.exists && isAuthenticated()) {
-      this.props.fetchPrograms();
-    }
+    setTimeout(() => {
+      if (
+        !prevProps.auth.exists &&
+        this.props.auth.exists &&
+        _.isEmpty(this.props.programs.items) &&
+        !this.props.programs.isFetching
+      ) {
+        this.props
+          .fetchPrograms()
+          .then(programs => {
+            if (_.isEmpty(programs)) {
+              throw Error("no programs");
+            }
+            this.props.fetchAllCourses(programs.map(({ _id }) => _id));
+          })
+          .catch(error => console.log(error));
+      }
+    }, 300);
   }
 
   renderContent() {

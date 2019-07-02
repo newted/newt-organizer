@@ -78,6 +78,8 @@ export const fetchPrograms = () => async dispatch => {
       type: FETCH_PROGRAMS,
       payload: programs
     });
+
+    return programs
   } catch (error) {
     dispatch(requestFailure(error.message));
     console.log("Error while fetching programs.", error);
