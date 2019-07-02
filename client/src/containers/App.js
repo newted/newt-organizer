@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { ToastProvider } from 'react-toast-notifications'
 // API
 import { fetchUser } from "../actions/authedUser";
 // Components
@@ -53,7 +54,9 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        {this.props.loading === true ? <Loader /> : this.renderContent()}
+        <ToastProvider>
+          {this.props.loading === true ? <Loader /> : this.renderContent()}
+        </ToastProvider>
       </BrowserRouter>
     );
   }

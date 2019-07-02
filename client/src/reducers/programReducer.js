@@ -38,7 +38,8 @@ export default function(
     case RESOLVE_PROGRAMS:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
+        error: null
       };
     case REMOVE_PROGRAMS:
       return {

@@ -3,8 +3,9 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withToastManager } from "react-toast-notifications";
 // API
-import { fetchPrograms } from "../../actions/programs";
+import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
 import Button from "../../components/Button";
 import Card from "../../components/Card";
@@ -24,6 +25,23 @@ class ProgramList extends Component {
     location: PropTypes.object,
     match: PropTypes.object
   };
+
+  componentDidUpdate() {
+    const { toastManager, resolvePrograms } = this.props;
+    const { error } = this.props.programs;
+
+    if (error) {
+      toastManager.add(
+        `Something went wrong, could not fetch programs: ${error}`,
+        {
+          appearance: "error",
+          autoDismiss: true,
+          pauseOnHover: true
+        }
+      );
+      resolvePrograms();
+    }
+  }
 
   renderCards() {
     const { programs } = this.props;
@@ -83,10 +101,11 @@ function mapStateToProps({ programs }) {
 }
 
 const mapDispatchToProps = {
-  fetchPrograms
+  fetchPrograms,
+  resolvePrograms
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProgramList);
+)(withToastManager(ProgramList));

@@ -24,7 +24,7 @@ const requestFailure = message => {
   };
 };
 
-const resolvePrograms = () => {
+export const resolvePrograms = () => {
   return {
     type: RESOLVE_PROGRAMS
   };
