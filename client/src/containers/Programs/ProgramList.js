@@ -42,9 +42,7 @@ class ProgramList extends Component {
           onRetry={this.onRetry}
         />,
         {
-          appearance: "error",
-          autoDismiss: true,
-          pauseOnHover: true
+          appearance: "error"
         },
         // Callback to assign id to variable after adding.
         id => (this.toastId = id)

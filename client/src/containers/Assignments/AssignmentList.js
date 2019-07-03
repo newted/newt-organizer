@@ -234,16 +234,18 @@ class AssignmentList extends Component {
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h2>Your Assignments</h2>
-          <Button
-            additionalClass={
-              showCompleted
-                ? [styles.completedBtn, styles.selected].join(" ")
-                : styles.completedBtn
-            }
-            onClick={this.handleShowCompleted}
-          >
-            {`Show Completed (${numCompleted})`}
-          </Button>
+          { !_.isEmpty(assignments) && (
+            <Button
+              additionalClass={
+                showCompleted
+                  ? [styles.completedBtn, styles.selected].join(" ")
+                  : styles.completedBtn
+              }
+              onClick={this.handleShowCompleted}
+            >
+              {`Show Completed (${numCompleted})`}
+            </Button>
+          )}
         </div>
         <div className={styles.container}>{this.renderContent()}</div>
         <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
