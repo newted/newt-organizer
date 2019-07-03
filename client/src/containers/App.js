@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { ToastProvider } from 'react-toast-notifications'
+import { ToastProvider } from "react-toast-notifications";
 // API
 import { fetchUser } from "../actions/authedUser";
 // Components
 import Loader from "../components/Loader";
+import CustomToast from "../components/CustomToast";
 import FourOhFour from "../components/404";
 // Containers
 import AppContainer from "./AppContainer";
@@ -54,7 +55,10 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <ToastProvider>
+        <ToastProvider
+          autoDismissTimeout={6000}
+          components={{ Toast: CustomToast }}
+        >
           {this.props.loading === true ? <Loader /> : this.renderContent()}
         </ToastProvider>
       </BrowserRouter>

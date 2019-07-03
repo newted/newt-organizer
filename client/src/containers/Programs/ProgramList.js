@@ -7,6 +7,7 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
+import ToastContent from "../../components/CustomToast/ToastContent";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
@@ -32,7 +33,11 @@ class ProgramList extends Component {
 
     if (error) {
       toastManager.add(
-        `Something went wrong, could not fetch programs: ${error}`,
+        <ToastContent
+          message="Something went wrong, could not fetch programs."
+          error={error}
+          onRetry={() => console.log("retry...")}
+        />,
         {
           appearance: "error",
           autoDismiss: true,
