@@ -27,6 +27,9 @@ class ProgramList extends Component {
     match: PropTypes.object
   };
 
+  // Variable to keep track of notification ids
+  toastId = null;
+
   componentDidUpdate() {
     const { toastManager, resolvePrograms } = this.props;
     const { error } = this.props.programs;
@@ -36,17 +39,29 @@ class ProgramList extends Component {
         <ToastContent
           message="Something went wrong, could not fetch programs."
           error={error}
-          onRetry={() => console.log("retry...")}
+          onRetry={this.onRetry}
         />,
         {
           appearance: "error",
           autoDismiss: true,
           pauseOnHover: true
-        }
+        },
+        // Callback to assign id to variable after adding.
+        id => (this.toastId = id)
       );
       resolvePrograms();
     }
   }
+
+  // Function to run when retry button is clicked.
+  onRetry = () => {
+    const { fetchPrograms, toastManager } = this.props;
+
+    // A request is made to fetch programs. Then the toast is removed so that it
+    // no longer displays on the screen.
+    fetchPrograms();
+    toastManager.remove(this.toastId);
+  };
 
   renderCards() {
     const { programs } = this.props;
