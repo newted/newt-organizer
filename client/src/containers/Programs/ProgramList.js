@@ -64,6 +64,18 @@ class ProgramList extends Component {
             }
           );
           break;
+        case "update":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not update the program."
+              error={error.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
         default:
           return;
       }

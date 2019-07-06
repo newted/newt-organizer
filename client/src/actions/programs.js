@@ -108,8 +108,8 @@ export const updateProgram = (programId, values, history) => async dispatch => {
     // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while updating program.", error);
+    history.push("/programs");
+    dispatch(requestFailure(error.message, "update"));
   }
 };
 
