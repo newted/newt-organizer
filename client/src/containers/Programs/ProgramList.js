@@ -34,19 +34,40 @@ class ProgramList extends Component {
     const { toastManager, resolvePrograms } = this.props;
     const { error } = this.props.programs;
 
-    if (error) {
-      toastManager.add(
-        <ToastContent
-          message="Something went wrong, could not fetch programs."
-          error={error}
-          onRetry={this.onRetry}
-        />,
-        {
-          appearance: "error"
-        },
-        // Callback to assign id to variable after adding.
-        id => (this.toastId = id)
-      );
+    // Error handling: add error toast notification if there's any error with
+    // data requests.
+    if (error.message) {
+      switch (error.source) {
+        case "fetch":
+          toastManager.add(
+            <ToastContent
+              message={`Something went wrong, could not fetch programs.`}
+              error={error.message}
+              onRetry={this.onRetry}
+            />,
+            {
+              appearance: "error"
+            },
+            // Callback to assign id to variable after adding.
+            id => (this.toastId = id)
+          );
+          break;
+        case "create":
+          toastManager.add(
+            <ToastContent
+              message={`Something went wrong, could not create the program.`}
+              error={error.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
+        default:
+          return;
+      }
+
       resolvePrograms();
     }
   }

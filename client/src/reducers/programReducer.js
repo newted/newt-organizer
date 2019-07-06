@@ -19,7 +19,10 @@ export default function(
   state = {
     isFetching: false,
     items: {},
-    error: null
+    error: {
+      message: null,
+      source: null
+    }
   },
   action
 ) {
@@ -33,13 +36,20 @@ export default function(
       return {
         ...state,
         isFetching: false,
-        error: action.message
-      }
+        error: {
+          ...state.error,
+          message: action.payload.message,
+          source: action.payload.source
+        }
+      };
     case RESOLVE_PROGRAMS:
       return {
         ...state,
         isFetching: false,
-        error: null
+        error: {
+          message: null,
+          source: null
+        }
       };
     case REMOVE_PROGRAMS:
       return {

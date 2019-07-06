@@ -17,10 +17,13 @@ export const requestPrograms = () => {
   };
 };
 
-const requestFailure = message => {
+const requestFailure = (message, source) => {
   return {
     type: REQUEST_FAILURE,
-    message
+    payload: {
+      message,
+      source
+    }
   };
 };
 
@@ -50,8 +53,8 @@ export const createProgram = (values, history) => async dispatch => {
     // Redirect to programs page
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while creating program", error);
+    history.push("/programs");
+    dispatch(requestFailure(error.message, "create"));
   }
 };
 
@@ -79,9 +82,9 @@ export const fetchPrograms = () => async dispatch => {
       payload: programs
     });
 
-    return programs
+    return programs;
   } catch (error) {
-    dispatch(requestFailure(error.message));
+    dispatch(requestFailure(error.message, "fetch"));
   }
 };
 
