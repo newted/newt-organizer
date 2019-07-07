@@ -68,24 +68,25 @@ module.exports = app => {
     const { programId } = req.params;
 
     // Delete courses that belong to the program being deleted
-    await Course.deleteMany(
-      {
-        programId: programId
-      },
-      error => {
-        if (error) {
-          res.send(error)
-        }
-      }
-    )
-
-    // Delete the program
-    await Program.findByIdAndDelete(programId, (error, program) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(program);
-      }
-    });
+    // await Course.deleteMany(
+    //   {
+    //     programId: programId
+    //   },
+    //   error => {
+    //     if (error) {
+    //       res.send(error)
+    //     }
+    //   }
+    // )
+    //
+    // // Delete the program
+    // await Program.findByIdAndDelete(programId, (error, program) => {
+    //   if (error) {
+    //     res.send(error);
+    //   } else {
+    //     res.send(program);
+    //   }
+    // });
+    res.sendStatus(422);
   });
 };

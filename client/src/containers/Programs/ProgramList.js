@@ -41,7 +41,7 @@ class ProgramList extends Component {
         case "fetch":
           toastManager.add(
             <ToastContent
-              message={`Something went wrong, could not fetch programs.`}
+              message="Something went wrong, could not fetch programs."
               error={error.message}
               onRetry={this.onRetry}
             />,
@@ -55,7 +55,7 @@ class ProgramList extends Component {
         case "create":
           toastManager.add(
             <ToastContent
-              message={`Something went wrong, could not create the program.`}
+              message="Something went wrong, could not create the program."
               error={error.message}
               displayRetry={false}
             />,
@@ -68,6 +68,18 @@ class ProgramList extends Component {
           toastManager.add(
             <ToastContent
               message="Something went wrong, could not update the program."
+              error={error.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
+        case "delete":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not delete the program."
               error={error.message}
               displayRetry={false}
             />,

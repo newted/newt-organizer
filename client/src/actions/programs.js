@@ -134,7 +134,10 @@ export const deleteProgram = (programId, history) => async dispatch => {
     // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while deleting program.", error);
+    history.push("/programs");
+    dispatch(requestFailure(error.message, "delete"))
+
+    // Re-fetch programs
+    dispatch(fetchPrograms())
   }
 };
