@@ -17,6 +17,7 @@ import {
   DELETE_ASSIGNMENT
 } from "../actions/assignments";
 import { GET_DEMO_COURSES } from "../actions/demo";
+import { REQUEST_FAILURE } from "../actions/shared";
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -25,7 +26,11 @@ import {
 export default function(
   state = {
     isFetching: false,
-    items: {}
+    items: {},
+    error: {
+      message: null,
+      source: null
+    }
   },
   action
 ) {
@@ -35,10 +40,24 @@ export default function(
         ...state,
         isFetching: true
       };
+    case REQUEST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: {
+          ...state.error,
+          message: action.payload.message,
+          source: action.payload.source
+        }
+      };
     case RESOLVE_COURSES:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
+        error: {
+          message: null,
+          source: null
+        }
       };
     case REMOVE_COURSES:
       return {

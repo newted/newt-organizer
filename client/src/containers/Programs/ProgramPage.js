@@ -3,10 +3,12 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withToastManager } from "react-toast-notifications";
 // API
 import { deleteProgram } from "../../actions/programs";
-import { fetchCourses } from "../../actions/courses";
+import { fetchCourses, resolveCourses } from "../../actions/courses";
 // Components
+import ToastContent from "../../components/CustomToast/ToastContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -35,6 +37,31 @@ class ProgramPage extends Component {
   state = {
     showModal: false
   };
+
+  componentDidUpdate() {
+    const { toastManager, resolveCourses, courseError } = this.props;
+
+    if (courseError.message) {
+      switch (courseError.source) {
+        case "create":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not create the course."
+              error={courseError.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
+        default:
+          return;
+      }
+
+      resolveCourses();
+    }
+  }
 
   openModal = () => {
     this.setState({ showModal: true });
@@ -102,25 +129,28 @@ class ProgramPage extends Component {
   }
 }
 
-function mapStateToProps({ programs }, props) {
+function mapStateToProps({ programs, courses }, props) {
   const { programId } = props.match.params;
   const program = _.filter(
     programs.items,
     program => program._id === programId
   )[0];
+  const courseError = courses.error;
 
   return {
     program,
-    programId
+    programId,
+    courseError
   };
 }
 
 const mapDispatchToProps = {
   deleteProgram,
-  fetchCourses
+  fetchCourses,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProgramPage);
+)(withToastManager(ProgramPage));

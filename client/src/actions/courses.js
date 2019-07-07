@@ -1,5 +1,6 @@
 import axios from "axios";
 import firebase from "../config/firebase";
+import { requestFailure } from "./shared";
 
 export const REQUEST_COURSES = "REQUEST_COURSES";
 export const RESOLVE_COURSES = "RESOLVE_COURSES";
@@ -45,8 +46,8 @@ export const createCourse = (programId, values, history) => async dispatch => {
     // Redirect to the program page
     history.push(`/programs/${programId}`);
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while creating course", error);
+    history.push(`/programs/${programId}`);
+    dispatch(requestFailure(error.message, "create"));
   }
 };
 

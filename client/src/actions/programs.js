@@ -1,9 +1,9 @@
 import axios from "axios";
 import firebase from "../config/firebase";
 import _ from "lodash";
+import { requestFailure } from "./shared";
 
 export const REQUEST_PROGRAMS = "REQUEST_PROGRAMS";
-export const REQUEST_FAILURE = "REQUEST_FAILURE";
 export const RESOLVE_PROGRAMS = "RESOLVE_PROGRAMS";
 export const REMOVE_PROGRAMS = "REMOVE_PROGRAMS";
 export const CREATE_PROGRAM = "CREATE_PROGRAM";
@@ -14,16 +14,6 @@ export const DELETE_PROGRAM = "DELETE_PROGRAM";
 export const requestPrograms = () => {
   return {
     type: REQUEST_PROGRAMS
-  };
-};
-
-const requestFailure = (message, source) => {
-  return {
-    type: REQUEST_FAILURE,
-    payload: {
-      message,
-      source
-    }
   };
 };
 
@@ -135,9 +125,9 @@ export const deleteProgram = (programId, history) => async dispatch => {
     history.push("/programs");
   } catch (error) {
     history.push("/programs");
-    dispatch(requestFailure(error.message, "delete"))
+    dispatch(requestFailure(error.message, "delete"));
 
     // Re-fetch programs
-    dispatch(fetchPrograms())
+    dispatch(fetchPrograms());
   }
 };
