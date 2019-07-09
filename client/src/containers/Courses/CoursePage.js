@@ -3,12 +3,14 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withToastManager } from "react-toast-notifications";
 // API
-import { deleteCourse } from "../../actions/courses";
+import { deleteCourse, resolveCourses } from "../../actions/courses";
 // Components
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
+import ToastContent from "../../components/CustomToast/ToastContent";
 import CourseAssignmentList from "../Assignments/CourseAssignmentList";
 // Styling
 import styles from "./CoursePage.module.css";
@@ -35,6 +37,31 @@ class CoursePage extends Component {
   state = {
     showModal: false
   };
+
+  componentDidUpdate() {
+    const { toastManager, resolveCourses, courseError } = this.props;
+
+    if (courseError.message) {
+      switch (courseError.source) {
+        case "update":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not update the course."
+              error={courseError.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
+        default:
+          return;
+      }
+      
+      resolveCourses();
+    }
+  }
 
   openModal = () => {
     this.setState({ showModal: true });
@@ -102,6 +129,7 @@ class CoursePage extends Component {
 function mapStateToProps({ courses }, props) {
   const { programId, courseId } = props.match.params;
 
+  const courseError = courses.error;
   const course = courses.items ? courses.items[courseId] : null;
 
   if (course) {
@@ -115,15 +143,17 @@ function mapStateToProps({ courses }, props) {
 
   return {
     programId,
-    course
+    course,
+    courseError
   };
 }
 
 const mapDispatchToProps = {
-  deleteCourse
+  deleteCourse,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoursePage);
+)(withToastManager(CoursePage));

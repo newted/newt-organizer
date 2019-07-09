@@ -124,7 +124,8 @@ export const updateCourse = (
     // Redirect to course page
     history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
-    dispatch(resolveCourses());
+    history.push(`/programs/${programId}/courses/${courseId}`);
+    dispatch(requestFailure(error.message, "update"));
     console.log("Error while updating course.", error);
   }
 };
