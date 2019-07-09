@@ -1,6 +1,7 @@
 import axios from "axios";
 import firebase from "../config/firebase";
 import { requestFailure } from "./shared";
+import { fetchPrograms } from "./programs";
 
 export const REQUEST_COURSES = "REQUEST_COURSES";
 export const RESOLVE_COURSES = "RESOLVE_COURSES";
@@ -156,6 +157,11 @@ export const deleteCourse = (
     // Redirect to program page
     history.push(`/programs/${programId}`);
   } catch (error) {
-    console.log("Error while deleting the course.", error);
+    history.push(`/programs/${programId}`);
+    dispatch(requestFailure(error.message, "delete"));
+
+    // Re-fetch programs and then courses
+    dispatch(fetchPrograms());
+    dispatch(fetchCourses(programId));
   }
 };

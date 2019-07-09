@@ -72,6 +72,18 @@ class ProgramPage extends Component {
             }
           );
           break;
+        case "delete":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not delete course."
+              error={courseError.message}
+              displayRetry={false}
+            />,
+            {
+              appearance: "error"
+            }
+          );
+          break;
         default:
           return;
       }
