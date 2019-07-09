@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
+import { withToastManager } from "react-toast-notifications";
 // API
-import { fetchAllCourses } from "../../actions/courses";
+import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
+import ToastContent from "../../components/CustomToast/ToastContent";
 // Styling
 import styles from "./CourseList.module.css";
 import { BookIcon } from "../../utils/icons";
@@ -23,6 +25,47 @@ class CourseList extends Component {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
+  };
+
+  // Variable to keep track of notification ids
+  toastId = null;
+
+  componentDidUpdate() {
+    const { toastManager, resolveCourses } = this.props;
+    const { error } = this.props.courses;
+
+    // Error handling: add error toast notification if there's any error with
+    // data requests.
+    if (error.message) {
+      switch (error.source) {
+        case "fetch":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not fetch courses."
+              error={error.message}
+              onRetry={this.onRetry}
+            />,
+            {
+              appearance: "error"
+            },
+            // Callback to assign id to variable after adding.
+            id => (this.toastId = id)
+          );
+          break;
+        default:
+          return;
+      }
+      resolveCourses();
+    }
+  }
+
+  onRetry = () => {
+    const { programs, fetchAllCourses, toastManager } = this.props;
+
+    // A request is made to fetch all courses. Then the toast is removed so that
+    // it no longer displays on the screen.
+    fetchAllCourses(Object.keys(programs.items));
+    toastManager.remove(this.toastId);
   };
 
   renderCards(programId, courseList) {
@@ -124,10 +167,11 @@ function mapStateToProps({ programs, courses }) {
 }
 
 const mapDispatchToProps = {
-  fetchAllCourses
+  fetchAllCourses,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CourseList);
+)(withToastManager(CourseList));

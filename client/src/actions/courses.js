@@ -69,8 +69,7 @@ export const fetchCourses = programId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while fetching courses for this program:", error);
+    dispatch(requestFailure(error.message, "fetch"));
   }
 };
 
@@ -94,8 +93,7 @@ export const fetchAllCourses = programIds => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error fetching all courses: ", error);
+    dispatch(requestFailure(error.message, "fetch"));
   }
 };
 

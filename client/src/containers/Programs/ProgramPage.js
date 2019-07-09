@@ -38,11 +38,28 @@ class ProgramPage extends Component {
     showModal: false
   };
 
+  // Variable to keep track of notification ids
+  toastId = null;
+
   componentDidUpdate() {
     const { toastManager, resolveCourses, courseError } = this.props;
 
     if (courseError.message) {
       switch (courseError.source) {
+        case "fetch":
+          toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not fetch courses."
+              error={courseError.message}
+              onRetry={this.onRetry}
+            />,
+            {
+              appearance: "error"
+            },
+            // Callback to assign id to variable after adding.
+            id => (this.toastId = id)
+          );
+          break;
         case "create":
           toastManager.add(
             <ToastContent
@@ -62,6 +79,15 @@ class ProgramPage extends Component {
       resolveCourses();
     }
   }
+
+  onRetry = () => {
+    const { programId, fetchCourses, toastManager } = this.props;
+
+    // A request is made to fetch courses. Then the toast is removed so that it
+    // no longer displays on the screen.
+    fetchCourses(programId);
+    toastManager.remove(this.toastId);
+  };
 
   openModal = () => {
     this.setState({ showModal: true });
