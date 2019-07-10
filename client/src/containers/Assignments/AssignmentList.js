@@ -2,19 +2,23 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { statusDueDateSort } from "../../utils/containerHelpers";
+import { withToastManager } from "react-toast-notifications";
 // API
 import {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
   deleteAssignment
 } from "../../actions/assignments";
+import { fetchAllCourses, resolveCourses } from '../../actions/courses'
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import Loader from '../../components/Loader'
+import Loader from "../../components/Loader";
+// Helpers
+import { statusDueDateSort } from "../../utils/containerHelpers";
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./AssignmentList.module.css";
 
@@ -27,6 +31,8 @@ class AssignmentList extends Component {
   };
 
   _isMounted = false;
+  // Variable to keep track of notification ids
+  toastId = null;
 
   componentDidMount() {
     this._isMounted = true;
@@ -99,10 +105,38 @@ class AssignmentList extends Component {
         });
       }
     }
+
+    const { error, toastManager, resolveCourses } = this.props;
+
+    if (error.message && error.requestType && error.source === "courses") {
+      switch (error.requestType) {
+        case "fetch":
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "assignment",
+            error.message,
+            this.onRetry,
+            callback
+          );
+      }
+      resolveCourses()
+    }
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  onRetry = () => {
+    const { programIds, fetchAllCourses, toastManager } = this.props;
+
+    // A request is made to fetch all courses. Then the toast is removed so that
+    // it no longer displays on the screen.
+    fetchAllCourses(programIds);
+    toastManager.remove(this.toastId);
   }
 
   openDropdown = e => {
@@ -227,14 +261,14 @@ class AssignmentList extends Component {
     const { showCompleted, currentAssignment } = this.state;
 
     if (isFetching && _.isEmpty(assignments)) {
-      return <Loader />
+      return <Loader />;
     }
 
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h2>Your Assignments</h2>
-          { !_.isEmpty(assignments) && (
+          {!_.isEmpty(assignments) && (
             <Button
               additionalClass={
                 showCompleted
@@ -276,6 +310,8 @@ function mapStateToProps({ programs, courses }, props) {
   // to false, which (sometimes) briefly flashes the No Assignments message on
   // screen.
   const isFetching = programs.isFetching || courses.isFetching;
+  const error = courses.error;
+  const programIds = Object.keys(programs.items);
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
@@ -294,6 +330,8 @@ function mapStateToProps({ programs, courses }, props) {
     urlAssignmentId: assignmentId,
     assignments,
     isFetching,
+    error,
+    programIds,
     numCompleted
   };
 }
@@ -301,10 +339,12 @@ function mapStateToProps({ programs, courses }, props) {
 const mapDispatchToProps = {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
-  deleteAssignment
+  deleteAssignment,
+  fetchAllCourses,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AssignmentList);
+)(withToastManager(AssignmentList));
