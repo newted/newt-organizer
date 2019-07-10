@@ -1,5 +1,6 @@
 import {
   REQUEST_COURSES,
+  REQUEST_FAILURE_COURSES,
   RESOLVE_COURSES,
   REMOVE_COURSES,
   CREATE_COURSE,
@@ -17,7 +18,6 @@ import {
   DELETE_ASSIGNMENT
 } from "../actions/assignments";
 import { GET_DEMO_COURSES } from "../actions/demo";
-import { REQUEST_FAILURE } from "../actions/shared";
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -40,7 +40,7 @@ export default function(
         ...state,
         isFetching: true
       };
-    case REQUEST_FAILURE:
+    case REQUEST_FAILURE_COURSES:
       return {
         ...state,
         isFetching: false,

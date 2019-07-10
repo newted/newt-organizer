@@ -8,11 +8,12 @@ import { withToastManager } from "react-toast-notifications";
 import { deleteProgram } from "../../actions/programs";
 import { fetchCourses, resolveCourses } from "../../actions/courses";
 // Components
-import ToastContent from "../../components/CustomToast/ToastContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
 import ProgramCourseList from "../Courses/ProgramCourseList";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./ProgramPage.module.css";
 
@@ -44,44 +45,27 @@ class ProgramPage extends Component {
   componentDidUpdate() {
     const { toastManager, resolveCourses, courseError } = this.props;
 
-    if (courseError.message) {
+    if (courseError.message && courseError.source) {
       switch (courseError.source) {
         case "fetch":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not fetch courses."
-              error={courseError.message}
-              onRetry={this.onRetry}
-            />,
-            {
-              appearance: "error"
-            },
-            // Callback to assign id to variable after adding.
-            id => (this.toastId = id)
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "course",
+            courseError.message,
+            this.onRetry,
+            callback
           );
           break;
         case "create":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not create the course."
-              error={courseError.message}
-              displayRetry={false}
-            />,
-            {
-              appearance: "error"
-            }
-          );
-          break;
         case "delete":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not delete course."
-              error={courseError.message}
-              displayRetry={false}
-            />,
-            {
-              appearance: "error"
-            }
+          displayErrorNotification(
+            toastManager,
+            courseError.source,
+            "course",
+            courseError.message
           );
           break;
         default:

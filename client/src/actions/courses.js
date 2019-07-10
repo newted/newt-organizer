@@ -4,6 +4,7 @@ import { requestFailure } from "./shared";
 import { fetchPrograms } from "./programs";
 
 export const REQUEST_COURSES = "REQUEST_COURSES";
+export const REQUEST_FAILURE_COURSES = "REQUEST_FAILURE_COURSES";
 export const RESOLVE_COURSES = "RESOLVE_COURSES";
 export const REMOVE_COURSES = "REMOVE_COURSES";
 export const CREATE_COURSE = "CREATE_COURSE";
@@ -48,7 +49,7 @@ export const createCourse = (programId, values, history) => async dispatch => {
     history.push(`/programs/${programId}`);
   } catch (error) {
     history.push(`/programs/${programId}`);
-    dispatch(requestFailure(error.message, "create"));
+    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "create"));
   }
 };
 
@@ -70,7 +71,7 @@ export const fetchCourses = programId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(requestFailure(error.message, "fetch"));
+    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch"));
   }
 };
 
@@ -94,7 +95,7 @@ export const fetchAllCourses = programIds => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(requestFailure(error.message, "fetch"));
+    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch"));
   }
 };
 
@@ -124,8 +125,7 @@ export const updateCourse = (
     history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
     history.push(`/programs/${programId}/courses/${courseId}`);
-    dispatch(requestFailure(error.message, "update"));
-    console.log("Error while updating course.", error);
+    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "update"));
   }
 };
 
@@ -158,7 +158,7 @@ export const deleteCourse = (
     history.push(`/programs/${programId}`);
   } catch (error) {
     history.push(`/programs/${programId}`);
-    dispatch(requestFailure(error.message, "delete"));
+    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "delete"));
 
     // Re-fetch programs and then courses
     dispatch(fetchPrograms());

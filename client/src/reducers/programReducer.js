@@ -1,5 +1,6 @@
 import {
   REQUEST_PROGRAMS,
+  REQUEST_FAILURE_PROGRAMS,
   RESOLVE_PROGRAMS,
   REMOVE_PROGRAMS,
   CREATE_PROGRAM,
@@ -9,7 +10,6 @@ import {
 } from "../actions/programs";
 import { GET_DEMO_PROGRAMS } from "../actions/demo";
 import { CREATE_COURSE, DELETE_COURSE } from "../actions/courses";
-import { REQUEST_FAILURE } from "../actions/shared";
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -32,7 +32,7 @@ export default function(
         ...state,
         isFetching: true
       };
-    case REQUEST_FAILURE:
+    case REQUEST_FAILURE_PROGRAMS:
       return {
         ...state,
         isFetching: false,

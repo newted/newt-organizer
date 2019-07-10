@@ -1,8 +1,6 @@
-export const REQUEST_FAILURE = "REQUEST_FAILURE";
-
-export const requestFailure = (message, source) => {
+export const requestFailure = (type, message, source) => {
   return {
-    type: REQUEST_FAILURE,
+    type,
     payload: {
       message,
       source

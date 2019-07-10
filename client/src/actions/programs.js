@@ -4,6 +4,7 @@ import _ from "lodash";
 import { requestFailure } from "./shared";
 
 export const REQUEST_PROGRAMS = "REQUEST_PROGRAMS";
+export const REQUEST_FAILURE_PROGRAMS = "REQUEST_FAILURE_PROGRAMS";
 export const RESOLVE_PROGRAMS = "RESOLVE_PROGRAMS";
 export const REMOVE_PROGRAMS = "REMOVE_PROGRAMS";
 export const CREATE_PROGRAM = "CREATE_PROGRAM";
@@ -44,7 +45,7 @@ export const createProgram = (values, history) => async dispatch => {
     history.push("/programs");
   } catch (error) {
     history.push("/programs");
-    dispatch(requestFailure(error.message, "create"));
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "create"));
   }
 };
 
@@ -74,7 +75,7 @@ export const fetchPrograms = () => async dispatch => {
 
     return programs;
   } catch (error) {
-    dispatch(requestFailure(error.message, "fetch"));
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "fetch"));
   }
 };
 
@@ -99,7 +100,7 @@ export const updateProgram = (programId, values, history) => async dispatch => {
     history.push("/programs");
   } catch (error) {
     history.push("/programs");
-    dispatch(requestFailure(error.message, "update"));
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "update"));
   }
 };
 
@@ -125,7 +126,7 @@ export const deleteProgram = (programId, history) => async dispatch => {
     history.push("/programs");
   } catch (error) {
     history.push("/programs");
-    dispatch(requestFailure(error.message, "delete"));
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "delete"));
 
     // Re-fetch programs
     dispatch(fetchPrograms());

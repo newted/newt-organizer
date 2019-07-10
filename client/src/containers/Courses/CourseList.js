@@ -10,7 +10,8 @@ import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
-import ToastContent from "../../components/CustomToast/ToastContent";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./CourseList.module.css";
 import { BookIcon } from "../../utils/icons";
@@ -39,17 +40,15 @@ class CourseList extends Component {
     if (error.message) {
       switch (error.source) {
         case "fetch":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not fetch courses."
-              error={error.message}
-              onRetry={this.onRetry}
-            />,
-            {
-              appearance: "error"
-            },
-            // Callback to assign id to variable after adding.
-            id => (this.toastId = id)
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "course",
+            error.message,
+            this.onRetry,
+            callback
           );
           break;
         default:

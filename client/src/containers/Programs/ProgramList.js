@@ -7,10 +7,11 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
-import ToastContent from "../../components/CustomToast/ToastContent";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./ProgramList.module.css";
 import { UniversityIcon } from "../../utils/icons";
@@ -33,59 +34,33 @@ class ProgramList extends Component {
   componentDidUpdate() {
     const { toastManager, resolvePrograms } = this.props;
     const { error } = this.props.programs;
+    console.log(this.props.programs);
 
     // Error handling: add error toast notification if there's any error with
     // data requests.
-    if (error.message) {
+    if (error.message !== null) {
+      console.log(1);
       switch (error.source) {
         case "fetch":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not fetch programs."
-              error={error.message}
-              onRetry={this.onRetry}
-            />,
-            {
-              appearance: "error"
-            },
-            // Callback to assign id to variable after adding.
-            id => (this.toastId = id)
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "program",
+            error.message,
+            this.onRetry,
+            callback
           );
           break;
         case "create":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not create the program."
-              error={error.message}
-              displayRetry={false}
-            />,
-            {
-              appearance: "error"
-            }
-          );
-          break;
         case "update":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not update the program."
-              error={error.message}
-              displayRetry={false}
-            />,
-            {
-              appearance: "error"
-            }
-          );
-          break;
         case "delete":
-          toastManager.add(
-            <ToastContent
-              message="Something went wrong, could not delete the program."
-              error={error.message}
-              displayRetry={false}
-            />,
-            {
-              appearance: "error"
-            }
+          displayErrorNotification(
+            toastManager,
+            error.source,
+            "program",
+            error.message
           );
           break;
         default:
