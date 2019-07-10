@@ -45,8 +45,12 @@ class ProgramPage extends Component {
   componentDidUpdate() {
     const { toastManager, resolveCourses, courseError } = this.props;
 
-    if (courseError.message && courseError.source) {
-      switch (courseError.source) {
+    if (
+      courseError.message &&
+      courseError.requestType &&
+      courseError.source === "courses"
+    ) {
+      switch (courseError.requestType) {
         case "fetch":
           const callback = id => (this.toastId = id);
           // Display error notification
@@ -63,7 +67,7 @@ class ProgramPage extends Component {
         case "delete":
           displayErrorNotification(
             toastManager,
-            courseError.source,
+            courseError.requestType,
             "course",
             courseError.message
           );

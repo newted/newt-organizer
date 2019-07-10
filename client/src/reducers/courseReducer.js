@@ -29,6 +29,7 @@ export default function(
     items: {},
     error: {
       message: null,
+      requestType: null,
       source: null
     }
   },
@@ -47,6 +48,7 @@ export default function(
         error: {
           ...state.error,
           message: action.payload.message,
+          requestType: action.payload.requestType,
           source: action.payload.source
         }
       };
@@ -56,6 +58,7 @@ export default function(
         isFetching: false,
         error: {
           message: null,
+          requestType: null,
           source: null
         }
       };

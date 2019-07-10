@@ -37,8 +37,8 @@ class CourseList extends Component {
 
     // Error handling: add error toast notification if there's any error with
     // data requests.
-    if (error.message) {
-      switch (error.source) {
+    if (error.message && error.requestType && error.source === "courses") {
+      switch (error.requestType) {
         case "fetch":
           const callback = id => (this.toastId = id);
           // Display error notification

@@ -34,13 +34,11 @@ class ProgramList extends Component {
   componentDidUpdate() {
     const { toastManager, resolvePrograms } = this.props;
     const { error } = this.props.programs;
-    console.log(this.props.programs);
 
     // Error handling: add error toast notification if there's any error with
     // data requests.
-    if (error.message !== null) {
-      console.log(1);
-      switch (error.source) {
+    if (error.message && error.requestType) {
+      switch (error.requestType) {
         case "fetch":
           const callback = id => (this.toastId = id);
           // Display error notification
@@ -58,7 +56,7 @@ class ProgramList extends Component {
         case "delete":
           displayErrorNotification(
             toastManager,
-            error.source,
+            error.requestType,
             "program",
             error.message
           );

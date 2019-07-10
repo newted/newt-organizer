@@ -71,7 +71,9 @@ export const fetchCourses = programId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch"));
+    dispatch(
+      requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch", "courses")
+    );
   }
 };
 
@@ -95,7 +97,9 @@ export const fetchAllCourses = programIds => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch"));
+    dispatch(
+      requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch", "courses")
+    );
   }
 };
 
@@ -125,7 +129,14 @@ export const updateCourse = (
     history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
     history.push(`/programs/${programId}/courses/${courseId}`);
-    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "update"));
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "update",
+        "courses"
+      )
+    );
   }
 };
 
@@ -158,7 +169,14 @@ export const deleteCourse = (
     history.push(`/programs/${programId}`);
   } catch (error) {
     history.push(`/programs/${programId}`);
-    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "delete"));
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "delete",
+        "courses"
+      )
+    );
 
     // Re-fetch programs and then courses
     dispatch(fetchPrograms());

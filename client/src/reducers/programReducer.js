@@ -21,7 +21,7 @@ export default function(
     items: {},
     error: {
       message: null,
-      source: null
+      requestType: null
     }
   },
   action
@@ -39,7 +39,7 @@ export default function(
         error: {
           ...state.error,
           message: action.payload.message,
-          source: action.payload.source
+          requestType: action.payload.requestType
         }
       };
     case RESOLVE_PROGRAMS:
@@ -48,7 +48,7 @@ export default function(
         isFetching: false,
         error: {
           message: null,
-          source: null
+          requestType: null
         }
       };
     case REMOVE_PROGRAMS:
