@@ -15,7 +15,8 @@ import {
   MARK_ASSIGNMENT_COMPLETE,
   MARK_ASSIGNMENT_IN_PROGRESS,
   MARK_ASSIGNMENT_INCOMPLETE,
-  DELETE_ASSIGNMENT
+  DELETE_ASSIGNMENT,
+  REQUEST_ASSIGNMENT_FAILURE
 } from "../actions/assignments";
 import { GET_DEMO_COURSES } from "../actions/demo";
 import {
@@ -41,6 +42,7 @@ export default function(
         ...state,
         isFetching: true
       };
+    case REQUEST_ASSIGNMENT_FAILURE:
     case REQUEST_FAILURE_COURSES:
       return {
         ...state,

@@ -1,6 +1,7 @@
 import axios from "axios";
 import firebase from "../config/firebase";
 import { requestCourses, resolveCourses } from "./courses";
+import { requestFailure } from "./shared";
 
 export const CREATE_ASSIGNMENT = "CREATE_ASSIGNMENT";
 export const UPDATE_ASSIGNMENT = "UPDATE_COURSE";
@@ -8,6 +9,7 @@ export const DELETE_ASSIGNMENT = "DELETE_ASSIGNMENT";
 export const MARK_ASSIGNMENT_COMPLETE = "MARK_ASSIGNMENT_COMPLETE";
 export const MARK_ASSIGNMENT_IN_PROGRESS = "MARK_ASSIGNMENT_IN_PROGRESS";
 export const MARK_ASSIGNMENT_INCOMPLETE = "MARK_ASSIGNMENT_INCOMPLETE";
+export const REQUEST_ASSIGNMENT_FAILURE = "REQUEST_ASSIGNMENT_FAILURE";
 
 // Function to create an assignment on database.
 export const createAssignment = (
@@ -36,7 +38,15 @@ export const createAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "create",
+        "assignments"
+      )
+    );
     console.log("Error while creating assignment.", error);
   }
 };
