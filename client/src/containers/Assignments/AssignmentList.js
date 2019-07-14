@@ -9,7 +9,7 @@ import {
   markAssignmentAsIncomplete,
   deleteAssignment
 } from "../../actions/assignments";
-import { fetchAllCourses, resolveCourses } from '../../actions/courses'
+import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
@@ -121,8 +121,11 @@ class AssignmentList extends Component {
             this.onRetry,
             callback
           );
+          break;
+        default:
+          return;
       }
-      resolveCourses()
+      resolveCourses();
     }
   }
 
@@ -137,7 +140,7 @@ class AssignmentList extends Component {
     // it no longer displays on the screen.
     fetchAllCourses(programIds);
     toastManager.remove(this.toastId);
-  }
+  };
 
   openDropdown = e => {
     if (this._isMounted) {

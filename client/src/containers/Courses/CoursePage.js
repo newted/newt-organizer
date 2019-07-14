@@ -12,6 +12,8 @@ import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
 import ToastContent from "../../components/CustomToast/ToastContent";
 import CourseAssignmentList from "../Assignments/CourseAssignmentList";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./CoursePage.module.css";
 
@@ -38,11 +40,31 @@ class CoursePage extends Component {
     showModal: false
   };
 
+  componentDidMount() {
+    const { toastManager, resolveCourses, courseError } = this.props;
+
+    if (courseError.message && courseError.source === "assignments") {
+      switch (courseError.requestType) {
+        case "create":
+          displayErrorNotification(
+            toastManager,
+            courseError.requestType,
+            "assignment",
+            courseError.message
+          );
+          break;
+        default:
+          return;
+      }
+      resolveCourses();
+    }
+  }
+
   componentDidUpdate() {
     const { toastManager, resolveCourses, courseError } = this.props;
 
-    if (courseError.message) {
-      switch (courseError.source) {
+    if (courseError.message && courseError.source === "courses") {
+      switch (courseError.requestType) {
         case "update":
           toastManager.add(
             <ToastContent
@@ -58,7 +80,7 @@ class CoursePage extends Component {
         default:
           return;
       }
-      
+
       resolveCourses();
     }
   }

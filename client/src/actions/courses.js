@@ -49,7 +49,14 @@ export const createCourse = (programId, values, history) => async dispatch => {
     history.push(`/programs/${programId}`);
   } catch (error) {
     history.push(`/programs/${programId}`);
-    dispatch(requestFailure(REQUEST_FAILURE_COURSES, error.message, "create"));
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "create",
+        "courses"
+      )
+    );
   }
 };
 
