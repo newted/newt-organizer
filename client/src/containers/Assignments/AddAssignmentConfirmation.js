@@ -8,7 +8,6 @@ import Button from "../../components/Button";
 import { createYoutubeAssignment } from "../../actions/assignments";
 // Styling
 import styles from "./AddAssignmentConfirmation.module.css";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 class AddAssignmentConfirmation extends Component {
   state = {

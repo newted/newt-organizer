@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Muli:300,400,600,700");
+@import "~react-datepicker/dist/react-datepicker.min.css";
 
 /* Colours */
 :root {
