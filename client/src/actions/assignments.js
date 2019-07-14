@@ -47,7 +47,6 @@ export const createAssignment = (
         "assignments"
       )
     );
-    console.log("Error while creating assignment.", error);
   }
 };
 
@@ -85,8 +84,15 @@ export const createYoutubeAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while creating assignment.", error);
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "create",
+        "assignments"
+      )
+    );
   }
 };
 
@@ -117,8 +123,15 @@ export const updateAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while updating assignment", error);
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "update",
+        "assignments"
+      )
+    );
   }
 };
 

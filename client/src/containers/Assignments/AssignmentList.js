@@ -127,6 +127,22 @@ class AssignmentList extends Component {
       }
       resolveCourses();
     }
+
+    if (error.message && error.requestType && error.source === "assignments") {
+      switch (error.requestType) {
+        case "update":
+          displayErrorNotification(
+            toastManager,
+            "update",
+            "assignment",
+            error.message
+          );
+          break;
+        default:
+          return;
+      }
+      resolveCourses();
+    }
   }
 
   componentWillUnmount() {

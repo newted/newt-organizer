@@ -46,6 +46,7 @@ class CoursePage extends Component {
     if (courseError.message && courseError.source === "assignments") {
       switch (courseError.requestType) {
         case "create":
+        case "update":
           displayErrorNotification(
             toastManager,
             courseError.requestType,
