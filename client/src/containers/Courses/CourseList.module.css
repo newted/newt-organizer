@@ -53,11 +53,9 @@
 }
 
 .message {
-  padding: 1.5rem;
-  border: 1px solid var(--lightGrey);
-  border-radius: 0.5rem;
+  composes: mainMessage from "../../styles/shared.css";
   margin: 0 2%;
-  min-width: 350px;
+  width: auto;
 }
 
 .link {

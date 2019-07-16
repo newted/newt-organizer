@@ -1,7 +1,7 @@
 import axios from "axios";
-import keys from "../config/keys";
 import firebase from "../config/firebase";
 import { requestCourses, resolveCourses } from "./courses";
+import { requestFailure } from "./shared";
 
 export const CREATE_ASSIGNMENT = "CREATE_ASSIGNMENT";
 export const UPDATE_ASSIGNMENT = "UPDATE_COURSE";
@@ -9,6 +9,7 @@ export const DELETE_ASSIGNMENT = "DELETE_ASSIGNMENT";
 export const MARK_ASSIGNMENT_COMPLETE = "MARK_ASSIGNMENT_COMPLETE";
 export const MARK_ASSIGNMENT_IN_PROGRESS = "MARK_ASSIGNMENT_IN_PROGRESS";
 export const MARK_ASSIGNMENT_INCOMPLETE = "MARK_ASSIGNMENT_INCOMPLETE";
+export const REQUEST_ASSIGNMENT_FAILURE = "REQUEST_ASSIGNMENT_FAILURE";
 
 // Function to create an assignment on database.
 export const createAssignment = (
@@ -37,8 +38,15 @@ export const createAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while creating assignment.", error);
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "create",
+        "assignments"
+      )
+    );
   }
 };
 
@@ -76,8 +84,15 @@ export const createYoutubeAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while creating assignment.", error);
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "create",
+        "assignments"
+      )
+    );
   }
 };
 
@@ -108,8 +123,15 @@ export const updateAssignment = (
     // Redirect to previous page
     history.goBack();
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while updating assignment", error);
+    history.goBack();
+    dispatch(
+      requestFailure(
+        REQUEST_ASSIGNMENT_FAILURE,
+        error.message,
+        "update",
+        "assignments"
+      )
+    );
   }
 };
 
@@ -221,42 +243,18 @@ export const markAssignmentAsIncomplete = (
   }
 };
 
-// YouTube API trial
-export async function getPlaylistVideos() {
-  const baseURL = "https://www.googleapis.com/youtube/v3/playlistItems";
-  const params = {
-    playlistId: "PLBDA2E52FB1EF80C9",
-    key: keys.youtubeApiKey,
-    part: "snippet"
-  };
-
-  try {
-    const res = await axios.get(baseURL, { params: params });
-    console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // This is a very basic Youtube URL parser which only does full links. A more
 // robust one will require regex to handle more types of URLs.
 // See: https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 export async function getYoutubeVideoInfo(videoUrl) {
-  try {
-    let videoId = videoUrl.split("v=")[1];
-    videoId = videoId.split("&")[0];
-    const baseURL = "https://www.googleapis.com/youtube/v3/videos";
-    const params = {
-      id: videoId,
-      part: "snippet",
-      key: keys.youtubeApiKey
-    };
+  let videoId = videoUrl.split("v=")[1];
+  videoId = videoId.split("&")[0];
 
-    return await axios.get(baseURL, { params });
+  try {
+    // Make request to server, which will make YouTube API request.
+    const res = await axios.get(`/api/youtube/videoInfo/${videoId}`);
+    return res.data;
   } catch (error) {
     console.log(error);
   }
 }
-
-// getPlaylistVideos();
-// console.log(getYoutubeVideoInfo('https://www.youtube.com/watch?v=O5nskjZ_GoI&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=2'))

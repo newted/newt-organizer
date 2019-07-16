@@ -7,9 +7,7 @@ module.exports = app => {
   // POST request to create an assignment
   app.post("/api/courses/:courseId/assignment", requireLogin, (req, res) => {
     const { courseId } = req.params;
-
     const { name, details, dateDue } = req.body;
-
     const assignment = {
       name,
       details,

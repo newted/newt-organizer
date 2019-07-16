@@ -35,10 +35,6 @@ class Timeline extends Component {
     )
   };
 
-  componentDidMount() {
-    this.props.fetchAllCourses(Object.keys(this.props.programs.items));
-  }
-
   // Variable to keep the last date used. When displaying the Timeline cards,
   // if two assignments are to be done/due on the same date, then it doesn't
   // make sense to render the same date twice. Instead, both assignments should

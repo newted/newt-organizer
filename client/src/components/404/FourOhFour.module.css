@@ -1,0 +1,47 @@
+.container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--off-black);
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 2rem;
+}
+
+.errorCode {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 92px;
+  margin-bottom: 1rem;
+}
+
+.errorMessage {
+  font-size: 32px;
+  margin-bottom: 5rem;
+}
+
+.linksMessage {
+  font-size: 20px;
+  margin-bottom: 1.25rem;
+}
+
+.linkBtn {
+  width: 250px;
+  font-size: 18px;
+  font-weight: 500;
+  font-variant: small-caps;
+  background-color: var(--off-black);
+  border-color: black;
+  color: white;
+}
+
+.linkBtn:hover {
+  background-color: var(--newtBlue);
+  border-color: #05c1ff;
+}

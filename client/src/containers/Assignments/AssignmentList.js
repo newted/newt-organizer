@@ -2,18 +2,23 @@ import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { statusDueDateSort } from "../../utils/containerHelpers";
+import { withToastManager } from "react-toast-notifications";
 // API
 import {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
   deleteAssignment
 } from "../../actions/assignments";
+import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
+// Helpers
+import { statusDueDateSort } from "../../utils/containerHelpers";
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./AssignmentList.module.css";
 
@@ -26,6 +31,8 @@ class AssignmentList extends Component {
   };
 
   _isMounted = false;
+  // Variable to keep track of notification ids
+  toastId = null;
 
   componentDidMount() {
     this._isMounted = true;
@@ -98,11 +105,58 @@ class AssignmentList extends Component {
         });
       }
     }
+
+    const { error, toastManager, resolveCourses } = this.props;
+
+    if (error.message && error.requestType && error.source === "courses") {
+      switch (error.requestType) {
+        case "fetch":
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "assignment",
+            error.message,
+            this.onRetry,
+            callback
+          );
+          break;
+        default:
+          return;
+      }
+      resolveCourses();
+    }
+
+    if (error.message && error.requestType && error.source === "assignments") {
+      switch (error.requestType) {
+        case "update":
+          displayErrorNotification(
+            toastManager,
+            "update",
+            "assignment",
+            error.message
+          );
+          break;
+        default:
+          return;
+      }
+      resolveCourses();
+    }
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
+
+  onRetry = () => {
+    const { programIds, fetchAllCourses, toastManager } = this.props;
+
+    // A request is made to fetch all courses. Then the toast is removed so that
+    // it no longer displays on the screen.
+    fetchAllCourses(programIds);
+    toastManager.remove(this.toastId);
+  };
 
   openDropdown = e => {
     if (this._isMounted) {
@@ -183,32 +237,12 @@ class AssignmentList extends Component {
   renderContent() {
     const {
       assignments,
-      isFetching,
       markAssignmentAsComplete,
       markAssignmentAsIncomplete
     } = this.props;
     const { currentAssignment, showDropdown } = this.state;
 
-    if (assignments.length > 0) {
-      return (
-        <Fragment>
-          <div className={styles.listContainer}>
-            {this.renderAssignmentList()}
-          </div>
-          <AssignmentContent
-            assignment={currentAssignment}
-            onComplete={markAssignmentAsComplete}
-            onIncomplete={markAssignmentAsIncomplete}
-            dropdownVisible={showDropdown}
-            handleOpenDropdown={this.openDropdown}
-            handleOpenModal={this.openModal}
-          />
-        </Fragment>
-      );
-    } else if (isFetching) {
-      // UI for when assignments are loading.
-      return <div>Loading...</div>;
-    } else {
+    if (_.isEmpty(assignments)) {
       // UI for when there are no assignments.
       const coursesLink = (
         <Link to="/courses" className={styles.link}>
@@ -223,26 +257,48 @@ class AssignmentList extends Component {
         </div>
       );
     }
+
+    return (
+      <Fragment>
+        <div className={styles.listContainer}>
+          {this.renderAssignmentList()}
+        </div>
+        <AssignmentContent
+          assignment={currentAssignment}
+          onComplete={markAssignmentAsComplete}
+          onIncomplete={markAssignmentAsIncomplete}
+          dropdownVisible={showDropdown}
+          handleOpenDropdown={this.openDropdown}
+          handleOpenModal={this.openModal}
+        />
+      </Fragment>
+    );
   }
 
   render() {
-    const { numCompleted } = this.props;
+    const { numCompleted, isFetching, assignments } = this.props;
     const { showCompleted, currentAssignment } = this.state;
+
+    if (isFetching && _.isEmpty(assignments)) {
+      return <Loader />;
+    }
 
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
           <h2>Your Assignments</h2>
-          <Button
-            additionalClass={
-              showCompleted
-                ? [styles.completedBtn, styles.selected].join(" ")
-                : styles.completedBtn
-            }
-            onClick={this.handleShowCompleted}
-          >
-            {`Show Completed (${numCompleted})`}
-          </Button>
+          {!_.isEmpty(assignments) && (
+            <Button
+              additionalClass={
+                showCompleted
+                  ? [styles.completedBtn, styles.selected].join(" ")
+                  : styles.completedBtn
+              }
+              onClick={this.handleShowCompleted}
+            >
+              {`Show Completed (${numCompleted})`}
+            </Button>
+          )}
         </div>
         <div className={styles.container}>{this.renderContent()}</div>
         <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
@@ -273,6 +329,8 @@ function mapStateToProps({ programs, courses }, props) {
   // to false, which (sometimes) briefly flashes the No Assignments message on
   // screen.
   const isFetching = programs.isFetching || courses.isFetching;
+  const error = courses.error;
+  const programIds = Object.keys(programs.items);
 
   _.forEach(courses.items, course => {
     _.forEach(course.assignments, assignment => {
@@ -291,6 +349,8 @@ function mapStateToProps({ programs, courses }, props) {
     urlAssignmentId: assignmentId,
     assignments,
     isFetching,
+    error,
+    programIds,
     numCompleted
   };
 }
@@ -298,10 +358,12 @@ function mapStateToProps({ programs, courses }, props) {
 const mapDispatchToProps = {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
-  deleteAssignment
+  deleteAssignment,
+  fetchAllCourses,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AssignmentList);
+)(withToastManager(AssignmentList));

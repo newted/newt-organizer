@@ -9,5 +9,6 @@ module.exports = {
   firebaseAuthUri: process.env.FIREBASE_AUTH_URI,
   firebaseTokenUri: process.env.FIREBASE_TOKEN_URI,
   firebaseAuthProviderX509CertUrl: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-  firebaseClientX509CertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL
+  firebaseClientX509CertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+  youtubeApiKey: process.env.YOUTUBE_API_KEY
 };

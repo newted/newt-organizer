@@ -3,14 +3,17 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import LoadingBar from "react-redux-loading";
+import { withToastManager } from "react-toast-notifications";
 // API
 import { deleteProgram } from "../../actions/programs";
-import { fetchCourses } from "../../actions/courses";
+import { fetchCourses, resolveCourses } from "../../actions/courses";
 // Components
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
 import ProgramCourseList from "../Courses/ProgramCourseList";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./ProgramPage.module.css";
 
@@ -36,9 +39,55 @@ class ProgramPage extends Component {
     showModal: false
   };
 
-  componentDidMount() {
-    this.props.fetchCourses(this.props.programId);
+  // Variable to keep track of notification ids
+  toastId = null;
+
+  componentDidUpdate() {
+    const { toastManager, resolveCourses, courseError } = this.props;
+
+    if (
+      courseError.message &&
+      courseError.requestType &&
+      courseError.source === "courses"
+    ) {
+      switch (courseError.requestType) {
+        case "fetch":
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "course",
+            courseError.message,
+            this.onRetry,
+            callback
+          );
+          break;
+        case "create":
+        case "delete":
+          displayErrorNotification(
+            toastManager,
+            courseError.requestType,
+            "course",
+            courseError.message
+          );
+          break;
+        default:
+          return;
+      }
+
+      resolveCourses();
+    }
   }
+
+  onRetry = () => {
+    const { programId, fetchCourses, toastManager } = this.props;
+
+    // A request is made to fetch courses. Then the toast is removed so that it
+    // no longer displays on the screen.
+    fetchCourses(programId);
+    toastManager.remove(this.toastId);
+  };
 
   openModal = () => {
     this.setState({ showModal: true });
@@ -97,33 +146,37 @@ class ProgramPage extends Component {
   }
 
   render() {
-    if (!this.props.program) {
-      return <LoadingBar />;
+    const { program } = this.props;
+    if (!program) {
+      return <Loader />;
     }
 
     return <div className={styles.mainContainer}>{this.renderContent()}</div>;
   }
 }
 
-function mapStateToProps({ programs }, props) {
+function mapStateToProps({ programs, courses }, props) {
   const { programId } = props.match.params;
   const program = _.filter(
     programs.items,
     program => program._id === programId
   )[0];
+  const courseError = courses.error;
 
   return {
     program,
-    programId
+    programId,
+    courseError
   };
 }
 
 const mapDispatchToProps = {
   deleteProgram,
-  fetchCourses
+  fetchCourses,
+  resolveCourses
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProgramPage);
+)(withToastManager(ProgramPage));

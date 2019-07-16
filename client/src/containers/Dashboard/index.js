@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // Components
+import Loader from "../../components/Loader";
 import Timeline from "./Timeline";
 // API
 import { fetchAllCourses } from "../../actions/courses";
@@ -18,15 +20,14 @@ class Dashboard extends Component {
   };
 
   renderContent() {
+    const { programs } = this.props;
     const programLink = (
       <Link to="/programs" className={styles.link}>
         Programs
       </Link>
     );
 
-    if (Object.keys(this.props.programs.items).length > 0) {
-      return <Timeline />;
-    } else {
+    if (_.isEmpty(programs.items)) {
       return (
         <div className={styles.message}>
           You aren't in any programs. Go to the {programLink} page from the
@@ -34,9 +35,16 @@ class Dashboard extends Component {
         </div>
       );
     }
+
+    return <Timeline />;
   }
 
   render() {
+    const { isFetching, items } = this.props.programs;
+    if (isFetching && _.isEmpty(items)) {
+      return <Loader />;
+    }
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>

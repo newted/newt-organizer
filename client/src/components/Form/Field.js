@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 // Styling
 import styles from "./Field.module.css";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 const Field = ({ input, label, name, required, touched, error }) => {
   return (

@@ -1,7 +1,10 @@
 import axios from "axios";
 import firebase from "../config/firebase";
+import { requestFailure } from "./shared";
+import { fetchPrograms } from "./programs";
 
 export const REQUEST_COURSES = "REQUEST_COURSES";
+export const REQUEST_FAILURE_COURSES = "REQUEST_FAILURE_COURSES";
 export const RESOLVE_COURSES = "RESOLVE_COURSES";
 export const REMOVE_COURSES = "REMOVE_COURSES";
 export const CREATE_COURSE = "CREATE_COURSE";
@@ -45,8 +48,15 @@ export const createCourse = (programId, values, history) => async dispatch => {
     // Redirect to the program page
     history.push(`/programs/${programId}`);
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while creating course", error);
+    history.push(`/programs/${programId}`);
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "create",
+        "courses"
+      )
+    );
   }
 };
 
@@ -68,8 +78,9 @@ export const fetchCourses = programId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while fetching courses for this program:", error);
+    dispatch(
+      requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch", "courses")
+    );
   }
 };
 
@@ -93,8 +104,9 @@ export const fetchAllCourses = programIds => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error fetching all courses: ", error);
+    dispatch(
+      requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch", "courses")
+    );
   }
 };
 
@@ -123,8 +135,15 @@ export const updateCourse = (
     // Redirect to course page
     history.push(`/programs/${programId}/courses/${courseId}`);
   } catch (error) {
-    dispatch(resolveCourses());
-    console.log("Error while updating course.", error);
+    history.push(`/programs/${programId}/courses/${courseId}`);
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "update",
+        "courses"
+      )
+    );
   }
 };
 
@@ -156,6 +175,18 @@ export const deleteCourse = (
     // Redirect to program page
     history.push(`/programs/${programId}`);
   } catch (error) {
-    console.log("Error while deleting the course.", error);
+    history.push(`/programs/${programId}`);
+    dispatch(
+      requestFailure(
+        REQUEST_FAILURE_COURSES,
+        error.message,
+        "delete",
+        "courses"
+      )
+    );
+
+    // Re-fetch programs and then courses
+    dispatch(fetchPrograms());
+    dispatch(fetchCourses(programId));
   }
 };

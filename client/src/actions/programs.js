@@ -1,8 +1,10 @@
 import axios from "axios";
 import firebase from "../config/firebase";
 import _ from "lodash";
+import { requestFailure } from "./shared";
 
 export const REQUEST_PROGRAMS = "REQUEST_PROGRAMS";
+export const REQUEST_FAILURE_PROGRAMS = "REQUEST_FAILURE_PROGRAMS";
 export const RESOLVE_PROGRAMS = "RESOLVE_PROGRAMS";
 export const REMOVE_PROGRAMS = "REMOVE_PROGRAMS";
 export const CREATE_PROGRAM = "CREATE_PROGRAM";
@@ -16,7 +18,7 @@ export const requestPrograms = () => {
   };
 };
 
-const resolvePrograms = () => {
+export const resolvePrograms = () => {
   return {
     type: RESOLVE_PROGRAMS
   };
@@ -42,8 +44,8 @@ export const createProgram = (values, history) => async dispatch => {
     // Redirect to programs page
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while creating program", error);
+    history.push("/programs");
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "create"));
   }
 };
 
@@ -70,9 +72,10 @@ export const fetchPrograms = () => async dispatch => {
       type: FETCH_PROGRAMS,
       payload: programs
     });
+
+    return programs;
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while fetching programs.", error);
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "fetch"));
   }
 };
 
@@ -96,8 +99,8 @@ export const updateProgram = (programId, values, history) => async dispatch => {
     // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while updating program.", error);
+    history.push("/programs");
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "update"));
   }
 };
 
@@ -122,7 +125,10 @@ export const deleteProgram = (programId, history) => async dispatch => {
     // Redirect to programs tab
     history.push("/programs");
   } catch (error) {
-    dispatch(resolvePrograms());
-    console.log("Error while deleting program.", error);
+    history.push("/programs");
+    dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "delete"));
+
+    // Re-fetch programs
+    dispatch(fetchPrograms());
   }
 };

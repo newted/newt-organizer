@@ -4,7 +4,7 @@
 
 .pageContainer {
   composes: pageContainer from "../styles/shared.css";
-  transition: width .5s;
+  transition: width 0.5s;
 }
 
 .expanded {

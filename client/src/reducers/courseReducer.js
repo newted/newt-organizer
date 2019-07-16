@@ -1,5 +1,6 @@
 import {
   REQUEST_COURSES,
+  REQUEST_FAILURE_COURSES,
   RESOLVE_COURSES,
   REMOVE_COURSES,
   CREATE_COURSE,
@@ -14,7 +15,8 @@ import {
   MARK_ASSIGNMENT_COMPLETE,
   MARK_ASSIGNMENT_IN_PROGRESS,
   MARK_ASSIGNMENT_INCOMPLETE,
-  DELETE_ASSIGNMENT
+  DELETE_ASSIGNMENT,
+  REQUEST_ASSIGNMENT_FAILURE
 } from "../actions/assignments";
 import { GET_DEMO_COURSES } from "../actions/demo";
 import {
@@ -25,7 +27,12 @@ import {
 export default function(
   state = {
     isFetching: false,
-    items: {}
+    items: {},
+    error: {
+      message: null,
+      requestType: null,
+      source: null
+    }
   },
   action
 ) {
@@ -35,10 +42,27 @@ export default function(
         ...state,
         isFetching: true
       };
+    case REQUEST_ASSIGNMENT_FAILURE:
+    case REQUEST_FAILURE_COURSES:
+      return {
+        ...state,
+        isFetching: false,
+        error: {
+          ...state.error,
+          message: action.payload.message,
+          requestType: action.payload.requestType,
+          source: action.payload.source
+        }
+      };
     case RESOLVE_COURSES:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
+        error: {
+          message: null,
+          requestType: null,
+          source: null
+        }
       };
     case REMOVE_COURSES:
       return {

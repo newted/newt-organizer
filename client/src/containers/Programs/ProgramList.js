@@ -3,11 +3,15 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withToastManager } from "react-toast-notifications";
 // API
-import { fetchPrograms } from "../../actions/programs";
+import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
 import Button from "../../components/Button";
 import Card from "../../components/Card";
+import Loader from "../../components/Loader";
+// Helpers
+import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./ProgramList.module.css";
 import { UniversityIcon } from "../../utils/icons";
@@ -24,9 +28,56 @@ class ProgramList extends Component {
     match: PropTypes.object
   };
 
-  componentDidMount() {
-    this.props.fetchPrograms();
+  // Variable to keep track of notification ids
+  toastId = null;
+
+  componentDidUpdate() {
+    const { toastManager, resolvePrograms } = this.props;
+    const { error } = this.props.programs;
+
+    // Error handling: add error toast notification if there's any error with
+    // data requests.
+    if (error.message && error.requestType) {
+      switch (error.requestType) {
+        case "fetch":
+          const callback = id => (this.toastId = id);
+          // Display error notification
+          displayErrorNotification(
+            toastManager,
+            "fetch",
+            "program",
+            error.message,
+            this.onRetry,
+            callback
+          );
+          break;
+        case "create":
+        case "update":
+        case "delete":
+          displayErrorNotification(
+            toastManager,
+            error.requestType,
+            "program",
+            error.message
+          );
+          break;
+        default:
+          return;
+      }
+
+      resolvePrograms();
+    }
   }
+
+  // Function to run when retry button is clicked.
+  onRetry = () => {
+    const { fetchPrograms, toastManager } = this.props;
+
+    // A request is made to fetch programs. Then the toast is removed so that it
+    // no longer displays on the screen.
+    fetchPrograms();
+    toastManager.remove(this.toastId);
+  };
 
   renderCards() {
     const { programs } = this.props;
@@ -55,6 +106,12 @@ class ProgramList extends Component {
   }
 
   render() {
+    const { isFetching, items } = this.props.programs;
+    // Display loader if the items are fetching
+    if (isFetching && _.isEmpty(items)) {
+      return <Loader />;
+    }
+
     return (
       <div className={styles.mainContainer}>
         <div className={styles.headerContainer}>
@@ -64,7 +121,7 @@ class ProgramList extends Component {
           </Link>
         </div>
         <div className={styles.cardContainer}>
-          {Object.keys(this.props.programs.items).length > 0
+          {!_.isEmpty(this.props.programs.items)
             ? this.renderCards()
             : this.renderNoContent()}
         </div>
@@ -80,10 +137,11 @@ function mapStateToProps({ programs }) {
 }
 
 const mapDispatchToProps = {
-  fetchPrograms
-}
+  fetchPrograms,
+  resolvePrograms
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProgramList);
+)(withToastManager(ProgramList));
