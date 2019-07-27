@@ -12,6 +12,10 @@ const assignmentSchema = new Schema({
     type: Boolean,
     default: false
   },
+  hasKnowledgeTracking: {
+    type: Boolean,
+    default: false
+  },
   dateCreated: Date,
   dateDue: Date,
   source: {

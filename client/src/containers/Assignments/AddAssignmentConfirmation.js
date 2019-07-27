@@ -14,6 +14,7 @@ class AddAssignmentConfirmation extends Component {
     values: {
       name: this.props.videoInfo.videoData.snippet.title,
       details: this.props.videoInfo.videoData.snippet.description,
+      hasKnowledgeTracking: this.props.videoInfo.hasKnowledgeTracking,
       dateDue: null
     },
     touched: {

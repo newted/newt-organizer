@@ -25,7 +25,7 @@ class AddAssignment extends Component {
   };
 
   state = {
-    activeForm: "YouTube",
+    activeForm: "Default",
     inputtedUrl: "",
     onConfirmationPage: false,
     videoInfo: null
