@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 2rem;
+  margin-left: 3rem;
   width: calc(100% - 320px);
 }
 
@@ -28,8 +28,12 @@
   justify-content: space-between;
 }
 
+.formRow:first-child {
+  margin-bottom: 0.75rem;
+}
+
 .input {
-  width: 85%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -41,7 +45,7 @@
 
 .inputGroupLeft {
   width: 70%;
-  margin-right: 1rem;
+  margin-right: 1.75rem;
 }
 
 .inputGroupRight {

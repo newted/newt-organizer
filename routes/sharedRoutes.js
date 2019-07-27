@@ -24,13 +24,12 @@ module.exports = app => {
       // Initialize object for video data
       let videoInfo = {
         videoData: {},
-        hasSkillsTracking: false
+        hasKnowledgeTracking: false
       };
 
       // If there's a video with that id, add the item to the videoInfo object,
       // and use the videoId to find the corresponding Source information. If
-      // there's a hit, then that particular video has skills tracking/
-      // knowledge mapping.
+      // there's a hit, then that particular video has knowledge tracking.
       if (data.items[0]) {
         videoInfo["videoData"] = data.items[0];
 
@@ -42,7 +41,7 @@ module.exports = app => {
             }
 
             if (source) {
-              videoInfo["hasSkillsTracking"] = true;
+              videoInfo["hasKnowledgeTracking"] = true;
             }
           }
         );

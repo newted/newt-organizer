@@ -167,7 +167,7 @@ class AddAssignmentConfirmation extends Component {
 
   render() {
     const {
-      videoInfo: { videoData, hasSkillsTracking },
+      videoInfo: { videoData, hasKnowledgeTracking },
       handleGoBackToForm
     } = this.props;
 
@@ -233,11 +233,13 @@ class AddAssignmentConfirmation extends Component {
                 />
               </div>
               <div className={`${styles.inputGroup} ${styles.inputGroupRight}`}>
-                <label style={{ marginRight: ".5rem" }}>Skills Tracking</label>
+                <label style={{ marginRight: ".5rem" }}>
+                  Knowledge Tracking
+                </label>
                 <p
                   style={{ marginTop: "0.625rem", color: "var(--darkGrey-2)" }}
                 >
-                  {hasSkillsTracking ? "Yes" : "No"}
+                  {hasKnowledgeTracking ? "Yes" : "No"}
                 </p>
               </div>
             </div>
