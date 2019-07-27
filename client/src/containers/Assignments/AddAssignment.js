@@ -25,7 +25,7 @@ class AddAssignment extends Component {
   };
 
   state = {
-    activeForm: "Default",
+    activeForm: "YouTube",
     inputtedUrl: "",
     onConfirmationPage: false,
     videoInfo: null
@@ -41,8 +41,7 @@ class AddAssignment extends Component {
 
   handleGoToConfirmationPage = async values => {
     try {
-      const data = await getYoutubeVideoInfo(values.videoLink);
-      const videoInfo = data.items[0];
+      const videoInfo = await getYoutubeVideoInfo(values.videoLink);
 
       this.setState(() => ({
         inputtedUrl: values.videoLink,
@@ -115,9 +114,7 @@ class AddAssignment extends Component {
           <Button
             additionalClass={
               activeForm === "Default"
-                ? `${styles.formOptionBtn} ${styles.defaultFormBtn} ${
-                    styles.activeDefaultFormBtn
-                  }`
+                ? `${styles.formOptionBtn} ${styles.defaultFormBtn} ${styles.activeDefaultFormBtn}`
                 : `${styles.formOptionBtn} ${styles.defaultFormBtn}`
             }
             onClick={this.handleFormChange}
@@ -127,9 +124,7 @@ class AddAssignment extends Component {
           <Button
             additionalClass={
               activeForm === "YouTube"
-                ? `${styles.formOptionBtn} ${styles.youtubeFormBtn} ${
-                    styles.activeYoutubeFormBtn
-                  }`
+                ? `${styles.formOptionBtn} ${styles.youtubeFormBtn} ${styles.activeYoutubeFormBtn}`
                 : `${styles.formOptionBtn} ${styles.youtubeFormBtn}`
             }
             onClick={this.handleFormChange}

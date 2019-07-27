@@ -1,6 +1,10 @@
+const mongoose = require("mongoose");
 const axios = require("axios");
 const requireLogin = require("../middleware/requireLogin");
 const keys = require("../config/keys");
+
+// Source model
+const Source = mongoose.model("sources");
 
 module.exports = app => {
   // Get video information through YouTube API through the video ID.
@@ -15,8 +19,36 @@ module.exports = app => {
     };
 
     try {
+      // Make request through YouTube API
       const { data } = await axios.get(baseUrl, { params });
-      res.send(data);
+      // Initialize object for video data
+      let videoInfo = {
+        videoData: {},
+        hasSkillsTracking: false
+      };
+
+      // If there's a video with that id, add the item to the videoInfo object,
+      // and use the videoId to find the corresponding Source information. If
+      // there's a hit, then that particular video has skills tracking/
+      // knowledge mapping.
+      if (data.items[0]) {
+        videoInfo["videoData"] = data.items[0];
+
+        await Source.findOne(
+          { "availableContent.mediaId": videoId },
+          (error, source) => {
+            if (error) {
+              res.send(error);
+            }
+
+            if (source) {
+              videoInfo["hasSkillsTracking"] = true;
+            }
+          }
+        );
+      }
+
+      res.send(videoInfo);
     } catch (error) {
       res.send(error);
     }
