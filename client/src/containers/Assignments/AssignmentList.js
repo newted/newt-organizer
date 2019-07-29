@@ -71,15 +71,6 @@ class AssignmentList extends Component {
   // Set the initial current assignment to the first one if/when the props are
   // loaded
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEmpty(this.props.assignments)) {
-      _.forEach(this.props.assignments, ({ contentId }) => {
-        if (contentId) {
-          console.log("fetch content information");
-          return false;
-        }
-      });
-    }
-
     // setState only needs to be called on updates if there's atleast one
     // assignment, thus the initial overarching check.
     // Also check if the previous props are a different length to the current

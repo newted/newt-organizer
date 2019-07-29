@@ -103,6 +103,8 @@ export const fetchAllCourses = programIds => async dispatch => {
       type: FETCH_ALL_COURSES,
       payload: res.data
     });
+
+    return res.data;
   } catch (error) {
     dispatch(
       requestFailure(REQUEST_FAILURE_COURSES, error.message, "fetch", "courses")

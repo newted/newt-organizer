@@ -12,7 +12,10 @@ require("newt-knowledge-map-models");
 require("./services/firebase-admin");
 
 // Connect to MongoDB
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useFindAndModify: false
+});
 
 const app = express();
 
