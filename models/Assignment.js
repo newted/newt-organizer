@@ -16,6 +16,10 @@ const assignmentSchema = new Schema({
     type: Boolean,
     default: false
   },
+  contentId: {
+    type: Schema.Types.ObjectId,
+    ref: "Source"
+  },
   dateCreated: Date,
   dateDue: Date,
   source: {

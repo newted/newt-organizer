@@ -14,7 +14,6 @@ class AddAssignmentConfirmation extends Component {
     values: {
       name: this.props.videoInfo.videoData.snippet.title,
       details: this.props.videoInfo.videoData.snippet.description,
-      hasKnowledgeTracking: this.props.videoInfo.hasKnowledgeTracking,
       dateDue: null
     },
     touched: {
@@ -142,20 +141,24 @@ class AddAssignmentConfirmation extends Component {
       const { values } = this.state;
       const {
         courseId,
-        videoInfo: { videoData },
+        videoInfo: { videoData, hasKnowledgeTracking, contentId },
         createYoutubeAssignment,
         history
       } = this.props;
 
       let info = {
-        videoId: videoData.id,
-        channelId: videoData.snippet.channelId,
-        datePublished: videoData.snippet.publishedAt,
-        thumbnails: {
-          maxres: {
-            url: videoData.snippet.thumbnails.maxres.url,
-            width: videoData.snippet.thumbnails.maxres.width,
-            height: videoData.snippet.thumbnails.maxres.height
+        hasKnowledgeTracking,
+        contentId,
+        videoInfo: {
+          videoId: videoData.id,
+          channelId: videoData.snippet.channelId,
+          datePublished: videoData.snippet.publishedAt,
+          thumbnails: {
+            maxres: {
+              url: videoData.snippet.thumbnails.maxres.url,
+              width: videoData.snippet.thumbnails.maxres.width,
+              height: videoData.snippet.thumbnails.maxres.height
+            }
           }
         }
       };

@@ -34,7 +34,11 @@ module.exports = app => {
         videoInfo["videoData"] = data.items[0];
 
         await Source.findOne(
+          // Find by the id of the youtube video
           { "availableContent.mediaId": videoId },
+          // Projection to only return the specific source availableContent,
+          // if found
+          { "availableContent.$": 1 },
           (error, source) => {
             if (error) {
               res.send(error);
@@ -42,6 +46,7 @@ module.exports = app => {
 
             if (source) {
               videoInfo["hasKnowledgeTracking"] = true;
+              videoInfo["contentId"] = source.availableContent[0].contentId;
             }
           }
         );
