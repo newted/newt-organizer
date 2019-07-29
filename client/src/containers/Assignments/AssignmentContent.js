@@ -54,9 +54,7 @@ class AssignmentContent extends Component {
                 <Dropdown.Item
                   onClick={() =>
                     history.push(
-                      `/courses/${assignment.courseId}/assignments/${
-                        assignment._id
-                      }/edit`
+                      `/courses/${assignment.courseId}/assignments/${assignment._id}/edit`
                     )
                   }
                 >
@@ -80,14 +78,22 @@ class AssignmentContent extends Component {
                 title={assignment.name}
                 width="640"
                 height="360"
-                src={`https://www.youtube.com/embed/${
-                  assignment.videoInfo.videoId
-                }`}
+                src={`https://www.youtube.com/embed/${assignment.videoInfo.videoId}`}
                 frameBorder="0"
                 allowFullScreen
               />
             </div>
           )}
+          {assignment.contentInfo && (
+            <div className={styles.knowledgeInfoContainer}>
+              <h4>Learning Map Info</h4>
+              <div style={{ display: "flex" }}>
+                <p>Main Topics:</p>
+                <p>{assignment.contentInfo.mainTopics.join(", ")}</p>
+              </div>
+            </div>
+          )}
+          <h4 className={styles.subheading}>Description</h4>
           <p className={styles.details}>{assignment.details}</p>
         </div>
       </div>
