@@ -1,6 +1,7 @@
 import axios from "axios";
 import firebase from "../config/firebase";
 import { requestCourses, resolveCourses } from "./courses";
+import { FETCH_CONTENT } from "./content";
 import { requestFailure } from "./shared";
 
 export const CREATE_ASSIGNMENT = "CREATE_ASSIGNMENT";
@@ -74,6 +75,21 @@ export const createYoutubeAssignment = (
       data,
       { headers: { Authorization: idToken } }
     );
+
+    // If there's a contentId field (i.e. there's Knowledge Tracking content),
+    // then fetch that info as well
+    if (otherInfo.contentId) {
+      const contentRes = await axios.get(
+        `/api/content/item/${otherInfo.contentId}`,
+        {
+          headers: { Authorization: idToken }
+        }
+      );
+      dispatch({
+        type: FETCH_CONTENT,
+        payload: contentRes.data
+      });
+    }
 
     // Dispatch data to store
     dispatch({

@@ -42,7 +42,6 @@ class AddAssignment extends Component {
   handleGoToConfirmationPage = async values => {
     try {
       const videoInfo = await getYoutubeVideoInfo(values.videoLink);
-      console.log(videoInfo);
 
       this.setState(() => ({
         inputtedUrl: values.videoLink,
