@@ -141,7 +141,12 @@ class AddAssignmentConfirmation extends Component {
       const { values } = this.state;
       const {
         courseId,
-        videoInfo: { videoData, hasKnowledgeTracking, contentId },
+        videoInfo: {
+          videoData,
+          hasKnowledgeTracking,
+          contentId,
+          knowledgeModuleId
+        },
         createYoutubeAssignment,
         history
       } = this.props;
@@ -149,6 +154,7 @@ class AddAssignmentConfirmation extends Component {
       let info = {
         hasKnowledgeTracking,
         contentId,
+        knowledgeModuleId,
         videoInfo: {
           videoId: videoData.id,
           channelId: videoData.snippet.channelId,

@@ -47,7 +47,12 @@ module.exports = app => {
 
       const {
         values: { name, details, dateDue },
-        otherInfo: { videoInfo, hasKnowledgeTracking, contentId }
+        otherInfo: {
+          videoInfo,
+          hasKnowledgeTracking,
+          contentId,
+          knowledgeModuleId
+        }
       } = req.body;
 
       const assignment = {
@@ -56,6 +61,7 @@ module.exports = app => {
         dateDue,
         hasKnowledgeTracking,
         contentId,
+        knowledgeModuleId,
         videoInfo,
         dateCreated: Date.now(),
         source: "youtube"

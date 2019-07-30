@@ -5,6 +5,7 @@ const keys = require("../config/keys");
 
 // Source model
 const Source = mongoose.model("sources");
+const Content = mongoose.model("content");
 
 module.exports = app => {
   // Get video information through YouTube API through the video ID.
@@ -33,26 +34,35 @@ module.exports = app => {
       if (data.items[0]) {
         videoInfo["videoData"] = data.items[0];
 
-        await Source.findOne(
+        Source.findOne(
           // Find by the id of the youtube video
           { "availableContent.mediaId": videoId },
           // Projection to only return the specific source availableContent,
           // if found
-          { "availableContent.$": 1 },
-          (error, source) => {
-            if (error) {
-              res.send(error);
-            }
-
-            if (source) {
-              videoInfo["hasKnowledgeTracking"] = true;
-              videoInfo["contentId"] = source.availableContent[0].contentId;
-            }
-          }
-        );
+          { "availableContent.$": 1 }
+        )
+          // Set knowledge tracking to true and add the content id
+          .then(source => {
+            const { contentId } = source.availableContent[0];
+            videoInfo["hasKnowledgeTracking"] = true;
+            videoInfo["contentId"] = contentId;
+            return contentId;
+          })
+          // Fetch content information using contentId
+          .then(contentId => Content.findById(contentId))
+          // Add knowledgeModuleId to videoInfo
+          .then(
+            content =>
+              (videoInfo["knowledgeModuleId"] = content.knowledgeModuleId)
+          )
+          .then(() => res.send(videoInfo))
+          .catch(error => {
+            res.send(videoInfo);
+            next();
+          });
+      } else {
+        res.send(videoInfo);
       }
-
-      res.send(videoInfo);
     } catch (error) {
       res.send(error);
     }
