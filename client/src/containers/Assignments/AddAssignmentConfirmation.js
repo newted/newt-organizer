@@ -145,7 +145,8 @@ class AddAssignmentConfirmation extends Component {
           videoData,
           hasKnowledgeTracking,
           contentId,
-          knowledgeModuleId
+          knowledgeModuleId,
+          knowledgeSubjectId
         },
         createYoutubeAssignment,
         history
@@ -155,6 +156,7 @@ class AddAssignmentConfirmation extends Component {
         hasKnowledgeTracking,
         contentId,
         knowledgeModuleId,
+        knowledgeSubjectId,
         videoInfo: {
           videoId: videoData.id,
           channelId: videoData.snippet.channelId,

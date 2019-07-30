@@ -24,6 +24,10 @@ const assignmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "KnowledgeSubject.modules"
   },
+  knowledgeSubjectId: {
+    type: Schema.Types.ObjectId,
+    ref: "KnowledgeSubject"
+  },
   dateCreated: Date,
   dateDue: Date,
   source: {

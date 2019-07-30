@@ -20,6 +20,7 @@
 
 .contentHeader {
   color: var(--off-black);
+  margin-right: 0.5rem;
 }
 
 .headerInfo {
@@ -36,12 +37,13 @@
 .date {
   color: var(--darkGrey-2);
   margin-right: 0.75rem;
+  width: max-content;
 }
 
 .check {
   color: var(--darkGrey-2);
   cursor: pointer;
-  margin-right: 1.25rem;
+  margin-right: 0.5rem;
 }
 
 .check:hover {

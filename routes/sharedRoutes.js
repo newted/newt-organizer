@@ -51,10 +51,10 @@ module.exports = app => {
           // Fetch content information using contentId
           .then(contentId => Content.findById(contentId))
           // Add knowledgeModuleId to videoInfo
-          .then(
-            content =>
-              (videoInfo["knowledgeModuleId"] = content.knowledgeModuleId)
-          )
+          .then(content => {
+            videoInfo["knowledgeModuleId"] = content.knowledgeModuleId;
+            videoInfo["knowledgeSubjectId"] = content.knowledgeSubjectId;
+          })
           .then(() => res.send(videoInfo))
           .catch(error => {
             res.send(videoInfo);

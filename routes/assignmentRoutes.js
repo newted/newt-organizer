@@ -51,7 +51,8 @@ module.exports = app => {
           videoInfo,
           hasKnowledgeTracking,
           contentId,
-          knowledgeModuleId
+          knowledgeModuleId,
+          knowledgeSubjectId
         }
       } = req.body;
 
@@ -62,6 +63,7 @@ module.exports = app => {
         hasKnowledgeTracking,
         contentId,
         knowledgeModuleId,
+        knowledgeSubjectId,
         videoInfo,
         dateCreated: Date.now(),
         source: "youtube"
