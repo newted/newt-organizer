@@ -58,7 +58,7 @@ module.exports = app => {
           .then(() => res.send(videoInfo))
           .catch(error => {
             res.send(videoInfo);
-            next();
+            next(error);
           });
       } else {
         res.send(videoInfo);

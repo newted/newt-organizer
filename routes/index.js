@@ -5,6 +5,7 @@ module.exports = app => {
     require("./authRoutes")(app),
     require("./contentRoutes")(app),
     require("./courseRoutes")(app),
+    require("./knowledgeMapRoutes")(app),
     require("./learningMapRoutes")(app),
     require("./programRoutes")(app),
     require("./sharedRoutes")(app)

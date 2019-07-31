@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { fetchPrograms } from "../actions/programs";
 import { fetchAllCourses } from "../actions/courses";
 import { fetchContentById } from "../actions/content";
+import { fetchSubjectById } from "../actions/knowledgeMap";
 // Components
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
@@ -40,12 +41,16 @@ class AppContainer extends Component {
           this.props
             .fetchAllCourses(programs.map(({ _id }) => _id))
             .then(courses =>
-              // For each assignment in each course, if there's a contentId,
-              // fetch Content information
+              // For each assignment in each course, if there's a contentId +
+              // knowledgeSubjectId, fetch Content + KnowledgeMap information
               _.forEach(courses, ({ assignments }) => {
-                _.forEach(assignments, ({ contentId }) => {
+                _.forEach(assignments, ({ contentId, knowledgeSubjectId }) => {
                   if (contentId) {
                     this.props.fetchContentById(contentId);
+                  }
+
+                  if (knowledgeSubjectId) {
+                    this.props.fetchSubjectById(knowledgeSubjectId);
                   }
                 });
               })
@@ -144,7 +149,8 @@ function mapStateToProps({ auth, sidebar }) {
 const mapDispatchToProps = {
   fetchPrograms,
   fetchAllCourses,
-  fetchContentById
+  fetchContentById,
+  fetchSubjectById
 };
 
 export default connect(

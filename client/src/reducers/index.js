@@ -3,6 +3,7 @@ import authReducer from "./authReducer";
 import programReducer from "./programReducer";
 import courseReducer from "./courseReducer";
 import contentReducer from "./contentReducer";
+import knowledgeMapReducer from "./knowledgeMapReducer";
 import sidebarReducer from "./sidebarReducer";
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   programs: programReducer,
   courses: courseReducer,
   content: contentReducer,
+  knowledgeMap: knowledgeMapReducer,
   sidebar: sidebarReducer
 });
