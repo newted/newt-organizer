@@ -87,7 +87,11 @@ class AssignmentContent extends Component {
           {assignment.contentInfo && (
             <div className={styles.knowledgeInfoContainer}>
               <h4>Learning Map Info</h4>
-              <div style={{ display: "flex" }}>
+              <div className={styles.knowledgeInfoItem}>
+                <p>Main Subject:</p>
+                <p>{assignment.knowledgeModuleName}</p>
+              </div>
+              <div className={styles.knowledgeInfoItem}>
                 <p>Topics Covered:</p>
                 <p>{assignment.contentInfo.mainTopics.join(", ")}</p>
               </div>

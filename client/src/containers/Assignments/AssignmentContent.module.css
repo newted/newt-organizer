@@ -91,7 +91,12 @@
   margin-bottom: 0.75rem;
 }
 
-.knowledgeInfoContainer p:first-child {
+.knowledgeInfoItem {
+  display: flex;
+  margin-bottom: 0.35rem;
+}
+
+.knowledgeInfoItem p:first-child {
   min-width: 130px;
   margin-right: 0.75rem;
 }

@@ -321,7 +321,7 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ programs, courses, content }, props) {
+function mapStateToProps({ programs, courses, content, knowledgeMap }, props) {
   const { assignmentId } = props.match.params;
   const assignments = [];
   // This way of setting isFetching seems logical, but for a brief moment,
@@ -329,7 +329,10 @@ function mapStateToProps({ programs, courses, content }, props) {
   // to false, which (sometimes) briefly flashes the No Assignments message on
   // screen.
   const isFetching =
-    programs.isFetching || courses.isFetching || content.isFetching;
+    programs.isFetching ||
+    courses.isFetching ||
+    content.isFetching ||
+    knowledgeMap.isFetching;
   const error = courses.error;
   const programIds = Object.keys(programs.items);
 
@@ -349,6 +352,19 @@ function mapStateToProps({ programs, courses, content }, props) {
         assignment["contentInfo"] = {
           mainTopics
         };
+      }
+
+      if (
+        assignment.knowledgeSubjectId &&
+        assignment.knowledgeModuleId &&
+        !_.isEmpty(knowledgeMap.items)
+      ) {
+        const { knowledgeSubjectId, knowledgeModuleId } = assignment;
+
+        const knowledgeModuleName =
+          knowledgeMap.items[knowledgeSubjectId].modules[knowledgeModuleId]
+            .name;
+        assignment["knowledgeModuleName"] = knowledgeModuleName;
       }
       assignments.push(assignment);
     });
