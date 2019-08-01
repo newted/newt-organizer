@@ -41,7 +41,8 @@ class App extends Component {
               "/programs",
               "/courses",
               "/assignments",
-              "/profile"
+              "/profile",
+              "/learning-map"
             ]}
             component={AppContainer}
           />

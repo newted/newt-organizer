@@ -25,6 +25,7 @@ import CourseList from "./Courses/CourseList";
 import AddAssignment from "./Assignments/AddAssignment";
 import AssignmentList from "./Assignments/AssignmentList";
 import EditAssignment from "./Assignments/EditAssignment";
+import LearningMap from "./LearningMap";
 // Styling
 import styles from "./AppContainer.module.css";
 
@@ -130,6 +131,12 @@ class AppContainer extends Component {
             <PrivateRoute
               path="/assignments/:assignmentId?"
               component={AssignmentList}
+              auth={auth}
+            />
+            {/* Learning Map Routes */}
+            <PrivateRoute
+              path="/learning-map"
+              component={LearningMap}
               auth={auth}
             />
           </Switch>

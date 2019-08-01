@@ -1,0 +1,3 @@
+.mainContainer {
+  composes: mainContainer from "../../styles/shared.css";
+}
