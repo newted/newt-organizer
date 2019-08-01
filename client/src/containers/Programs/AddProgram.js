@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import programFields from "./programFields";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 // API
 import { createProgram } from "../../actions/programs";
-// Styling
-import styles from "./AddProgram.module.css";
 
 class AddProgram extends Component {
   static propTypes = {
@@ -20,10 +20,10 @@ class AddProgram extends Component {
 
   render() {
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Add a New Program</h3>
-        </div>
+        </PageHeaderContainer>
         <Form
           formName="AddProgramForm"
           formFields={programFields}
@@ -31,7 +31,7 @@ class AddProgram extends Component {
             this.props.createProgram(values, this.props.history)
           }
         />
-      </div>
+      </MainContainer>
     );
   }
 }

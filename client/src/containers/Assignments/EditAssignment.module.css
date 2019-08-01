@@ -1,7 +1,0 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-}
-
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
-}

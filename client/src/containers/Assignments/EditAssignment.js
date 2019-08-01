@@ -7,10 +7,10 @@ import { assignmentInputFields } from "./assignmentFields";
 // API
 import { updateAssignment } from "../../actions/assignments";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
-import Loader from '../../components/Loader';
-// Styling
-import styles from "./EditAssignment.module.css";
+import Loader from "../../components/Loader";
 
 class EditAssignment extends Component {
   static propTypes = {
@@ -43,10 +43,10 @@ class EditAssignment extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Edit Assignment</h3>
-        </div>
+        </PageHeaderContainer>
         <Form
           formName="EditAssignmentForm"
           formFields={assignmentInputFields}
@@ -55,7 +55,7 @@ class EditAssignment extends Component {
             this.props.updateAssignment(courseId, assignmentId, values, history)
           }
         />
-      </div>
+      </MainContainer>
     );
   }
 }

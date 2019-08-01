@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { assignmentInputFields, youtubeInputFields } from "./assignmentFields";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import AddAssignmentConfirmation from "./AddAssignmentConfirmation";
@@ -106,10 +108,10 @@ class AddAssignment extends Component {
     const { activeForm } = this.state;
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Add a New Assignment</h3>
-        </div>
+        </PageHeaderContainer>
         <div className={styles.formOptions}>
           <Button
             additionalClass={
@@ -133,7 +135,7 @@ class AddAssignment extends Component {
           </Button>
         </div>
         {this.renderForm()}
-      </div>
+      </MainContainer>
     );
   }
 }

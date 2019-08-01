@@ -1,27 +1,21 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-}
-
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
-}
-
 .formOptions {
   padding: 0.25rem 2% 1rem 2%;
 }
 
 .formOptionBtn {
-  border-radius: .25rem;
-  margin-right: .75rem;
+  border-radius: 0.25rem;
+  margin-right: 0.75rem;
 }
 
-.defaultFormBtn:hover, .activeDefaultFormBtn {
+.defaultFormBtn:hover,
+.activeDefaultFormBtn {
   background-color: rgb(36, 41, 46, 0.15);
   color: #24292e;
   border-color: #24292e;
 }
 
-.youtubeFormBtn:hover, .activeYoutubeFormBtn {
+.youtubeFormBtn:hover,
+.activeYoutubeFormBtn {
   background-color: rgb(255, 0, 0, 0.15);
   color: #ff0000; /* YouTube colour */
   border-color: #ff0000;

@@ -6,10 +6,10 @@ import programFields from "./programFields";
 // API
 import { updateProgram } from "../../actions/programs";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 import Loader from "../../components/Loader";
-// Styling
-import styles from "./EditProgram.module.css";
 
 class EditProgram extends Component {
   static propTypes = {
@@ -41,10 +41,10 @@ class EditProgram extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Edit Program</h3>
-        </div>
+        </PageHeaderContainer>
         <Form
           formName="EditProgramForm"
           formFields={programFields}
@@ -52,7 +52,7 @@ class EditProgram extends Component {
           onSubmit={values => updateProgram(programId, values, history)}
           buttonText="Update"
         />
-      </div>
+      </MainContainer>
     );
   }
 }

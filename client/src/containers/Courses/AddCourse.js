@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import courseFields from "./courseFields";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 // API
 import { createCourse } from "../../actions/courses";
-// Styling
-import styles from "./AddCourse.module.css";
 
 class AddCourse extends Component {
   static propTypes = {
@@ -21,10 +21,10 @@ class AddCourse extends Component {
 
   render() {
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Add a New Course</h3>
-        </div>
+        </PageHeaderContainer>
         <Form
           formName="AddCourseForm"
           formFields={courseFields}
@@ -36,7 +36,7 @@ class AddCourse extends Component {
             )
           }
         />
-      </div>
+      </MainContainer>
     );
   }
 }

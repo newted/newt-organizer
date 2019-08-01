@@ -5,10 +5,10 @@ import courseFields from "./courseFields";
 // API
 import { updateCourse } from "../../actions/courses";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 import Loader from "../../components/Loader";
-// Styling
-import styles from "./EditCourse.module.css";
 
 class EditCourse extends Component {
   static propTypes = {
@@ -41,10 +41,10 @@ class EditCourse extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
+      <MainContainer>
+        <PageHeaderContainer>
           <h3>Edit Course</h3>
-        </div>
+        </PageHeaderContainer>
         <Form
           formName="EditCourseForm"
           formFields={courseFields}
@@ -54,7 +54,7 @@ class EditCourse extends Component {
           }
           buttonText="Update"
         />
-      </div>
+      </MainContainer>
     );
   }
 }
