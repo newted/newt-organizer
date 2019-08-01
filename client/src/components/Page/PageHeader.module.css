@@ -1,3 +1,6 @@
 .headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
+  padding: 1rem 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { assignmentTableFields } from "./assignmentFields";
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Components
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Button from "../../components/Button";
 import AssignmentTable from "./AssignmentTable";
 // Styling
@@ -111,7 +112,7 @@ class CourseAssignmentList extends Component {
 
     return (
       <div className={styles.assignmentsContainer}>
-        <div className={styles.headerContainer}>
+        <PageHeaderContainer className={styles.subHeaderContainer}>
           <h3 className={styles.header}>Assignments</h3>
           <div>
             <Button
@@ -130,7 +131,7 @@ class CourseAssignmentList extends Component {
               <Button category="success">Add Assignment</Button>
             </Link>
           </div>
-        </div>
+        </PageHeaderContainer>
         <AssignmentTable
           fields={assignmentTableFields}
           assignments={statusDueDateSort(assignments)}

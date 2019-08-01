@@ -1,17 +1,6 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-  min-height: calc(100vh - 54px);
-  box-sizing: border-box;
-}
-
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
-}
-
 .leftBtn {
   width: 75px;
   margin: 0 0.5rem 0 0;
-
 }
 
 .rightBtn {

@@ -9,18 +9,6 @@
   flex-direction: column;
 }
 
-.mainContainer {
-  padding: 1.75rem;
-  overflow: auto;
-}
-
-.headerContainer {
-  padding: 1rem 2%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .mainMessage {
   width: 100%;
   padding: 1.5rem;

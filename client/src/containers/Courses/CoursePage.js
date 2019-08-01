@@ -7,6 +7,11 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import { deleteCourse, resolveCourses } from "../../actions/courses";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import {
+  PageHeaderContainer,
+  PageHeader
+} from "../../components/Page/PageHeader";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -102,9 +107,9 @@ class CoursePage extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2>{course.name}</h2>
+      <MainContainer>
+        <PageHeaderContainer>
+          <PageHeader>{course.name}</PageHeader>
           <div>
             <Link
               to={{
@@ -139,12 +144,12 @@ class CoursePage extends Component {
               </Modal.Footer>
             </Modal>
           </div>
-        </div>
+        </PageHeaderContainer>
         <CourseAssignmentList
           courseId={course._id}
           assignments={course.assignments}
         />
-      </div>
+      </MainContainer>
     );
   }
 }
