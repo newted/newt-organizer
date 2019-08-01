@@ -42,11 +42,11 @@ const personalKnowledgeMapSchema = new Schema({
 
 const learningMapSchema = new Schema({
   _user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "User"
   },
   knowledgeMap: [personalKnowledgeMapSchema],
-  dateAdded: Date,
+  dateCreated: Date,
   lastUpdated: Date
 });
 
