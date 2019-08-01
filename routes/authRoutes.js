@@ -21,7 +21,7 @@ module.exports = app => {
   });
 
   // Create user if does not exist, otherwise send existing user info
-  app.post("/api/create_user", async (req, res) => {
+  app.post("/api/user/create", requireLogin, async (req, res) => {
     const { _id, displayName, email } = req.body;
 
     // Check if user exists

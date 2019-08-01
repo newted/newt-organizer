@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
+const requireLogin = require("../middleware/requireLogin");
 
 const LearningMap = mongoose.model("learningMaps");
 
 module.exports = app => {
   // POST request to create an initial learning map if one doesn't already
   // exist for the user
-  app.post("/api/learning-map/create", async (req, res) => {
+  app.post("/api/learning-map/create", requireLogin, async (req, res) => {
     try {
-      // Get userId from request
-      const { userId } = req.body;
-
       // Check if learning map exists for the user
-      const existingLearningMap = await LearningMap.findOne({ _user: userId });
+      const existingLearningMap = await LearningMap.findOne({
+        _user: req.user.uid
+      });
 
       // If it does exist, send existing one to client
       if (existingLearningMap) {

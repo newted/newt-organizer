@@ -120,6 +120,9 @@ async function authenticateWithProvider(provider, history, dispatch) {
       // still the Login page (and not loading screen)
       dispatch(requestSignInUser());
 
+      // Get current user token
+      const idToken = await firebase.auth().currentUser.getIdToken(true);
+
       const user = result.user;
 
       // Take only currently necessary info from user object
@@ -131,7 +134,9 @@ async function authenticateWithProvider(provider, history, dispatch) {
 
       // Request to create user if doesn't exist, or send back existing user
       // from Mongo DB
-      const res = await axios.post("/api/create_user", userInfo);
+      const res = await axios.post("/api/user/create", userInfo, {
+        headers: { Authorization: idToken }
+      });
 
       dispatch(setAuthedUser(res.data));
 
