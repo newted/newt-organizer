@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "./PageHeader.module.css";
 
-const PageHeader = ({ children }) => (
-  <div className={styles.headerContainer}>
-    <h2>{children}</h2>
-  </div>
+export const PageHeaderContainer = ({ children }) => (
+  <div className={styles.headerContainer}>{children}</div>
 );
 
-export default PageHeader;
+export const PageHeader = ({ children }) => <h2>{children}</h2>;

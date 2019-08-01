@@ -11,6 +11,11 @@ import {
 } from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import {
+  PageHeaderContainer,
+  PageHeader
+} from "../../components/Page/PageHeader";
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
@@ -284,9 +289,9 @@ class AssignmentList extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2>Your Assignments</h2>
+      <MainContainer>
+        <PageHeaderContainer>
+          <PageHeader>Your Assignments</PageHeader>
           {!_.isEmpty(assignments) && (
             <Button
               additionalClass={
@@ -299,7 +304,7 @@ class AssignmentList extends Component {
               {`Show Completed (${numCompleted})`}
             </Button>
           )}
-        </div>
+        </PageHeaderContainer>
         <div className={styles.container}>{this.renderContent()}</div>
         <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
           <Modal.Body>
@@ -316,7 +321,7 @@ class AssignmentList extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
-      </div>
+      </MainContainer>
     );
   }
 }

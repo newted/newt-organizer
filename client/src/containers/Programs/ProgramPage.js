@@ -8,6 +8,8 @@ import { withToastManager } from "react-toast-notifications";
 import { deleteProgram } from "../../actions/programs";
 import { fetchCourses, resolveCourses } from "../../actions/courses";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import { PageHeaderContainer } from "../../components/Page/PageHeader";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -102,7 +104,7 @@ class ProgramPage extends Component {
 
     return (
       <Fragment>
-        <div className={styles.headerContainer}>
+        <PageHeaderContainer>
           <div className={styles.headings}>
             <h2 className={styles.header}>{this.props.program.name}</h2>
             <h2 className={styles.institution}>
@@ -139,7 +141,7 @@ class ProgramPage extends Component {
               </Modal.Footer>
             </Modal>
           </div>
-        </div>
+        </PageHeaderContainer>
         <ProgramCourseList programId={program._id} />
       </Fragment>
     );
@@ -151,7 +153,7 @@ class ProgramPage extends Component {
       return <Loader />;
     }
 
-    return <div className={styles.mainContainer}>{this.renderContent()}</div>;
+    return <MainContainer>{this.renderContent()}</MainContainer>;
   }
 }
 

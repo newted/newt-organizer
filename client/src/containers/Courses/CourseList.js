@@ -8,6 +8,11 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import {
+  PageHeaderContainer,
+  PageHeader
+} from "../../components/Page/PageHeader";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
 // Helpers
@@ -144,16 +149,16 @@ class CourseList extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2>Your Courses</h2>
-        </div>
+      <MainContainer>
+        <PageHeaderContainer>
+          <PageHeader>Your Courses</PageHeader>
+        </PageHeaderContainer>
         <div className={styles.coursesContainer}>
           {!_.isEmpty(this.props.courses.items)
             ? this.renderCourseSections()
             : this.renderNoContent()}
         </div>
-      </div>
+      </MainContainer>
     );
   }
 }

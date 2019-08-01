@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // Components
+import MainContainer from "../../components/Page/MainContainer";
+import {
+  PageHeaderContainer,
+  PageHeader
+} from "../../components/Page/PageHeader";
 import Loader from "../../components/Loader";
 import Timeline from "./Timeline";
 // API
@@ -46,12 +51,12 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2 className={styles.header}>Dashboard</h2>
-        </div>
+      <MainContainer>
+        <PageHeaderContainer>
+          <PageHeader>Dashboard</PageHeader>
+        </PageHeaderContainer>
         {this.renderContent()}
-      </div>
+      </MainContainer>
     );
   }
 }
