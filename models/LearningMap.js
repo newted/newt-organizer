@@ -1,41 +1,52 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const learningMapInfoSchema = new Schema({
-  level: Number,
-  contentConsumed: [{
-    type: Schema.Types.ObjectId,
-    ref: "Content"
-  }]
-})
-
-const learningMapSubclassSchema = new Schema({
-  knowledgeMapSubclass: {
-    type: Map,
-    of: {
-      ref: learningMapInfoSchema
+const learningTopicSchema = new Schema({
+  name: String,
+  contentHistoryIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "LearningMap.knowledgeMap.contentHistory"
     }
+  ],
+  confidenceRating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
   }
 });
 
-const learningMapSchema = new Schema({
-  contentHistory: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Content"
-    }
-  ],
-  knowledgeMap: {
-    type: Map,
-    of: {
-      ref: learningMapSubclassSchema
-    }
+const contentHistorySchema = new Schema({
+  contentId: {
+    type: Schema.Types.ObjectId,
+    ref: "Content"
   },
+  dateCompleted: Date,
+  lastUpdated: Date
+});
+
+const personalKnowledgeMapSchema = new Schema({
+  knowledgeSubjectId: {
+    type: Schema.Types.ObjectId,
+    ref: "KnowledgeSubject"
+  },
+  knowledgeModuleId: {
+    type: Schema.Types.ObjectId,
+    ref: "KnowledgeSubject.modules"
+  },
+  contentHistory: [contentHistorySchema],
+  primaryTopics: [learningTopicSchema],
+  secondaryTopics: [learningTopicSchema]
+});
+
+const learningMapSchema = new Schema({
   _user: {
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: "User"
   },
-  dateCreated: Date,
+  knowledgeMap: [personalKnowledgeMapSchema],
+  dateAdded: Date,
   lastUpdated: Date
 });
 
