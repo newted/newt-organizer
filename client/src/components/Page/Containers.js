@@ -16,3 +16,15 @@ export const HeaderContainer = ({ children, className }) => (
     {children}
   </div>
 );
+
+export const ContentContainer = ({ children, className }) => (
+  <div
+    className={
+      className
+        ? `${styles.contentContainer} ${className}`
+        : styles.contentContainer
+    }
+  >
+    {children}
+  </div>
+);

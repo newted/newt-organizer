@@ -10,7 +10,8 @@ import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/Page/Containers";
 import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
@@ -152,11 +153,11 @@ class CourseList extends Component {
         <HeaderContainer>
           <PageHeader>Your Courses</PageHeader>
         </HeaderContainer>
-        <div className={styles.coursesContainer}>
+        <ContentContainer className={styles.coursesContainer}>
           {!_.isEmpty(this.props.courses.items)
             ? this.renderCourseSections()
             : this.renderNoContent()}
-        </div>
+        </ContentContainer>
       </MainContainer>
     );
   }

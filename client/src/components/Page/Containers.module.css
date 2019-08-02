@@ -10,3 +10,8 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.contentContainer {
+  display: flex;
+  padding: 1rem 2%;
+}

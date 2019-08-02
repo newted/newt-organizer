@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/Page/Containers";
 import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
@@ -27,11 +28,13 @@ class Dashboard extends Component {
 
     if (_.isEmpty(programs.items)) {
       return (
-        <MessageBox>
-          You aren't in any programs. Go to the{" "}
-          <MessageLink to="/programs">Programs</MessageLink> page from the
-          sidebar to create a Program.
-        </MessageBox>
+        <ContentContainer>
+          <MessageBox>
+            You aren't in any programs. Go to the{" "}
+            <MessageLink to="/programs">Programs</MessageLink> page from the
+            sidebar to create a Program.
+          </MessageBox>
+        </ContentContainer>
       );
     }
 

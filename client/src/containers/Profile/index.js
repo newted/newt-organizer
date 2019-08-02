@@ -6,7 +6,8 @@ import { updateUser } from "../../actions/authedUser";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/Page/Containers";
 import { PageHeader } from "../../components/Page/Headers";
 import Form from "../../components/Form";
@@ -60,7 +61,7 @@ class Profile extends Component {
         <HeaderContainer>
           <PageHeader>Profile</PageHeader>
         </HeaderContainer>
-        <div className={styles.container}>
+        <ContentContainer>
           <div className={styles.optionsContainer}>
             <h2 className={styles.subheading}>Account</h2>
             <div
@@ -80,7 +81,7 @@ class Profile extends Component {
             <h3 className={styles.contentHeader}>{this.state.activeTab}</h3>
             {this.renderContent()}
           </div>
-        </div>
+        </ContentContainer>
       </MainContainer>
     );
   }

@@ -9,7 +9,8 @@ import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/Page/Containers";
 import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox } from "../../components/Page/MessageBox";
@@ -126,11 +127,11 @@ class ProgramList extends Component {
             <Button category="success">Add Program</Button>
           </Link>
         </HeaderContainer>
-        <div className={styles.cardContainer}>
+        <ContentContainer className={styles.cardContainer}>
           {!_.isEmpty(this.props.programs.items)
             ? this.renderCards()
             : this.renderNoContent()}
-        </div>
+        </ContentContainer>
       </MainContainer>
     );
   }

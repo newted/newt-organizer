@@ -12,7 +12,8 @@ import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/Page/Containers";
 import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
@@ -299,7 +300,7 @@ class AssignmentList extends Component {
             </Button>
           )}
         </HeaderContainer>
-        <div className={styles.container}>{this.renderContent()}</div>
+        <ContentContainer>{this.renderContent()}</ContentContainer>
         <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
           <Modal.Body>
             Are you sure you want to delete this assignment?

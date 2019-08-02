@@ -11,6 +11,7 @@ import {
 } from "../../actions/assignments";
 import { fetchAllCourses } from "../../actions/courses";
 // Components
+import { ContentContainer } from "../../components/Page/Containers";
 import TimelineCard from "./TimelineCard";
 import PrevWeekCard from "./PrevWeekCard";
 // Styling
@@ -148,12 +149,12 @@ class Timeline extends Component {
 
   render() {
     return (
-      <div
+      <ContentContainer
         // Different responsive class for different sidebar state
         className={
           this.props.sidebar.isCollapsed
-            ? `${styles.container} ${styles.collapsedSidebar}`
-            : `${styles.container} ${styles.expandedSidebar}`
+            ? styles.collapsedSidebar
+            : styles.expandedSidebar
         }
       >
         <div className={styles.agendaContainer}>
@@ -166,7 +167,7 @@ class Timeline extends Component {
           <h3 className={styles.header}>Previous Weeks</h3>
           <div className={styles.timeline}>{this.renderPrevAssignments()}</div>
         </div>
-      </div>
+      </ContentContainer>
     );
   }
 }
