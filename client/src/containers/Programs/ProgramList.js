@@ -7,11 +7,11 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import { fetchPrograms, resolvePrograms } from "../../actions/programs";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
 import {
-  PageHeaderContainer,
-  PageHeader
-} from "../../components/Page/PageHeader";
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
+import { PageHeader } from "../../components/Page/PageHeader";
 import { MessageBox } from "../../components/Page/MessageBox";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
@@ -120,12 +120,12 @@ class ProgramList extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <PageHeader>Programs</PageHeader>
           <Link to="/programs/new">
             <Button category="success">Add Program</Button>
           </Link>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <div className={styles.cardContainer}>
           {!_.isEmpty(this.props.programs.items)
             ? this.renderCards()

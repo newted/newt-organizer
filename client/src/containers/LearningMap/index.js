@@ -1,15 +1,15 @@
 import React from "react";
-import MainContainer from "../../components/Page/MainContainer";
 import {
-  PageHeaderContainer,
-  PageHeader
-} from "../../components/Page/PageHeader";
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
+import { PageHeader } from "../../components/Page/PageHeader";
 
 const LearningMap = () => (
   <MainContainer>
-    <PageHeaderContainer>
+    <HeaderContainer>
       <PageHeader>Learning Map</PageHeader>
-    </PageHeaderContainer>
+    </HeaderContainer>
   </MainContainer>
 );
 

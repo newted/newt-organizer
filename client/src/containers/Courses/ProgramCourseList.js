@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // Components
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import { HeaderContainer } from "../../components/Page/Containers";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 // Styling
@@ -48,12 +48,12 @@ class ProgramCourseList extends Component {
 
     return (
       <div className={styles.courseContainer}>
-        <PageHeaderContainer className={styles.subHeaderContainer}>
+        <HeaderContainer className={styles.subHeaderContainer}>
           <h3>Courses</h3>
           <Link to={{ pathname: `/programs/${programId}/courses/add` }}>
             <Button category="success">Add Course</Button>
           </Link>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <div className={styles.cardContainer}>
           {!_.isEmpty(programCourses)
             ? this.renderCards()

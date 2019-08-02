@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { assignmentInputFields, youtubeInputFields } from "./assignmentFields";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import AddAssignmentConfirmation from "./AddAssignmentConfirmation";
@@ -109,9 +111,9 @@ class AddAssignment extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <h3>Add a New Assignment</h3>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <div className={styles.formOptions}>
           <Button
             additionalClass={

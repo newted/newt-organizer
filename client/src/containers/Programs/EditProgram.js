@@ -6,8 +6,10 @@ import programFields from "./programFields";
 // API
 import { updateProgram } from "../../actions/programs";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
 import Form from "../../components/Form";
 import Loader from "../../components/Loader";
 
@@ -42,9 +44,9 @@ class EditProgram extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <h3>Edit Program</h3>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <Form
           formName="EditProgramForm"
           formFields={programFields}

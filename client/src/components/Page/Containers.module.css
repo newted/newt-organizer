@@ -3,3 +3,10 @@
   overflow: auto;
   min-height: calc(100vh - 54px); /* Fill the page (54px is height of Navbar) */
 }
+
+.headerContainer {
+  padding: 1rem 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

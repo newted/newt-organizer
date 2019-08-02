@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import programFields from "./programFields";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
 import Form from "../../components/Form";
 // API
 import { createProgram } from "../../actions/programs";
@@ -21,9 +23,9 @@ class AddProgram extends Component {
   render() {
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <h3>Add a New Program</h3>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <Form
           formName="AddProgramForm"
           formFields={programFields}

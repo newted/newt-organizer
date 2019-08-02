@@ -4,11 +4,11 @@ import infoFields from "./infoFields";
 // API
 import { updateUser } from "../../actions/authedUser";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
 import {
-  PageHeaderContainer,
-  PageHeader
-} from "../../components/Page/PageHeader";
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
+import { PageHeader } from "../../components/Page/PageHeader";
 import Form from "../../components/Form";
 import StatisticsTab from "./StatisticsTab";
 // Styling
@@ -57,9 +57,9 @@ class Profile extends Component {
   render() {
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <PageHeader>Profile</PageHeader>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <div className={styles.container}>
           <div className={styles.optionsContainer}>
             <h2 className={styles.subheading}>Account</h2>

@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import courseFields from "./courseFields";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
 import Form from "../../components/Form";
 // API
 import { createCourse } from "../../actions/courses";
@@ -22,9 +24,9 @@ class AddCourse extends Component {
   render() {
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <h3>Add a New Course</h3>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <Form
           formName="AddCourseForm"
           formFields={courseFields}

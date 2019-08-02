@@ -3,11 +3,11 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
 import {
-  PageHeaderContainer,
-  PageHeader
-} from "../../components/Page/PageHeader";
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
+import { PageHeader } from "../../components/Page/PageHeader";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import Loader from "../../components/Loader";
 import Timeline from "./Timeline";
@@ -46,9 +46,9 @@ class Dashboard extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <PageHeader>Dashboard</PageHeader>
-        </PageHeaderContainer>
+        </HeaderContainer>
         {this.renderContent()}
       </MainContainer>
     );

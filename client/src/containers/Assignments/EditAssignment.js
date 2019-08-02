@@ -7,8 +7,10 @@ import { assignmentInputFields } from "./assignmentFields";
 // API
 import { updateAssignment } from "../../actions/assignments";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
-import { PageHeaderContainer } from "../../components/Page/PageHeader";
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
 import Form from "../../components/Form";
 import Loader from "../../components/Loader";
 
@@ -44,9 +46,9 @@ class EditAssignment extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <h3>Edit Assignment</h3>
-        </PageHeaderContainer>
+        </HeaderContainer>
         <Form
           formName="EditAssignmentForm"
           formFields={assignmentInputFields}

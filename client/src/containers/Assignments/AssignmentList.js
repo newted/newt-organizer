@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withToastManager } from "react-toast-notifications";
 // API
@@ -11,11 +10,11 @@ import {
 } from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
-import MainContainer from "../../components/Page/MainContainer";
 import {
-  PageHeaderContainer,
-  PageHeader
-} from "../../components/Page/PageHeader";
+  MainContainer,
+  HeaderContainer
+} from "../../components/Page/Containers";
+import { PageHeader } from "../../components/Page/PageHeader";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
@@ -250,12 +249,6 @@ class AssignmentList extends Component {
 
     if (_.isEmpty(assignments)) {
       // UI for when there are no assignments.
-      const coursesLink = (
-        <Link to="/courses" className={styles.link}>
-          Courses
-        </Link>
-      );
-
       return (
         <MessageBox>
           You currently have no assignments. Add an assignment from one of the
@@ -291,7 +284,7 @@ class AssignmentList extends Component {
 
     return (
       <MainContainer>
-        <PageHeaderContainer>
+        <HeaderContainer>
           <PageHeader>Your Assignments</PageHeader>
           {!_.isEmpty(assignments) && (
             <Button
@@ -305,7 +298,7 @@ class AssignmentList extends Component {
               {`Show Completed (${numCompleted})`}
             </Button>
           )}
-        </PageHeaderContainer>
+        </HeaderContainer>
         <div className={styles.container}>{this.renderContent()}</div>
         <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
           <Modal.Body>
