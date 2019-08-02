@@ -127,10 +127,10 @@ class ProgramList extends Component {
             <Button category="success">Add Program</Button>
           </Link>
         </HeaderContainer>
-        <ContentContainer className={styles.cardContainer}>
-          {!_.isEmpty(this.props.programs.items)
-            ? this.renderCards()
-            : this.renderNoContent()}
+        <ContentContainer
+          className={!_.isEmpty(items) ? styles.cardContainer : null}
+        >
+          {!_.isEmpty(items) ? this.renderCards() : this.renderNoContent()}
         </ContentContainer>
       </MainContainer>
     );

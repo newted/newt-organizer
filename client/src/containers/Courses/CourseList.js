@@ -153,8 +153,10 @@ class CourseList extends Component {
         <HeaderContainer>
           <PageHeader>Your Courses</PageHeader>
         </HeaderContainer>
-        <ContentContainer className={styles.coursesContainer}>
-          {!_.isEmpty(this.props.courses.items)
+        <ContentContainer
+          className={!_.isEmpty(courses.items) ? styles.coursesContainer : null}
+        >
+          {!_.isEmpty(courses.items)
             ? this.renderCourseSections()
             : this.renderNoContent()}
         </ContentContainer>
