@@ -12,7 +12,7 @@ import {
   MainContainer,
   HeaderContainer
 } from "../../components/Page/Containers";
-import { PageHeader } from "../../components/Page/PageHeader";
+import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";

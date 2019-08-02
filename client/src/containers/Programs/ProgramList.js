@@ -11,7 +11,7 @@ import {
   MainContainer,
   HeaderContainer
 } from "../../components/Page/Containers";
-import { PageHeader } from "../../components/Page/PageHeader";
+import { PageHeader } from "../../components/Page/Headers";
 import { MessageBox } from "../../components/Page/MessageBox";
 import Button from "../../components/Button";
 import Card from "../../components/Card";

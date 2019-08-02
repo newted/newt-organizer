@@ -8,7 +8,7 @@ import {
   MainContainer,
   HeaderContainer
 } from "../../components/Page/Containers";
-import { PageHeader } from "../../components/Page/PageHeader";
+import { PageHeader } from "../../components/Page/Headers";
 import Form from "../../components/Form";
 import StatisticsTab from "./StatisticsTab";
 // Styling

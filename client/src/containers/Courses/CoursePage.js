@@ -11,7 +11,7 @@ import {
   MainContainer,
   HeaderContainer
 } from "../../components/Page/Containers";
-import { PageHeader } from "../../components/Page/PageHeader";
+import { PageHeader } from "../../components/Page/Headers";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";

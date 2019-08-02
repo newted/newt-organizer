@@ -3,7 +3,7 @@ import {
   MainContainer,
   HeaderContainer
 } from "../../components/Page/Containers";
-import { PageHeader } from "../../components/Page/PageHeader";
+import { PageHeader } from "../../components/Page/Headers";
 
 const LearningMap = () => (
   <MainContainer>
