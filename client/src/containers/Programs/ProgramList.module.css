@@ -13,10 +13,6 @@
   }
 }
 
-.message {
-  composes: mainMessage from "../../styles/shared.css";
-}
-
 .addProgram {
   color: var(--lightGreen);
   font-weight: 600;

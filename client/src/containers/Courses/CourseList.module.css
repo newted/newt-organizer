@@ -43,14 +43,3 @@
 .cardColor {
   background-color: var(--salmon);
 }
-
-.message {
-  composes: mainMessage from "../../styles/shared.css";
-  margin: 0 2%;
-  width: auto;
-}
-
-.link {
-  font-weight: 600;
-  text-decoration: underline;
-}

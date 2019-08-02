@@ -70,10 +70,12 @@ export const fetchPrograms = () => async dispatch => {
     // Dispatch data to store
     dispatch({
       type: FETCH_PROGRAMS,
-      payload: programs
+      // payload: programs
+      payload: []
     });
 
-    return programs;
+    // return programs;
+    return [];
   } catch (error) {
     dispatch(requestFailure(REQUEST_FAILURE_PROGRAMS, error.message, "fetch"));
   }

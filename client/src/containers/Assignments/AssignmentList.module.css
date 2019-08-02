@@ -25,13 +25,3 @@
   border: 1px solid var(--lightGreen-btn-border);
   color: var(--lightGreen-btn-border);
 }
-
-.link {
-  font-weight: 600;
-  text-decoration: underline;
-}
-
-.message {
-  composes: mainMessage from "../../styles/shared.css";
-  margin: 0;
-}

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // Components
 import MainContainer from "../../components/Page/MainContainer";
@@ -9,12 +8,11 @@ import {
   PageHeaderContainer,
   PageHeader
 } from "../../components/Page/PageHeader";
+import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import Loader from "../../components/Loader";
 import Timeline from "./Timeline";
 // API
 import { fetchAllCourses } from "../../actions/courses";
-// Styling
-import styles from "./Dashboard.module.css";
 
 class Dashboard extends Component {
   static propTypes = {
@@ -26,18 +24,14 @@ class Dashboard extends Component {
 
   renderContent() {
     const { programs } = this.props;
-    const programLink = (
-      <Link to="/programs" className={styles.link}>
-        Programs
-      </Link>
-    );
 
     if (_.isEmpty(programs.items)) {
       return (
-        <div className={styles.message}>
-          You aren't in any programs. Go to the {programLink} page from the
+        <MessageBox>
+          You aren't in any programs. Go to the{" "}
+          <MessageLink to="/programs">Programs</MessageLink> page from the
           sidebar to create a Program.
-        </div>
+        </MessageBox>
       );
     }
 

@@ -1,4 +1,5 @@
-.message {
+.messageBox {
+  width: 100%;
   padding: 1.5rem;
   border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
@@ -6,7 +7,7 @@
   min-width: 350px;
 }
 
-.link {
+.messageLink {
   font-weight: 600;
   text-decoration: underline;
 }

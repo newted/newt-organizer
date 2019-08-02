@@ -16,6 +16,7 @@ import {
   PageHeaderContainer,
   PageHeader
 } from "../../components/Page/PageHeader";
+import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
@@ -256,10 +257,10 @@ class AssignmentList extends Component {
       );
 
       return (
-        <div className={styles.message}>
+        <MessageBox>
           You currently have no assignments. Add an assignment from one of the
-          courses on the {coursesLink} page.
-        </div>
+          courses on the <MessageLink to="/courses">Courses</MessageLink> page.
+        </MessageBox>
       );
     }
 

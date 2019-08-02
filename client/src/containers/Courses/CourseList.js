@@ -13,6 +13,7 @@ import {
   PageHeaderContainer,
   PageHeader
 } from "../../components/Page/PageHeader";
+import { MessageBox, MessageLink } from "../../components/Page/MessageBox";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
 // Helpers
@@ -89,26 +90,24 @@ class CourseList extends Component {
   }
 
   renderNoContent() {
-    const programLink = (
-      <Link to="/programs" className={styles.link}>
-        Programs
-      </Link>
-    );
+    const { programs } = this.props;
 
-    if (_.isEmpty(this.props.programs.items)) {
+    if (_.isEmpty(programs.items)) {
       return (
-        <div className={styles.message}>
-          You aren't in any programs. Go to the {programLink} page from the
+        <MessageBox>
+          You aren't in any programs. Go to the{" "}
+          <MessageLink to="/programs">Programs</MessageLink> page from the
           sidebar to create a Program.
-        </div>
+        </MessageBox>
       );
     }
 
     return (
-      <div className={styles.message}>
+      <MessageBox>
         There are no courses to display. Add a course in any of your{" "}
-        {programLink} to see your courses listed here.
-      </div>
+        <MessageLink to="/programs">Programs</MessageLink> to see your courses
+        listed here.
+      </MessageBox>
     );
   }
 
