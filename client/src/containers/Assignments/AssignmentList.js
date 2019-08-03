@@ -3,11 +3,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import { withToastManager } from "react-toast-notifications";
 // API
-import {
-  markAssignmentAsComplete,
-  markAssignmentAsIncomplete,
-  deleteAssignment
-} from "../../actions/assignments";
+import { deleteAssignment } from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
 import {
@@ -241,11 +237,7 @@ class AssignmentList extends Component {
   }
 
   renderContent() {
-    const {
-      assignments,
-      markAssignmentAsComplete,
-      markAssignmentAsIncomplete
-    } = this.props;
+    const { assignments } = this.props;
     const { currentAssignment, showDropdown } = this.state;
 
     if (_.isEmpty(assignments)) {
@@ -265,8 +257,6 @@ class AssignmentList extends Component {
         </div>
         <AssignmentContent
           assignment={currentAssignment}
-          onComplete={markAssignmentAsComplete}
-          onIncomplete={markAssignmentAsIncomplete}
           dropdownVisible={showDropdown}
           handleOpenDropdown={this.openDropdown}
           handleOpenModal={this.openModal}
@@ -386,8 +376,6 @@ function mapStateToProps({ programs, courses, content, knowledgeMap }, props) {
 }
 
 const mapDispatchToProps = {
-  markAssignmentAsComplete,
-  markAssignmentAsIncomplete,
   deleteAssignment,
   fetchAllCourses,
   resolveCourses
