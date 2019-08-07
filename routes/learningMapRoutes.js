@@ -18,7 +18,11 @@ module.exports = app => {
 
       // If it does exist, send existing one to client
       if (existingLearningMap) {
-        res.send(existingLearningMap);
+        // Get the associated personal knowledge map info
+        const personalKnowledgeMap = await PersonalKnowledgeMap.findById(
+          existingLearningMap.knowledgeMap
+        );
+        res.send({ personalKnowledgeMap, learningMap: existingLearningMap });
       } else {
         // Create a Personal Knowledge Map
         const personalKnowledgeMap = new PersonalKnowledgeMap({});
@@ -41,7 +45,6 @@ module.exports = app => {
           if (error) {
             res.send(error);
           } else {
-            console.log(doc);
             res.send(doc);
           }
         });

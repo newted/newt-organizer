@@ -20,11 +20,13 @@ export const getLearningMap = () => async dispatch => {
         headers: { Authorization: idToken }
       }
     );
-    console.log(res);
+    const { learningMap, personalKnowledgeMap } = res.data;
+    // Replace learning map's knowledgeMap id with all the knowledgeMap info
+    learningMap.knowledgeMap = personalKnowledgeMap;
 
     dispatch({
       type: GET_LEARNING_MAP,
-      payload: res.data
+      payload: learningMap
     });
   } catch (error) {
     dispatch({ type: RESOLVE_LEARNING_MAP });
