@@ -20,6 +20,7 @@ export const getLearningMap = () => async dispatch => {
         headers: { Authorization: idToken }
       }
     );
+    console.log(res);
 
     dispatch({
       type: GET_LEARNING_MAP,
