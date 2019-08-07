@@ -6,10 +6,13 @@ const learningMapSchema = new Schema({
     type: String,
     ref: "User"
   },
-  knowledgeMap: {
-    type: Schema.Types.ObjectId,
-    ref: "PersonalKnowledgeMap"
-  },
+  // Each personal knowledge map is a different knowledge module
+  knowledgeMap: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "PersonalKnowledgeMap"
+    }
+  ],
   dateCreated: Date,
   lastUpdated: Date
 });

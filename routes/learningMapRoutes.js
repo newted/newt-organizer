@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
 const LearningMap = mongoose.model("learningMaps");
-const PersonalKnowledgeMap = mongoose.model("personal-knowledge-maps");
 
 module.exports = app => {
   // POST request to create an initial learning map if one doesn't already
@@ -20,21 +19,11 @@ module.exports = app => {
       if (existingLearningMap) {
         res.send(existingLearningMap);
       } else {
-        // Create a Personal Knowledge Map
-        const personalKnowledgeMap = new PersonalKnowledgeMap({});
-
         // Create Learning Map
         const learningMap = new LearningMap({
           _user: userId,
-          knowledgeMap: personalKnowledgeMap._id,
           dateCreated: Date.now(),
           lastUpdated: Date.now()
-        });
-
-        personalKnowledgeMap.save((error, doc) => {
-          if (error) {
-            res.send(error);
-          }
         });
 
         learningMap.save((error, doc) => {
