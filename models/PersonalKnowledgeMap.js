@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const contentHistorySchema = new Schema({
-  contentId: {
-    type: Schema.Types.ObjectId,
-    ref: "Content"
+const contentHistorySchema = new Schema(
+  {
+    contentId: {
+      type: Schema.Types.ObjectId,
+      ref: "Content"
+    },
+    dateCompleted: Date
   },
-  dateCompleted: Date,
-  lastUpdated: Date
-});
+  { _id: false }
+);
 
 const learningTopicSchema = new Schema({
   name: String,
@@ -16,12 +18,8 @@ const learningTopicSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Topic"
   },
-  contentHistoryIds: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "PersonalKnowledgeMap.contentHistory"
-    }
-  ],
+  // Content history specific to this particular topic
+  contentHistory: [contentHistorySchema],
   confidenceRating: {
     type: Number,
     default: 0,
@@ -31,6 +29,10 @@ const learningTopicSchema = new Schema({
 });
 
 const personalKnowledgeMapSchema = new Schema({
+  learningMapId: {
+    type: Schema.Types.ObjectId,
+    ref: "LearningMap"
+  },
   knowledgeSubjectId: {
     type: Schema.Types.ObjectId,
     ref: "KnowledgeSubject"
@@ -39,6 +41,7 @@ const personalKnowledgeMapSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "KnowledgeSubject.modules"
   },
+  // Content history specific to this particular knowledge module
   contentHistory: [contentHistorySchema],
   primaryTopics: [learningTopicSchema],
   secondaryTopics: [learningTopicSchema]
