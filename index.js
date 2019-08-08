@@ -5,6 +5,8 @@ const keys = require("./config/keys");
 
 // Require models
 require("./models");
+// Require shared models
+require("newt-knowledge-map-models");
 
 // Require firebase admin initialization
 require("./services/firebase-admin");
