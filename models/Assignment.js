@@ -12,6 +12,35 @@ const assignmentSchema = new Schema({
     type: Boolean,
     default: false
   },
+  hasKnowledgeTracking: {
+    type: Boolean,
+    default: false
+  },
+  // Denormalized from Content collection (name and level)
+  contentInfo: {
+    name: String,
+    level: Number,
+    contentId: {
+      type: Schema.Types.ObjectId,
+      ref: "Content"
+    }
+  },
+  // Denormalized from KnowledgeSubject (name)
+  knowledgeSubject: {
+    name: String,
+    knowledgeSubjectId: {
+      type: Schema.Types.ObjectId,
+      ref: "KnowledgeSubject"
+    }
+  },
+  // Denormalized from KnowledgeModule (name)
+  knowledgeModule: {
+    name: String,
+    knowledgeModuleId: {
+      type: Schema.Types.ObjectId,
+      ref: "KnowledgeModule"
+    }
+  },
   dateCreated: Date,
   dateDue: Date,
   source: {

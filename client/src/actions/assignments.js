@@ -55,7 +55,7 @@ export const createAssignment = (
 export const createYoutubeAssignment = (
   courseId,
   values,
-  videoInfo,
+  otherInfo,
   history
 ) => async dispatch => {
   try {
@@ -65,7 +65,7 @@ export const createYoutubeAssignment = (
 
     let data = {
       values,
-      videoInfo
+      otherInfo
     };
 
     // Make request to create assignment with authorization header
