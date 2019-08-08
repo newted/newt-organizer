@@ -23,7 +23,7 @@ module.exports = app => {
       // Initialize object for video/content info
       let videoInfo = {
         videoData: {},
-        hasSkillsTracking: false
+        hasKnowledgeTracking: false
       };
 
       // If the Content collection has a video with that id (that is, if it has
@@ -46,7 +46,7 @@ module.exports = app => {
             // If there's a result, this content has knowledge tracking. Thus
             // add the additional information to the videoInfo object
             if (content) {
-              videoInfo.hasSkillsTracking = true;
+              videoInfo.hasKnowledgeTracking = true;
               videoInfo["contentId"] = content._id;
               videoInfo["knowledgeSubjectId"] =
                 content.knowledgeSubject.knowledgeSubjectId;

@@ -12,8 +12,8 @@ import styles from "./AddAssignmentConfirmation.module.css";
 class AddAssignmentConfirmation extends Component {
   state = {
     values: {
-      name: this.props.videoInfo.snippet.title,
-      details: this.props.videoInfo.snippet.description,
+      name: this.props.videoInfo.videoData.snippet.title,
+      details: this.props.videoInfo.videoData.snippet.description,
       dateDue: null
     },
     touched: {
@@ -141,20 +141,20 @@ class AddAssignmentConfirmation extends Component {
       const { values } = this.state;
       const {
         courseId,
-        videoInfo,
+        videoInfo: { videoData },
         createYoutubeAssignment,
         history
       } = this.props;
 
       let info = {
-        videoId: videoInfo.id,
-        channelId: videoInfo.snippet.channelId,
-        datePublished: videoInfo.snippet.publishedAt,
+        videoId: videoData.id,
+        channelId: videoData.snippet.channelId,
+        datePublished: videoData.snippet.publishedAt,
         thumbnails: {
           maxres: {
-            url: videoInfo.snippet.thumbnails.maxres.url,
-            width: videoInfo.snippet.thumbnails.maxres.width,
-            height: videoInfo.snippet.thumbnails.maxres.height
+            url: videoData.snippet.thumbnails.maxres.url,
+            width: videoData.snippet.thumbnails.maxres.width,
+            height: videoData.snippet.thumbnails.maxres.height
           }
         }
       };
@@ -166,19 +166,22 @@ class AddAssignmentConfirmation extends Component {
   };
 
   render() {
-    const { videoInfo, handleGoBackToForm } = this.props;
+    const {
+      videoInfo: { videoData, hasKnowledgeTracking },
+      handleGoBackToForm
+    } = this.props;
 
     return (
       <div className={styles.container}>
         <div className={styles.videoPreview}>
           <img
-            src={videoInfo.snippet.thumbnails.maxres.url}
-            height={videoInfo.snippet.thumbnails.medium.height}
-            width={videoInfo.snippet.thumbnails.medium.width}
-            alt={videoInfo.snippet.title}
+            src={videoData.snippet.thumbnails.maxres.url}
+            height={videoData.snippet.thumbnails.medium.height}
+            width={videoData.snippet.thumbnails.medium.width}
+            alt={videoData.snippet.title}
           />
           <form className={styles.formContainer}>
-            <div className={styles.formRowOne}>
+            <div className={styles.formRow}>
               <div className={`${styles.inputGroup} ${styles.inputGroupLeft}`}>
                 <label>Name</label>
                 <input
@@ -195,7 +198,7 @@ class AddAssignmentConfirmation extends Component {
                   </small>
                 )}
               </div>
-              <div className={styles.inputGroup}>
+              <div className={`${styles.inputGroup} ${styles.inputGroupRight}`}>
                 <label>Due Date</label>
                 <DatePicker
                   name="dateDue"
@@ -213,19 +216,32 @@ class AddAssignmentConfirmation extends Component {
                 )}
               </div>
             </div>
-            <div className={styles.inputGroup} style={{ width: "70%" }}>
-              <div>
-                <label style={{ marginRight: ".5rem" }}>Details</label>
-                <span className={styles.optional}>Optional</span>
+            <div className={styles.formRow}>
+              <div className={`${styles.inputGroup} ${styles.inputGroupLeft}`}>
+                <div>
+                  <label style={{ marginRight: ".5rem" }}>Details</label>
+                  <span className={styles.optional}>Optional</span>
+                </div>
+                <textarea
+                  name="details"
+                  type="text"
+                  rows={4}
+                  value={this.state.values.details}
+                  className={styles.input}
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleBlur}
+                />
               </div>
-              <textarea
-                name="details"
-                type="text"
-                value={this.state.values.details}
-                className={styles.input}
-                onChange={this.handleInputChange}
-                onBlur={this.handleBlur}
-              />
+              <div className={`${styles.inputGroup} ${styles.inputGroupRight}`}>
+                <label style={{ marginRight: ".5rem" }}>
+                  Knowledge Tracking
+                </label>
+                <p
+                  style={{ marginTop: "0.625rem", color: "var(--darkGrey-2)" }}
+                >
+                  {hasKnowledgeTracking ? "Yes" : "No"}
+                </p>
+              </div>
             </div>
           </form>
         </div>
