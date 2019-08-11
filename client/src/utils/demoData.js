@@ -58,7 +58,7 @@ const courses = {
       {
         completed: false,
         dateCreated: "2019-02-20T23:25:48.205Z",
-        dateDue: futureDueDater(1),
+        dateDue: futureDueDater(2),
         details: "Storing and using component-specific data.",
         inProgress: false,
         name: "Managing State",
@@ -127,7 +127,7 @@ const courses = {
       {
         completed: false,
         dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: futureDueDater(1),
+        dateDue: futureDueDater(2),
         details:
           "John presents Mesopotamia, and the early civilizations that arose around the Fertile Crescent",
         inProgress: false,
@@ -154,7 +154,7 @@ const courses = {
       {
         completed: false,
         dateCreated: "2019-08-08T21:25:48.205Z",
-        dateDue: prevDueDater(1),
+        dateDue: futureDueDater(1),
         details:
           "We're going to take a look at computing's origins, because even though our digital computers are relatively new, the need for computation is not!",
         inProgress: false,
@@ -175,6 +175,19 @@ const courses = {
           }
         },
         hasKnowledgeTracking: true,
+        contentInfo: {
+          primaryTopics: [
+            { name: "abacus" },
+            { name: "Analytical Engine" },
+            { name: "Hollerith Machine" },
+            { name: "pre-computed tables" },
+            { name: "punch cards" },
+            { name: "Step Reckoner" }
+          ]
+        },
+        knowledgeModule: {
+          name: "History of Computer Science"
+        },
         source: "youtube"
       }
     ],
