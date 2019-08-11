@@ -37,7 +37,13 @@ module.exports = app => {
           // Find by mediaId and source name
           { "source.name": "YouTube", "source.mediaId": videoId },
           // Projection to only return specific, required information
-          { _id: 1, knowledgeSubject: 1, knowledgeModule: 1 },
+          {
+            _id: 1,
+            name: 1,
+            level: 1,
+            knowledgeSubject: 1,
+            knowledgeModule: 1
+          },
           (error, content) => {
             if (error) {
               res.send(error);
@@ -47,12 +53,22 @@ module.exports = app => {
             // add the additional information to the videoInfo object
             if (content) {
               videoInfo.hasKnowledgeTracking = true;
-              videoInfo["contentId"] = content._id;
-              videoInfo["knowledgeSubjectId"] =
-                content.knowledgeSubject.knowledgeSubjectId;
-              videoInfo["knowledgeModuleId"] =
-                content.knowledgeModule.knowledgeModuleId;
-
+              // Add content info
+              videoInfo["contentInfo"] = {
+                name: content.name,
+                level: content.level,
+                contentId: content._id
+              };
+              // Add knowledge subject info
+              videoInfo["knowledgeSubject"] = {
+                name: content.knowledgeSubject.name,
+                knowledgeSubjectId: content.knowledgeSubject.knowledgeSubjectId
+              };
+              // Add knowledge module info
+              videoInfo["knowledgeModule"] = {
+                name: content.knowledgeModule.name,
+                knowledgeModuleId: content.knowledgeModule.knowledgeModuleId
+              };
               // Send data
               res.send(videoInfo);
             } else {
