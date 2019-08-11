@@ -71,6 +71,36 @@
   height: 100%;
 }
 
-.details {
-  /* margin-top: 1.5rem; */
+.knowledgeInfoContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.25rem;
+  background-color: rgba(0, 123, 255, 0.35);
+  padding: 0.75rem;
+  color: var(--off-black);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+.knowledgeInfoContainer h4 {
+  font-size: 1.1rem;
+  color: var(--off-black);
+  text-decoration: underline;
+  margin-bottom: 0.75rem;
+}
+
+.knowledgeInfoItem {
+  display: flex;
+  margin-bottom: 0.35rem;
+}
+
+.knowledgeInfoItem p:first-child {
+  min-width: 130px;
+  margin-right: 0.75rem;
+}
+
+.subheading {
+  font-size: 1.1rem;
+  color: var(--darkGrey);
+  margin-bottom: 0.5rem;
 }
