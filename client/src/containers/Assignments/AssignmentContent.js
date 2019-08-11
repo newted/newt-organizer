@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
+// API
+import {
+  markAssignmentAsComplete,
+  markAssignmentAsIncomplete
+} from "../../actions/assignments";
 // Components
 import Dropdown from "../../components/Dropdown";
 // Styling
@@ -11,8 +17,8 @@ class AssignmentContent extends Component {
   render() {
     const {
       assignment,
-      onComplete,
-      onIncomplete,
+      markAssignmentAsComplete,
+      markAssignmentAsIncomplete,
       dropdownVisible,
       handleOpenDropdown,
       handleOpenModal,
@@ -31,8 +37,14 @@ class AssignmentContent extends Component {
               style={{ height: "26px" }}
               onClick={() =>
                 assignment.completed
-                  ? onIncomplete(assignment.courseId, assignment._id)
-                  : onComplete(assignment.courseId, assignment._id)
+                  ? markAssignmentAsIncomplete(
+                      assignment.courseId,
+                      assignment._id
+                    )
+                  : markAssignmentAsComplete(
+                      assignment.courseId,
+                      assignment._id
+                    )
               }
             >
               <FiCheckSquare
@@ -117,4 +129,12 @@ class AssignmentContent extends Component {
   }
 }
 
-export default withRouter(AssignmentContent);
+const mapDispatchToProps = {
+  markAssignmentAsComplete,
+  markAssignmentAsIncomplete
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(AssignmentContent));
