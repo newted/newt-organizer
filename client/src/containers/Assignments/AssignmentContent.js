@@ -94,6 +94,14 @@ class AssignmentContent extends Component {
                 <p>Main Subject:</p>
                 <p>{assignment.knowledgeModule.name}</p>
               </div>
+              <div className={styles.knowledgeInfoItem}>
+                <p>Topics Covered:</p>
+                <p>
+                  {assignment.contentInfo.primaryTopics
+                    .map(({ name }) => name)
+                    .join(", ")}
+                </p>
+              </div>
             </div>
           )}
           {/* If assignment has a description, display it */}
