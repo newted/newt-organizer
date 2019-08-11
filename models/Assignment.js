@@ -20,6 +20,20 @@ const assignmentSchema = new Schema({
   contentInfo: {
     name: String,
     level: Number,
+    primaryTopics: [
+      {
+        name: String,
+        category: String,
+        topicId: Schema.Types.ObjectId
+      }
+    ],
+    secondaryTopics: [
+      {
+        name: String,
+        category: String,
+        topicId: Schema.Types.ObjectId
+      }
+    ],
     contentId: {
       type: Schema.Types.ObjectId,
       ref: "Content"
