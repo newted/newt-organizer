@@ -42,7 +42,9 @@ module.exports = app => {
             name: 1,
             level: 1,
             knowledgeSubject: 1,
-            knowledgeModule: 1
+            knowledgeModule: 1,
+            primaryTopics: 1,
+            secondaryTopics: 1
           },
           (error, content) => {
             if (error) {
@@ -57,6 +59,8 @@ module.exports = app => {
               videoInfo["contentInfo"] = {
                 name: content.name,
                 level: content.level,
+                primaryTopics: content.primaryTopics,
+                secondaryTopics: content.secondaryTopics,
                 contentId: content._id
               };
               // Add knowledge subject info
