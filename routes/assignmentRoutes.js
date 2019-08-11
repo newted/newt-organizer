@@ -47,13 +47,22 @@ module.exports = app => {
 
       const {
         values: { name, details, dateDue },
-        otherInfo: { hasKnowledgeTracking, videoInfo }
+        otherInfo: {
+          hasKnowledgeTracking,
+          videoInfo,
+          contentInfo,
+          knowledgeSubject,
+          knowledgeModule
+        }
       } = req.body;
 
       const assignment = {
         name,
         details,
         hasKnowledgeTracking,
+        contentInfo,
+        knowledgeSubject,
+        knowledgeModule,
         videoInfo,
         dateDue,
         dateCreated: Date.now(),
