@@ -39,41 +39,58 @@ module.exports = app => {
 
   // POST request to create a Youtube assignment (should merge with general
   // createAssignment route later).
-  app.post("/api/courses/:courseId/youtubeAssignment", requireLogin, (req, res) => {
-    const { courseId } = req.params;
+  app.post(
+    "/api/courses/:courseId/youtubeAssignment",
+    requireLogin,
+    (req, res) => {
+      const { courseId } = req.params;
 
-    const { values: { name, details, dateDue }, videoInfo } = req.body;
-
-    const assignment = {
-      name,
-      details,
-      dateDue,
-      videoInfo,
-      dateCreated: Date.now(),
-      source: "youtube"
-    };
-
-    Course.findOneAndUpdate(
-      {
-        _id: courseId
-      },
-      {
-        $push: {
-          assignments: assignment
+      const {
+        values: { name, details, dateDue },
+        otherInfo: {
+          hasKnowledgeTracking,
+          videoInfo,
+          contentInfo,
+          knowledgeSubject,
+          knowledgeModule
         }
-      },
-      {
-        new: true
-      },
-      (error, course) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(course);
+      } = req.body;
+
+      const assignment = {
+        name,
+        details,
+        hasKnowledgeTracking,
+        contentInfo,
+        knowledgeSubject,
+        knowledgeModule,
+        videoInfo,
+        dateDue,
+        dateCreated: Date.now(),
+        source: "youtube"
+      };
+
+      Course.findOneAndUpdate(
+        {
+          _id: courseId
+        },
+        {
+          $push: {
+            assignments: assignment
+          }
+        },
+        {
+          new: true
+        },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
         }
-      }
-    );
-  });
+      );
+    }
+  );
 
   // PUT request to edit assignment information
   app.put(

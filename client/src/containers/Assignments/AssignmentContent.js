@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 // Components
@@ -54,9 +54,7 @@ class AssignmentContent extends Component {
                 <Dropdown.Item
                   onClick={() =>
                     history.push(
-                      `/courses/${assignment.courseId}/assignments/${
-                        assignment._id
-                      }/edit`
+                      `/courses/${assignment.courseId}/assignments/${assignment._id}/edit`
                     )
                   }
                 >
@@ -72,6 +70,7 @@ class AssignmentContent extends Component {
           </div>
         </div>
         <div className={styles.contentContainerBody}>
+          {/* If the assignment is from Youtube, display video iframe */}
           {assignment.source === "youtube" && (
             <div className={styles.videoContainer}>
               <iframe
@@ -80,15 +79,38 @@ class AssignmentContent extends Component {
                 title={assignment.name}
                 width="640"
                 height="360"
-                src={`https://www.youtube.com/embed/${
-                  assignment.videoInfo.videoId
-                }`}
+                src={`https://www.youtube.com/embed/${assignment.videoInfo.videoId}`}
                 frameBorder="0"
                 allowFullScreen
               />
             </div>
           )}
-          <p className={styles.details}>{assignment.details}</p>
+          {/* If assignment has knowledge tracking, display related information.
+              (Just Knowledge module for now) */}
+          {assignment.hasKnowledgeTracking && (
+            <div className={styles.knowledgeInfoContainer}>
+              <h4>Learning Map Info</h4>
+              <div className={styles.knowledgeInfoItem}>
+                <p>Main Subject:</p>
+                <p>{assignment.knowledgeModule.name}</p>
+              </div>
+              <div className={styles.knowledgeInfoItem}>
+                <p>Topics Covered:</p>
+                <p>
+                  {assignment.contentInfo.primaryTopics
+                    .map(({ name }) => name)
+                    .join(", ")}
+                </p>
+              </div>
+            </div>
+          )}
+          {/* If assignment has a description, display it */}
+          {assignment.details && (
+            <Fragment>
+              <h4 className={styles.subheading}>Description</h4>
+              <p className={styles.details}>{assignment.details}</p>
+            </Fragment>
+          )}
         </div>
       </div>
     );

@@ -55,7 +55,7 @@ export const createAssignment = (
 export const createYoutubeAssignment = (
   courseId,
   values,
-  videoInfo,
+  otherInfo,
   history
 ) => async dispatch => {
   try {
@@ -65,7 +65,7 @@ export const createYoutubeAssignment = (
 
     let data = {
       values,
-      videoInfo
+      otherInfo
     };
 
     // Make request to create assignment with authorization header
@@ -253,6 +253,7 @@ export async function getYoutubeVideoInfo(videoUrl) {
   try {
     // Make request to server, which will make YouTube API request.
     const res = await axios.get(`/api/youtube/videoInfo/${videoId}`);
+
     return res.data;
   } catch (error) {
     console.log(error);
