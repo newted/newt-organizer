@@ -24,7 +24,7 @@ const learningTopicSchema = new Schema(
     },
     category: String,
     // Content history specific to this particular topic
-    contentHistory: [contentHistory],
+    contentHistory: [contentHistorySchema],
     confidenceRating: {
       type: Number,
       default: 0,
