@@ -13,3 +13,8 @@
   margin: 1rem 2%;
   min-width: 350px;
 }
+
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+}
