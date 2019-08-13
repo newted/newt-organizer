@@ -54,7 +54,29 @@ module.exports = app => {
     }
   });
 
-  // PUT request to update user's learning map (and personal knowledge map)
+  app.post("/api/learning-map/knowledge-map", requireLogin, (req, res) => {
+    // Array of knowledge map ids in request body (which are in Learning map's
+    // knowledgeMap field)
+    const { knowledgeMapIds } = req.body;
+
+    // Get all knowledge maps that are in the array of ids and send them
+    PersonalKnowledgeMap.find(
+      {
+        _id: {
+          $in: knowledgeMapIds
+        }
+      },
+      (error, knowledgeMaps) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.send(knowledgeMaps);
+        }
+      }
+    );
+  });
+
+  // PUT request to update user's learning map and personal knowledge map
   // after completing some content
   app.put(
     "/api/learning-map/:learningMapId/update",
