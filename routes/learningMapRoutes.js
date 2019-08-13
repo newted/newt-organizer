@@ -71,44 +71,41 @@ module.exports = app => {
         // Find user's learning map through id
         const learningMap = await LearningMap.findById(learningMapId);
 
-        // If Learning map exists, make updats
+        // If Learning map exists, make updates
         if (learningMap) {
-          // Update lastUpdated field to now
-          learningMap.lastUpdated = Date.now();
-          await learningMap.save();
+          // await learningMap.save();
 
           // Find personal knowledge map based on learningMapId and knowledgeModuleId
-          PersonalKnowledgeMap.findOne(
-            {
+          const personalKnowledgeMap = await PersonalKnowledgeMap.findOne({
+            learningMapId,
+            "knowledgeModule.knowledgeModuleId":
+              knowledgeModule.knowledgeModuleId
+          });
+
+          if (!personalKnowledgeMap) {
+            console.log("Gotta create a personal map");
+            const personalKMap = new PersonalKnowledgeMap({
               learningMapId,
-              "knowledgeModule.knowledgeModuleId":
-                knowledgeModule.knowledgeModuleId
-            },
-            async (error, kMap) => {
-              if (error) {
-                res.send(error);
-              }
+              knowledgeSubject,
+              knowledgeModule,
+              contentHistory,
+              topics
+            });
 
-              // If particular map doesn't exist, create one and send learning map
-              // and knowledge map
-              if (!kMap) {
-                const personalKMap = new PersonalKnowledgeMap({
-                  learningMapId,
-                  knowledgeSubject,
-                  knowledgeModule,
-                  contentHistory,
-                  topics
-                });
+            // Add knowledgeMap id to Learning Map
+            learningMap.knowledgeMap.push(personalKMap._id);
+            // Update lastUpdated field to now
+            learningMap.lastUpdated = Date.now();
 
-                await personalKMap.save();
-                res.send({ learningMap, personalKnowledgeMap: personalKMap });
-              } else {
-                // TODO: Update existing knowledge map
-                console.log(kMap);
-                res.send({ learningMap, personalKnowledgeMap: kMap });
-              }
-            }
-          );
+            // Save changes to learning map and knowledge map on database
+            await learningMap.save();
+            await personalKMap.save();
+            res.send({ learningMap, personalKnowledgeMap: personalKMap });
+          } else {
+            // TODO: Update existing knowledge map
+            console.log(personalKnowledgeMap);
+            res.send({ learningMap, personalKnowledgeMap });
+          }
         }
       } catch (error) {
         res.send(error);

@@ -28,7 +28,7 @@ export default function(
         isFetching: false,
         items: {
           ...state.items,
-          [action.payload._id]: action.payload
+          ...action.payload
         }
       };
     default:
