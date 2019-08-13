@@ -1,7 +1,8 @@
 import {
   REQUEST_LEARNING_MAP,
   RESOLVE_LEARNING_MAP,
-  GET_LEARNING_MAP
+  GET_LEARNING_MAP,
+  UPDATE_LEARNING_MAP
 } from "../actions/learningMap";
 
 export default function(
@@ -23,6 +24,7 @@ export default function(
         isFetching: false
       };
     case GET_LEARNING_MAP:
+    case UPDATE_LEARNING_MAP:
       return {
         ...state,
         isFetching: false,

@@ -7,6 +7,7 @@ import {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete
 } from "../../actions/assignments";
+import { updateLearningMap } from "../../actions/learningMap";
 // Components
 import Dropdown from "../../components/Dropdown";
 // Styling
@@ -14,10 +15,42 @@ import styles from "./AssignmentContent.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
 class AssignmentContent extends Component {
+  onComplete = (courseId, assignmentId) => {
+    const { assignment, markAssignmentAsComplete } = this.props;
+
+    // If assignment has knowledge tracking, send request to update the learning
+    // map and send the required information
+    if (assignment.hasKnowledgeTracking) {
+      const {
+        assignment: { contentInfo, knowledgeSubject, knowledgeModule },
+        learningMapId,
+        updateLearningMap
+      } = this.props;
+      // Combine primary and secondary topics into a singular topics array
+      const allTopics = contentInfo.primaryTopics.concat(
+        contentInfo.secondaryTopics
+      );
+
+      const data = {
+        knowledgeSubject,
+        knowledgeModule,
+        topics: allTopics,
+        contentHistory: {
+          name: contentInfo.name,
+          contentId: contentInfo.contentId
+        }
+      };
+      // Send request to update learning map
+      updateLearningMap(learningMapId, data);
+    }
+
+    // Send request to mark the assignment as complete
+    markAssignmentAsComplete(courseId, assignmentId);
+  };
+
   render() {
     const {
       assignment,
-      markAssignmentAsComplete,
       markAssignmentAsIncomplete,
       dropdownVisible,
       handleOpenDropdown,
@@ -41,10 +74,7 @@ class AssignmentContent extends Component {
                       assignment.courseId,
                       assignment._id
                     )
-                  : markAssignmentAsComplete(
-                      assignment.courseId,
-                      assignment._id
-                    )
+                  : this.onComplete(assignment.courseId, assignment._id)
               }
             >
               <FiCheckSquare
@@ -129,12 +159,17 @@ class AssignmentContent extends Component {
   }
 }
 
+function mapStateToProps({ learningMap }) {
+  return { learningMapId: learningMap.items._id };
+}
+
 const mapDispatchToProps = {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete
+  markAssignmentAsIncomplete,
+  updateLearningMap
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(AssignmentContent));
