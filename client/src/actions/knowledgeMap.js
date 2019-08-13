@@ -1,8 +1,10 @@
 import axios from "axios";
+import _ from "lodash";
 import firebase from "../config/firebase";
 
 export const REQUEST_KNOWLEDGE_MAP = "REQUEST_KNOWLEDGE_MAP";
 export const RESOLVE_KNOWLEDGE_MAP = "RESOLVE_KNOWLEDGE_MAP";
+export const GET_KNOWLEDGE_MAPS = "GET_KNOWLEDGE_MAPS";
 export const UPDATE_KNOWLEDGE_MAP = "UPDATE_KNOWLEDGE_MAP";
 
 export const getKnowledgeMaps = knowledgeMapIds => async dispatch => {
@@ -19,6 +21,32 @@ export const getKnowledgeMaps = knowledgeMapIds => async dispatch => {
       }
     );
 
-    console.log(res.data);
-  } catch (error) {}
+    // Reorganize the data from array of knowledge map objects to the tree structure
+    const formattedData = arrayOfObjToTree(res.data);
+    dispatch({ type: GET_KNOWLEDGE_MAPS, payload: formattedData });
+  } catch (error) {
+    dispatch({ type: RESOLVE_KNOWLEDGE_MAP });
+    console.log(error);
+  }
 };
+
+function arrayOfObjToTree(kMapArray) {
+  let result = {};
+
+  kMapArray.forEach(kMap => {
+    const {
+      knowledgeSubject: { knowledgeSubjectId },
+      knowledgeModule: { knowledgeModuleId }
+    } = kMap;
+
+    // If the particular subject isn't in the object, initialize it
+    if (_.isEmpty(result[knowledgeSubjectId])) {
+      result[knowledgeSubjectId] = {};
+    }
+
+    // Add the module under the subject
+    result[knowledgeSubjectId][knowledgeModuleId] = kMap;
+  });
+
+  return result;
+}

@@ -3,10 +3,27 @@ import _ from "lodash";
 import { connect } from "react-redux";
 // Components
 import Loader from "../../components/Loader";
+// API
+import { getKnowledgeMaps } from "../../actions/knowledgeMap";
 // Styling
 import styles from "./LearningMap.module.css";
 
 class LearningMap extends Component {
+  componentDidUpdate() {
+    const {
+      isFetching,
+      learningMap,
+      knowledgeMap,
+      getKnowledgeMaps
+    } = this.props;
+
+    // If the learning map exists and the knowledge map doesn't and neither of
+    // them are being fetched, request to get the knowledge maps
+    if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
+      getKnowledgeMaps(learningMap.knowledgeMap);
+    }
+  }
+
   renderNoContent() {
     return (
       <div className={styles.message}>
@@ -44,11 +61,18 @@ class LearningMap extends Component {
 }
 
 function mapStateToProps({ learningMap, knowledgeMap }) {
+  const isFetching = learningMap.isFetching || knowledgeMap.isFetching;
+
   return {
-    isFetching: learningMap.isFetching,
+    isFetching,
     learningMap: learningMap.items,
     knowledgeMap: knowledgeMap.items
   };
 }
 
-export default connect(mapStateToProps)(LearningMap);
+const mapDispatchToProps = { getKnowledgeMaps };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LearningMap);
