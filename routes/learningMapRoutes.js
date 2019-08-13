@@ -60,7 +60,7 @@ module.exports = app => {
     requireLogin,
     async (req, res) => {
       const { learningMapId } = req.params;
-      const {
+      let {
         knowledgeSubject,
         knowledgeModule,
         contentHistory,
@@ -73,8 +73,6 @@ module.exports = app => {
 
         // If Learning map exists, make updates
         if (learningMap) {
-          // await learningMap.save();
-
           // Find personal knowledge map based on learningMapId and knowledgeModuleId
           const personalKnowledgeMap = await PersonalKnowledgeMap.findOne({
             learningMapId,
@@ -83,13 +81,25 @@ module.exports = app => {
           });
 
           if (!personalKnowledgeMap) {
-            console.log("Gotta create a personal map");
+            // Add current date as the completion date for the piece of content
+            contentHistory.dateCompleted = Date.now();
+
+            // Add "learning/ fields" (add content to content history and give a
+            // confidence rating) for each topic in the assignment/content
+            const evaluatedTopics = topics.map(topic => {
+              return Object.assign(topic, {
+                contentHistory: [contentHistory],
+                confidenceRating: 70 // Arbitrary value for now
+              });
+            });
+
+            // Create personal knowledge map
             const personalKMap = new PersonalKnowledgeMap({
               learningMapId,
               knowledgeSubject,
               knowledgeModule,
               contentHistory,
-              topics
+              topics: evaluatedTopics
             });
 
             // Add knowledgeMap id to Learning Map
