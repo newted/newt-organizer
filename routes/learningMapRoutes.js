@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const _ = require("lodash");
 const requireLogin = require("../middleware/requireLogin");
 
 const LearningMap = mongoose.model("learning-maps");
@@ -112,8 +113,56 @@ module.exports = app => {
             await personalKMap.save();
             res.send({ learningMap, personalKnowledgeMap: personalKMap });
           } else {
-            // TODO: Update existing knowledge map
-            console.log(personalKnowledgeMap);
+            // Update lastUpdated field to now
+            learningMap.lastUpdated = Date.now();
+
+            // Check if content info from the request body is already part of the
+            // personal knowledge map. If it isn't, add this content info to
+            // content history array.
+            const repeatContent = personalKnowledgeMap.contentHistory.filter(
+              ({ contentId }) => String(contentId) === contentHistory.contentId
+            );
+
+            if (_.isEmpty(repeatContent)) {
+              contentHistory.dateCompleted = Date.now();
+              personalKnowledgeMap.contentHistory.push(contentHistory);
+            }
+
+            // For each topic that's in the request body, check if it's already
+            // a part of the knowledge map. If it is, increase the confidence
+            // rating by 10 (up till a 100 - the 10 is arbitrary). If it doesn't,
+            // add the topic to the knowledge map topics array.
+            topics.forEach(topic => {
+              // Get index of body topic in map's topics (-1 if doesn't exist)
+              topicIndex = personalKnowledgeMap.topics.findIndex(
+                ({ topicId }) => String(topicId) === topic.topicId
+              );
+
+              // If the topic does exist (index >= 0), increment the confidence
+              // rating
+              if (topicIndex >= 0) {
+                const { confidenceRating } = personalKnowledgeMap.topics[
+                  topicIndex
+                ];
+
+                // Add 10 to confidence rating (up till a max of 100).
+                personalKnowledgeMap.topics[
+                  topicIndex
+                ].confidenceRating = Math.min(100, confidenceRating + 10);
+              } else {
+                contentHistory.dateCompleted = Date.now();
+                // Add learning info to topic
+                const evaluatedTopic = Object.assign(topic, {
+                  contentHistory: [contentHistory],
+                  confidenceRating: 70
+                });
+                // Add topic to knowledge map
+                personalKnowledgeMap.topics.push(evaluatedTopic);
+              }
+            });
+
+            await learningMap.save();
+            await personalKnowledgeMap.save();
             res.send({ learningMap, personalKnowledgeMap });
           }
         }
