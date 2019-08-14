@@ -57,7 +57,11 @@ class LearningMap extends Component {
 
     // If the learning map exists and the knowledge map doesn't and neither of
     // them are being fetched, request to get the knowledge maps
-    if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
+    if (
+      !isFetching &&
+      !_.isEmpty(learningMap.knowledgeMap) &&
+      _.isEmpty(knowledgeMap)
+    ) {
       getKnowledgeMaps(learningMap.knowledgeMap);
     }
 
@@ -110,9 +114,18 @@ class LearningMap extends Component {
 
   renderContent() {
     const { knowledgeMap } = this.props;
+    const { currentSubject, currentModule } = this.state;
 
     if (_.isEmpty(knowledgeMap)) {
-      this.renderNoContent();
+      return this.renderNoContent();
+    }
+
+    // Initialize learningInfo object
+    let learningInfo = {};
+
+    // Get knowledge map information for particular subject and module
+    if (currentSubject && currentModule) {
+      learningInfo = knowledgeMap[currentSubject][currentModule];
     }
 
     return (
@@ -125,7 +138,7 @@ class LearningMap extends Component {
           />
         </div>
         <div className={styles.contentContainer}>
-          <Content />
+          <Content learningInfo={learningInfo} />
         </div>
       </div>
     );
