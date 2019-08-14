@@ -29,6 +29,22 @@ class LearningMap extends Component {
     if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
       getKnowledgeMaps(learningMap.knowledgeMap);
     }
+
+    // Set the current subject and module to the first one in the knowledge map
+    // object if the object exists and there's no other subject or module set
+    if (
+      !_.isEmpty(knowledgeMap) &&
+      !this.state.currentSubject &&
+      !this.state.currentModule
+    ) {
+      const firstSubject = Object.keys(knowledgeMap)[0];
+      const firstModule = Object.keys(knowledgeMap[firstSubject])[0];
+
+      this.setState(() => ({
+        currentSubject: firstSubject,
+        currentModule: firstModule
+      }));
+    }
   }
 
   componentDidUpdate() {
@@ -43,6 +59,22 @@ class LearningMap extends Component {
     // them are being fetched, request to get the knowledge maps
     if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
       getKnowledgeMaps(learningMap.knowledgeMap);
+    }
+
+    // Set the current subject and module to the first one in the knowledge map
+    // object if the object exists and there's no other subject or module set
+    if (
+      !_.isEmpty(knowledgeMap) &&
+      !this.state.currentSubject &&
+      !this.state.currentModule
+    ) {
+      const firstSubject = Object.keys(knowledgeMap)[0];
+      const firstModule = Object.keys(knowledgeMap[firstSubject])[0];
+
+      this.setState(() => ({
+        currentSubject: firstSubject,
+        currentModule: firstModule
+      }));
     }
   }
 
