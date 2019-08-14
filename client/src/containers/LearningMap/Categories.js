@@ -6,7 +6,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { FiChevronDown } from "react-icons/fi";
 import styles from "./Categories.module.css";
 
-const Categories = ({ knowledgeMap }) => {
+const Categories = ({ knowledgeMap, setCategory }) => {
   // Get array of subjects, which are the fields of the knowledge map object
   const subjects = Object.keys(knowledgeMap);
 
@@ -31,9 +31,13 @@ const Categories = ({ knowledgeMap }) => {
             <Accordion.Collapse eventKey={String(index)}>
               <Card.Body>
                 {modules.map(module => (
-                  <p key={module} className={styles.module}>
+                  <div
+                    key={module}
+                    className={styles.module}
+                    onClick={() => setCategory(module, subject)}
+                  >
                     {module}
-                  </p>
+                  </div>
                 ))}
               </Card.Body>
             </Accordion.Collapse>

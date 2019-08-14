@@ -4,12 +4,18 @@ import { connect } from "react-redux";
 // Components
 import Loader from "../../components/Loader";
 import Categories from "./Categories";
+import Content from "./LearningMapContent";
 // API
 import { getKnowledgeMaps } from "../../actions/knowledgeMap";
 // Styling
 import styles from "./LearningMap.module.css";
 
 class LearningMap extends Component {
+  state = {
+    currentSubject: "",
+    currentModule: ""
+  };
+
   componentDidMount() {
     const {
       isFetching,
@@ -39,6 +45,16 @@ class LearningMap extends Component {
       getKnowledgeMaps(learningMap.knowledgeMap);
     }
   }
+
+  // Handler to pass to Categories component so when a particular module is
+  // clicked, the module name and subject name is sent back so that it can be
+  // used to get the necessary info to display in the Content component
+  setCurrentCategory = (moduleName, subjectName) => {
+    this.setState(() => ({
+      currentSubject: subjectName,
+      currentModule: moduleName
+    }));
+  };
 
   renderNoContent() {
     return (
@@ -71,9 +87,14 @@ class LearningMap extends Component {
       <div className={styles.container}>
         <div className={styles.categoriesContainer}>
           <h5 className={styles.subheading}>Categories</h5>
-          <Categories knowledgeMap={knowledgeMap} />
+          <Categories
+            knowledgeMap={knowledgeMap}
+            setCategory={this.setCurrentCategory}
+          />
         </div>
-        <div className={styles.contentContainer}>Content</div>
+        <div className={styles.contentContainer}>
+          <Content />
+        </div>
       </div>
     );
   }
