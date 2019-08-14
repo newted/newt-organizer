@@ -3,6 +3,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 // Components
 import Loader from "../../components/Loader";
+import Categories from "./Categories";
 // API
 import { getKnowledgeMaps } from "../../actions/knowledgeMap";
 // Styling
@@ -59,8 +60,26 @@ class LearningMap extends Component {
     );
   }
 
+  renderContent() {
+    const { knowledgeMap } = this.props;
+
+    if (_.isEmpty(knowledgeMap)) {
+      this.renderNoContent();
+    }
+
+    return (
+      <div className={styles.container}>
+        <div className={styles.categoriesContainer}>
+          <h5 className={styles.subheading}>Categories</h5>
+          <Categories />
+        </div>
+        <div className={styles.contentContainer}>Content</div>
+      </div>
+    );
+  }
+
   render() {
-    const { isFetching, knowledgeMap } = this.props;
+    const { isFetching } = this.props;
 
     if (isFetching) {
       return <Loader />;
@@ -69,7 +88,7 @@ class LearningMap extends Component {
     return (
       <div className={styles.mainContainer}>
         <h2 className={styles.headerContainer}>Learning Map</h2>
-        {_.isEmpty(knowledgeMap) && this.renderNoContent()}
+        {this.renderContent()}
       </div>
     );
   }

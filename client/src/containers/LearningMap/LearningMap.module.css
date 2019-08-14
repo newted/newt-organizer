@@ -6,6 +6,25 @@
   composes: headerContainer from "../../styles/shared.css";
 }
 
+.container {
+  display: flex;
+  padding: 1rem 2%;
+}
+
+.categoriesContainer {
+  width: 20%;
+}
+
+.contentContainer {
+  padding-left: 2rem;
+  width: 80%;
+}
+
+.subheading {
+  color: var(--darkGrey);
+  margin-bottom: 1rem;
+}
+
 .message {
   padding: 1.5rem;
   border: 1px solid var(--lightGrey);
