@@ -2,4 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 500;
+}
+
+.module {
+  font-size: 0.9rem;
+}
+
+.module:hover {
+  font-weight: 500;
+  cursor: pointer;
 }

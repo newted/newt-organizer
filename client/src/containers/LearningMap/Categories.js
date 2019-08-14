@@ -6,27 +6,45 @@ import Accordion from "react-bootstrap/Accordion";
 import { FiChevronDown } from "react-icons/fi";
 import styles from "./Categories.module.css";
 
-const Categories = () => (
-  <Accordion defaultActiveKey="0">
-    <Card>
-      <Accordion.Toggle
-        as={Card.Header}
-        className={styles.subject}
-        eventKey="0"
-      >
-        <p>Computer Science</p>
-        <FiChevronDown />
-      </Accordion.Toggle>
-      <Accordion.Collapse eventKey="0">
-        <Card.Body>
-          <div>History of Computer Science</div>
-          <div>Module 2</div>
-          <div>Module 3</div>
-        </Card.Body>
-      </Accordion.Collapse>
-    </Card>
-    <Card></Card>
-  </Accordion>
-);
+const Categories = ({ knowledgeMap }) => {
+  // Get array of subjects, which are the fields of the knowledge map object
+  const subjects = Object.keys(knowledgeMap);
+
+  return (
+    <Accordion defaultActiveKey="0">
+      {/* Map over each subject and create an accordion nav menu, with the
+          modules showing in the collapsed state. (Modules are fields of subject
+          object) */}
+      {subjects.map((subject, index) => {
+        const modules = Object.keys(knowledgeMap[subject]);
+
+        return (
+          <Card key={subject}>
+            <Accordion.Toggle
+              as={Card.Header}
+              className={styles.subject}
+              eventKey={String(index)}
+            >
+              <p>{subject}</p>
+              <FiChevronDown />
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey={String(index)}>
+              <Card.Body>
+                {modules.map(module => (
+                  <p key={module} className={styles.module}>
+                    {module}
+                  </p>
+                ))}
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        );
+      })}
+      {/* If there is only 1 subject, add an empty card because the accordion
+          component messes up UI if there's only 1 */}
+      {subjects.length === 1 && <Card></Card>}
+    </Accordion>
+  );
+};
 
 export default Categories;

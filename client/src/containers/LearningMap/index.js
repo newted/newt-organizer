@@ -71,7 +71,7 @@ class LearningMap extends Component {
       <div className={styles.container}>
         <div className={styles.categoriesContainer}>
           <h5 className={styles.subheading}>Categories</h5>
-          <Categories />
+          <Categories knowledgeMap={knowledgeMap} />
         </div>
         <div className={styles.contentContainer}>Content</div>
       </div>
