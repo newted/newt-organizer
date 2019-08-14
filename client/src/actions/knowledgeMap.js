@@ -34,18 +34,15 @@ function arrayOfObjToTree(kMapArray) {
   let result = {};
 
   kMapArray.forEach(kMap => {
-    const {
-      knowledgeSubject: { knowledgeSubjectId },
-      knowledgeModule: { knowledgeModuleId }
-    } = kMap;
+    const { knowledgeSubject, knowledgeModule } = kMap;
 
     // If the particular subject isn't in the object, initialize it
-    if (_.isEmpty(result[knowledgeSubjectId])) {
-      result[knowledgeSubjectId] = {};
+    if (_.isEmpty(result[knowledgeSubject.name])) {
+      result[knowledgeSubject.name] = {};
     }
 
     // Add the module under the subject
-    result[knowledgeSubjectId][knowledgeModuleId] = kMap;
+    result[knowledgeSubject.name][knowledgeModule.name] = kMap;
   });
 
   return result;

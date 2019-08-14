@@ -9,6 +9,21 @@ import { getKnowledgeMaps } from "../../actions/knowledgeMap";
 import styles from "./LearningMap.module.css";
 
 class LearningMap extends Component {
+  componentDidMount() {
+    const {
+      isFetching,
+      learningMap,
+      knowledgeMap,
+      getKnowledgeMaps
+    } = this.props;
+
+    // If the learning map exists and the knowledge map doesn't and neither of
+    // them are being fetched, request to get the knowledge maps
+    if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
+      getKnowledgeMaps(learningMap.knowledgeMap);
+    }
+  }
+
   componentDidUpdate() {
     const {
       isFetching,
