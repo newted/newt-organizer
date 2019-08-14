@@ -1,8 +1,8 @@
 .card {
   display: flex;
   justify-content: center;
-  width: 26.33%; /* (100% - margin - padding) */
-  min-width: 200px;
+  width: 29.3%; /* (100% - margin - padding) */
+  min-width: 250px;
   min-height: 100px;
   margin: 2%;
   padding: 1rem;
@@ -14,7 +14,7 @@
 /* For widescreen make cards in sets of 4 instead of 3 */
 @media screen and (min-width: 1800px) {
   .card {
-    width: 18%;
+    width: 21%;
     max-width: 500px;
   }
 }

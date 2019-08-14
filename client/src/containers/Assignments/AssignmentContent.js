@@ -61,11 +61,11 @@ class AssignmentContent extends Component {
     return (
       <div className={styles.contentContainer}>
         <div className={styles.contentHeaderContainer}>
-          <h3 className={styles.contentHeader}>{assignment.name}</h3>
+          <h4 className={styles.contentHeader}>{assignment.name}</h4>
           <div className={styles.headerInfo}>
-            <h4 className={styles.date}>
-              Due on {moment(assignment.dateDue).format("MMMM DD")}
-            </h4>
+            <h5 className={styles.date}>
+              Due on {moment(assignment.dateDue).format("MMM DD")}
+            </h5>
             <span
               style={{ height: "26px" }}
               onClick={() =>

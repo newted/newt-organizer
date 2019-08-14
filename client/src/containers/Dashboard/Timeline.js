@@ -48,7 +48,7 @@ class Timeline extends Component {
     if (formattedDate !== this.currentDate) {
       // Update the current date
       this.currentDate = formattedDate;
-      return <h4 className={styles.date}>{formattedDate}</h4>;
+      return <h5 className={styles.date}>{formattedDate}</h5>;
     }
   };
 
@@ -95,11 +95,7 @@ class Timeline extends Component {
       prevAssignments[1].assignments.length === 0 &&
       prevAssignments[2].assignments.length === 0
     ) {
-      return (
-        <div className={styles.date}>
-          No assignment data available for previous weeks.
-        </div>
-      );
+      return <div>No assignment data available for previous weeks.</div>;
     }
 
     // Get number of assignments completed and percent completed for each
@@ -132,9 +128,9 @@ class Timeline extends Component {
       // but that's not implemented yet so, for another day.
       return (
         <Fragment key={`week ${index + 1}`}>
-          <h4 className={styles.date}>
+          <h5 className={styles.date}>
             {weekGroup.startDate} &ndash; {weekGroup.endDate}
-          </h4>
+          </h5>
           <PrevWeekCard
             key={`week ${index + 1}`}
             numCompleted={numCompleted}

@@ -42,7 +42,7 @@ const AssignmentCard = ({ assignment, handleClick, active }) => (
         <FiFileText size={30} color="#666" />
       </div>
       <div className={styles.cardBody}>
-        <h4>{assignment.name}</h4>
+        <h5>{assignment.name}</h5>
         <div className={styles.subtitle}>{assignment.courseName}</div>
       </div>
     </div>

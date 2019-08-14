@@ -54,7 +54,7 @@
 
 .headers {
   display: flex;
-  margin-bottom: .375rem;
+  margin-bottom: 0.375rem;
 }
 
 .title {
@@ -67,6 +67,7 @@
 
 .subtitle {
   color: var(--grey-2);
+  font-weight: 700;
   border-bottom: 1px solid #fff; /* White border so elements don't shift on hover's border */
 }
 
