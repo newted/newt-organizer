@@ -25,8 +25,17 @@ const Content = ({ learningInfo }) => {
               name and confidence rating */}
           {_.map(learningInfo.topics, ({ name, confidenceRating }) => (
             <tr key={name}>
-              <td>{name}</td>
-              <td>{confidenceRating}</td>
+              <td className={styles.topicsRow}>{name}</td>
+              <td className={styles.ratingRow}>
+                <div
+                  className={styles.ratingBar}
+                  style={{ width: `${confidenceRating}%` }}
+                >
+                  <text
+                    className={styles.ratingLabel}
+                  >{`${confidenceRating}%`}</text>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
