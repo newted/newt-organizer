@@ -12,7 +12,25 @@ const Content = ({ learningInfo }) => {
 
   return (
     <div className={styles.contentContainer}>
-      <h3>{learningInfo.knowledgeModule.name}</h3>
+      <h3 className={styles.header}>{learningInfo.knowledgeModule.name}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th className={styles.topicsRow}>Topics</th>
+            <th className={styles.ratingRow}>Confidence Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Map over topics and create a row for each topic, displaying the
+              name and confidence rating */}
+          {_.map(learningInfo.topics, ({ name, confidenceRating }) => (
+            <tr key={name}>
+              <td>{name}</td>
+              <td>{confidenceRating}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

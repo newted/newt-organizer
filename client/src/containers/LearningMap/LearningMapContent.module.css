@@ -1,9 +1,20 @@
 .contentContainer {
   min-height: 550px;
-  min-width: 500px;
   padding: 2.5rem;
   border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
   box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
     0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.topicsRow {
+  width: 60%;
+}
+
+.ratingRow {
+  width: 40%;
 }
