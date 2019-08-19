@@ -154,24 +154,6 @@ class AssignmentList extends Component {
     toastManager.remove(this.toastId);
   };
 
-  openDropdown = e => {
-    if (this._isMounted) {
-      this.setState(
-        () => ({ showDropdown: true }),
-        () => document.addEventListener("click", this.closeDropdown)
-      );
-    }
-  };
-
-  closeDropdown = e => {
-    if (this._isMounted) {
-      this.setState(
-        () => ({ showDropdown: false }),
-        () => document.removeEventListener("click", this.closeDropdown)
-      );
-    }
-  };
-
   openModal = () => {
     this.setState({
       showModal: true
@@ -232,7 +214,7 @@ class AssignmentList extends Component {
 
   renderContent() {
     const { assignments } = this.props;
-    const { currentAssignment, showDropdown } = this.state;
+    const { currentAssignment } = this.state;
 
     if (_.isEmpty(assignments)) {
       // UI for when there are no assignments.
@@ -257,8 +239,6 @@ class AssignmentList extends Component {
         </div>
         <AssignmentContent
           assignment={currentAssignment}
-          dropdownVisible={showDropdown}
-          handleOpenDropdown={this.openDropdown}
           handleOpenModal={this.openModal}
         />
       </Fragment>

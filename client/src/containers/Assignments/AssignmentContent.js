@@ -9,7 +9,8 @@ import {
 } from "../../actions/assignments";
 import { updateLearningMap } from "../../actions/learningMap";
 // Components
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import CustomToggle from "../../components/Dropdown/CustomToggle";
 // Styling
 import styles from "./AssignmentContent.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
@@ -52,8 +53,6 @@ class AssignmentContent extends Component {
     const {
       assignment,
       markAssignmentAsIncomplete,
-      dropdownVisible,
-      handleOpenDropdown,
       handleOpenModal,
       history
     } = this.props;
@@ -64,7 +63,7 @@ class AssignmentContent extends Component {
           <h4 className={styles.contentHeader}>{assignment.name}</h4>
           <div className={styles.headerInfo}>
             <h5 className={styles.date}>
-              Due on {moment(assignment.dateDue).format("MMM DD")}
+              Due {moment(assignment.dateDue).format("MMM DD")}
             </h5>
             <span
               style={{ height: "26px" }}
@@ -86,12 +85,13 @@ class AssignmentContent extends Component {
                 }
               />
             </span>
-            <Dropdown
-              visible={dropdownVisible}
-              style={{ height: "26px", display: "flex", alignItems: "center" }}
-              handleOpen={handleOpenDropdown}
-            >
-              <FiMoreVertical size={18} />
+            <Dropdown alignRight={true} drop="down" className={styles.dropdown}>
+              <Dropdown.Toggle
+                id="assignment-content-dropdown"
+                as={CustomToggle}
+              >
+                <FiMoreVertical size={18} />
+              </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() =>
