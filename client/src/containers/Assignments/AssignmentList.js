@@ -22,7 +22,6 @@ class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment: "",
-    showDropdown: false,
     showModal: false
   };
 

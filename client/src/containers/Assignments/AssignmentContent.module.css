@@ -59,6 +59,10 @@
   height: 26px;
 }
 
+.dropdownMenu {
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
 /*
    For responsive iframe
    See: https://www.ostraining.com/blog/coding/responsive-videos/

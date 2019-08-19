@@ -92,7 +92,7 @@ class AssignmentContent extends Component {
               >
                 <FiMoreVertical size={18} />
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu className={styles.dropdownMenu}>
                 <Dropdown.Item
                   onClick={() =>
                     history.push(
