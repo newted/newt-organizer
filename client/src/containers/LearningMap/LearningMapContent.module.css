@@ -23,7 +23,7 @@
 
 .ratingBar {
   border-radius: 0.25rem;
-  background-color: var(--blue-btn-hover);
+  background-color: rgba(0, 123, 255, 0.6);
 }
 
 .ratingLabel {

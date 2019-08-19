@@ -48,7 +48,6 @@ export const updateLearningMap = (learningMapId, data) => async dispatch => {
     );
     // Destructure data received
     const { learningMap, personalKnowledgeMap } = res.data;
-    console.log(personalKnowledgeMap);
 
     dispatch({ type: UPDATE_LEARNING_MAP, payload: learningMap });
     dispatch({ type: UPDATE_KNOWLEDGE_MAP, payload: personalKnowledgeMap });
