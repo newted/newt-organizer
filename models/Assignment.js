@@ -16,6 +16,19 @@ const assignmentSchema = new Schema({
     type: Boolean,
     default: false
   },
+  hasQuiz: {
+    type: Boolean,
+    default: false
+  },
+  // List of quiz ids that the user has taken for this assignment/content
+  quizInfo: {
+    quizzes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "PersonalQuiz"
+      }
+    ]
+  },
   // Denormalized from Content collection (name and level)
   contentInfo: {
     name: String,
