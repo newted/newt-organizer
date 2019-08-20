@@ -31,9 +31,9 @@ const Content = ({ learningInfo }) => {
                   className={styles.ratingBar}
                   style={{ width: `${confidenceRating}%` }}
                 >
-                  <text
+                  <span
                     className={styles.ratingLabel}
-                  >{`${confidenceRating}%`}</text>
+                  >{`${confidenceRating}%`}</span>
                 </div>
               </td>
             </tr>

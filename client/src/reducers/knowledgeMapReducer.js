@@ -28,26 +28,13 @@ export default function(state = { isFetching: false, items: {} }, action) {
         isFetching: false
       };
     case GET_KNOWLEDGE_MAPS:
+    case UPDATE_KNOWLEDGE_MAP:
       return {
         ...state,
         isFetching: false,
         items: {
           ...state.items,
           ...action.payload
-        }
-      };
-    case UPDATE_KNOWLEDGE_MAP:
-      return {
-        ...state,
-        items: {
-          ...state.items,
-          [action.payload.knowledgeSubject.knowledgeSubjectId]: {
-            ...state.items[action.payload.knowledgeSubject.knowledgeSubjectId],
-            [action.payload.knowledgeModule.knowledgeModuleId]: {
-              ...state.items[action.payload.knowledgeModule.knowledgeModuleId],
-              ...action.payload
-            }
-          }
         }
       };
     default:

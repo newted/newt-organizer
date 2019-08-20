@@ -30,7 +30,7 @@ export const getKnowledgeMaps = knowledgeMapIds => async dispatch => {
   }
 };
 
-function arrayOfObjToTree(kMapArray) {
+export function arrayOfObjToTree(kMapArray) {
   let result = {};
 
   kMapArray.forEach(kMap => {

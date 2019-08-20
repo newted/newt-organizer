@@ -1,6 +1,6 @@
 import axios from "axios";
 import firebase from "../config/firebase";
-import { UPDATE_KNOWLEDGE_MAP } from "./knowledgeMap";
+import { UPDATE_KNOWLEDGE_MAP, arrayOfObjToTree } from "./knowledgeMap";
 
 export const REQUEST_LEARNING_MAP = "REQUEST_LEARNING_MAP";
 export const RESOLVE_LEARNING_MAP = "RESOLVE_LEARNING_MAP";
@@ -47,8 +47,8 @@ export const updateLearningMap = (learningMapId, data) => async dispatch => {
       { headers: { Authorization: idToken } }
     );
     // Destructure data received
-    const { learningMap, personalKnowledgeMap } = res.data;
-    console.log(personalKnowledgeMap);
+    let { learningMap, personalKnowledgeMap } = res.data;
+    personalKnowledgeMap = arrayOfObjToTree([personalKnowledgeMap]);
 
     dispatch({ type: UPDATE_LEARNING_MAP, payload: learningMap });
     dispatch({ type: UPDATE_KNOWLEDGE_MAP, payload: personalKnowledgeMap });

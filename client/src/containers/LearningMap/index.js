@@ -26,7 +26,11 @@ class LearningMap extends Component {
 
     // If the learning map exists and the knowledge map doesn't and neither of
     // them are being fetched, request to get the knowledge maps
-    if (!isFetching && !_.isEmpty(learningMap) && _.isEmpty(knowledgeMap)) {
+    if (
+      !isFetching &&
+      !_.isEmpty(learningMap.knowledgeMap) &&
+      _.isEmpty(knowledgeMap)
+    ) {
       getKnowledgeMaps(learningMap.knowledgeMap);
     }
 

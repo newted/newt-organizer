@@ -187,6 +187,8 @@ module.exports = app => {
             await personalKnowledgeMap.save();
             res.send({ learningMap, personalKnowledgeMap });
           }
+        } else {
+          throw new Error("No learning map found.");
         }
       } catch (error) {
         res.send(error);
