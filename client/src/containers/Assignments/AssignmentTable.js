@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 // Components
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 // API
@@ -24,9 +25,7 @@ class AssignmentTable extends Component {
   static propTypes = {
     assignments: PropTypes.arrayOf(PropTypes.object).isRequired,
     deleteAssignment: PropTypes.func.isRequired,
-    dropdownVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
     fields: PropTypes.object.isRequired,
-    handleOpenDropdown: PropTypes.func.isRequired,
     name: PropTypes.string,
     showCompleted: PropTypes.bool,
     history: PropTypes.object
@@ -126,12 +125,13 @@ class AssignmentTable extends Component {
           {/* Options icon */}
           <td className={styles.options}>
             <Dropdown
-              visible={this.props.dropdownVisible[object._id]}
-              handleOpen={event =>
-                this.props.handleOpenDropdown(object._id, event)
-              }
+              alignRight={true}
+              drop="down"
+              style={{ cursor: "pointer" }}
             >
-              <FiMoreVertical />
+              <Dropdown.Toggle id="assignment-table-dropdown" as={CustomToggle}>
+                <FiMoreVertical />
+              </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() =>
@@ -166,13 +166,11 @@ class AssignmentTable extends Component {
                 >
                   Mark as Complete
                 </Dropdown.Item>
-                <Dropdown.Item />
+                <Dropdown.Divider />
                 <Dropdown.Item
                   onClick={() =>
                     history.push(
-                      `/courses/${object.courseId}/assignments/${
-                        object._id
-                      }/edit`
+                      `/courses/${object.courseId}/assignments/${object._id}/edit`
                     )
                   }
                 >

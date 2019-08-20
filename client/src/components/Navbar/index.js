@@ -6,7 +6,8 @@ import { Link, withRouter } from "react-router-dom";
 import { signOut } from "../../actions/authedUser";
 // Components
 import Button from "../Button";
-import Dropdown from "../Dropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import CustomToggle from "../../components/Dropdown/CustomToggle";
 // Styling
 import styles from "./Navbar.module.css";
 import { FiUser } from "react-icons/fi";
@@ -22,10 +23,6 @@ class Navbar extends Component {
     signOut: PropTypes.func
   };
 
-  state = {
-    showDropdown: false
-  };
-
   _isMounted = false;
 
   componentDidMount() {
@@ -35,28 +32,6 @@ class Navbar extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
-  openDropdown = event => {
-    if (this._isMounted) {
-      this.setState(
-        () => ({
-          showDropdown: true
-        }),
-        () => document.addEventListener("click", this.closeDropdown)
-      );
-    }
-  };
-
-  closeDropdown = () => {
-    if (this._isMounted) {
-      this.setState(
-        () => ({
-          showDropdown: false
-        }),
-        () => document.removeEventListener("click", this.closeDropdown)
-      );
-    }
-  };
 
   // Render Login or Logout based on authentication state
   renderButtons() {
@@ -89,11 +64,13 @@ class Navbar extends Component {
         ) : (
           <div className={styles.userIcon}>
             <Dropdown
-              visible={this.state.showDropdown}
-              handleOpen={event => this.openDropdown(event)}
-              style={{ height: "22px" }}
+              alignRight={true}
+              drop="down"
+              style={{ height: "22px", cursor: "pointer" }}
             >
-              <FiUser size={22} />
+              <Dropdown.Toggle id="navbar-options-dropdown" as={CustomToggle}>
+                <FiUser size={22} />
+              </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() => this.props.history.push("/profile")}

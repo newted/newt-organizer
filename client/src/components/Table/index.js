@@ -4,15 +4,8 @@ import { connect } from "react-redux";
 import moment from "moment";
 // Styling
 import styles from "./Table.module.css";
-import { FiMoreVertical } from "react-icons/fi";
 
 class Table extends Component {
-  showHideDropdown(objectId) {
-    return this.props.dropdownVisible[objectId]
-      ? [styles.menu, styles.displayBlock].join(" ")
-      : [styles.menu, styles.displayNone].join(" ");
-  }
-
   renderTableHeader() {
     const { fieldsObj } = this.props;
 
@@ -39,30 +32,6 @@ class Table extends Component {
               </td>
             );
           })}
-          {/* Options icon */}
-          <td className={styles.options}>
-            <div
-              className={styles.dropdown}
-              onClick={event =>
-                this.props.handleOpenDropdown(object._id, event)
-              }
-            >
-              <FiMoreVertical />
-              <div
-                className={this.showHideDropdown(object._id)}
-                ref={element => {
-                  this.props.setDropdownMenu(element);
-                }}
-              >
-                <div
-                  className={styles.item}
-                  onClick={() => console.log(object.name)}
-                >
-                  Delete
-                </div>
-              </div>
-            </div>
-          </td>
         </tr>
       );
     });
