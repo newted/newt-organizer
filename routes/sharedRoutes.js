@@ -4,6 +4,7 @@ const requireLogin = require("../middleware/requireLogin");
 const keys = require("../config/keys");
 
 const Content = mongoose.model("content");
+const Quiz = mongoose.model("quizzes");
 
 module.exports = app => {
   // Get video information through YouTube API through the video ID.
@@ -23,7 +24,8 @@ module.exports = app => {
       // Initialize object for video/content info
       let videoInfo = {
         videoData: {},
-        hasKnowledgeTracking: false
+        hasKnowledgeTracking: false,
+        hasQuiz: false
       };
 
       // If the Content collection has a video with that id (that is, if it has
@@ -43,10 +45,11 @@ module.exports = app => {
             level: 1,
             knowledgeSubject: 1,
             knowledgeModule: 1,
+            quizId: 1,
             primaryTopics: 1,
             secondaryTopics: 1
           },
-          (error, content) => {
+          async (error, content) => {
             if (error) {
               res.send(error);
             }
@@ -54,6 +57,13 @@ module.exports = app => {
             // If there's a result, this content has knowledge tracking. Thus
             // add the additional information to the videoInfo object
             if (content) {
+              // If there's a quiz Id, fetch the quiz data and add to videoInfo
+              // object
+              if (content.quizId) {
+                const quiz = await Quiz.findById(content.quizId);
+                videoInfo.hasQuiz = true;
+                videoInfo["quizInfo"] = quiz;
+              }
               videoInfo.hasKnowledgeTracking = true;
               // Add content info
               videoInfo["contentInfo"] = {
