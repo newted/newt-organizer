@@ -145,7 +145,6 @@ class AddAssignmentConfirmation extends Component {
           videoData,
           hasKnowledgeTracking,
           hasQuiz,
-          quizInfo,
           contentInfo,
           knowledgeSubject,
           knowledgeModule
@@ -157,7 +156,6 @@ class AddAssignmentConfirmation extends Component {
       let info = {
         hasKnowledgeTracking,
         hasQuiz,
-        quizInfo,
         contentInfo,
         knowledgeSubject,
         knowledgeModule,

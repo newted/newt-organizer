@@ -62,7 +62,6 @@ module.exports = app => {
               if (content.quizId) {
                 const quiz = await Quiz.findById(content.quizId);
                 videoInfo.hasQuiz = true;
-                videoInfo["quizInfo"] = quiz;
               }
               videoInfo.hasKnowledgeTracking = true;
               // Add content info
