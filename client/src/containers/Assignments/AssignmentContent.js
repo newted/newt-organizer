@@ -9,6 +9,7 @@ import {
 } from "../../actions/assignments";
 import { updateLearningMap } from "../../actions/learningMap";
 // Components
+import Button from "../../components/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 // Styling
@@ -112,6 +113,10 @@ class AssignmentContent extends Component {
           </div>
         </div>
         <div className={styles.contentContainerBody}>
+          {/* If the assignment has a quiz and is from youtube, show steps */}
+          {assignment.hasQuiz && assignment.source === "youtube" && (
+            <h5 className={styles.instruction}>1. Watch the video</h5>
+          )}
           {/* If the assignment is from Youtube, display video iframe */}
           {assignment.source === "youtube" && (
             <div className={styles.videoContainer}>
@@ -149,8 +154,25 @@ class AssignmentContent extends Component {
           {/* If assignment has a description, display it */}
           {assignment.details && (
             <Fragment>
-              <h4 className={styles.subheading}>Description</h4>
-              <p className={styles.details}>{assignment.details}</p>
+              <h5 className={styles.subheading}>Description</h5>
+              <p style={{ marginBottom: "1.75rem" }}>{assignment.details}</p>
+            </Fragment>
+          )}
+          {/* If assignment has a quiz, add step + display take quiz button */}
+          {assignment.hasQuiz && (
+            <Fragment>
+              <h5 className={styles.instruction}>
+                2. Check your understanding
+              </h5>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  category="primary"
+                  onClick={() => alert("Working on this!")}
+                  style={{ width: "60%" }}
+                >
+                  Take the quiz
+                </Button>
+              </div>
             </Fragment>
           )}
         </div>
