@@ -49,6 +49,7 @@ module.exports = app => {
         values: { name, details, dateDue },
         otherInfo: {
           hasKnowledgeTracking,
+          hasQuiz,
           videoInfo,
           contentInfo,
           knowledgeSubject,
@@ -60,6 +61,7 @@ module.exports = app => {
         name,
         details,
         hasKnowledgeTracking,
+        hasQuiz,
         contentInfo,
         knowledgeSubject,
         knowledgeModule,
