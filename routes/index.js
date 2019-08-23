@@ -6,5 +6,6 @@ module.exports = app =>
     require("./courseRoutes")(app),
     require("./learningMapRoutes")(app),
     require("./programRoutes")(app),
+    require("./quizRoutes")(app),
     require("./sharedRoutes")(app)
   );

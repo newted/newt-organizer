@@ -6,12 +6,18 @@ const resultSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Quiz.questions"
   },
-  // Denormalize question and options
+  // Denormalize question, options and topics
   question: String,
   options: [
     {
       option: String,
       explanation: String
+    }
+  ],
+  topics: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Topic"
     }
   ],
   optionChosen: String,
@@ -43,6 +49,7 @@ const personalQuizSchema = new Schema({
     type: Number,
     default: 1
   },
+  dateCreated: Date,
   dateCompleted: Date,
   results: [resultSchema]
 });
