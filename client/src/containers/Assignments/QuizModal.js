@@ -11,7 +11,7 @@ class QuizModal extends Component {
     show: this.props.show,
     quiz: null,
     numQuestions: 0,
-    currentQuestion: 1
+    currentQuestion: 0
   };
 
   componentDidUpdate() {
@@ -74,20 +74,26 @@ class QuizModal extends Component {
           ))}
         </ol>
         <div className={styles.actionButtonGroup}>
-          <Button
-            variant="secondary"
-            className={styles.actionButton}
-            onClick={this.decrementCurrentQuestion}
-          >
-            Back
-          </Button>
-          <Button
-            variant="primary"
-            className={styles.actionButton}
-            onClick={this.incrementCurrentQuestion}
-          >
-            Next
-          </Button>
+          {/* Don't show back button if it's the first question */}
+          {currentQuestion !== 1 && (
+            <Button
+              variant="secondary"
+              className={styles.actionButton}
+              onClick={this.decrementCurrentQuestion}
+            >
+              Back
+            </Button>
+          )}
+          {/* Don't show next button if it's the last question */}
+          {currentQuestion !== numQuestions && (
+            <Button
+              variant="primary"
+              className={styles.actionButton}
+              onClick={this.incrementCurrentQuestion}
+            >
+              Next
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -95,7 +101,7 @@ class QuizModal extends Component {
 
   render() {
     const { show, handleCloseModal, quizName } = this.props;
-    const { currentQuestion } = this.state;
+    const { currentQuestion, numQuestions } = this.state;
 
     return (
       <Modal show={show} onHide={handleCloseModal} size="lg">
@@ -113,12 +119,15 @@ class QuizModal extends Component {
               <Button variant="secondary" onClick={handleCloseModal}>
                 Close
               </Button>
-              <Button
-                variant="primary"
-                onClick={() => alert("working on this!")}
-              >
-                Submit
-              </Button>
+              {/* Show Finish button when on the last question */}
+              {currentQuestion === numQuestions && (
+                <Button
+                  variant="primary"
+                  onClick={() => alert("working on this!")}
+                >
+                  Finish
+                </Button>
+              )}
             </Modal.Footer>
           </>
         ) : (
