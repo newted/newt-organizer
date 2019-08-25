@@ -346,6 +346,7 @@ class AssignmentList extends Component {
         <QuizModal
           show={this.state.showQuizModal}
           handleCloseModal={this.closeQuizModal}
+          quizName={`Quiz for ${currentAssignment.name}`}
           quiz={this.state.newQuiz}
         />
       </div>
