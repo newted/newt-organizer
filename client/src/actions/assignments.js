@@ -120,8 +120,10 @@ export const updateAssignment = (
       payload: res.data
     });
 
-    // Redirect to previous page
-    history.goBack();
+    if (history) {
+      // Redirect to previous page
+      history.goBack();
+    }
   } catch (error) {
     history.goBack();
     dispatch(
@@ -240,6 +242,34 @@ export const markAssignmentAsIncomplete = (
   } catch (error) {
     dispatch(resolveCourses());
     console.log("Error while marking assignment as incomplete", error);
+  }
+};
+
+export const addQuizToAssignment = (
+  courseId,
+  assignmentId,
+  data
+) => async dispatch => {
+  try {
+    dispatch(requestCourses());
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+
+    // Make request to mark assignment as incomplete
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/add-quiz`,
+      data,
+      { headers: { Authorization: idToken } }
+    );
+
+    // Dispatch data to store
+    dispatch({
+      type: UPDATE_ASSIGNMENT,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch(resolveCourses());
+    console.log("Error while adding quiz to assignment", error);
   }
 };
 

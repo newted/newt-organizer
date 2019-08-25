@@ -6,8 +6,10 @@ import moment from "moment";
 // API
 import {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete
+  markAssignmentAsIncomplete,
+  addQuizToAssignment
 } from "../../actions/assignments";
+import { createPersonalQuiz } from "../../actions/quizzes";
 import { updateLearningMap } from "../../actions/learningMap";
 // Components
 import Button from "../../components/Button";
@@ -23,10 +25,21 @@ class AssignmentContent extends Component {
     showModal: false
   };
 
-  onTakeQuiz = assignment => {
+  onTakeQuiz = async assignment => {
+    const { createPersonalQuiz, addQuizToAssignment } = this.props;
+
     if (_.isEmpty(assignment.quizInfo.quizzes)) {
       // TODO: Create personal quiz and update assignment
-      console.log("Generating quiz...");
+      const data = {
+        contentId: assignment.contentInfo.contentId,
+        assignmentId: assignment._id
+      };
+      // Dispatch action to create quiz, then update assignmet to add quiz id
+      createPersonalQuiz(data).then(quiz =>
+        addQuizToAssignment(assignment.courseId, assignment._id, {
+          quizId: quiz._id
+        })
+      );
     } else {
       // TODO: Fetch personal quiz using id
       console.log("Fetching quiz...");
@@ -219,7 +232,9 @@ function mapStateToProps({ learningMap }) {
 const mapDispatchToProps = {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
-  updateLearningMap
+  addQuizToAssignment,
+  updateLearningMap,
+  createPersonalQuiz
 };
 
 export default connect(

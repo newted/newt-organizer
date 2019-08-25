@@ -1,6 +1,7 @@
 import {
   REQUEST_PERSONAL_QUIZ,
-  RESOLVE_PERSONAL_QUIZ
+  RESOLVE_PERSONAL_QUIZ,
+  CREATE_PERSONAL_QUIZ
 } from "../actions/quizzes";
 
 export default function(
@@ -20,6 +21,15 @@ export default function(
       return {
         ...state,
         isFetching: false
+      };
+    case CREATE_PERSONAL_QUIZ:
+      return {
+        ...state,
+        isFetching: false,
+        items: {
+          ...state.items,
+          [action.payload._id]: action.payload
+        }
       };
     default:
       return state;

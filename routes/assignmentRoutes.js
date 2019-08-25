@@ -112,9 +112,6 @@ module.exports = app => {
             "assignments.$.name": name,
             "assignments.$.details": details,
             "assignments.$.dateDue": dateDue
-          },
-          $push: {
-            "assignments.$.quizInfo.quizzes": quizId
           }
         },
         {
@@ -211,6 +208,38 @@ module.exports = app => {
           $set: {
             "assignments.$.completed": false,
             "assignments.$.inProgress": false
+          }
+        },
+        {
+          new: true
+        },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
+        }
+      );
+    }
+  );
+
+  // PUT request to add quiz id to assignment quizzes
+  app.put(
+    "/api/courses/:courseId/assignments/:assignmentId/add-quiz",
+    requireLogin,
+    (req, res) => {
+      const { courseId, assignmentId } = req.params;
+      const { quizId } = req.body;
+
+      Course.findOneAndUpdate(
+        {
+          _id: courseId,
+          "assignments._id": assignmentId
+        },
+        {
+          $push: {
+            "assignments.$.quizInfo.quizzes": quizId
           }
         },
         {
