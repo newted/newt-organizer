@@ -212,10 +212,18 @@ class AssignmentList extends Component {
         );
       });
     } else {
-      // Fetch personal quiz using id
-      fetchQuiz(assignment.quizInfo.quizzes[0]).then(quiz =>
-        this.setState({ newQuiz: quiz })
-      );
+      const { allQuizzes } = this.props;
+
+      // If the quiz has already been fetched, set state with that, otherwise
+      // fetch quiz
+      if (allQuizzes[assignment.quizInfo.quizzes[0]]) {
+        this.setState({ newQuiz: allQuizzes[assignment.quizInfo.quizzes[0]] });
+      } else {
+        // Fetch personal quiz using id
+        fetchQuiz(assignment.quizInfo.quizzes[0]).then(quiz =>
+          this.setState({ newQuiz: quiz })
+        );
+      }
     }
   };
 
@@ -354,7 +362,7 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ programs, courses }, props) {
+function mapStateToProps({ programs, courses, quizzes }, props) {
   const { assignmentId } = props.match.params;
   const assignments = [];
   // This way of setting isFetching seems logical, but for a brief moment,
@@ -380,6 +388,7 @@ function mapStateToProps({ programs, courses }, props) {
 
   return {
     urlAssignmentId: assignmentId,
+    allQuizzes: quizzes.items,
     assignments,
     isFetching,
     error,

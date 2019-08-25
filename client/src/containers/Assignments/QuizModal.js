@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import _ from "lodash";
 // Components
 import Button from "react-bootstrap/Button";
