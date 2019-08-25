@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import _ from "lodash";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
@@ -20,6 +21,16 @@ import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 class AssignmentContent extends Component {
   state = {
     showModal: false
+  };
+
+  onTakeQuiz = assignment => {
+    if (_.isEmpty(assignment.quizInfo.quizzes)) {
+      // TODO: Create personal quiz and update assignment
+      console.log("Generating quiz...");
+    } else {
+      // TODO: Fetch personal quiz using id
+      console.log("Fetching quiz...");
+    }
   };
 
   handleShowModal = () => {
@@ -180,7 +191,10 @@ class AssignmentContent extends Component {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   category="primary"
-                  onClick={this.handleShowModal}
+                  onClick={() => {
+                    this.onTakeQuiz(assignment);
+                    this.handleShowModal();
+                  }}
                   style={{ width: "60%" }}
                 >
                   Take the quiz
