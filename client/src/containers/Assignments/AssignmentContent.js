@@ -9,7 +9,7 @@ import {
   markAssignmentAsIncomplete,
   addQuizToAssignment
 } from "../../actions/assignments";
-import { createPersonalQuiz } from "../../actions/quizzes";
+import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
 import { updateLearningMap } from "../../actions/learningMap";
 // Components
 import Button from "../../components/Button";
@@ -26,10 +26,10 @@ class AssignmentContent extends Component {
   };
 
   onTakeQuiz = async assignment => {
-    const { createPersonalQuiz, addQuizToAssignment } = this.props;
+    const { createPersonalQuiz, fetchQuiz, addQuizToAssignment } = this.props;
 
     if (_.isEmpty(assignment.quizInfo.quizzes)) {
-      // TODO: Create personal quiz and update assignment
+      // Create personal quiz and update assignment
       const data = {
         contentId: assignment.contentInfo.contentId,
         assignmentId: assignment._id
@@ -41,8 +41,8 @@ class AssignmentContent extends Component {
         })
       );
     } else {
-      // TODO: Fetch personal quiz using id
-      console.log("Fetching quiz...");
+      // Fetch personal quiz using id
+      fetchQuiz(assignment.quizInfo.quizzes[0]);
     }
   };
 
@@ -234,7 +234,8 @@ const mapDispatchToProps = {
   markAssignmentAsIncomplete,
   addQuizToAssignment,
   updateLearningMap,
-  createPersonalQuiz
+  createPersonalQuiz,
+  fetchQuiz
 };
 
 export default connect(

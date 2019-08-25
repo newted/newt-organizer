@@ -6,6 +6,19 @@ const Quiz = mongoose.model("quizzes");
 const PersonalQuiz = mongoose.model("personal-quizzes");
 
 module.exports = app => {
+  // GET request to fetch personal quiz by id
+  app.get("/api/quiz/:quizId", requireLogin, (req, res) => {
+    const { quizId } = req.params;
+
+    PersonalQuiz.findById(quizId, (error, quiz) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(quiz);
+      }
+    });
+  });
+
   // POST request to create a personal quiz based on a particular item of
   // content
   app.post("/api/quiz/create", requireLogin, async (req, res) => {
