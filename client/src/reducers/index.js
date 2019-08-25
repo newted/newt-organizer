@@ -4,6 +4,7 @@ import programReducer from "./programReducer";
 import courseReducer from "./courseReducer";
 import learningMapReducer from "./learningMapReducer";
 import knowledgeMapReducer from "./knowledgeMapReducer";
+import quizReducer from "./quizReducer";
 import sidebarReducer from "./sidebarReducer";
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   courses: courseReducer,
   learningMap: learningMapReducer,
   knowledgeMap: knowledgeMapReducer,
+  quizzes: quizReducer,
   sidebar: sidebarReducer
 });
