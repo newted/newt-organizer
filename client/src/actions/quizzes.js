@@ -18,6 +18,8 @@ export const fetchQuiz = quizId => async dispatch => {
 
     // Dispatch quiz to store
     dispatch({ type: FETCH_PERSONAL_QUIZ, payload: res.data });
+
+    return res.data;
   } catch (error) {
     console.log(error);
   }

@@ -6,10 +6,8 @@ import moment from "moment";
 // API
 import {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete,
-  addQuizToAssignment
+  markAssignmentAsIncomplete
 } from "../../actions/assignments";
-import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
 import { updateLearningMap } from "../../actions/learningMap";
 // Components
 import Button from "../../components/Button";
@@ -23,27 +21,6 @@ import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 class AssignmentContent extends Component {
   state = {
     showModal: false
-  };
-
-  onTakeQuiz = async assignment => {
-    const { createPersonalQuiz, fetchQuiz, addQuizToAssignment } = this.props;
-
-    if (_.isEmpty(assignment.quizInfo.quizzes)) {
-      // Create personal quiz and update assignment
-      const data = {
-        contentId: assignment.contentInfo.contentId,
-        assignmentId: assignment._id
-      };
-      // Dispatch action to create quiz, then update assignmet to add quiz id
-      createPersonalQuiz(data).then(quiz =>
-        addQuizToAssignment(assignment.courseId, assignment._id, {
-          quizId: quiz._id
-        })
-      );
-    } else {
-      // Fetch personal quiz using id
-      fetchQuiz(assignment.quizInfo.quizzes[0]);
-    }
   };
 
   handleShowModal = () => {
@@ -92,6 +69,7 @@ class AssignmentContent extends Component {
       assignment,
       markAssignmentAsIncomplete,
       handleOpenModal,
+      onTakeQuiz,
       history
     } = this.props;
 
@@ -205,7 +183,7 @@ class AssignmentContent extends Component {
                 <Button
                   category="primary"
                   onClick={() => {
-                    this.onTakeQuiz(assignment);
+                    onTakeQuiz(assignment);
                     this.handleShowModal();
                   }}
                   style={{ width: "60%" }}
@@ -232,10 +210,7 @@ function mapStateToProps({ learningMap }) {
 const mapDispatchToProps = {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete,
-  addQuizToAssignment,
-  updateLearningMap,
-  createPersonalQuiz,
-  fetchQuiz
+  updateLearningMap
 };
 
 export default connect(

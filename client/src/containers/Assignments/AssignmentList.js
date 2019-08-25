@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withToastManager } from "react-toast-notifications";
 // API
-import { deleteAssignment } from "../../actions/assignments";
+import {
+  deleteAssignment,
+  addQuizToAssignment
+} from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
+import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
@@ -22,6 +26,7 @@ class AssignmentList extends Component {
   state = {
     showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment: "",
+    newQuiz: {},
     showModal: false
   };
 
@@ -165,6 +170,43 @@ class AssignmentList extends Component {
     });
   };
 
+  // Handler function for when the 'Take the quiz' button is clicked
+  handleTakeQuiz = assignment => {
+    const { createPersonalQuiz, fetchQuiz, addQuizToAssignment } = this.props;
+
+    if (_.isEmpty(assignment.quizInfo.quizzes)) {
+      // Create personal quiz and update assignment
+      const data = {
+        contentId: assignment.contentInfo.contentId,
+        assignmentId: assignment._id
+      };
+      // Dispatch action to create quiz, then update assignmet to add quiz id
+      createPersonalQuiz(data).then(quiz => {
+        addQuizToAssignment(assignment.courseId, assignment._id, {
+          quizId: quiz._id
+        }).then(() =>
+          // Hacky way of dealing with assignment data not updating after making
+          // addQuiz request: manually add quiz to currentAssignment in state
+          this.setState((state, props) => ({
+            newQuiz: quiz,
+            currentAssignment: {
+              ...state.currentAssignment,
+              quizInfo: {
+                ...state.currentAssignment.quizInfo,
+                quizzes: [...state.currentAssignment.quizInfo.quizzes, quiz._id]
+              }
+            }
+          }))
+        );
+      });
+    } else {
+      // Fetch personal quiz using id
+      fetchQuiz(assignment.quizInfo.quizzes[0]).then(quiz =>
+        this.setState({ newQuiz: quiz })
+      );
+    }
+  };
+
   delete = async (courseId, assignmentId) => {
     const { history, deleteAssignment } = this.props;
 
@@ -239,6 +281,7 @@ class AssignmentList extends Component {
         <AssignmentContent
           assignment={currentAssignment}
           handleOpenModal={this.openModal}
+          onTakeQuiz={this.handleTakeQuiz}
         />
       </Fragment>
     );
@@ -326,8 +369,11 @@ function mapStateToProps({ programs, courses }, props) {
 
 const mapDispatchToProps = {
   deleteAssignment,
+  addQuizToAssignment,
   fetchAllCourses,
-  resolveCourses
+  resolveCourses,
+  createPersonalQuiz,
+  fetchQuiz
 };
 
 export default connect(
