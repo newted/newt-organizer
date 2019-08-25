@@ -12,11 +12,24 @@ import { updateLearningMap } from "../../actions/learningMap";
 import Button from "../../components/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
+import QuizModal from "./QuizModal";
 // Styling
 import styles from "./AssignmentContent.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
 class AssignmentContent extends Component {
+  state = {
+    showModal: false
+  };
+
+  handleShowModal = () => {
+    this.setState(() => ({ showModal: true }));
+  };
+
+  handleCloseModal = () => {
+    this.setState(() => ({ showModal: false }));
+  };
+
   onComplete = (courseId, assignmentId) => {
     const { assignment, markAssignmentAsComplete } = this.props;
 
@@ -167,7 +180,7 @@ class AssignmentContent extends Component {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   category="primary"
-                  onClick={() => alert("Working on this!")}
+                  onClick={this.handleShowModal}
                   style={{ width: "60%" }}
                 >
                   Take the quiz
@@ -176,6 +189,10 @@ class AssignmentContent extends Component {
             </Fragment>
           )}
         </div>
+        <QuizModal
+          show={this.state.showModal}
+          handleCloseModal={this.handleCloseModal}
+        />
       </div>
     );
   }
