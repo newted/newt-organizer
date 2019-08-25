@@ -1,0 +1,56 @@
+.quizBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quizBody li {
+  list-style-type: upper-alpha;
+}
+
+.light {
+  color: var(--grey);
+}
+
+.beginButton {
+  margin-top: 2rem;
+  width: 35%;
+}
+
+.optionsGroup {
+  min-width: 400px;
+}
+
+.actionButtonGroup {
+  display: flex;
+}
+
+.actionButtonGroup button:first-child {
+  margin-right: 0.5rem;
+}
+
+.actionButton {
+  margin-top: 2rem;
+  width: 125px;
+}
+
+.question {
+  text-align: center;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.option {
+  border: 1px solid var(--lightGrey);
+  border-radius: 2rem;
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.option:last-child {
+  margin-bottom: 0;
+}
+
+.option:hover {
+  background-color: var(--lightGrey-2);
+}

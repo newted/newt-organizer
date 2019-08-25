@@ -3,13 +3,15 @@ import _ from "lodash";
 // Components
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+// Styling
+import styles from "./QuizModal.module.css";
 
 class QuizModal extends Component {
   state = {
     show: this.props.show,
     quiz: null,
     numQuestions: 0,
-    currentQuestion: 0
+    currentQuestion: 1
   };
 
   componentDidUpdate() {
@@ -27,14 +29,24 @@ class QuizModal extends Component {
     this.setState(state => ({ currentQuestion: state.currentQuestion + 1 }));
   };
 
+  decrementCurrentQuestion = () => {
+    this.setState(state => ({ currentQuestion: state.currentQuestion - 1 }));
+  };
+
   // First thing user sees (currentQuestion = 0). Message + button to begin quiz.
   renderIntroMessage() {
     return (
-      <div>
+      <div className={styles.quizBody}>
         <p>Whenever you're ready, click the button to begin the quiz.</p>
-        <p>{`Total Questions: ${this.state.numQuestions}`}</p>
-        <Button variant="primary" onClick={this.incrementCurrentQuestion}>
-          Begin
+        <p
+          className={styles.light}
+        >{`Total Questions: ${this.state.numQuestions}`}</p>
+        <Button
+          variant="primary"
+          className={styles.beginButton}
+          onClick={this.incrementCurrentQuestion}
+        >
+          Begin Quiz
         </Button>
       </div>
     );
@@ -42,9 +54,43 @@ class QuizModal extends Component {
 
   // UI for each question
   renderQuestion(currentQuestion) {
-    const { numQuestions } = this.state;
+    const {
+      quiz: { results },
+      numQuestions
+    } = this.state;
+    const { question, options } = results[currentQuestion - 1];
 
-    return <p>{`Question ${currentQuestion}/${numQuestions}`}</p>;
+    return (
+      <div className={styles.quizBody}>
+        <p
+          className={styles.light}
+        >{`Question ${currentQuestion}/${numQuestions}`}</p>
+        <h4 className={styles.question}>{question}</h4>
+        <ol type="A" className={styles.optionsGroup}>
+          {options.map(option => (
+            <li key={option._id} className={styles.option}>
+              {option.option}
+            </li>
+          ))}
+        </ol>
+        <div className={styles.actionButtonGroup}>
+          <Button
+            variant="secondary"
+            className={styles.actionButton}
+            onClick={this.decrementCurrentQuestion}
+          >
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            className={styles.actionButton}
+            onClick={this.incrementCurrentQuestion}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   render() {
