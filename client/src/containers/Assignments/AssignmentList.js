@@ -15,6 +15,7 @@ import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import QuizModal from "./QuizModal";
 import Loader from "../../components/Loader";
 // Helpers
 import { statusDueDateSort } from "../../utils/containerHelpers";
@@ -27,7 +28,8 @@ class AssignmentList extends Component {
     showCompleted: false, // Doesn't show completed assignments by default
     currentAssignment: "",
     newQuiz: {},
-    showModal: false
+    showDeleteModal: false,
+    showQuizModal: false
   };
 
   _isMounted = false;
@@ -158,21 +160,31 @@ class AssignmentList extends Component {
     toastManager.remove(this.toastId);
   };
 
-  openModal = () => {
+  openDeleteModal = () => {
     this.setState({
-      showModal: true
+      showDeleteModal: true
     });
   };
 
-  closeModal = () => {
+  closeDeleteModal = () => {
     this.setState({
-      showModal: false
+      showDeleteModal: false
     });
+  };
+
+  openQuizModal = () => {
+    this.setState({ showQuizModal: true });
+  };
+
+  closeQuizModal = () => {
+    this.setState({ showQuizModal: false });
   };
 
   // Handler function for when the 'Take the quiz' button is clicked
   handleTakeQuiz = assignment => {
     const { createPersonalQuiz, fetchQuiz, addQuizToAssignment } = this.props;
+
+    this.openQuizModal();
 
     if (_.isEmpty(assignment.quizInfo.quizzes)) {
       // Create personal quiz and update assignment
@@ -212,7 +224,7 @@ class AssignmentList extends Component {
 
     await deleteAssignment(courseId, assignmentId, history);
 
-    this.closeModal();
+    this.closeDeleteModal();
   };
 
   handleShowCompleted = e => {
@@ -280,7 +292,7 @@ class AssignmentList extends Component {
         </div>
         <AssignmentContent
           assignment={currentAssignment}
-          handleOpenModal={this.openModal}
+          handleDeleteModal={this.openDeleteModal}
           onTakeQuiz={this.handleTakeQuiz}
         />
       </Fragment>
@@ -313,7 +325,10 @@ class AssignmentList extends Component {
           )}
         </div>
         <div className={styles.container}>{this.renderContent()}</div>
-        <Modal showModal={this.state.showModal} handleClose={this.closeModal}>
+        <Modal
+          showModal={this.state.showDeleteModal}
+          handleClose={this.closeDeleteModal}
+        >
           <Modal.Body>
             Are you sure you want to delete this assignment?
           </Modal.Body>
@@ -328,6 +343,11 @@ class AssignmentList extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
+        <QuizModal
+          show={this.state.showQuizModal}
+          handleCloseModal={this.closeQuizModal}
+          quiz={this.state.newQuiz}
+        />
       </div>
     );
   }

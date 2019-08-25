@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import _ from "lodash";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
@@ -13,24 +12,11 @@ import { updateLearningMap } from "../../actions/learningMap";
 import Button from "../../components/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
-import QuizModal from "./QuizModal";
 // Styling
 import styles from "./AssignmentContent.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
 class AssignmentContent extends Component {
-  state = {
-    showModal: false
-  };
-
-  handleShowModal = () => {
-    this.setState(() => ({ showModal: true }));
-  };
-
-  handleCloseModal = () => {
-    this.setState(() => ({ showModal: false }));
-  };
-
   onComplete = (courseId, assignmentId) => {
     const { assignment, markAssignmentAsComplete } = this.props;
 
@@ -68,7 +54,7 @@ class AssignmentContent extends Component {
     const {
       assignment,
       markAssignmentAsIncomplete,
-      handleOpenModal,
+      handleDeleteModal,
       onTakeQuiz,
       history
     } = this.props;
@@ -119,7 +105,7 @@ class AssignmentContent extends Component {
                   Edit
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={() => handleOpenModal(assignment.courseId)}
+                  onClick={() => handleDeleteModal(assignment.courseId)}
                 >
                   Delete
                 </Dropdown.Item>
@@ -182,10 +168,7 @@ class AssignmentContent extends Component {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   category="primary"
-                  onClick={() => {
-                    onTakeQuiz(assignment);
-                    this.handleShowModal();
-                  }}
+                  onClick={() => onTakeQuiz(assignment)}
                   style={{ width: "60%" }}
                 >
                   Take the quiz
@@ -194,10 +177,6 @@ class AssignmentContent extends Component {
             </Fragment>
           )}
         </div>
-        <QuizModal
-          show={this.state.showModal}
-          handleCloseModal={this.handleCloseModal}
-        />
       </div>
     );
   }
