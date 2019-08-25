@@ -100,7 +100,7 @@ module.exports = app => {
     requireLogin,
     (req, res) => {
       const { courseId, assignmentId } = req.params;
-      const { name, details, dateDue } = req.body;
+      const { name, details, dateDue, quizId } = req.body;
 
       Course.findOneAndUpdate(
         {
@@ -112,6 +112,9 @@ module.exports = app => {
             "assignments.$.name": name,
             "assignments.$.details": details,
             "assignments.$.dateDue": dateDue
+          },
+          $push: {
+            "assignments.$.quizInfo.quizzes": quizId
           }
         },
         {

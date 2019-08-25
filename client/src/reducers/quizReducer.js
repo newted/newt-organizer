@@ -1,4 +1,7 @@
-import { REQUEST_PERSONAL_QUIZ, RESOLVE_PERSONAL_QUIZ } from "../actions/quiz";
+import {
+  REQUEST_PERSONAL_QUIZ,
+  RESOLVE_PERSONAL_QUIZ
+} from "../actions/quizzes";
 
 export default function(
   state = {
