@@ -54,3 +54,21 @@
 .option:hover {
   background-color: var(--lightGrey-2);
 }
+
+.correctOption {
+  border-color: var(--lightGreen-btn-border);
+  background-color: var(--lightGreen-btn-hover);
+}
+
+.correctOption:hover {
+  background-color: var(--lightGreen-btn-hover);
+}
+
+.wrongOption {
+  border-color: var(--red-btn-border);
+  background-color: var(--red-btn-hover);
+}
+
+.wrongOption:hover {
+  background-color: var(--red-btn-hover);
+}

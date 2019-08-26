@@ -4,11 +4,19 @@ import Button from "react-bootstrap/Button";
 // Styling
 import styles from "./QuizModal.module.css";
 
+// Function to set class based on whether the option selected was correct or wrong
+const setOptionClass = isChoiceCorrect => {
+  return isChoiceCorrect
+    ? [styles.option, styles.correctOption].join(" ")
+    : [styles.option, styles.wrongOption].join(" ");
+};
+
 const QuizBody = ({
-  currentQuestion,
-  numQuestions,
-  question,
-  options,
+  questionData: {
+    currentQuestion,
+    numQuestions,
+    resultObject: { question, options, isChoiceCorrect, optionChosen }
+  },
   onClickOption,
   onClickNext,
   onClickBack
@@ -22,7 +30,13 @@ const QuizBody = ({
       {options.map(option => (
         <li
           key={option._id}
-          className={styles.option}
+          // If the option chosen is the same as the current option, set UI
+          // based on whether the option chosen is correct or wrong
+          className={
+            option.option === optionChosen
+              ? setOptionClass(isChoiceCorrect)
+              : styles.option
+          }
           onClick={e => onClickOption(e)}
         >
           {option.option}

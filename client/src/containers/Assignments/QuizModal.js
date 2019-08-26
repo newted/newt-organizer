@@ -89,14 +89,12 @@ class QuizModal extends Component {
       quiz: { results },
       numQuestions
     } = this.state;
-    const { question, options } = results[currentQuestion - 1];
+    const resultObject = results[currentQuestion - 1];
+    const questionData = { currentQuestion, numQuestions, resultObject };
 
     return (
       <QuizBody
-        currentQuestion={currentQuestion}
-        numQuestions={numQuestions}
-        question={question}
-        options={options}
+        questionData={questionData}
         onClickOption={this.handleOptionClick}
         onClickNext={this.incrementCurrentQuestion}
         onClickBack={this.decrementCurrentQuestion}
