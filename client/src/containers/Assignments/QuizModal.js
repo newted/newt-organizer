@@ -33,6 +33,36 @@ class QuizModal extends Component {
     this.setState(state => ({ currentQuestion: state.currentQuestion - 1 }));
   };
 
+  // Function to update quiz results - record option picked and check if it's right.
+  handleOptionClick = e => {
+    e.preventDefault();
+
+    const {
+      quiz: { results },
+      currentQuestion
+    } = this.state;
+    // Create new results array
+    let newResults = [...results];
+
+    // Get value of the text of the option selected
+    const optionChosen = e.target.innerText;
+    // Check if it's the same as the correct answer
+    const isChoiceCorrect =
+      optionChosen === newResults[currentQuestion - 1].correctAnswer;
+
+    // Add the two data points to the result object
+    newResults[currentQuestion - 1].optionChosen = optionChosen;
+    newResults[currentQuestion - 1].isChoiceCorrect = isChoiceCorrect;
+
+    // Update quiz with the new results
+    this.setState(state => ({
+      quiz: {
+        ...state.quiz,
+        results: newResults
+      }
+    }));
+  };
+
   // First thing user sees (currentQuestion = 0). Message + button to begin quiz.
   renderIntroMessage() {
     return (
@@ -68,7 +98,11 @@ class QuizModal extends Component {
         <h4 className={styles.question}>{question}</h4>
         <ol type="A" className={styles.optionsGroup}>
           {options.map(option => (
-            <li key={option._id} className={styles.option}>
+            <li
+              key={option._id}
+              className={styles.option}
+              onClick={e => this.handleOptionClick(e)}
+            >
               {option.option}
             </li>
           ))}
@@ -116,7 +150,11 @@ class QuizModal extends Component {
                 : this.renderQuestion(currentQuestion)}
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
+              <Button
+                variant="secondary"
+                onClick={handleCloseModal}
+                style={{ width: "100px" }}
+              >
                 Close
               </Button>
               {/* Show Finish button when on the last question */}
@@ -124,6 +162,7 @@ class QuizModal extends Component {
                 <Button
                   variant="primary"
                   onClick={() => alert("working on this!")}
+                  style={{ width: "100px" }}
                 >
                   Finish
                 </Button>
