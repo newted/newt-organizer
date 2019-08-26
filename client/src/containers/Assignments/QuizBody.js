@@ -5,7 +5,12 @@ import Button from "react-bootstrap/Button";
 import styles from "./QuizModal.module.css";
 
 // Function to set class based on whether the option selected was correct or wrong
-const setOptionClass = (option, optionChosen, isChoiceCorrect) => {
+const setOptionClass = (
+  option,
+  optionChosen,
+  correctAnswer,
+  isChoiceCorrect
+) => {
   // If an option was chosen, check if it's the same as the current option. If
   // it is, return classes based on whether it was correct or not. For the rest
   // of the options (not the one chosen), return the disabled option class
@@ -16,6 +21,12 @@ const setOptionClass = (option, optionChosen, isChoiceCorrect) => {
       } else {
         return [styles.option, styles.wrongOption].join(" ");
       }
+      // If a wrong option is selected, this will display the correct answer
+      // .correctOption = CSS for correct option selected
+      // .correctAnswer = CSS for option that is correct if option selected by user
+      //                  was wrong.
+    } else if (option === correctAnswer) {
+      return [styles.option, styles.correctAnswer].join(" ");
     } else {
       return [styles.option, styles.disabledOption].join(" ");
     }
@@ -29,7 +40,13 @@ const QuizBody = ({
   questionData: {
     currentQuestion,
     numQuestions,
-    resultObject: { question, options, isChoiceCorrect, optionChosen }
+    resultObject: {
+      question,
+      options,
+      isChoiceCorrect,
+      optionChosen,
+      correctAnswer
+    }
   },
   onClickOption,
   onClickNext,
@@ -49,6 +66,7 @@ const QuizBody = ({
             className={setOptionClass(
               option.option,
               optionChosen,
+              correctAnswer,
               isChoiceCorrect
             )}
             onClick={e => (optionChosen ? null : onClickOption(e))}

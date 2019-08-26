@@ -84,6 +84,18 @@
   background-color: var(--red-btn-hover);
 }
 
+/* .correctOption = CSS for correct option selected
+   .correctAnswer = CSS for option that is correct if option selected by user
+                    was wrong. */
+.correctAnswer {
+  border-color: var(--lightGreen-btn-border);
+  background-color: rgba(93, 216, 121, 0.3);
+}
+
+.correctAnswer:hover {
+  background-color: rgba(93, 216, 121, 0.3);
+}
+
 .explanation {
   color: var(--grey);
   font-size: 0.9rem;
