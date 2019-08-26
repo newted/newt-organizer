@@ -3,6 +3,7 @@ import _ from "lodash";
 // Components
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import QuizBody from "./QuizBody";
 // Styling
 import styles from "./QuizModal.module.css";
 
@@ -91,45 +92,15 @@ class QuizModal extends Component {
     const { question, options } = results[currentQuestion - 1];
 
     return (
-      <div className={styles.quizBody}>
-        <p
-          className={styles.light}
-        >{`Question ${currentQuestion}/${numQuestions}`}</p>
-        <h4 className={styles.question}>{question}</h4>
-        <ol type="A" className={styles.optionsGroup}>
-          {options.map(option => (
-            <li
-              key={option._id}
-              className={styles.option}
-              onClick={e => this.handleOptionClick(e)}
-            >
-              {option.option}
-            </li>
-          ))}
-        </ol>
-        <div className={styles.actionButtonGroup}>
-          {/* Don't show back button if it's the first question */}
-          {currentQuestion !== 1 && (
-            <Button
-              variant="secondary"
-              className={styles.actionButton}
-              onClick={this.decrementCurrentQuestion}
-            >
-              Back
-            </Button>
-          )}
-          {/* Don't show next button if it's the last question */}
-          {currentQuestion !== numQuestions && (
-            <Button
-              variant="primary"
-              className={styles.actionButton}
-              onClick={this.incrementCurrentQuestion}
-            >
-              Next
-            </Button>
-          )}
-        </div>
-      </div>
+      <QuizBody
+        currentQuestion={currentQuestion}
+        numQuestions={numQuestions}
+        question={question}
+        options={options}
+        onClickOption={this.handleOptionClick}
+        onClickNext={this.incrementCurrentQuestion}
+        onClickBack={this.decrementCurrentQuestion}
+      />
     );
   }
 
