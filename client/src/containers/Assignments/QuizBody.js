@@ -42,19 +42,25 @@ const QuizBody = ({
     <h4 className={styles.question}>{question}</h4>
     <ol type="A" className={styles.optionsGroup}>
       {options.map(option => (
-        <li
-          key={option._id}
-          // If the option chosen is the same as the current option, set UI
-          // based on whether the option chosen is correct or wrong
-          className={setOptionClass(
-            option.option,
-            optionChosen,
-            isChoiceCorrect
+        <div key={option._id} className={styles.listGroup}>
+          <li
+            // If the option chosen is the same as the current option, set UI
+            // based on whether the option chosen is correct or wrong
+            className={setOptionClass(
+              option.option,
+              optionChosen,
+              isChoiceCorrect
+            )}
+            onClick={e => (optionChosen ? null : onClickOption(e))}
+          >
+            {option.option}
+          </li>
+          {/* Display the answer explanation if an option has been chosen and
+            an explanation exists */}
+          {optionChosen && option.explanation && (
+            <p className={styles.explanation}>{option.explanation}</p>
           )}
-          onClick={e => (optionChosen ? null : onClickOption(e))}
-        >
-          {option.option}
-        </li>
+        </div>
       ))}
     </ol>
     <div className={styles.actionButtonGroup}>

@@ -18,7 +18,7 @@
 }
 
 .optionsGroup {
-  min-width: 400px;
+  width: 500px;
 }
 
 .actionButtonGroup {
@@ -39,12 +39,15 @@
   margin: 2rem 0 1.5rem 0;
 }
 
+.listGroup {
+  margin-bottom: 0.75rem;
+}
+
 .option {
   border: 1px solid var(--lightGrey);
   border-radius: 2rem;
   cursor: pointer;
   padding: 0.75rem 1.25rem;
-  margin-bottom: 0.5rem;
 }
 
 .option:last-child {
@@ -79,4 +82,12 @@
 
 .wrongOption:hover {
   background-color: var(--red-btn-hover);
+}
+
+.explanation {
+  color: var(--grey);
+  font-size: 0.9rem;
+  padding-left: 1.25rem;
+  margin-top: 0.25rem;
+  max-width: 500px;
 }
