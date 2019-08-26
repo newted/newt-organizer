@@ -55,6 +55,14 @@
   background-color: var(--lightGrey-2);
 }
 
+.disabledOption {
+  cursor: not-allowed;
+}
+
+.disabledOption:hover {
+  background-color: white;
+}
+
 .correctOption {
   border-color: var(--lightGreen-btn-border);
   background-color: var(--lightGreen-btn-hover);
