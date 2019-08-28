@@ -3,6 +3,8 @@ import _ from "lodash";
 // Components
 import Modal from "react-bootstrap/Modal";
 import QuizModalContent from "./QuizModalContent";
+// Styling
+import styles from "./QuizBody.module.css";
 
 class QuizModal extends Component {
   state = {
@@ -87,35 +89,46 @@ class QuizModal extends Component {
   };
 
   render() {
-    const { quiz, show, handleCloseModal, quizName } = this.props;
+    const {
+      quiz: { results },
+      show,
+      handleCloseModal,
+      quizName
+    } = this.props;
     const { currentSection, currentQuestion, numQuestions } = this.state;
 
     return (
       <Modal show={show} onHide={handleCloseModal} size="lg" backdrop="static">
         {this.state.quiz ? (
           <QuizModalContent
-            quiz={quiz}
             quizName={quizName}
+            questions={results}
             onCloseModal={handleCloseModal}
             currentSection={currentSection}
             currentQuestion={currentQuestion}
-            isQuizComplete={this.isQuizComplete(quiz.results)}
+            numQuestions={numQuestions}
+            isQuizComplete={this.isQuizComplete(results)}
             onClickBegin={this.handleBeginClick}
             onClickFinish={this.handleFinishClick}
             onClickOption={this.handleOptionClick}
             onClickNext={this.incrementCurrentQuestion}
             onClickBack={this.decrementCurrentQuestion}
-            numQuestions={numQuestions}
           />
         ) : (
-          <>
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>Generating quiz...</Modal.Body>
-          </>
+          <QuizLoading />
         )}
       </Modal>
     );
   }
 }
+
+const QuizLoading = () => (
+  <>
+    <Modal.Header closeButton></Modal.Header>
+    <Modal.Body>
+      <div className={styles.quizBody}>Generating quiz...</div>
+    </Modal.Body>
+  </>
+);
 
 export default QuizModal;

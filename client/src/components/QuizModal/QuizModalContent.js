@@ -11,13 +11,11 @@ import styles from "./QuizBody.module.css";
 class QuizModalContent extends Component {
   renderQuizBody(currentSection) {
     const {
-      quiz: { results },
+      questions,
       currentQuestion,
       numQuestions,
       onClickBegin,
-      onClickOption,
-      onClickBack,
-      onClickNext
+      ...rest
     } = this.props;
 
     switch (currentSection) {
@@ -26,15 +24,13 @@ class QuizModalContent extends Component {
           <QuizIntro numQuestions={numQuestions} onBeginClick={onClickBegin} />
         );
       case "questions":
-        const resultObject = results[currentQuestion - 1];
+        const questionInfo = questions[currentQuestion - 1];
         return (
           <QuizQuestion
             currentQuestion={currentQuestion}
             numQuestions={numQuestions}
-            resultObject={resultObject}
-            onClickOption={onClickOption}
-            onClickNext={onClickNext}
-            onClickBack={onClickBack}
+            questionInfo={questionInfo}
+            {...rest}
           />
         );
       case "outro":
