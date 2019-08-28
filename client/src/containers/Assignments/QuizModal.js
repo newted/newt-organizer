@@ -64,6 +64,20 @@ class QuizModal extends Component {
     }));
   };
 
+  // Function to check if the quiz has been completed (all the questions
+  // answered) - used to disable Finish button until complete
+  isQuizComplete = results => {
+    const { numQuestions } = this.state;
+
+    // Returns only questions that have been answered (by checking if the object
+    // has an `optionChosen` field)
+    const isComplete = results.filter(result => _.has(result, "optionChosen"));
+
+    // Checks if the filtered list is the same as the number of questions and
+    // returns boolean
+    return isComplete.length === numQuestions;
+  };
+
   // First thing user sees (currentQuestion = 0). Message + button to begin quiz.
   renderIntroMessage() {
     return (
@@ -103,11 +117,16 @@ class QuizModal extends Component {
   }
 
   render() {
-    const { show, handleCloseModal, quizName } = this.props;
+    const {
+      quiz: { results },
+      show,
+      handleCloseModal,
+      quizName
+    } = this.props;
     const { currentQuestion, numQuestions } = this.state;
 
     return (
-      <Modal show={show} onHide={handleCloseModal} size="lg">
+      <Modal show={show} onHide={handleCloseModal} size="lg" backdrop="static">
         {this.state.quiz ? (
           <>
             <Modal.Header closeButton>
@@ -132,6 +151,7 @@ class QuizModal extends Component {
                   variant="primary"
                   onClick={() => alert("working on this!")}
                   style={{ width: "100px" }}
+                  disabled={!this.isQuizComplete(results)}
                 >
                   Finish
                 </Button>
