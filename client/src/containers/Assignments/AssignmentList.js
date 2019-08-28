@@ -15,7 +15,7 @@ import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import QuizModal from "./QuizModal";
+import QuizModal from "../../components/QuizModal";
 import Loader from "../../components/Loader";
 // Helpers
 import { statusDueDateSort } from "../../utils/containerHelpers";

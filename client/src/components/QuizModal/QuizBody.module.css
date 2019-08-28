@@ -66,6 +66,10 @@
   background-color: white;
 }
 
+.disabledButton {
+  cursor: not-allowed;
+}
+
 .correctOption {
   border-color: var(--lightGreen-btn-border);
   background-color: var(--lightGreen-btn-hover);
@@ -119,4 +123,8 @@
 .finishSection img {
   align-items: center;
   margin: 0 auto;
+}
+
+.finishButton {
+  width: 100px;
 }
