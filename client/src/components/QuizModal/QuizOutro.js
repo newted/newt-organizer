@@ -3,6 +3,7 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 // Styling
 import styles from "./QuizBody.module.css";
+import puppies from "../../assets/puppies.jpeg";
 
 const QuizOutro = () => (
   <div className={styles.quizBody}>
@@ -18,7 +19,7 @@ const QuizOutro = () => (
         We're working on this. Until then, enjoy this picture of two adorable
         puppies:
       </p>
-      <Image src="https://placedog.net/400/225?id=8" rounded />
+      <Image src={puppies} rounded />
     </div>
   </div>
 );
