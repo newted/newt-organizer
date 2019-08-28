@@ -103,3 +103,20 @@
   margin-top: 0.25rem;
   max-width: 500px;
 }
+
+.finishSection {
+  margin: 2rem 0;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.finishSection h4 {
+  margin-bottom: 1.5rem;
+}
+
+.finishSection img {
+  align-items: center;
+  margin: 0 auto;
+}

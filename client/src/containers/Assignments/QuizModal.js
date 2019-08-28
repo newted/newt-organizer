@@ -12,7 +12,8 @@ class QuizModal extends Component {
     show: this.props.show,
     quiz: null,
     numQuestions: 0,
-    currentQuestion: 0
+    currentQuestion: 0,
+    showFinishSection: false
   };
 
   componentDidUpdate() {
@@ -64,6 +65,11 @@ class QuizModal extends Component {
     }));
   };
 
+  // Function to handle clicking the Finish button - send user to Finish section
+  handleFinishClick = () => {
+    this.setState({ showFinishSection: true });
+  };
+
   // Function to check if the quiz has been completed (all the questions
   // answered) - used to disable Finish button until complete
   isQuizComplete = results => {
@@ -101,7 +107,8 @@ class QuizModal extends Component {
   renderQuestion(currentQuestion) {
     const {
       quiz: { results },
-      numQuestions
+      numQuestions,
+      showFinishSection
     } = this.state;
     const resultObject = results[currentQuestion - 1];
     const questionData = { currentQuestion, numQuestions, resultObject };
@@ -112,6 +119,7 @@ class QuizModal extends Component {
         onClickOption={this.handleOptionClick}
         onClickNext={this.incrementCurrentQuestion}
         onClickBack={this.decrementCurrentQuestion}
+        showFinishSection={showFinishSection}
       />
     );
   }
@@ -123,7 +131,7 @@ class QuizModal extends Component {
       handleCloseModal,
       quizName
     } = this.props;
-    const { currentQuestion, numQuestions } = this.state;
+    const { currentQuestion, numQuestions, showFinishSection } = this.state;
 
     return (
       <Modal show={show} onHide={handleCloseModal} size="lg" backdrop="static">
@@ -146,10 +154,10 @@ class QuizModal extends Component {
                 Close
               </Button>
               {/* Show Finish button when on the last question */}
-              {currentQuestion === numQuestions && (
+              {currentQuestion === numQuestions && !showFinishSection && (
                 <Button
                   variant="primary"
-                  onClick={() => alert("working on this!")}
+                  onClick={this.handleFinishClick}
                   style={{ width: "100px" }}
                   disabled={!this.isQuizComplete(results)}
                 >
