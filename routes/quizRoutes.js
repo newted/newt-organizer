@@ -58,4 +58,27 @@ module.exports = app => {
       res.send(error);
     }
   });
+
+  // PUT request to update the quiz
+  app.put("/api/quiz/:quizId/update", requireLogin, (req, res) => {
+    try {
+      const { quizId } = req.params;
+      const { quiz } = req.body;
+
+      PersonalQuiz.findByIdAndUpdate(
+        quizId,
+        quiz,
+        { new: true },
+        (error, quiz) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(quiz);
+          }
+        }
+      );
+    } catch (error) {
+      res.send(error);
+    }
+  });
 };

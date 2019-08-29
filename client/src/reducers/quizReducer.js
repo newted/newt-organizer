@@ -2,7 +2,8 @@ import {
   REQUEST_PERSONAL_QUIZ,
   RESOLVE_PERSONAL_QUIZ,
   FETCH_PERSONAL_QUIZ,
-  CREATE_PERSONAL_QUIZ
+  CREATE_PERSONAL_QUIZ,
+  UPDATE_PERSONAL_QUIZ
 } from "../actions/quizzes";
 
 export default function(
@@ -25,6 +26,7 @@ export default function(
       };
     case FETCH_PERSONAL_QUIZ:
     case CREATE_PERSONAL_QUIZ:
+    case UPDATE_PERSONAL_QUIZ:
       return {
         ...state,
         isFetching: false,
