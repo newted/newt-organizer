@@ -186,7 +186,7 @@ class AssignmentList extends Component {
 
     this.openQuizModal();
 
-    if (_.isEmpty(assignment.quizInfo.quizzes)) {
+    if (_.isEmpty(assignment.quizInfo)) {
       // Create personal quiz and update assignment
       const data = {
         contentId: assignment.contentInfo.contentId,
@@ -207,6 +207,7 @@ class AssignmentList extends Component {
                 ...state.currentAssignment.quizInfo,
                 {
                   dateCreated: quiz.dateCreated,
+                  dateCompleted: quiz.dateCompleted ? quiz.dateCompleted : null,
                   quizId: quiz._id
                 }
               ]
@@ -219,11 +220,11 @@ class AssignmentList extends Component {
 
       // If the quiz has already been fetched, set state with that, otherwise
       // fetch quiz
-      if (allQuizzes[assignment.quizInfo.quizzes[0]]) {
-        this.setState({ newQuiz: allQuizzes[assignment.quizInfo.quizzes[0]] });
+      if (allQuizzes[assignment.quizInfo[0].quizId]) {
+        this.setState({ newQuiz: allQuizzes[assignment.quizInfo[0].quizId] });
       } else {
         // Fetch personal quiz using id
-        fetchQuiz(assignment.quizInfo.quizzes[0]).then(quiz =>
+        fetchQuiz(assignment.quizInfo[0].quizId).then(quiz =>
           this.setState({ newQuiz: quiz })
         );
       }

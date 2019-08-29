@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import _ from "lodash";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
@@ -49,6 +50,16 @@ class AssignmentContent extends Component {
     // Send request to mark the assignment as complete
     markAssignmentAsComplete(courseId, assignmentId);
   };
+
+  // If quiz has a created date but no finish date, it's still in progress.
+  // Otherwise it's finished. Return message depending on situation.
+  renderQuizButtonMessage(quizDateCreated, quizDateCompleted) {
+    if (quizDateCreated && quizDateCompleted) {
+      return "See quiz results";
+    }
+
+    return "Continue quiz";
+  }
 
   render() {
     const {
@@ -171,7 +182,12 @@ class AssignmentContent extends Component {
                   onClick={() => onTakeQuiz(assignment)}
                   style={{ width: "60%" }}
                 >
-                  Take the quiz
+                  {_.isEmpty(assignment.quizInfo)
+                    ? "Take the quiz"
+                    : this.renderQuizButtonMessage(
+                        assignment.quizInfo[0].dateCreated,
+                        assignment.quizInfo[0].dateCompleted
+                      )}
                 </Button>
               </div>
             </Fragment>
