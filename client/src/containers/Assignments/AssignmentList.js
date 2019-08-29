@@ -203,10 +203,13 @@ class AssignmentList extends Component {
             newQuiz: quiz,
             currentAssignment: {
               ...state.currentAssignment,
-              quizInfo: {
+              quizInfo: [
                 ...state.currentAssignment.quizInfo,
-                quizzes: [...state.currentAssignment.quizInfo.quizzes, quiz._id]
-              }
+                {
+                  dateCreated: quiz.dateCreated,
+                  quizId: quiz._id
+                }
+              ]
             }
           }))
         );
