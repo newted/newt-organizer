@@ -250,6 +250,20 @@ class AssignmentList extends Component {
     });
   };
 
+  // Function that returns whether a quiz has been completed or not, so the
+  // right quiz page flow (questions or results) can be shown
+  isQuizComplete = () => {
+    const { currentAssignment } = this.state;
+    // If the quizInfo array is empty (no quizzes), return false. Otherwise
+    // check if the dateCompleted field is filled. If there's a date, return
+    // true, otherwise false
+    if (!_.isEmpty(currentAssignment.quizInfo)) {
+      return !_.isEmpty(currentAssignment.quizInfo[0].dateCompleted);
+    } else {
+      return false;
+    }
+  };
+
   delete = async (courseId, assignmentId) => {
     const { history, deleteAssignment } = this.props;
 
@@ -379,6 +393,7 @@ class AssignmentList extends Component {
           handleCloseModal={this.closeQuizModal}
           quizName={`Quiz for ${currentAssignment.name}`}
           quiz={this.state.newQuiz}
+          isQuizComplete={this.isQuizComplete()}
           onComplete={this.handleCompleteQuiz}
         />
       </div>

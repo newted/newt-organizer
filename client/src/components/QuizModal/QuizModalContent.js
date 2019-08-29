@@ -35,6 +35,8 @@ class QuizModalContent extends Component {
         );
       case "outro":
         return <QuizOutro />;
+      case "results":
+        return <div>Results</div>;
       default:
         return (
           <QuizIntro numQuestions={numQuestions} onBeginClick={onClickBegin} />
