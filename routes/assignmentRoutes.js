@@ -259,6 +259,36 @@ module.exports = app => {
     }
   );
 
+  // PUT request to update quiz info for assignment
+  app.put(
+    "/api/courses/:courseId/assignments/:assignmentId/update-quiz",
+    requireLogin,
+    (req, res) => {
+      const { courseId, assignmentId } = req.params;
+      const { dateCompleted } = req.body;
+
+      Course.findOneAndUpdate(
+        { _id: courseId, "assignments._id": assignmentId },
+        {
+          // Update date completed of first element in quizInfo array
+          $set: {
+            "assignments.$.quizInfo.0.dateCompleted": dateCompleted
+          }
+        },
+        {
+          new: true
+        },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
+        }
+      );
+    }
+  );
+
   // DELETE request to delete an assignment
   app.delete(
     "/api/courses/:courseId/assignments/:assignmentId",

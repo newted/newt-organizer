@@ -273,6 +273,31 @@ export const addQuizToAssignment = (
   }
 };
 
+// Request to update quiz info in assignment (really need to de-couple courses
+// and assignments so I don't have to make custom requests for everything
+export const updateAssignmentQuiz = (
+  courseId,
+  assignmentId,
+  dateCompleted
+) => async dispatch => {
+  try {
+    dispatch(requestCourses());
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+
+    const res = await axios.put(
+      `/api/courses/${courseId}/assignments/${assignmentId}/update-quiz`,
+      { dateCompleted },
+      { headers: { Authorization: idToken } }
+    );
+
+    dispatch({ type: UPDATE_ASSIGNMENT, payload: res.data });
+  } catch (error) {
+    dispatch(resolveCourses());
+    console.error(error);
+  }
+};
+
 // This is a very basic Youtube URL parser which only does full links. A more
 // robust one will require regex to handle more types of URLs.
 // See: https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url

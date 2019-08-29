@@ -6,7 +6,8 @@ import { withToastManager } from "react-toast-notifications";
 // API
 import {
   deleteAssignment,
-  addQuizToAssignment
+  addQuizToAssignment,
+  updateAssignmentQuiz
 } from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 import {
@@ -237,10 +238,16 @@ class AssignmentList extends Component {
 
   // Handler function to submit request to update quiz once it's complete
   handleCompleteQuiz = quiz => {
-    const { completeQuiz } = this.props;
+    const { completeQuiz, updateAssignmentQuiz } = this.props;
+    const {
+      currentAssignment: { _id, courseId }
+    } = this.state;
 
     quiz.dateCompleted = Date.now();
-    completeQuiz(quiz).then(updatedQuiz => console.log(updatedQuiz));
+    completeQuiz(quiz).then(updatedQuiz => {
+      // TODO: Update assignment quiz info
+      updateAssignmentQuiz(courseId, _id, updatedQuiz.dateCompleted);
+    });
   };
 
   delete = async (courseId, assignmentId) => {
@@ -417,6 +424,7 @@ function mapStateToProps({ programs, courses, quizzes }, props) {
 const mapDispatchToProps = {
   deleteAssignment,
   addQuizToAssignment,
+  updateAssignmentQuiz,
   fetchAllCourses,
   resolveCourses,
   createPersonalQuiz,
