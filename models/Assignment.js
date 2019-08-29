@@ -20,15 +20,18 @@ const assignmentSchema = new Schema({
     type: Boolean,
     default: false
   },
-  // List of quiz ids that the user has taken for this assignment/content
-  quizInfo: {
-    quizzes: [
-      {
+  // List of quiz id and dates created and completed for each quiz that the
+  // user has taken for this assignment/content
+  quizInfo: [
+    {
+      dateCreated: Date,
+      dateCompleted: Date,
+      quizId: {
         type: Schema.Types.ObjectId,
         ref: "PersonalQuiz"
       }
-    ]
-  },
+    }
+  ],
   // Denormalized from Content collection (name and level)
   contentInfo: {
     name: String,

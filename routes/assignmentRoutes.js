@@ -239,7 +239,10 @@ module.exports = app => {
         },
         {
           $push: {
-            "assignments.$.quizInfo.quizzes": quizId
+            "assignments.$.quizInfo": {
+              quizId,
+              dateCreated: Date.now()
+            }
           }
         },
         {
