@@ -55,9 +55,13 @@ export const completeQuiz = quiz => async dispatch => {
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
-    const res = await axios.put(`/api/quiz/${quiz._id}/update`, quiz, {
-      headers: { Authorization: idToken }
-    });
+    const res = await axios.put(
+      `/api/quiz/${quiz._id}/update`,
+      { quiz },
+      {
+        headers: { Authorization: idToken }
+      }
+    );
 
     dispatch({ type: UPDATE_PERSONAL_QUIZ, payload: res.data });
 

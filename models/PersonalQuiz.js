@@ -22,7 +22,7 @@ const resultSchema = new Schema({
   ],
   optionChosen: String,
   correctAnswer: String,
-  choiceIsCorrect: Boolean,
+  isChoiceCorrect: Boolean,
   didNotKnow: Boolean
 });
 

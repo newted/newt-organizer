@@ -9,7 +9,11 @@ import {
   addQuizToAssignment
 } from "../../actions/assignments";
 import { fetchAllCourses, resolveCourses } from "../../actions/courses";
-import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
+import {
+  createPersonalQuiz,
+  fetchQuiz,
+  completeQuiz
+} from "../../actions/quizzes";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
@@ -231,6 +235,14 @@ class AssignmentList extends Component {
     }
   };
 
+  // Handler function to submit request to update quiz once it's complete
+  handleCompleteQuiz = quiz => {
+    const { completeQuiz } = this.props;
+
+    quiz.dateCompleted = Date.now();
+    completeQuiz(quiz).then(updatedQuiz => console.log(updatedQuiz));
+  };
+
   delete = async (courseId, assignmentId) => {
     const { history, deleteAssignment } = this.props;
 
@@ -360,6 +372,7 @@ class AssignmentList extends Component {
           handleCloseModal={this.closeQuizModal}
           quizName={`Quiz for ${currentAssignment.name}`}
           quiz={this.state.newQuiz}
+          onComplete={this.handleCompleteQuiz}
         />
       </div>
     );
@@ -407,7 +420,8 @@ const mapDispatchToProps = {
   fetchAllCourses,
   resolveCourses,
   createPersonalQuiz,
-  fetchQuiz
+  fetchQuiz,
+  completeQuiz
 };
 
 export default connect(

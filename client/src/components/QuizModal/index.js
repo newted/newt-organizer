@@ -71,6 +71,10 @@ class QuizModal extends Component {
 
   // Function to handle clicking the Finish button - send user to Finish section
   handleFinishClick = () => {
+    const { quiz } = this.props;
+    const { onComplete } = this.props;
+
+    onComplete(quiz);
     this.setState({ currentSection: "outro" });
   };
 
