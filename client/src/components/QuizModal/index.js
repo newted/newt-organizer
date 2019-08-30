@@ -16,17 +16,12 @@ class QuizModal extends Component {
   };
 
   componentDidUpdate() {
-    const { quiz, isQuizComplete } = this.props;
-    const { currentSection } = this.state;
+    const { quiz } = this.props;
 
     // Add quiz and number of questions to state
     if (_.isEmpty(this.state.quiz) && !_.isEmpty(quiz)) {
       this.setState({ quiz, numQuestions: quiz.results.length });
     }
-
-    // If the quiz is complete, set current section to results section
-    if (isQuizComplete && currentSection !== "results")
-      this.setState({ currentSection: "results" });
   }
 
   // Function to handle beginning the quiz: move from intro section to questions

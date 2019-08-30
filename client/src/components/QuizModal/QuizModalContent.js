@@ -15,13 +15,18 @@ class QuizModalContent extends Component {
       currentQuestion,
       numQuestions,
       onClickBegin,
+      isQuizComplete,
       ...rest
     } = this.props;
 
     switch (currentSection) {
       case "intro":
         return (
-          <QuizIntro numQuestions={numQuestions} onBeginClick={onClickBegin} />
+          <QuizIntro
+            numQuestions={numQuestions}
+            onBeginClick={onClickBegin}
+            showReview={isQuizComplete}
+          />
         );
       case "questions":
         const questionInfo = questions[currentQuestion - 1];
@@ -30,13 +35,12 @@ class QuizModalContent extends Component {
             currentQuestion={currentQuestion}
             numQuestions={numQuestions}
             questionInfo={questionInfo}
+            showReview={isQuizComplete}
             {...rest}
           />
         );
       case "outro":
         return <QuizOutro />;
-      case "results":
-        return <div>Results</div>;
       default:
         return (
           <QuizIntro numQuestions={numQuestions} onBeginClick={onClickBegin} />
@@ -69,21 +73,24 @@ class QuizModalContent extends Component {
           >
             Close
           </Button>
-          {/* Show Finish button in footer when on the last question */}
-          {currentQuestion === numQuestions && currentSection !== "outro" && (
-            <Button
-              variant="primary"
-              className={
-                isQuizComplete
-                  ? styles.finishButton
-                  : `${styles.finishButton} ${styles.disabledButton}`
-              }
-              onClick={onClickFinish}
-              disabled={!isQuizComplete}
-            >
-              Finish
-            </Button>
-          )}
+          {/* Show Finish button in footer when on the last question (don't
+              show when in outro section or if quiz is complete) */}
+          {currentQuestion === numQuestions &&
+            currentSection !== "outro" &&
+            !isQuizComplete && (
+              <Button
+                variant="primary"
+                className={
+                  isQuizComplete
+                    ? styles.finishButton
+                    : `${styles.finishButton} ${styles.disabledButton}`
+                }
+                onClick={onClickFinish}
+                disabled={!isQuizComplete}
+              >
+                Finish
+              </Button>
+            )}
         </Modal.Footer>
       </>
     );
