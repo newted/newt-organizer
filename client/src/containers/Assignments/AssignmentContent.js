@@ -18,39 +18,6 @@ import styles from "./AssignmentContent.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
 class AssignmentContent extends Component {
-  onComplete = (courseId, assignmentId) => {
-    const { assignment, markAssignmentAsComplete } = this.props;
-
-    // If assignment has knowledge tracking, send request to update the learning
-    // map and send the required information
-    if (assignment.hasKnowledgeTracking) {
-      const {
-        assignment: { contentInfo, knowledgeSubject, knowledgeModule },
-        learningMapId,
-        updateLearningMap
-      } = this.props;
-      // Combine primary and secondary topics into a singular topics array
-      const allTopics = contentInfo.primaryTopics.concat(
-        contentInfo.secondaryTopics
-      );
-
-      const data = {
-        knowledgeSubject,
-        knowledgeModule,
-        topics: allTopics,
-        contentHistory: {
-          name: contentInfo.name,
-          contentId: contentInfo.contentId
-        }
-      };
-      // Send request to update learning map
-      updateLearningMap(learningMapId, data);
-    }
-
-    // Send request to mark the assignment as complete
-    markAssignmentAsComplete(courseId, assignmentId);
-  };
-
   // If quiz has a created date but no finish date, it's still in progress.
   // Otherwise it's finished. Return message depending on situation.
   renderQuizButtonMessage(quizDateCreated, quizDateCompleted) {
@@ -65,6 +32,7 @@ class AssignmentContent extends Component {
     const {
       assignment,
       markAssignmentAsIncomplete,
+      markAssignmentAsComplete,
       handleDeleteModal,
       onTakeQuiz,
       history
@@ -86,7 +54,10 @@ class AssignmentContent extends Component {
                       assignment.courseId,
                       assignment._id
                     )
-                  : this.onComplete(assignment.courseId, assignment._id)
+                  : markAssignmentAsComplete(
+                      assignment.courseId,
+                      assignment._id
+                    )
               }
             >
               <FiCheckSquare

@@ -15,6 +15,7 @@ import {
   fetchQuiz,
   completeQuiz
 } from "../../actions/quizzes";
+import { updateLearningMap } from "../../actions/learningMap";
 // Components
 import AssignmentCard from "./AssignmentCard";
 import AssignmentContent from "./AssignmentContent";
@@ -238,15 +239,59 @@ class AssignmentList extends Component {
 
   // Handler function to submit request to update quiz once it's complete
   handleCompleteQuiz = quiz => {
-    const { completeQuiz, updateAssignmentQuiz } = this.props;
     const {
-      currentAssignment: { _id, courseId }
+      completeQuiz,
+      updateAssignmentQuiz,
+      learningMapId,
+      updateLearningMap
+    } = this.props;
+    const {
+      currentAssignment: {
+        _id,
+        courseId,
+        contentInfo,
+        knowledgeModule,
+        knowledgeSubject
+      }
     } = this.state;
 
+    // Set completed data and update quiz results
     quiz.dateCompleted = Date.now();
     completeQuiz(quiz).then(updatedQuiz => {
-      // TODO: Update assignment quiz info
+      // Update assignment quiz info
       updateAssignmentQuiz(courseId, _id, updatedQuiz.dateCompleted);
+      // Update Learning map
+
+      let quizTopicsIds = [];
+      // Get all the topic ids from each question and add it to the array
+      _.each(updatedQuiz.results, ({ topics }) => {
+        quizTopicsIds = _.concat(quizTopicsIds, topics);
+      });
+      // Remove duplicate topic ids
+      quizTopicsIds = _.uniq(quizTopicsIds);
+      // Combine primary and secondary topics into single array
+      const allTopics = contentInfo.primaryTopics.concat(
+        contentInfo.secondaryTopics
+      );
+
+      // Filter out topics that aren't part of the quiz (not in topicIds array)
+      const quizTopics = _.filter(
+        allTopics,
+        ({ topicId }) => _.indexOf(quizTopicsIds, topicId) !== -1
+      );
+
+      const data = {
+        knowledgeSubject,
+        knowledgeModule,
+        topics: quizTopics,
+        contentHistory: {
+          name: contentInfo.name,
+          contentId: contentInfo.contentId
+        }
+      };
+
+      // Send request to update learning map
+      updateLearningMap(learningMapId, data);
     });
   };
 
@@ -401,7 +446,7 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ programs, courses, quizzes }, props) {
+function mapStateToProps({ programs, courses, quizzes, learningMap }, props) {
   const { assignmentId } = props.match.params;
   const assignments = [];
   // This way of setting isFetching seems logical, but for a brief moment,
@@ -428,6 +473,7 @@ function mapStateToProps({ programs, courses, quizzes }, props) {
   return {
     urlAssignmentId: assignmentId,
     allQuizzes: quizzes.items,
+    learningMapId: learningMap.items._id,
     assignments,
     isFetching,
     error,
@@ -444,7 +490,8 @@ const mapDispatchToProps = {
   resolveCourses,
   createPersonalQuiz,
   fetchQuiz,
-  completeQuiz
+  completeQuiz,
+  updateLearningMap
 };
 
 export default connect(
