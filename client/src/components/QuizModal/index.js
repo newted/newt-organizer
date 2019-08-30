@@ -97,7 +97,8 @@ class QuizModal extends Component {
       quiz: { results },
       show,
       handleCloseModal,
-      quizName
+      quizName,
+      showReview
     } = this.props;
     const { currentSection, currentQuestion, numQuestions } = this.state;
 
@@ -112,6 +113,7 @@ class QuizModal extends Component {
             currentQuestion={currentQuestion}
             numQuestions={numQuestions}
             isQuizComplete={this.isQuizComplete(results)}
+            showReview={showReview}
             onClickBegin={this.handleBeginClick}
             onClickFinish={this.handleFinishClick}
             onClickOption={this.handleOptionClick}

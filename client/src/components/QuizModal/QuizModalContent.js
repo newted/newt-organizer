@@ -15,7 +15,7 @@ class QuizModalContent extends Component {
       currentQuestion,
       numQuestions,
       onClickBegin,
-      isQuizComplete,
+      showReview,
       ...rest
     } = this.props;
 
@@ -25,7 +25,7 @@ class QuizModalContent extends Component {
           <QuizIntro
             numQuestions={numQuestions}
             onBeginClick={onClickBegin}
-            showReview={isQuizComplete}
+            showReview={showReview}
           />
         );
       case "questions":
@@ -35,7 +35,6 @@ class QuizModalContent extends Component {
             currentQuestion={currentQuestion}
             numQuestions={numQuestions}
             questionInfo={questionInfo}
-            showReview={isQuizComplete}
             {...rest}
           />
         );
@@ -56,6 +55,7 @@ class QuizModalContent extends Component {
       currentQuestion,
       numQuestions,
       isQuizComplete,
+      showReview,
       onClickFinish
     } = this.props;
 
@@ -77,7 +77,7 @@ class QuizModalContent extends Component {
               show when in outro section or if quiz is complete) */}
           {currentQuestion === numQuestions &&
             currentSection !== "outro" &&
-            !isQuizComplete && (
+            !showReview && (
               <Button
                 variant="primary"
                 className={

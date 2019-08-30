@@ -393,7 +393,7 @@ class AssignmentList extends Component {
           handleCloseModal={this.closeQuizModal}
           quizName={`Quiz for ${currentAssignment.name}`}
           quiz={this.state.newQuiz}
-          isQuizComplete={this.isQuizComplete()}
+          showReview={this.isQuizComplete()}
           onComplete={this.handleCompleteQuiz}
         />
       </div>
