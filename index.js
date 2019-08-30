@@ -3,11 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 
-// Require models
-require("./models");
-// Require shared models
-require("newt-knowledge-map-models");
-
 // Require firebase admin initialization
 require("./services/firebase-admin");
 
@@ -16,6 +11,11 @@ mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useFindAndModify: false
 });
+
+// Require models
+require("./models");
+// Require shared models
+require("newt-knowledge-map-models");
 
 const app = express();
 
