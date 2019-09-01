@@ -2,7 +2,10 @@ import React from "react";
 import _ from "lodash";
 // Components
 import Loader from "../../components/Loader";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 // Styling
+import { FiInfo } from "react-icons/fi";
 import styles from "./LearningMapContent.module.css";
 
 const Content = ({ learningInfo }) => {
@@ -17,7 +20,26 @@ const Content = ({ learningInfo }) => {
         <thead>
           <tr>
             <th className={styles.topicsRow}>Topics</th>
-            <th className={styles.ratingRow}>Confidence Rating</th>
+            <th className={styles.ratingRow}>
+              <span className={styles.ratingRowTitle}>Confidence Rating</span>
+              <OverlayTrigger
+                trigger="click"
+                placement="top"
+                overlay={
+                  <Popover id="confidence-rating-info">
+                    <Popover.Content className={styles.borderShadow}>
+                      The percentages "gained" below are arbitrary - just a
+                      placeholder that demonstrates what we wish to achieve in
+                      terms of measuring and displaying knowledge.
+                    </Popover.Content>
+                  </Popover>
+                }
+              >
+                <div className={styles.ratingInfoIcon}>
+                  <FiInfo size={14} />
+                </div>
+              </OverlayTrigger>
+            </th>
           </tr>
         </thead>
         <tbody>
