@@ -29,8 +29,8 @@ const Content = ({ learningInfo }) => {
                   <Popover id="confidence-rating-info">
                     <Popover.Content className={styles.borderShadow}>
                       The percentages "gained" below are arbitrary - just a
-                      placeholder that demonstrates what we wish to achieve in
-                      terms of measuring and displaying knowledge.
+                      placeholder until a more objective measure of "knowledge
+                      gained" has been devised.
                     </Popover.Content>
                   </Popover>
                 }

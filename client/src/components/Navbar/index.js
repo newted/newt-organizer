@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 // API
 import { signOut } from "../../actions/authedUser";
 // Components
@@ -72,11 +73,10 @@ class Navbar extends Component {
                 <FiUser size={22} />
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() => this.props.history.push("/profile")}
-                >
-                  Profile
-                </Dropdown.Item>
+                <LinkContainer to="/profile">
+                  <Dropdown.Item>Profile</Dropdown.Item>
+                </LinkContainer>
+                <Dropdown.Divider />
                 <Dropdown.Item onClick={this.props.signOut}>
                   Logout
                 </Dropdown.Item>
