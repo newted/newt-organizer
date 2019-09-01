@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Righteous");
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -15,10 +17,24 @@
   width: 68px;
 }
 
+.logo {
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px; /* 56px is height of navbar */
+  font-family: "Righteous", cursive;
+}
+
+.logo h4 {
+  color: white;
+  font-size: 36px;
+}
+
 .sidebarNavlinks {
   display: flex;
   flex-direction: column;
-  padding: 54px 0 1rem 0; /* 54px is height of navbar */
+  padding: 1rem 0;
   width: 100%;
 }
 

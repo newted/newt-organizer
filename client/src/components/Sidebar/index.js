@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { NavLink, withRouter } from "react-router-dom";
+import { Link, NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../../actions/sidebar";
 import sidebarFields from "./sidebarFields";
@@ -65,8 +65,15 @@ class Sidebar extends Component {
             : `${styles.sidebar} ${styles.expandedSidebar}`
         }
       >
-        <div className={styles.sidebarNavlinks}>
-          <ul>{this.renderNavlinks()}</ul>
+        <div>
+          <div className={styles.logo}>
+            <Link to="/">
+              <h4>n</h4>
+            </Link>
+          </div>
+          <div className={styles.sidebarNavlinks}>
+            <ul>{this.renderNavlinks()}</ul>
+          </div>
         </div>
         <div className={styles.collapse}>
           <div

@@ -100,17 +100,7 @@ class Navbar extends Component {
   render() {
     return (
       <nav className={`${styles.navbarContainer} ${this.renderNavbarColor()}`}>
-        <div className={styles.navbar}>
-          <Link
-            to="/"
-            style={{
-              color: this.props.theme === "landing" ? "white" : "black"
-            }}
-          >
-            Newt
-          </Link>
-          {this.renderButtons()}
-        </div>
+        <div className={styles.navbar}>{this.renderButtons()}</div>
       </nav>
     );
   }
