@@ -63,26 +63,18 @@ class Navbar extends Component {
             </Button>
           </Fragment>
         ) : (
-          <div className={styles.userIcon}>
-            <Dropdown
-              alignRight={true}
-              drop="down"
-              style={{ height: "22px", cursor: "pointer" }}
-            >
-              <Dropdown.Toggle id="navbar-options-dropdown" as={CustomToggle}>
-                <FiUser size={22} />
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <LinkContainer to="/profile">
-                  <Dropdown.Item>Profile</Dropdown.Item>
-                </LinkContainer>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={this.props.signOut}>
-                  Logout
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+          <Dropdown alignRight={true} drop="down" className={styles.userIcon}>
+            <Dropdown.Toggle id="navbar-options-dropdown" as={CustomToggle}>
+              <FiUser size={22} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <LinkContainer to="/profile">
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </LinkContainer>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={this.props.signOut}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
       </div>
     );

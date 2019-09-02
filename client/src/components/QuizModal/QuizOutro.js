@@ -13,7 +13,7 @@ const QuizOutro = () => (
         Usually at this point we'll ask you to schedule another quiz. The time
         interval between quizzes as well as the questions asked in the next one
         will be based on how you did on this one. This process , called spaced
-        repetition, will solidy what you're learning.
+        repetition, will solidify what you're learning.
       </p>
       <p style={{ marginBottom: "1.5rem" }}>
         We're working on this. Until then, enjoy this picture of two adorable

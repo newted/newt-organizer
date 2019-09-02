@@ -23,14 +23,14 @@ const Content = ({ learningInfo }) => {
             <th className={styles.ratingRow}>
               <span className={styles.ratingRowTitle}>Confidence Rating</span>
               <OverlayTrigger
-                trigger="click"
+                trigger="hover"
                 placement="top"
                 overlay={
                   <Popover id="confidence-rating-info">
                     <Popover.Content className={styles.borderShadow}>
                       The percentages "gained" below are arbitrary - just a
                       placeholder until a more objective measure of "knowledge
-                      gained" has been devised.
+                      gained" has been designed.
                     </Popover.Content>
                   </Popover>
                 }
