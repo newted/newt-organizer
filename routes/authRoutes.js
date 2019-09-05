@@ -31,19 +31,18 @@ module.exports = app => {
     if (existingUser) {
       res.send(existingUser);
     } else {
-      const givenName = displayName.split(" ")[0];
-      const familyName = displayName.split(" ")[1];
+      const firstName = displayName.split(" ")[0];
+      const lastName = displayName.split(" ")[1];
 
       // No existing user, create a new user
       await new User({
         _id,
         displayName,
+        firstName,
+        lastName,
         email,
-        name: {
-          familyName,
-          givenName
-        },
-        dateCreated: Date.now()
+        dateCreated: Date.now(),
+        lastUpdated: Date.now()
       }).save();
 
       const newUser = await User.findOne({ _id });
@@ -54,17 +53,17 @@ module.exports = app => {
   // Update user's personal information information
   app.put("/api/user/:userId/edit", requireLogin, (req, res) => {
     const { userId } = req.params;
+    const { firstName, lastName } = req.body;
 
-    const displayName = `${req.body.firstName} ${req.body.lastName}`;
+    const displayName = `${firstName} ${lastName}`;
 
     User.findByIdAndUpdate(
       userId,
       {
-        $set: {
-          "name.givenName": req.body.firstName,
-          "name.familyName": req.body.lastName,
-          displayName
-        }
+        firstName,
+        lastName,
+        displayName,
+        lastUpdated: Date.now()
       },
       {
         new: true

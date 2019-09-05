@@ -7,7 +7,7 @@ const keys = require("./config/keys");
 require("./services/firebase-admin");
 
 // Connect to MongoDB
-mongoose.connect(keys.mongoURI, {
+mongoose.connect(keys.newMongoURI, {
   useNewUrlParser: true,
   useFindAndModify: false
 });

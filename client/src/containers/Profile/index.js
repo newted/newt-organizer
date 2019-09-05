@@ -83,8 +83,8 @@ function mapStateToProps({ auth: { item } }) {
   return {
     userId: item._id,
     initialValues: {
-      firstName: item.name.givenName,
-      lastName: item.name.familyName
+      firstName: item.firstName,
+      lastName: item.lastName
     }
   };
 }

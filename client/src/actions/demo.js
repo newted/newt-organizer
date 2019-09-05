@@ -10,10 +10,8 @@ export const signInDemoUser = history => async dispatch => {
   // User data
   const user = {
     _id: "demouser",
-    name: {
-      givenName: "Demo",
-      familyName: "User"
-    },
+    firstName: "Demo",
+    lastName: "User",
     dateCreated: new Date(),
     email: "demouser@newt.com"
   };
