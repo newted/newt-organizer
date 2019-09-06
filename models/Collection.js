@@ -10,7 +10,16 @@ const collectionSchema = new Schema({
     min: 0,
     max: 100
   },
-  hasCompleted: Boolean,
+  isComplete: {
+    type: Boolean,
+    default: false
+  },
+  userContentIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "UserContent"
+    }
+  ],
   // Array of knowledge subjects
   knowledgeSubject: [
     {
@@ -40,7 +49,10 @@ const collectionSchema = new Schema({
     }
   },
   sourceInfo: {
-    name: String,
+    name: {
+      type: String,
+      default: "user"
+    },
     sourceId: {
       type: Schema.Types.ObjectId,
       ref: "Source"
