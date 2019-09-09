@@ -4,11 +4,16 @@ import _ from "lodash";
 // Components
 import Button from "../../components/Button";
 import Card from "../../components/Card";
+import Loader from "../../components/Loader";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
-import { CREATE_NEW_COURSE, createCourse } from "../../actions/newCourses";
+import {
+  REQUEST_NEW_COURSES,
+  CREATE_NEW_COURSE,
+  createCourse
+} from "../../actions/newCourses";
 // Styling
 import styles from "./NewCoursePage.module.css";
 import { UniversityIcon } from "../../utils/icons";
@@ -27,6 +32,7 @@ const NewCoursePage = () => {
 
   // Function to handle form submission (API request + dispatch action)
   const handleFormSubmit = async values => {
+    dispatch({ type: REQUEST_NEW_COURSES });
     const data = await createCourse(values);
     dispatch({ type: CREATE_NEW_COURSE, payload: data });
     handleCloseModal();
@@ -45,6 +51,11 @@ const NewCoursePage = () => {
       ));
     }
   };
+
+  // If courses are being fetching show loading indicator
+  if (courses.isFetching) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.mainContainer}>

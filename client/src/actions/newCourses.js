@@ -1,21 +1,29 @@
 import axios from "axios";
 import firebase from "firebase";
 
+export const REQUEST_NEW_COURSES = "REQUEST_NEW_COURSES";
+export const RESOLVE_NEW_COURSES = "RESOLVE_NEW_COURSES";
 export const FETCH_NEW_COURSES = "FETCH_NEW_COURSES";
 export const CREATE_NEW_COURSE = "CREATE_NEW_COURSE";
 
 // With dispatch because it's called in class component
 export const fetchCourses = () => async dispatch => {
-  // Get current user token
-  const idToken = await firebase.auth().currentUser.getIdToken(true);
-  // Make request to fetch courses
-  const res = await axios.get("/api/courses", {
-    headers: { Authorization: idToken }
-  });
+  try {
+    dispatch({ type: REQUEST_NEW_COURSES });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to fetch courses
+    const res = await axios.get("/api/courses", {
+      headers: { Authorization: idToken }
+    });
 
-  dispatch({ type: FETCH_NEW_COURSES, payload: res.data });
+    dispatch({ type: FETCH_NEW_COURSES, payload: res.data });
 
-  return res.data;
+    return res.data;
+  } catch (error) {
+    dispatch({ type: RESOLVE_NEW_COURSES });
+    console.error(error);
+  }
 };
 
 // No dispatch because it's used in functional component (hooks)

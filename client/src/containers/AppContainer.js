@@ -32,7 +32,7 @@ class AppContainer extends Component {
     if (this.props.auth.exists) {
       // Get a user's learning map
       this.props.getLearningMap();
-      // Fetch user's programs and then all their corresponding courses
+      // Fetch user's courses
       this.props.fetchCourses().catch(error => console.log(error));
     }
   }
