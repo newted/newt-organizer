@@ -20,7 +20,7 @@ import EditProgram from "./Programs/EditProgram";
 import AddCourse from "./Courses/AddCourse";
 import CoursePage from "./Courses/CoursePage";
 import EditCourse from "./Courses/EditCourse";
-import CourseList from "./Courses/CourseList";
+import NewCoursePage from "./Courses/NewCoursePage";
 import AddAssignment from "./Assignments/AddAssignment";
 import AssignmentList from "./Assignments/AssignmentList";
 import EditAssignment from "./Assignments/EditAssignment";
@@ -111,7 +111,11 @@ class AppContainer extends Component {
               component={EditAssignment}
               auth={auth}
             />
-            <PrivateRoute path="/courses" component={CourseList} auth={auth} />
+            <PrivateRoute
+              path="/courses"
+              component={NewCoursePage}
+              auth={auth}
+            />
             {/* Assignments based Routes */}
             <PrivateRoute
               path="/assignments/:assignmentId?"
