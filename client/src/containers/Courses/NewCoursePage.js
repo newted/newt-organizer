@@ -22,7 +22,8 @@ import styles from "./NewCourseList.module.css";
 
 const NewCoursePage = ({ match }) => {
   const [currentCourse, setCurrentCourse] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setshowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Get courseId from URL
   const { courseId } = match.params;
@@ -42,31 +43,44 @@ const NewCoursePage = ({ match }) => {
     return <Loader />;
   }
 
-  // Functions to set modal show state to true and false
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  // Functions to set edit modal show state to true and false
+  const handleShowEditModal = () => setshowEditModal(true);
+  const handleCloseEditModal = () => setshowEditModal(false);
+  // Functions to set delete modal show state to true and false
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
   // Function to handle form submission (update course)
   const handleFormSubmit = async (courseId, values) => {
     dispatch({ type: REQUEST_NEW_COURSES });
     const data = await updateCourse(courseId, values);
     dispatch({ type: UPDATE_NEW_COURSE, payload: data });
-    handleCloseModal();
+    handleCloseEditModal();
   };
 
   return (
     <MainContainer>
       <HeaderContainer>
         <h2>{currentCourse.name}</h2>
-        <Button
-          category="primary"
-          onClick={handleShowModal}
-          style={{ width: "100px" }}
-        >
-          Edit
-        </Button>
+        <div>
+          <Button
+            category="primary"
+            onClick={handleShowEditModal}
+            style={{ width: "75px", marginRight: "1rem" }}
+          >
+            Edit
+          </Button>
+          <Button
+            category="danger"
+            onClick={handleShowDeleteModal}
+            style={{ width: "75px" }}
+          >
+            Delete
+          </Button>
+        </div>
       </HeaderContainer>
-      <Modal show={showModal} onHide={handleCloseModal} size="lg">
+      {/* Edit Course modal */}
+      <Modal show={showEditModal} onHide={handleCloseEditModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Edit {currentCourse.name}</Modal.Title>
         </Modal.Header>
@@ -119,6 +133,17 @@ const NewCoursePage = ({ match }) => {
             )}
           </Formik>
         </Modal.Body>
+      </Modal>
+      {/* Delete modal */}
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this course?</Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseDeleteModal}>Close</Button>
+          <Button category="danger">Delete</Button>
+        </Modal.Footer>
       </Modal>
     </MainContainer>
   );
