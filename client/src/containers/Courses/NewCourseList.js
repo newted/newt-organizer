@@ -7,6 +7,7 @@ import {
   HeaderContainer,
   ContentContainer
 } from "../../components/PageContainers";
+import MessageBox from "../../components/MessageBox";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
@@ -43,6 +44,14 @@ const NewCoursePage = () => {
     handleCloseModal();
   };
 
+  // Message for no courses
+  const renderNoContent = () => (
+    <MessageBox>
+      There are no courses to display. To create a course, click on the{" "}
+      <span className={styles.createCourse}>Create Course</span> button.
+    </MessageBox>
+  );
+
   // Function to render course cards
   const renderCards = () => {
     if (!_.isEmpty(courses.items)) {
@@ -55,6 +64,8 @@ const NewCoursePage = () => {
           key={course._id}
         />
       ));
+    } else {
+      return renderNoContent();
     }
   };
 
@@ -71,7 +82,9 @@ const NewCoursePage = () => {
           Create Course
         </Button>
       </HeaderContainer>
-      <ContentContainer className={styles.cardContainer}>
+      <ContentContainer
+        className={!_.isEmpty(courses.items) ? styles.cardContainer : ""}
+      >
         {renderCards()}
       </ContentContainer>
       <Modal show={showModal} onHide={handleCloseModal} size="lg">
