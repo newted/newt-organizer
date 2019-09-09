@@ -6,6 +6,15 @@
   composes: headerContainer from "../../styles/shared.css";
 }
 
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cardColor {
+  background-color: var(--yellow);
+}
+
 .modalBody {
   display: flex;
   flex-direction: column;
