@@ -6,6 +6,7 @@ export const RESOLVE_NEW_COURSES = "RESOLVE_NEW_COURSES";
 export const FETCH_NEW_COURSES = "FETCH_NEW_COURSES";
 export const CREATE_NEW_COURSE = "CREATE_NEW_COURSE";
 export const UPDATE_NEW_COURSE = "UPDATE_NEW_COURSE";
+export const DELETE_NEW_COURSE = "DELETE_NEW_COURSE";
 
 // With dispatch because it's called in class component
 export const fetchCourses = () => async dispatch => {
@@ -46,4 +47,13 @@ export async function updateCourse(courseId, values) {
     headers: { Authorization: idToken }
   });
   return res.data;
+}
+
+export async function deleteCourse(courseId) {
+  // Get current user token
+  const idToken = await firebase.auth().currentUser.getIdToken(true);
+  // Make request to delete course
+  await axios.delete(`/api/courses/${courseId}`, {
+    headers: { Authorization: idToken }
+  });
 }

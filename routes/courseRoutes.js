@@ -65,4 +65,11 @@ module.exports = app => {
       res.send(error);
     }
   });
+
+  // DELETE request to delete a course
+  app.delete("/api/courses/:courseId", requireLogin, (req, res) => {
+    const { courseId } = req.params;
+
+    Course.findByIdAndDelete(courseId, error => res.send(error));
+  });
 };

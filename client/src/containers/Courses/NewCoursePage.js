@@ -15,12 +15,14 @@ import { Formik } from "formik";
 import {
   REQUEST_NEW_COURSES,
   UPDATE_NEW_COURSE,
-  updateCourse
+  DELETE_NEW_COURSE,
+  updateCourse,
+  deleteCourse
 } from "../../actions/newCourses";
 // Styles
 import styles from "./NewCourseList.module.css";
 
-const NewCoursePage = ({ match }) => {
+const NewCoursePage = ({ match, history }) => {
   const [currentCourse, setCurrentCourse] = useState({});
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -56,6 +58,17 @@ const NewCoursePage = ({ match }) => {
     const data = await updateCourse(courseId, values);
     dispatch({ type: UPDATE_NEW_COURSE, payload: data });
     handleCloseEditModal();
+  };
+
+  // Function to handle course deleting
+  const handleDeleteCourse = async courseId => {
+    dispatch({ type: REQUEST_NEW_COURSES });
+    // Make request to delete course
+    await deleteCourse(courseId);
+    // Dispatch delete action
+    dispatch({ type: DELETE_NEW_COURSE, payload: courseId });
+    // Go to Courses page
+    history.push("/courses");
   };
 
   return (
@@ -142,7 +155,12 @@ const NewCoursePage = ({ match }) => {
         <Modal.Body>Are you sure you want to delete this course?</Modal.Body>
         <Modal.Footer>
           <Button onClick={handleCloseDeleteModal}>Close</Button>
-          <Button category="danger">Delete</Button>
+          <Button
+            category="danger"
+            onClick={() => handleDeleteCourse(currentCourse._id)}
+          >
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     </MainContainer>

@@ -3,9 +3,13 @@ import {
   RESOLVE_NEW_COURSES,
   FETCH_NEW_COURSES,
   CREATE_NEW_COURSE,
-  UPDATE_NEW_COURSE
+  UPDATE_NEW_COURSE,
+  DELETE_NEW_COURSE
 } from "../actions/newCourses";
-import { dataArrayToObject } from "../utils/reducerHelpers";
+import {
+  dataArrayToObject,
+  deleteItemFromObject
+} from "../utils/reducerHelpers";
 
 export default function(
   state = { isFetching: false, items: {}, error: { message: null } },
@@ -37,6 +41,12 @@ export default function(
           ...state.items,
           [action.payload._id]: action.payload
         }
+      };
+    case DELETE_NEW_COURSE:
+      return {
+        ...state,
+        isFetching: false,
+        items: deleteItemFromObject(state.items, action.payload)
       };
     default:
       return state;
