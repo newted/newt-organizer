@@ -41,4 +41,28 @@ module.exports = app => {
       res.send(error);
     }
   });
+
+  // PUT request to update course
+  app.put("/api/courses/:courseId/update", requireLogin, (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const data = req.body;
+
+      // Find Course by id and update
+      Course.findByIdAndUpdate(
+        courseId,
+        data,
+        { new: true },
+        (error, course) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.send(course);
+          }
+        }
+      );
+    } catch (error) {
+      res.send(error);
+    }
+  });
 };

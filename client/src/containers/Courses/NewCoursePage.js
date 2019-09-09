@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 // Components
 import {
@@ -11,6 +11,12 @@ import Button from "../../components/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
+// API
+import {
+  REQUEST_NEW_COURSES,
+  UPDATE_NEW_COURSE,
+  updateCourse
+} from "../../actions/newCourses";
 // Styles
 import styles from "./NewCourseList.module.css";
 
@@ -22,6 +28,7 @@ const NewCoursePage = ({ match }) => {
   const { courseId } = match.params;
   // Get courses data from global state
   const courses = useSelector(state => state.newCourses);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Filter out course which matches page's courseId
@@ -38,6 +45,14 @@ const NewCoursePage = ({ match }) => {
   // Functions to set modal show state to true and false
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  // Function to handle form submission (update course)
+  const handleFormSubmit = async (courseId, values) => {
+    dispatch({ type: REQUEST_NEW_COURSES });
+    const data = await updateCourse(courseId, values);
+    dispatch({ type: UPDATE_NEW_COURSE, payload: data });
+    handleCloseModal();
+  };
 
   return (
     <MainContainer>
@@ -61,7 +76,7 @@ const NewCoursePage = ({ match }) => {
               name: currentCourse.name,
               shortname: currentCourse.shortname
             }}
-            onSubmit={values => console.log(values)}
+            onSubmit={values => handleFormSubmit(currentCourse._id, values)}
           >
             {({
               handleSubmit,

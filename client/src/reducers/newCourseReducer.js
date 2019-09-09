@@ -2,7 +2,8 @@ import {
   REQUEST_NEW_COURSES,
   RESOLVE_NEW_COURSES,
   FETCH_NEW_COURSES,
-  CREATE_NEW_COURSE
+  CREATE_NEW_COURSE,
+  UPDATE_NEW_COURSE
 } from "../actions/newCourses";
 import { dataArrayToObject } from "../utils/reducerHelpers";
 
@@ -28,6 +29,7 @@ export default function(
         items: dataArrayToObject(action.payload)
       };
     case CREATE_NEW_COURSE:
+    case UPDATE_NEW_COURSE:
       return {
         ...state,
         isFetching: false,
