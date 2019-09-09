@@ -4,6 +4,20 @@ const requireLogin = require("../middleware/requireLogin");
 const Course = mongoose.model("courses");
 
 module.exports = app => {
+  // GET request to fetch user's courses
+  app.get("/api/courses", requireLogin, (req, res) => {
+    const user = req.user.uid;
+
+    Course.find({ _user: user }, (error, courses) => {
+      if (error) {
+        console.log(error);
+        res.send(error);
+      } else {
+        res.send(courses);
+      }
+    });
+  });
+
   // POST request to create a course
   app.post("/api/courses/create", requireLogin, async (req, res) => {
     try {

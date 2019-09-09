@@ -3,8 +3,7 @@ import _ from "lodash";
 import { Switch } from "react-router-dom";
 import { connect } from "react-redux";
 // API
-import { fetchPrograms } from "../actions/programs";
-import { fetchAllCourses } from "../actions/courses";
+import { fetchCourses } from "../actions/newCourses";
 import { getLearningMap } from "../actions/learningMap";
 // Components
 import Sidebar from "../components/Sidebar";
@@ -35,14 +34,7 @@ class AppContainer extends Component {
       // Get a user's learning map
       this.props.getLearningMap();
       // Fetch user's programs and then all their corresponding courses
-      this.props
-        .fetchPrograms()
-        .then(programs => {
-          if (!_.isEmpty(programs)) {
-            this.props.fetchAllCourses(programs.map(({ _id }) => _id));
-          }
-        })
-        .catch(error => console.log(error));
+      this.props.fetchCourses().catch(error => console.log(error));
     }
   }
 
@@ -142,8 +134,7 @@ function mapStateToProps({ auth, sidebar }) {
 }
 
 const mapDispatchToProps = {
-  fetchPrograms,
-  fetchAllCourses,
+  fetchCourses,
   getLearningMap
 };
 
