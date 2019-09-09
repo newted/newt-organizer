@@ -1,17 +1,28 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const AssignmentSchema = require("./Assignment");
-
 const courseSchema = new Schema({
   name: String,
   shortname: String,
-  programId: {
-    type: Schema.Types.ObjectId,
-    ref: "Program"
+  creator: {
+    type: String,
+    default: "user"
   },
-  assignments: [AssignmentSchema],
-  dateCreated: Date
+  collections: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Collection"
+    }
+  ],
+  individualContent: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "UserContent"
+    }
+  ],
+  _user: String,
+  dateCreated: Date,
+  lastUpdated: Date
 });
 
 mongoose.model("courses", courseSchema);
