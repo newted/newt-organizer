@@ -1,14 +1,6 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-}
-
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
-}
-
 .cardContainer {
-  display: flex;
   flex-wrap: wrap;
+  padding: 0;
 }
 
 .cardColor {

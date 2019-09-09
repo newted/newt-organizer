@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 // Components
+import {
+  MainContainer,
+  HeaderContainer,
+  ContentContainer
+} from "../../components/PageContainers";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
@@ -59,14 +64,16 @@ const NewCoursePage = () => {
   }
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.headerContainer}>
+    <MainContainer>
+      <HeaderContainer>
         <h2>Courses</h2>
         <Button category="success" onClick={handleShowModal}>
           Create Course
         </Button>
-      </div>
-      <div className={styles.cardContainer}>{renderCards()}</div>
+      </HeaderContainer>
+      <ContentContainer className={styles.cardContainer}>
+        {renderCards()}
+      </ContentContainer>
       <Modal show={showModal} onHide={handleCloseModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Create a Course</Modal.Title>
@@ -118,7 +125,7 @@ const NewCoursePage = () => {
           </Formik>
         </Modal.Body>
       </Modal>
-    </div>
+    </MainContainer>
   );
 };
 
