@@ -29,15 +29,20 @@ export const fetchCourses = () => async dispatch => {
 };
 
 // No dispatch because it's used in functional component (hooks)
-export async function createCourse(values) {
-  // Get current user token
-  const idToken = await firebase.auth().currentUser.getIdToken(true);
-  // Make request to create course
-  const res = await axios.post("/api/courses/create", values, {
-    headers: { Authorization: idToken }
-  });
-  return res.data;
-}
+export const createCourse = values => async dispatch => {
+  try {
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to create course
+    const res = await axios.post("/api/courses/create", values, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch({ type: CREATE_NEW_COURSE, payload: res.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const updateCourse = (courseId, values) => async dispatch => {
   try {
@@ -50,7 +55,6 @@ export const updateCourse = (courseId, values) => async dispatch => {
     });
 
     dispatch({ type: UPDATE_NEW_COURSE, payload: res.data });
-    return res.data;
   } catch (error) {
     dispatch({ type: REQUEST_FAILURE_NEW_COURSES, payload: error.message });
   }

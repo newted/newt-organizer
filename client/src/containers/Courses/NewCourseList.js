@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import _ from "lodash";
 // Components
 import {
@@ -15,32 +15,21 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
-import {
-  REQUEST_NEW_COURSES,
-  CREATE_NEW_COURSE,
-  createCourse
-} from "../../actions/newCourses";
+import { createCourse } from "../../actions/newCourses";
 // Styling
 import styles from "./NewCourseList.module.css";
 import { UniversityIcon } from "../../utils/icons";
 
-const NewCoursePage = () => {
+const NewCoursePage = ({ courses, createCourse }) => {
   const [showModal, setShowModal] = useState(false);
 
   // Functions to set modal show state to true and false
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  // Get courses data from global state
-  const courses = useSelector(state => state.newCourses);
-  // Get dispatch
-  const dispatch = useDispatch();
-
   // Function to handle form submission (API request + dispatch action)
   const handleFormSubmit = async values => {
-    dispatch({ type: REQUEST_NEW_COURSES });
-    const data = await createCourse(values);
-    dispatch({ type: CREATE_NEW_COURSE, payload: data });
+    await createCourse(values);
     handleCloseModal();
   };
 
@@ -142,4 +131,12 @@ const NewCoursePage = () => {
   );
 };
 
-export default NewCoursePage;
+const mapStateToProps = ({ newCourses }) => {
+  return { courses: newCourses };
+};
+const mapDispatchToProps = { createCourse };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewCoursePage);
