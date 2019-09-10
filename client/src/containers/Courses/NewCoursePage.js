@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
 // Components
@@ -15,26 +15,26 @@ import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
 import {
-  REQUEST_NEW_COURSES,
-  REQUEST_FAILURE_NEW_COURSES,
   RESOLVE_NEW_COURSES,
-  UPDATE_NEW_COURSE,
-  DELETE_NEW_COURSE,
   updateCourse,
   deleteCourse
 } from "../../actions/newCourses";
 // Styles
 import styles from "./NewCourseList.module.css";
 
-const NewCoursePage = ({ updateCourse, match, history }) => {
+const NewCoursePage = ({
+  courses,
+  updateCourse,
+  deleteCourse,
+  match,
+  history
+}) => {
   const [currentCourse, setCurrentCourse] = useState({});
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Get courseId from URL
   const { courseId } = match.params;
-  // Get courses data from global state
-  const courses = useSelector(state => state.newCourses);
   const dispatch = useDispatch();
   const { addToast } = useToasts();
 
@@ -77,11 +77,8 @@ const NewCoursePage = ({ updateCourse, match, history }) => {
 
   // Function to handle course deleting
   const handleDeleteCourse = async courseId => {
-    dispatch({ type: REQUEST_NEW_COURSES });
     // Make request to delete course
     await deleteCourse(courseId);
-    // Dispatch delete action
-    dispatch({ type: DELETE_NEW_COURSE, payload: courseId });
     // Go to Courses page
     history.push("/courses");
   };
@@ -187,9 +184,13 @@ const NewCoursePage = ({ updateCourse, match, history }) => {
   );
 };
 
-const mapDispatchToProps = { updateCourse };
+const mapDispatchToProps = { updateCourse, deleteCourse };
+
+function mapStateToProps({ newCourses }) {
+  return { courses: newCourses };
+}
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewCoursePage);

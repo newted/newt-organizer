@@ -9,7 +9,6 @@ export const CREATE_NEW_COURSE = "CREATE_NEW_COURSE";
 export const UPDATE_NEW_COURSE = "UPDATE_NEW_COURSE";
 export const DELETE_NEW_COURSE = "DELETE_NEW_COURSE";
 
-// With dispatch because it's called in class component
 export const fetchCourses = () => async dispatch => {
   try {
     dispatch({ type: REQUEST_NEW_COURSES });
@@ -57,11 +56,18 @@ export const updateCourse = (courseId, values) => async dispatch => {
   }
 };
 
-export async function deleteCourse(courseId) {
-  // Get current user token
-  const idToken = await firebase.auth().currentUser.getIdToken(true);
-  // Make request to delete course
-  await axios.delete(`/api/courses/${courseId}`, {
-    headers: { Authorization: idToken }
-  });
-}
+export const deleteCourse = courseId => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_NEW_COURSES });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to delete course
+    await axios.delete(`/api/courses/${courseId}`, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch({ type: DELETE_NEW_COURSE, payload: courseId });
+  } catch (error) {
+    dispatch({ type: REQUEST_FAILURE_NEW_COURSES, payload: error.message });
+  }
+};
