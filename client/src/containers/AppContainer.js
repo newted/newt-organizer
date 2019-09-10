@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { withToastManager } from "react-toast-notifications";
 // API
-import { fetchCourses } from "../actions/newCourses";
+import { fetchCourses, resolveCourses } from "../actions/newCourses";
 import { getLearningMap } from "../actions/learningMap";
 // Components
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import PrivateRoute from "../components/PrivateRoute";
+import ToastContent from "../components/CustomToast/ToastContent";
 // Containers
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
@@ -34,7 +36,19 @@ class AppContainer extends Component {
       // Get a user's learning map
       this.props.getLearningMap();
       // Fetch user's courses
-      this.props.fetchCourses().catch(error => console.log(error));
+      this.props.fetchCourses().catch(error => {
+        // Display error notification
+        this.props.toastManager.add(
+          <ToastContent
+            message="Something went wrong, could not fetch courses."
+            error={error.message}
+            displayRetry={false}
+          />,
+          { appearance: "error", autoDismiss: true }
+        );
+        // Call resolve action creator to set isFetching back to false
+        this.props.resolveCourses();
+      });
     }
   }
 
@@ -140,10 +154,11 @@ function mapStateToProps({ auth, sidebar }) {
 
 const mapDispatchToProps = {
   fetchCourses,
+  resolveCourses,
   getLearningMap
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppContainer);
+)(withToastManager(AppContainer));
