@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
 // Components
 import {
@@ -11,16 +12,17 @@ import MessageBox from "../../components/MessageBox";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
+import ToastContent from "../../components/CustomToast/ToastContent";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
-import { createCourse } from "../../actions/newCourses";
+import { createCourse, resolveCourses } from "../../actions/newCourses";
 // Styling
 import styles from "./NewCourseList.module.css";
 import { UniversityIcon } from "../../utils/icons";
 
-const NewCoursePage = ({ courses, createCourse }) => {
+const NewCoursePage = ({ courses, createCourse, resolveCourses }) => {
   const [showModal, setShowModal] = useState(false);
 
   // Functions to set modal show state to true and false
@@ -32,6 +34,23 @@ const NewCoursePage = ({ courses, createCourse }) => {
     await createCourse(values);
     handleCloseModal();
   };
+
+  const { addToast } = useToasts();
+  // Hook for error notification
+  useEffect(() => {
+    if (courses.error.message) {
+      addToast(
+        <ToastContent
+          message="Something went wrong, could not create the course."
+          error={courses.error.message}
+          displayRetry={false}
+        />,
+        { appearance: "error", autoDismiss: true }
+      );
+      // Call resolve action to remove error since it has already been shown
+      resolveCourses();
+    }
+  }, [courses.error.message, resolveCourses, addToast]);
 
   // Message for no courses
   const renderNoContent = () => (
@@ -134,7 +153,7 @@ const NewCoursePage = ({ courses, createCourse }) => {
 const mapStateToProps = ({ newCourses }) => {
   return { courses: newCourses };
 };
-const mapDispatchToProps = { createCourse };
+const mapDispatchToProps = { createCourse, resolveCourses };
 
 export default connect(
   mapStateToProps,

@@ -28,7 +28,6 @@ export const fetchCourses = () => async dispatch => {
   }
 };
 
-// No dispatch because it's used in functional component (hooks)
 export const createCourse = values => async dispatch => {
   try {
     // Get current user token
@@ -40,7 +39,7 @@ export const createCourse = values => async dispatch => {
 
     dispatch({ type: CREATE_NEW_COURSE, payload: res.data });
   } catch (error) {
-    console.error(error);
+    dispatch({ type: REQUEST_FAILURE_NEW_COURSES, payload: error.message });
   }
 };
 
