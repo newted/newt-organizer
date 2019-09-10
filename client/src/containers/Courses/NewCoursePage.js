@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
+import PropTypes from "prop-types";
 import _ from "lodash";
 // Components
 import {
@@ -184,11 +185,29 @@ const NewCoursePage = ({
   );
 };
 
+// Prop types
+NewCoursePage.propTypes = {
+  courses: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    items: PropTypes.object,
+    error: PropTypes.shape({
+      message: PropTypes.string
+    })
+  }).isRequired,
+  updateCourse: PropTypes.func.isRequired,
+  deleteCourse: PropTypes.func.isRequired,
+  resolveCourses: PropTypes.func.isRequired,
+  // Router props
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object
+};
+
 const mapDispatchToProps = { updateCourse, deleteCourse, resolveCourses };
 
-function mapStateToProps({ newCourses }) {
+const mapStateToProps = ({ newCourses }) => {
   return { courses: newCourses };
-}
+};
 
 export default connect(
   mapStateToProps,
