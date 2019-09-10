@@ -2,6 +2,7 @@ import axios from "axios";
 import firebase from "firebase";
 
 export const REQUEST_NEW_COURSES = "REQUEST_NEW_COURSES";
+export const REQUEST_FAILURE_NEW_COURSES = "REQUEST_FAILURE_NEW_COURSES";
 export const RESOLVE_NEW_COURSES = "RESOLVE_NEW_COURSES";
 export const FETCH_NEW_COURSES = "FETCH_NEW_COURSES";
 export const CREATE_NEW_COURSE = "CREATE_NEW_COURSE";
@@ -39,15 +40,22 @@ export async function createCourse(values) {
   return res.data;
 }
 
-export async function updateCourse(courseId, values) {
-  // Get current user token
-  const idToken = await firebase.auth().currentUser.getIdToken(true);
-  // Make request to update course
-  const res = await axios.put(`/api/courses/${courseId}/update`, values, {
-    headers: { Authorization: idToken }
-  });
-  return res.data;
-}
+export const updateCourse = (courseId, values) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_NEW_COURSES });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to update course
+    const res = await axios.put(`/api/courses/${courseId}/update`, values, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch({ type: UPDATE_NEW_COURSE, payload: res.data });
+    return res.data;
+  } catch (error) {
+    dispatch({ type: REQUEST_FAILURE_NEW_COURSES, payload: error.message });
+  }
+};
 
 export async function deleteCourse(courseId) {
   // Get current user token

@@ -1,5 +1,6 @@
 import {
   REQUEST_NEW_COURSES,
+  REQUEST_FAILURE_NEW_COURSES,
   RESOLVE_NEW_COURSES,
   FETCH_NEW_COURSES,
   CREATE_NEW_COURSE,
@@ -21,10 +22,22 @@ export default function(
         ...state,
         isFetching: true
       };
+    case REQUEST_FAILURE_NEW_COURSES:
+      return {
+        ...state,
+        isFetching: false,
+        error: {
+          ...state.error,
+          message: action.payload
+        }
+      };
     case RESOLVE_NEW_COURSES:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
+        error: {
+          message: null
+        }
       };
     case FETCH_NEW_COURSES:
       return {

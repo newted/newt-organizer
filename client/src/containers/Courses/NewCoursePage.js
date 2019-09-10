@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
 // Components
 import {
@@ -8,12 +9,15 @@ import {
 } from "../../components/PageContainers";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import ToastContent from "../../components/CustomToast/ToastContent";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
 import {
   REQUEST_NEW_COURSES,
+  REQUEST_FAILURE_NEW_COURSES,
+  RESOLVE_NEW_COURSES,
   UPDATE_NEW_COURSE,
   DELETE_NEW_COURSE,
   updateCourse,
@@ -22,7 +26,7 @@ import {
 // Styles
 import styles from "./NewCourseList.module.css";
 
-const NewCoursePage = ({ match, history }) => {
+const NewCoursePage = ({ updateCourse, match, history }) => {
   const [currentCourse, setCurrentCourse] = useState({});
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,6 +36,7 @@ const NewCoursePage = ({ match, history }) => {
   // Get courses data from global state
   const courses = useSelector(state => state.newCourses);
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
 
   useEffect(() => {
     // Filter out course which matches page's courseId
@@ -40,10 +45,21 @@ const NewCoursePage = ({ match, history }) => {
     setCurrentCourse(course);
   }, [courses.items, courseId]);
 
-  // If fetching or current course hasn't been set yet, show Loader
-  if (courses.isFetching || _.isEmpty(currentCourse)) {
-    return <Loader />;
-  }
+  // Hook for error notification: if an error message exists, show error toast
+  useEffect(() => {
+    if (courses.error.message) {
+      addToast(
+        <ToastContent
+          message="Something went wrong, could not update the course."
+          error={courses.error.message}
+          displayRetry={false}
+        />,
+        { appearance: "error", autoDismiss: true }
+      );
+      // Dispatch to remove error since it has already been shown
+      dispatch({ type: RESOLVE_NEW_COURSES });
+    }
+  }, [courses.error.message, dispatch, addToast]);
 
   // Functions to set edit modal show state to true and false
   const handleShowEditModal = () => setshowEditModal(true);
@@ -54,9 +70,8 @@ const NewCoursePage = ({ match, history }) => {
 
   // Function to handle form submission (update course)
   const handleFormSubmit = async (courseId, values) => {
-    dispatch({ type: REQUEST_NEW_COURSES });
-    const data = await updateCourse(courseId, values);
-    dispatch({ type: UPDATE_NEW_COURSE, payload: data });
+    // Make request to update course
+    await updateCourse(courseId, values);
     handleCloseEditModal();
   };
 
@@ -70,6 +85,11 @@ const NewCoursePage = ({ match, history }) => {
     // Go to Courses page
     history.push("/courses");
   };
+
+  // If fetching or current course hasn't been set yet, show Loader
+  if (courses.isFetching || _.isEmpty(currentCourse)) {
+    return <Loader />;
+  }
 
   return (
     <MainContainer>
@@ -167,4 +187,9 @@ const NewCoursePage = ({ match, history }) => {
   );
 };
 
-export default NewCoursePage;
+const mapDispatchToProps = { updateCourse };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCoursePage);
