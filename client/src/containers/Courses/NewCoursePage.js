@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, connect } from "react-redux";
+import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
 // Components
@@ -15,9 +15,9 @@ import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
 import {
-  RESOLVE_NEW_COURSES,
   updateCourse,
-  deleteCourse
+  deleteCourse,
+  resolveCourses
 } from "../../actions/newCourses";
 // Styles
 import styles from "./NewCourseList.module.css";
@@ -26,6 +26,7 @@ const NewCoursePage = ({
   courses,
   updateCourse,
   deleteCourse,
+  resolveCourses,
   match,
   history
 }) => {
@@ -35,7 +36,6 @@ const NewCoursePage = ({
 
   // Get courseId from URL
   const { courseId } = match.params;
-  const dispatch = useDispatch();
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -56,10 +56,10 @@ const NewCoursePage = ({
         />,
         { appearance: "error", autoDismiss: true }
       );
-      // Dispatch to remove error since it has already been shown
-      dispatch({ type: RESOLVE_NEW_COURSES });
+      // Call resolve action to remove error since it has already been shown
+      resolveCourses();
     }
-  }, [courses.error.message, dispatch, addToast]);
+  }, [courses.error.message, resolveCourses, addToast]);
 
   // Functions to set edit modal show state to true and false
   const handleShowEditModal = () => setshowEditModal(true);
@@ -184,7 +184,7 @@ const NewCoursePage = ({
   );
 };
 
-const mapDispatchToProps = { updateCourse, deleteCourse };
+const mapDispatchToProps = { updateCourse, deleteCourse, resolveCourses };
 
 function mapStateToProps({ newCourses }) {
   return { courses: newCourses };

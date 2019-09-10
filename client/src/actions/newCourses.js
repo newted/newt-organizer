@@ -71,3 +71,7 @@ export const deleteCourse = courseId => async dispatch => {
     dispatch({ type: REQUEST_FAILURE_NEW_COURSES, payload: error.message });
   }
 };
+
+export const resolveCourses = () => dispatch => {
+  dispatch({ type: RESOLVE_NEW_COURSES });
+};
