@@ -47,6 +47,8 @@ module.exports = app => {
     try {
       const { courseId } = req.params;
       const data = req.body;
+      // Set lastUpdated field to now
+      data.lastUpdated = Date.now();
 
       // Find Course by id and update
       Course.findByIdAndUpdate(
