@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
-import * as yup from "yup";
 // Components
 import {
   MainContainer,
@@ -17,15 +16,12 @@ import ToastContent from "../../components/CustomToast/ToastContent";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
+import { courseFormSchema } from "./courseFormSchema";
 // API
 import { createCourse, resolveCourses } from "../../actions/courses";
 // Styling
 import styles from "./CourseList.module.css";
 import { UniversityIcon } from "../../utils/icons";
-
-const createCourseSchema = yup.object({
-  name: yup.string().required("Name is required")
-});
 
 const CourseList = ({ courses, createCourse, resolveCourses }) => {
   const [showModal, setShowModal] = useState(false);
@@ -114,19 +110,11 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <Formik
-            validationSchema={createCourseSchema}
+            validationSchema={courseFormSchema}
             initialValues={{ name: "" }}
             onSubmit={values => handleFormSubmit(values)}
           >
-            {({
-              handleSubmit,
-              handleChange,
-              handleBlur,
-              values,
-              touched,
-              isValid,
-              errors
-            }) => (
+            {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
               <Form noValidate onSubmit={handleSubmit} className={styles.form}>
                 <Form.Group controlId="courseName">
                   <Form.Label>Name</Form.Label>
@@ -135,6 +123,7 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
                     name="name"
                     value={values.name}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     isInvalid={!!errors.name}
                   />
                   <Form.Control.Feedback type="invalid">

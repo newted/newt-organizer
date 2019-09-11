@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
+import { courseFormSchema } from "./courseFormSchema";
 // API
 import {
   updateCourse,
@@ -118,20 +119,13 @@ const NewCoursePage = ({
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <Formik
+            validationSchema={courseFormSchema}
             initialValues={{
               name: currentCourse.name
             }}
             onSubmit={values => handleFormSubmit(currentCourse._id, values)}
           >
-            {({
-              handleSubmit,
-              handleChange,
-              handleBlur,
-              values,
-              touched,
-              isValid,
-              errors
-            }) => (
+            {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
               <Form noValidate onSubmit={handleSubmit} className={styles.form}>
                 <Form.Group controlId="courseName">
                   <Form.Label>Name</Form.Label>
@@ -140,7 +134,12 @@ const NewCoursePage = ({
                     name="name"
                     value={values.name}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={!!errors.name}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <div className={styles.buttonContainer}>
                   <Button
