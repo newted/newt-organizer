@@ -11,7 +11,9 @@ import {
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import ToastContent from "../../components/CustomToast/ToastContent";
+import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Modal from "react-bootstrap/Modal";
+import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import { Formik } from "formik";
 // API
@@ -21,7 +23,8 @@ import {
   resolveCourses
 } from "../../actions/newCourses";
 // Styles
-import styles from "./NewCourseList.module.css";
+import styles from "./NewCoursePage.module.css";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 const NewCoursePage = ({
   courses,
@@ -93,21 +96,19 @@ const NewCoursePage = ({
     <MainContainer>
       <HeaderContainer>
         <h2>{currentCourse.name}</h2>
-        <div>
-          <Button
-            category="primary"
-            onClick={handleShowEditModal}
-            style={{ width: "75px", marginRight: "1rem" }}
-          >
-            Edit
-          </Button>
-          <Button
-            category="danger"
-            onClick={handleShowDeleteModal}
-            style={{ width: "75px" }}
-          >
-            Delete
-          </Button>
+        <div className={styles.optionsDropdown}>
+          <Dropdown alignRight={true} drop="down">
+            <Dropdown.Toggle id="course-page-more-dropdown" as={CustomToggle}>
+              <FiMoreHorizontal size={25} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={handleShowEditModal}>Edit</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleShowDeleteModal}>
+                Delete
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </HeaderContainer>
       {/* Edit Course modal */}
