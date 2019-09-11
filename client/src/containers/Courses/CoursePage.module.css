@@ -15,11 +15,16 @@
   justify-content: center;
 }
 
+.optionsContainer {
+  display: flex;
+}
+
 .optionsDropdown {
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
-  width: 30px;
+  width: 35px;
   border-radius: 0.5rem;
   transition: 0.15s linear;
 }

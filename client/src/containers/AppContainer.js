@@ -15,6 +15,7 @@ import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import CourseList from "./Courses/CourseList";
 import CoursePage from "./Courses/CoursePage";
+import AddContent from "./Content/AddContent";
 import AddAssignment from "./Assignments/AddAssignment";
 import AssignmentList from "./Assignments/AssignmentList";
 import EditAssignment from "./Assignments/EditAssignment";
@@ -79,6 +80,12 @@ class AppContainer extends Component {
               auth={auth}
             />
             <PrivateRoute path="/courses" component={CourseList} auth={auth} />
+            {/* Content routes */}
+            <PrivateRoute
+              path="/content/add"
+              component={AddContent}
+              auth={auth}
+            />
             {/* Assignments based Routes */}
             <PrivateRoute
               path="/assignments/:assignmentId?"

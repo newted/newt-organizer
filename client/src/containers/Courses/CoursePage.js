@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import PropTypes from "prop-types";
 import _ from "lodash";
@@ -97,19 +98,28 @@ const NewCoursePage = ({
     <MainContainer>
       <HeaderContainer>
         <h2>{currentCourse.name}</h2>
-        <div className={styles.optionsDropdown}>
-          <Dropdown alignRight={true} drop="down">
-            <Dropdown.Toggle id="course-page-more-dropdown" as={CustomToggle}>
-              <FiMoreHorizontal size={25} />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={handleShowEditModal}>Edit</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleShowDeleteModal}>
-                Delete
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        <div className={styles.optionsContainer}>
+          <Link to="/content/add">
+            <Button category="success" style={{ marginRight: "1.5rem " }}>
+              Add Content
+            </Button>
+          </Link>
+          <div className={styles.optionsDropdown}>
+            <Dropdown alignRight={true} drop="down">
+              <Dropdown.Toggle id="course-page-more-dropdown" as={CustomToggle}>
+                <FiMoreHorizontal size={25} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={handleShowEditModal}>
+                  Edit
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleShowDeleteModal}>
+                  Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </div>
       </HeaderContainer>
       {/* Edit Course modal */}
