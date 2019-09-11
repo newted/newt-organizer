@@ -10,8 +10,7 @@ module.exports = app => {
 
     Course.find({ _user: user }, (error, courses) => {
       if (error) {
-        console.log(error);
-        res.send(error);
+        res.status(500).send(error);
       } else {
         res.send(courses);
       }
@@ -57,7 +56,7 @@ module.exports = app => {
         { new: true },
         (error, course) => {
           if (error) {
-            res.send(error);
+            res.status(500).send(error);
           } else {
             res.send(course);
           }
@@ -72,6 +71,6 @@ module.exports = app => {
   app.delete("/api/courses/:courseId", requireLogin, (req, res) => {
     const { courseId } = req.params;
 
-    Course.findByIdAndDelete(courseId, error => res.send(error));
+    Course.findByIdAndDelete(courseId, error => res.status(500).send(error));
   });
 };
