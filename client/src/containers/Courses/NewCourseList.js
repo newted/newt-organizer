@@ -24,6 +24,7 @@ import { UniversityIcon } from "../../utils/icons";
 
 const NewCoursePage = ({ courses, createCourse, resolveCourses }) => {
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({});
 
   // Functions to set modal show state to true and false
   const handleShowModal = () => setShowModal(true);
@@ -31,6 +32,8 @@ const NewCoursePage = ({ courses, createCourse, resolveCourses }) => {
 
   // Function to handle form submission (API request + dispatch action)
   const handleFormSubmit = async values => {
+    // Add form data to state (in case request fails and need to retry)
+    setFormData(values);
     await createCourse(values);
     handleCloseModal();
   };
@@ -38,19 +41,24 @@ const NewCoursePage = ({ courses, createCourse, resolveCourses }) => {
   const { addToast } = useToasts();
   // Hook for error notification
   useEffect(() => {
+    const handleRetry = async () => {
+      await createCourse(formData);
+    };
+
     if (courses.error.message) {
       addToast(
         <ToastContent
           message="Something went wrong, could not create the course."
           error={courses.error.message}
-          displayRetry={false}
+          displayRetry={true}
+          onRetry={handleRetry}
         />,
-        { appearance: "error", autoDismiss: true }
+        { appearance: "error", autoDismiss: true, pauseOnHover: true }
       );
       // Call resolve action to remove error since it has already been shown
       resolveCourses();
     }
-  }, [courses.error.message, resolveCourses, addToast]);
+  }, [courses.error.message, formData, createCourse, resolveCourses, addToast]);
 
   // Message for no courses
   const renderNoContent = () => (

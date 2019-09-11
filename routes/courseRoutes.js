@@ -38,7 +38,7 @@ module.exports = app => {
       // Send course to client
       res.send(course);
     } catch (error) {
-      res.send(error);
+      res.status(500).send(error);
     }
   });
 
