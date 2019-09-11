@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
+import * as yup from "yup";
 // Components
 import {
   MainContainer,
@@ -22,6 +23,10 @@ import { createCourse, resolveCourses } from "../../actions/courses";
 import styles from "./CourseList.module.css";
 import { UniversityIcon } from "../../utils/icons";
 
+const createCourseSchema = yup.object({
+  name: yup.string().required("Name is required")
+});
+
 const CourseList = ({ courses, createCourse, resolveCourses }) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
@@ -32,7 +37,6 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
 
   // Function to handle form submission (API request + dispatch action)
   const handleFormSubmit = async values => {
-    console.log(values);
     // Add form data to state (in case request fails and need to retry)
     setFormData(values);
     await createCourse(values);
@@ -110,6 +114,7 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <Formik
+            validationSchema={createCourseSchema}
             initialValues={{ name: "" }}
             onSubmit={values => handleFormSubmit(values)}
           >
@@ -130,7 +135,11 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
                     name="name"
                     value={values.name}
                     onChange={handleChange}
+                    isInvalid={!!errors.name}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <div className={styles.buttonContainer}>
                   <Button
