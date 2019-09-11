@@ -110,7 +110,7 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <Formik
-            initialValues={{ name: "", shortname: "" }}
+            initialValues={{ name: "" }}
             onSubmit={values => handleFormSubmit(values)}
           >
             {({
@@ -129,15 +129,6 @@ const CourseList = ({ courses, createCourse, resolveCourses }) => {
                     type="text"
                     name="name"
                     value={values.name}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="courseShortName">
-                  <Form.Label>Short Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="shortname"
-                    value={values.shortname}
                     onChange={handleChange}
                   />
                 </Form.Group>

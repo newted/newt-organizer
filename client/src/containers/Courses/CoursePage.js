@@ -119,8 +119,7 @@ const NewCoursePage = ({
         <Modal.Body className={styles.modalBody}>
           <Formik
             initialValues={{
-              name: currentCourse.name,
-              shortname: currentCourse.shortname
+              name: currentCourse.name
             }}
             onSubmit={values => handleFormSubmit(currentCourse._id, values)}
           >
@@ -140,15 +139,6 @@ const NewCoursePage = ({
                     type="text"
                     name="name"
                     value={values.name}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="courseShortName">
-                  <Form.Label>Short Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="shortname"
-                    value={values.shortname}
                     onChange={handleChange}
                   />
                 </Form.Group>
