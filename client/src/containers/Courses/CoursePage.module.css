@@ -1,20 +1,29 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-  min-height: calc(100vh - 54px);
-  box-sizing: border-box;
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
+.form {
+  margin: 1rem 0;
+  width: 70%;
 }
 
-.leftBtn {
-  width: 75px;
-  margin: 0 0.5rem 0 0;
-
+.buttonContainer {
+  display: flex;
+  justify-content: center;
 }
 
-.rightBtn {
-  width: 75px;
-  margin: 0 0 0 0.5rem;
+.optionsDropdown {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 30px;
+  border-radius: 0.5rem;
+  transition: 0.15s linear;
+}
+
+.optionsDropdown:hover {
+  background-color: #eee;
 }

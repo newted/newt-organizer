@@ -9,7 +9,6 @@ import {
   markAssignmentAsComplete,
   markAssignmentAsIncomplete
 } from "../../actions/assignments";
-import { fetchAllCourses } from "../../actions/courses";
 // Components
 import TimelineCard from "./TimelineCard";
 import PrevWeekCard from "./PrevWeekCard";
@@ -219,8 +218,7 @@ function mapStateToProps({ courses, programs, sidebar }) {
 
 const mapDispatchToProps = {
   markAssignmentAsComplete,
-  markAssignmentAsIncomplete,
-  fetchAllCourses
+  markAssignmentAsIncomplete
 };
 
 export default connect(

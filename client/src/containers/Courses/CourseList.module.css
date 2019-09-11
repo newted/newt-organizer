@@ -1,64 +1,30 @@
-.mainContainer {
-  composes: mainContainer from "../../styles/shared.css";
-}
-
-.headerContainer {
-  composes: headerContainer from "../../styles/shared.css";
-}
-
-.coursesContainer {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-}
-
-.courseSection {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.headings {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  margin: 0 2%;
-  padding: 0.25rem 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.header {
-  color: var(--off-black);
-  margin: 0 2% 0 0;
-  font-weight: 500;
-}
-
-.header:hover {
-  font-weight: 600;
-}
-
-.institution {
-  margin: 0 0 0 2%;
-  color: var(--grey-2);
-}
-
 .cardContainer {
-  display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
+  padding: 0;
 }
 
 .cardColor {
-  background-color: var(--salmon);
+  background-color: var(--yellow);
 }
 
-.message {
-  composes: mainMessage from "../../styles/shared.css";
-  margin: 0 2%;
-  width: auto;
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.link {
+.form {
+  margin: 1rem 0;
+  width: 70%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.createCourse {
+  color: var(--lightGreen);
   font-weight: 600;
-  text-decoration: underline;
 }

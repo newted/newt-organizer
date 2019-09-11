@@ -9,7 +9,6 @@ import {
   addQuizToAssignment,
   updateAssignmentQuiz
 } from "../../actions/assignments";
-import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 import {
   createPersonalQuiz,
   fetchQuiz,
@@ -22,10 +21,8 @@ import AssignmentContent from "./AssignmentContent";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import QuizModal from "../../components/QuizModal";
-import Loader from "../../components/Loader";
 // Helpers
 import { statusDueDateSort } from "../../utils/containerHelpers";
-import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
 // Styling
 import styles from "./AssignmentList.module.css";
 
@@ -113,44 +110,6 @@ class AssignmentList extends Component {
         });
       }
     }
-
-    const { error, toastManager, resolveCourses } = this.props;
-
-    if (error.message && error.requestType && error.source === "courses") {
-      switch (error.requestType) {
-        case "fetch":
-          const callback = id => (this.toastId = id);
-          // Display error notification
-          displayErrorNotification(
-            toastManager,
-            "fetch",
-            "assignment",
-            error.message,
-            this.onRetry,
-            callback
-          );
-          break;
-        default:
-          return;
-      }
-      resolveCourses();
-    }
-
-    if (error.message && error.requestType && error.source === "assignments") {
-      switch (error.requestType) {
-        case "update":
-          displayErrorNotification(
-            toastManager,
-            "update",
-            "assignment",
-            error.message
-          );
-          break;
-        default:
-          return;
-      }
-      resolveCourses();
-    }
   }
 
   componentWillUnmount() {
@@ -158,11 +117,7 @@ class AssignmentList extends Component {
   }
 
   onRetry = () => {
-    const { programIds, fetchAllCourses, toastManager } = this.props;
-
-    // A request is made to fetch all courses. Then the toast is removed so that
-    // it no longer displays on the screen.
-    fetchAllCourses(programIds);
+    const { toastManager } = this.props;
     toastManager.remove(this.toastId);
   };
 
@@ -390,12 +345,8 @@ class AssignmentList extends Component {
   }
 
   render() {
-    const { numCompleted, isFetching, assignments } = this.props;
+    const { numCompleted, assignments } = this.props;
     const { showCompleted, currentAssignment } = this.state;
-
-    if (isFetching && _.isEmpty(assignments)) {
-      return <Loader />;
-    }
 
     return (
       <div className={styles.mainContainer}>
@@ -446,24 +397,9 @@ class AssignmentList extends Component {
   }
 }
 
-function mapStateToProps({ programs, courses, quizzes, learningMap }, props) {
+function mapStateToProps({ quizzes, learningMap }, props) {
   const { assignmentId } = props.match.params;
   const assignments = [];
-  // This way of setting isFetching seems logical, but for a brief moment,
-  // between the 'FETCH_PROGRAMS' and 'REQUEST_COURSES' reducers, it evaluates
-  // to false, which (sometimes) briefly flashes the No Assignments message on
-  // screen.
-  const isFetching = programs.isFetching || courses.isFetching;
-  const error = courses.error;
-  const programIds = Object.keys(programs.items);
-
-  _.forEach(courses.items, course => {
-    _.forEach(course.assignments, assignment => {
-      assignment["courseId"] = course._id;
-      assignment["courseName"] = course.name;
-      assignments.push(assignment);
-    });
-  });
 
   const numCompleted = assignments.filter(({ completed }) => completed).length;
 
@@ -475,9 +411,6 @@ function mapStateToProps({ programs, courses, quizzes, learningMap }, props) {
     allQuizzes: quizzes.items,
     learningMapId: learningMap.items._id,
     assignments,
-    isFetching,
-    error,
-    programIds,
     numCompleted
   };
 }
@@ -486,8 +419,6 @@ const mapDispatchToProps = {
   deleteAssignment,
   addQuizToAssignment,
   updateAssignmentQuiz,
-  fetchAllCourses,
-  resolveCourses,
   createPersonalQuiz,
   fetchQuiz,
   completeQuiz,

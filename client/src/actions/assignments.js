@@ -1,6 +1,5 @@
 import axios from "axios";
 import firebase from "../config/firebase";
-import { requestCourses, resolveCourses } from "./courses";
 import { requestFailure } from "./shared";
 
 export const CREATE_ASSIGNMENT = "CREATE_ASSIGNMENT";
@@ -18,7 +17,6 @@ export const createAssignment = (
   history
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -59,7 +57,6 @@ export const createYoutubeAssignment = (
   history
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -140,7 +137,6 @@ export const updateAssignment = (
 // Function to delete an assignment on database
 export const deleteAssignment = (courseId, assignmentId) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -156,7 +152,6 @@ export const deleteAssignment = (courseId, assignmentId) => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
     console.log("Error while deleting the assignment", error);
   }
 };
@@ -167,7 +162,6 @@ export const markAssignmentAsComplete = (
   assignmentId
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -184,7 +178,6 @@ export const markAssignmentAsComplete = (
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
     console.log("Error while marking assignment as complete", error);
   }
 };
@@ -195,7 +188,6 @@ export const markAssignmentAsInProgress = (
   assignmentId
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -212,7 +204,6 @@ export const markAssignmentAsInProgress = (
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
     console.log("Error while marking assignment as in progress", error);
   }
 };
@@ -223,7 +214,6 @@ export const markAssignmentAsIncomplete = (
   assignmentId
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -240,7 +230,6 @@ export const markAssignmentAsIncomplete = (
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
     console.log("Error while marking assignment as incomplete", error);
   }
 };
@@ -251,7 +240,6 @@ export const addQuizToAssignment = (
   data
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -268,7 +256,6 @@ export const addQuizToAssignment = (
       payload: res.data
     });
   } catch (error) {
-    dispatch(resolveCourses());
     console.log("Error while adding quiz to assignment", error);
   }
 };
@@ -281,7 +268,6 @@ export const updateAssignmentQuiz = (
   dateCompleted
 ) => async dispatch => {
   try {
-    dispatch(requestCourses());
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
 
@@ -293,7 +279,6 @@ export const updateAssignmentQuiz = (
 
     dispatch({ type: UPDATE_ASSIGNMENT, payload: res.data });
   } catch (error) {
-    dispatch(resolveCourses());
     console.error(error);
   }
 };

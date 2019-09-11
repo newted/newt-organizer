@@ -2,38 +2,18 @@ import {
   REQUEST_COURSES,
   REQUEST_FAILURE_COURSES,
   RESOLVE_COURSES,
-  REMOVE_COURSES,
-  CREATE_COURSE,
   FETCH_COURSES,
-  FETCH_ALL_COURSES,
+  CREATE_COURSE,
   UPDATE_COURSE,
   DELETE_COURSE
 } from "../actions/courses";
-import {
-  CREATE_ASSIGNMENT,
-  UPDATE_ASSIGNMENT,
-  MARK_ASSIGNMENT_COMPLETE,
-  MARK_ASSIGNMENT_IN_PROGRESS,
-  MARK_ASSIGNMENT_INCOMPLETE,
-  DELETE_ASSIGNMENT,
-  REQUEST_ASSIGNMENT_FAILURE
-} from "../actions/assignments";
-import { GET_DEMO_COURSES } from "../actions/demo";
 import {
   dataArrayToObject,
   deleteItemFromObject
 } from "../utils/reducerHelpers";
 
 export default function(
-  state = {
-    isFetching: false,
-    items: {},
-    error: {
-      message: null,
-      requestType: null,
-      source: null
-    }
-  },
+  state = { isFetching: false, items: {}, error: { message: null } },
   action
 ) {
   switch (action.type) {
@@ -42,16 +22,13 @@ export default function(
         ...state,
         isFetching: true
       };
-    case REQUEST_ASSIGNMENT_FAILURE:
     case REQUEST_FAILURE_COURSES:
       return {
         ...state,
         isFetching: false,
         error: {
           ...state.error,
-          message: action.payload.message,
-          requestType: action.payload.requestType,
-          source: action.payload.source
+          message: action.payload
         }
       };
     case RESOLVE_COURSES:
@@ -59,51 +36,17 @@ export default function(
         ...state,
         isFetching: false,
         error: {
-          message: null,
-          requestType: null,
-          source: null
-        }
-      };
-    case REMOVE_COURSES:
-      return {
-        ...state,
-        isFetching: false,
-        items: {}
-      };
-    case CREATE_COURSE:
-      return {
-        ...state,
-        isFetching: false,
-        items: {
-          ...state.items,
-          [action.payload.course._id]: action.payload.course
+          message: null
         }
       };
     case FETCH_COURSES:
       return {
         ...state,
         isFetching: false,
-        items: Object.assign({}, state.items, dataArrayToObject(action.payload))
-      };
-    case FETCH_ALL_COURSES:
-      return {
-        ...state,
-        isFetching: false,
         items: dataArrayToObject(action.payload)
       };
-    case DELETE_COURSE:
-      return {
-        ...state,
-        isFetching: false,
-        items: deleteItemFromObject(state.items, action.payload.courseId)
-      };
+    case CREATE_COURSE:
     case UPDATE_COURSE:
-    case CREATE_ASSIGNMENT:
-    case UPDATE_ASSIGNMENT:
-    case MARK_ASSIGNMENT_COMPLETE:
-    case MARK_ASSIGNMENT_IN_PROGRESS:
-    case MARK_ASSIGNMENT_INCOMPLETE:
-    case DELETE_ASSIGNMENT:
       return {
         ...state,
         isFetching: false,
@@ -112,10 +55,11 @@ export default function(
           [action.payload._id]: action.payload
         }
       };
-    case GET_DEMO_COURSES:
+    case DELETE_COURSE:
       return {
         ...state,
-        items: action.payload
+        isFetching: false,
+        items: deleteItemFromObject(state.items, action.payload)
       };
     default:
       return state;

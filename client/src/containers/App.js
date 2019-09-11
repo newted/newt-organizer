@@ -38,7 +38,6 @@ class App extends Component {
           <Route
             path={[
               "/dashboard",
-              "/programs",
               "/courses",
               "/assignments",
               "/profile",

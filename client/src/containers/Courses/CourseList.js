@@ -1,176 +1,170 @@
-/* This is the page that's rendered when you click on Courses on the Sidebar */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import _ from "lodash";
-import { withToastManager } from "react-toast-notifications";
-// API
-import { fetchAllCourses, resolveCourses } from "../../actions/courses";
 // Components
+import {
+  MainContainer,
+  HeaderContainer,
+  ContentContainer
+} from "../../components/PageContainers";
+import MessageBox from "../../components/MessageBox";
+import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Loader from "../../components/Loader";
-// Helpers
-import { displayErrorNotification } from "../../components/CustomToast/errorNotification";
+import ToastContent from "../../components/CustomToast/ToastContent";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { Formik } from "formik";
+// API
+import { createCourse, resolveCourses } from "../../actions/courses";
 // Styling
 import styles from "./CourseList.module.css";
-import { BookIcon } from "../../utils/icons";
+import { UniversityIcon } from "../../utils/icons";
 
-class CourseList extends Component {
-  static propTypes = {
-    programs: PropTypes.shape({
-      isFetching: PropTypes.bool,
-      items: PropTypes.object
-    }),
-    // Connect props
-    history: PropTypes.object,
-    location: PropTypes.object,
-    match: PropTypes.object
+const CourseList = ({ courses, createCourse, resolveCourses }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  // Functions to set modal show state to true and false
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  // Function to handle form submission (API request + dispatch action)
+  const handleFormSubmit = async values => {
+    console.log(values);
+    // Add form data to state (in case request fails and need to retry)
+    setFormData(values);
+    await createCourse(values);
+    handleCloseModal();
   };
 
-  // Variable to keep track of notification ids
-  toastId = null;
+  const { addToast } = useToasts();
+  // Hook for error notification
+  useEffect(() => {
+    const handleRetry = async () => {
+      await createCourse(formData);
+    };
 
-  componentDidUpdate() {
-    const { toastManager, resolveCourses } = this.props;
-    const { error } = this.props.courses;
-
-    // Error handling: add error toast notification if there's any error with
-    // data requests.
-    if (error.message && error.requestType && error.source === "courses") {
-      switch (error.requestType) {
-        case "fetch":
-          const callback = id => (this.toastId = id);
-          // Display error notification
-          displayErrorNotification(
-            toastManager,
-            "fetch",
-            "course",
-            error.message,
-            this.onRetry,
-            callback
-          );
-          break;
-        default:
-          return;
-      }
+    if (courses.error.message) {
+      addToast(
+        <ToastContent
+          message="Something went wrong, could not create the course."
+          error={courses.error.message}
+          displayRetry={true}
+          onRetry={handleRetry}
+        />,
+        { appearance: "error", autoDismiss: true, pauseOnHover: true }
+      );
+      // Call resolve action to remove error since it has already been shown
       resolveCourses();
     }
-  }
+  }, [courses.error.message, formData, createCourse, resolveCourses, addToast]);
 
-  onRetry = () => {
-    const { programs, fetchAllCourses, toastManager } = this.props;
+  // Message for no courses
+  const renderNoContent = () => (
+    <MessageBox>
+      There are no courses to display. To create a course, click on the{" "}
+      <span className={styles.createCourse}>Create Course</span> button.
+    </MessageBox>
+  );
 
-    // A request is made to fetch all courses. Then the toast is removed so that
-    // it no longer displays on the screen.
-    fetchAllCourses(Object.keys(programs.items));
-    toastManager.remove(this.toastId);
-  };
-
-  renderCards(programId, courseList) {
-    const { courses } = this.props;
-
-    return _.map(courseList, courseId => {
-      return (
+  // Function to render course cards
+  const renderCards = () => {
+    if (!_.isEmpty(courses.items)) {
+      return _.map(courses.items, course => (
         <Card
-          path={`/programs/${programId}/courses/${courseId}`}
-          title={courses.items[courseId].name}
-          icon={BookIcon}
+          title={course.name}
+          path={`/courses/${course._id}`}
+          icon={UniversityIcon}
           additionalClass={styles.cardColor}
-          key={courseId}
+          key={course._id}
         />
-      );
-    });
-  }
-
-  renderNoContent() {
-    const programLink = (
-      <Link to="/programs" className={styles.link}>
-        Programs
-      </Link>
-    );
-
-    if (_.isEmpty(this.props.programs.items)) {
-      return (
-        <div className={styles.message}>
-          You aren't in any programs. Go to the {programLink} page from the
-          sidebar to create a Program.
-        </div>
-      );
+      ));
+    } else {
+      return renderNoContent();
     }
-
-    return (
-      <div className={styles.message}>
-        There are no courses to display. Add a course in any of your{" "}
-        {programLink} to see your courses listed here.
-      </div>
-    );
-  }
-
-  renderCourseSections() {
-    const { programs } = this.props;
-
-    return _.map(programs.items, ({ _id, name, institution, courses }) => {
-      const courseList = courses;
-
-      if (courses.length > 0) {
-        return (
-          <div className={styles.courseSection} key={_id}>
-            <div className={styles.headings}>
-              <Link to={`/programs/${_id}`} className={styles.header}>
-                {name}
-              </Link>
-              <div className={styles.institution}>{institution}</div>
-            </div>
-            <div className={styles.cardContainer}>
-              {this.renderCards(_id, courseList)}
-            </div>
-          </div>
-        );
-      }
-    });
-  }
-
-  render() {
-    const { programs, courses } = this.props;
-
-    // If either programs or courses is fetching and if either of the two is
-    // empty, display Loader UI.
-    if (
-      (programs.isFetching && _.isEmpty(programs.items)) ||
-      (courses.isFetching && _.isEmpty(courses.items))
-    ) {
-      return <Loader />;
-    }
-
-    return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2>Your Courses</h2>
-        </div>
-        <div className={styles.coursesContainer}>
-          {!_.isEmpty(this.props.courses.items)
-            ? this.renderCourseSections()
-            : this.renderNoContent()}
-        </div>
-      </div>
-    );
-  }
-}
-
-function mapStateToProps({ programs, courses }) {
-  return {
-    programs,
-    courses
   };
-}
 
-const mapDispatchToProps = {
-  fetchAllCourses,
-  resolveCourses
+  // If courses are being fetching show loading indicator
+  if (courses.isFetching) {
+    return <Loader />;
+  }
+
+  return (
+    <MainContainer>
+      <HeaderContainer>
+        <h2>Courses</h2>
+        <Button category="success" onClick={handleShowModal}>
+          Create Course
+        </Button>
+      </HeaderContainer>
+      <ContentContainer
+        className={!_.isEmpty(courses.items) ? styles.cardContainer : ""}
+      >
+        {renderCards()}
+      </ContentContainer>
+      <Modal show={showModal} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Create a Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={styles.modalBody}>
+          <Formik
+            initialValues={{ name: "", shortname: "" }}
+            onSubmit={values => handleFormSubmit(values)}
+          >
+            {({
+              handleSubmit,
+              handleChange,
+              handleBlur,
+              values,
+              touched,
+              isValid,
+              errors
+            }) => (
+              <Form noValidate onSubmit={handleSubmit} className={styles.form}>
+                <Form.Group controlId="courseName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="courseShortName">
+                  <Form.Label>Short Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="shortname"
+                    value={values.shortname}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <div className={styles.buttonContainer}>
+                  <Button
+                    category="primary"
+                    type="submit"
+                    style={{ width: "200px", marginTop: "1rem" }}
+                  >
+                    Create
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+    </MainContainer>
+  );
 };
+
+const mapStateToProps = ({ courses }) => {
+  return { courses };
+};
+const mapDispatchToProps = { createCourse, resolveCourses };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withToastManager(CourseList));
+)(CourseList);
