@@ -16,6 +16,10 @@ const userContentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Collection"
   },
+  courseId: {
+    type: Schema.Types.ObjectId,
+    ref: "Collection"
+  },
   hasKnowledgeTracking: {
     type: Boolean,
     default: false

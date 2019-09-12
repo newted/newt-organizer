@@ -5,13 +5,14 @@ export const REQUEST_USER_CONTENT = "REQUEST_USER_CONTENT";
 export const RESOLVE_USER_CONTENT = "RESOLVE_USER_CONTENT";
 export const CREATE_USER_CONTENT = "CREATE_USER_CONTENT";
 
-export const createUserContent = values => async dispatch => {
+export const createUserContent = (values, courseId) => async dispatch => {
   try {
+    const data = { ...values, courseId };
     dispatch({ type: REQUEST_USER_CONTENT });
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
     // Make request to create content
-    const res = await axios.post("/api/user-content/create", values, {
+    const res = await axios.post("/api/user-content/create", data, {
       headers: { Authorization: idToken }
     });
 

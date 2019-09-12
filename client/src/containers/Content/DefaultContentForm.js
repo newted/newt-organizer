@@ -1,10 +1,13 @@
 import React from "react";
 import * as yup from "yup";
+import { connect } from "react-redux";
 // Components
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
+// API
+import { createUserContent } from "../../actions/userContent";
 // Styling
 import styles from "./AddContent.module.css";
 
@@ -14,11 +17,11 @@ const contentSchema = yup.object({
   dateDue: yup.date().required("A due date is required")
 });
 
-const DefaultContentForm = () => (
+const DefaultContentForm = ({ courseId, createUserContent }) => (
   <Formik
     validationSchema={contentSchema}
     initialValues={{ name: "", description: "", dateDue: "" }}
-    onSubmit={values => console.log(values)}
+    onSubmit={values => createUserContent(values, courseId)}
   >
     {({
       handleSubmit,
@@ -91,4 +94,9 @@ const DefaultContentForm = () => (
   </Formik>
 );
 
-export default DefaultContentForm;
+const mapDispatchToProps = { createUserContent };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(DefaultContentForm);

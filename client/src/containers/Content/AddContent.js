@@ -17,7 +17,7 @@ import YoutubeContentForm from "./YoutubeContentForm";
 // Styles
 import styles from "./AddContent.module.css";
 
-const AddContent = () => (
+const AddContent = ({ location }) => (
   <MainContainer>
     <HeaderContainer>
       <h4>Add Content</h4>
@@ -45,7 +45,7 @@ const AddContent = () => (
           <Col md={9} className={styles.tabPane}>
             <TabContent>
               <TabPane eventKey="default">
-                <DefaultContentForm />
+                <DefaultContentForm courseId={location.state.courseId} />
               </TabPane>
               <TabPane eventKey="youtube">
                 <YoutubeContentForm />

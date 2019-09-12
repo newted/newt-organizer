@@ -99,7 +99,13 @@ const NewCoursePage = ({
       <HeaderContainer>
         <h2>{currentCourse.name}</h2>
         <div className={styles.optionsContainer}>
-          <Link to="/content/add">
+          <Link
+            to={{
+              pathname: "/content/add",
+              // Pass courseId to Add Content route (which is sent to component)
+              state: { courseId: currentCourse._id }
+            }}
+          >
             <Button category="success" style={{ marginRight: "1.5rem " }}>
               Add Content
             </Button>
