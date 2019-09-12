@@ -12,6 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import TabContent from "react-bootstrap/TabContent";
 import TabPane from "react-bootstrap/TabPane";
 import TabContainer from "react-bootstrap/TabContainer";
+import DefaultContentForm from "./DefaultContentForm";
 // Styles
 import styles from "./AddContent.module.css";
 
@@ -22,8 +23,11 @@ const AddContent = () => (
     </HeaderContainer>
     <ContentContainer className={styles.contentForms}>
       <TabContainer id="add-content-tabs" defaultActiveKey="default">
-        <Row style={{ minHeight: "500px" }}>
-          <Col lg={2} md={3}>
+        <Row>
+          <Col md={3} style={{ marginTop: "1rem" }}>
+            <h5 style={{ color: "#666", marginBottom: "1rem" }}>
+              Content Type
+            </h5>
             <Nav variant="pills" className="flex-column">
               <Nav.Item as={CustomNavItem}>
                 <Nav.Link as={CustomNavLink} eventKey="default">
@@ -37,9 +41,11 @@ const AddContent = () => (
               </Nav.Item>
             </Nav>
           </Col>
-          <Col lg={10} md={9}>
+          <Col md={9} className={styles.tabPane}>
             <TabContent>
-              <TabPane eventKey="default">Default form...</TabPane>
+              <TabPane eventKey="default">
+                <DefaultContentForm />
+              </TabPane>
               <TabPane eventKey="youtube">YouTube form...</TabPane>
             </TabContent>
           </Col>

@@ -1,3 +1,22 @@
 .contentForms {
   display: block;
 }
+
+.tabPane {
+  min-height: 500px;
+  padding: 2rem;
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.formLabel {
+  font-weight: 500;
+}
+
+.optional {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--grey-2);
+}
