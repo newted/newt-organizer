@@ -5,6 +5,7 @@ import learningMapReducer from "./learningMapReducer";
 import knowledgeMapReducer from "./knowledgeMapReducer";
 import quizReducer from "./quizReducer";
 import sidebarReducer from "./sidebarReducer";
+import userContentReducer from "./userContentReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   learningMap: learningMapReducer,
   knowledgeMap: knowledgeMapReducer,
   quizzes: quizReducer,
-  sidebar: sidebarReducer
+  sidebar: sidebarReducer,
+  userContent: userContentReducer
 });
