@@ -11,13 +11,13 @@ import styles from "./AddContent.module.css";
 const contentSchema = yup.object({
   name: yup.string().required("A name is required"),
   description: yup.string(),
-  dueDate: yup.date().required("A due date is required")
+  dateDue: yup.date().required("A due date is required")
 });
 
 const DefaultContentForm = () => (
   <Formik
     validationSchema={contentSchema}
-    initialValues={{ name: "", description: "", dueDate: "" }}
+    initialValues={{ name: "", description: "", dateDue: "" }}
     onSubmit={values => console.log(values)}
   >
     {({
@@ -63,10 +63,10 @@ const DefaultContentForm = () => (
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Form.Label className={styles.formLabel}>Due Date</Form.Label>
           <DatePicker
-            name="dueDate"
-            value={values.dueDate}
-            selected={values.dueDate}
-            onChange={date => setFieldValue("dueDate", date)}
+            name="dateDue"
+            value={values.dateDue}
+            selected={values.dateDue}
+            onChange={date => setFieldValue("dateDue", date)}
             dateFormat="MMM d, yyyy h:mm aa"
             placeholderText="Select date"
             showTimeSelect
@@ -74,7 +74,7 @@ const DefaultContentForm = () => (
             timeIntervals={30}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.dueDate}
+            {errors.dateDue}
           </Form.Control.Feedback>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

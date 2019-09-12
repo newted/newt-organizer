@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const userContentSchema = new Schema({
   name: String,
-  details: String,
+  description: String,
   isComplete: {
     type: Boolean,
     default: false

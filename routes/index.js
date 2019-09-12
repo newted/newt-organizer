@@ -5,5 +5,6 @@ module.exports = app =>
     require("./courseRoutes")(app),
     require("./learningMapRoutes")(app),
     require("./quizRoutes")(app),
-    require("./sharedRoutes")(app)
+    require("./sharedRoutes")(app),
+    require("./userContentRoutes")(app)
   );
