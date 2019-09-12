@@ -2,8 +2,31 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 
 const UserContent = mongoose.model("user-contents");
+const Course = mongoose.model("courses");
 
 module.exports = app => {
+  // GET request to get user content for a course
+  app.get("/api/user-content/:courseId", requireLogin, async (req, res) => {
+    const { courseId } = req.params;
+
+    // Get individualContent field (and _id) from Course
+    const { individualContent } = await Course.findById(courseId, {
+      individualContent: 1
+    });
+
+    // Get user content data based on individualContent ids array
+    UserContent.find(
+      { _id: { $in: individualContent } },
+      (error, userContentList) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(userContentList);
+        }
+      }
+    );
+  });
+
   // POST request to create content
   app.post("/api/user-content/create", requireLogin, async (req, res) => {
     try {
