@@ -13,6 +13,7 @@ import TabContent from "react-bootstrap/TabContent";
 import TabPane from "react-bootstrap/TabPane";
 import TabContainer from "react-bootstrap/TabContainer";
 import DefaultContentForm from "./DefaultContentForm";
+import YoutubeContentForm from "./YoutubeContentForm";
 // Styles
 import styles from "./AddContent.module.css";
 
@@ -46,7 +47,9 @@ const AddContent = () => (
               <TabPane eventKey="default">
                 <DefaultContentForm />
               </TabPane>
-              <TabPane eventKey="youtube">YouTube form...</TabPane>
+              <TabPane eventKey="youtube">
+                <YoutubeContentForm />
+              </TabPane>
             </TabContent>
           </Col>
         </Row>
