@@ -42,28 +42,41 @@ module.exports = app => {
 
   // PUT request to update course
   app.put("/api/courses/:courseId/update", requireLogin, (req, res) => {
-    try {
-      const { courseId } = req.params;
-      const data = req.body;
-      // Set lastUpdated field to now
-      data.lastUpdated = Date.now();
+    const { courseId } = req.params;
+    const data = req.body;
+    // Set lastUpdated field to now
+    data.lastUpdated = Date.now();
 
-      // Find Course by id and update
-      Course.findByIdAndUpdate(
-        courseId,
-        data,
-        { new: true },
-        (error, course) => {
-          if (error) {
-            res.status(500).send(error);
-          } else {
-            res.send(course);
-          }
+    // Find Course by id and update
+    Course.findByIdAndUpdate(courseId, data, { new: true }, (error, course) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.send(course);
+      }
+    });
+  });
+
+  // PUT request to add content ids to course
+  app.put("/api/courses/:courseId/add-content", requireLogin, (req, res) => {
+    const { courseId } = req.params;
+    const { userContentId } = req.body;
+
+    // Find Course by id and add content
+    Course.findByIdAndUpdate(
+      courseId,
+      {
+        $push: { individualContent: userContentId }
+      },
+      { new: true },
+      (error, course) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(course);
         }
-      );
-    } catch (error) {
-      res.send(error);
-    }
+      }
+    );
   });
 
   // DELETE request to delete a course
