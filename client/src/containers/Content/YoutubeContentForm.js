@@ -4,9 +4,16 @@ import * as yup from "yup";
 import Button from "../../components/Button";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
+// Styling
+import styles from "./AddContent.module.css";
 
 const youtubeContentSchema = yup.object({
-  url: yup.string().required("A YouTube URL is required")
+  url: yup
+    .string()
+    .url(
+      "Make sure it's a URL. E.g.: https://www.youtube.com/watch?v=LN0ucKNX0hc"
+    )
+    .required("A YouTube URL is required")
 });
 
 const YoutubeContentForm = () => (
@@ -18,7 +25,9 @@ const YoutubeContentForm = () => (
     {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group controlId="youtubeUrl">
-          <Form.Label>YouTube Video URL</Form.Label>
+          <Form.Label className={styles.formLabel}>
+            YouTube Video URL
+          </Form.Label>
           <Form.Control
             type="text"
             name="url"
