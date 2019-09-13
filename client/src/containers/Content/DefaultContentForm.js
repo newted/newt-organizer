@@ -1,6 +1,7 @@
 import React from "react";
 import * as yup from "yup";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // Components
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
@@ -17,11 +18,14 @@ const contentSchema = yup.object({
   dateDue: yup.date().required("A due date is required")
 });
 
-const DefaultContentForm = ({ courseId, createUserContent }) => (
+const DefaultContentForm = ({ courseId, createUserContent, history }) => (
   <Formik
     validationSchema={contentSchema}
     initialValues={{ name: "", description: "", dateDue: "" }}
-    onSubmit={values => createUserContent(values, courseId)}
+    onSubmit={values => {
+      createUserContent(values, courseId);
+      history.push(`/courses/${courseId}`);
+    }}
   >
     {({
       handleSubmit,
@@ -99,4 +103,4 @@ const mapDispatchToProps = { createUserContent };
 export default connect(
   null,
   mapDispatchToProps
-)(DefaultContentForm);
+)(withRouter(DefaultContentForm));
