@@ -1,8 +1,10 @@
 import {
   REQUEST_USER_CONTENT,
   RESOLVE_USER_CONTENT,
-  CREATE_USER_CONTENT
+  CREATE_USER_CONTENT,
+  FETCH_USER_CONTENT
 } from "../actions/userContent";
+import { dataArrayToObject } from "../utils/reducerHelpers";
 
 export default function(
   state = { isFetching: false, items: {}, error: { message: null } },
@@ -26,6 +28,16 @@ export default function(
         items: {
           ...state.items,
           [action.payload._id]: action.payload
+        }
+      };
+    case FETCH_USER_CONTENT:
+      const contentObj = dataArrayToObject(action.payload);
+      return {
+        ...state,
+        isFetching: false,
+        items: {
+          ...state.items,
+          ...contentObj
         }
       };
     default:

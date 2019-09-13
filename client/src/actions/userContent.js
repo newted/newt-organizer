@@ -5,6 +5,23 @@ import { UPDATE_COURSE } from "./courses";
 export const REQUEST_USER_CONTENT = "REQUEST_USER_CONTENT";
 export const RESOLVE_USER_CONTENT = "RESOLVE_USER_CONTENT";
 export const CREATE_USER_CONTENT = "CREATE_USER_CONTENT";
+export const FETCH_USER_CONTENT = "FETCH_USER_CONTENT";
+
+export const fetchCourseContent = courseId => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to get courses content
+    const res = await axios.get(`/api/user-content/${courseId}`, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch({ type: FETCH_USER_CONTENT, payload: res.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const createUserContent = (values, courseId) => async dispatch => {
   try {
