@@ -7,7 +7,8 @@ import _ from "lodash";
 // Components
 import {
   MainContainer,
-  HeaderContainer
+  HeaderContainer,
+  ContentContainer
 } from "../../components/PageContainers";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
@@ -24,6 +25,7 @@ import {
   deleteCourse,
   resolveCourses
 } from "../../actions/courses";
+import { fetchCourseContent } from "../../actions/userContent";
 // Styles
 import styles from "./CoursePage.module.css";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -33,16 +35,23 @@ const NewCoursePage = ({
   updateCourse,
   deleteCourse,
   resolveCourses,
+  fetchCourseContent,
   match,
   history
 }) => {
   const [currentCourse, setCurrentCourse] = useState({});
+  const [courseContent, setCourseContent] = useState([]);
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Get courseId from URL
   const { courseId } = match.params;
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    // Fetch content for the course and set to state
+    fetchCourseContent(courseId).then(content => setCourseContent(content));
+  }, [courseId, fetchCourseContent]);
 
   useEffect(() => {
     // Filter out course which matches page's courseId
@@ -128,6 +137,7 @@ const NewCoursePage = ({
           </div>
         </div>
       </HeaderContainer>
+      <ContentContainer>{JSON.stringify(courseContent)}</ContentContainer>
       {/* Edit Course modal */}
       <Modal show={showEditModal} onHide={handleCloseEditModal} size="lg">
         <Modal.Header closeButton>
@@ -209,7 +219,12 @@ NewCoursePage.propTypes = {
   location: PropTypes.object
 };
 
-const mapDispatchToProps = { updateCourse, deleteCourse, resolveCourses };
+const mapDispatchToProps = {
+  updateCourse,
+  deleteCourse,
+  resolveCourses,
+  fetchCourseContent
+};
 
 const mapStateToProps = ({ courses }) => {
   return { courses };

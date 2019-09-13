@@ -18,6 +18,8 @@ export const fetchCourseContent = courseId => async dispatch => {
     });
 
     dispatch({ type: FETCH_USER_CONTENT, payload: res.data });
+
+    return res.data;
   } catch (error) {
     console.error(error);
   }
