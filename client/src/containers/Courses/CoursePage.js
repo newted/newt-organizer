@@ -14,6 +14,7 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import ToastContent from "../../components/CustomToast/ToastContent";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
+import ContentCard from "../Content/ContentCard";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
@@ -32,6 +33,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 
 const NewCoursePage = ({
   courses,
+  isFetching,
   updateCourse,
   deleteCourse,
   resolveCourses,
@@ -99,7 +101,7 @@ const NewCoursePage = ({
   };
 
   // If fetching or current course hasn't been set yet, show Loader
-  if (courses.isFetching || _.isEmpty(currentCourse)) {
+  if (isFetching || _.isEmpty(currentCourse)) {
     return <Loader />;
   }
 
@@ -137,7 +139,12 @@ const NewCoursePage = ({
           </div>
         </div>
       </HeaderContainer>
-      <ContentContainer>{JSON.stringify(courseContent)}</ContentContainer>
+      <ContentContainer className={styles.cardContainer}>
+        {!_.isEmpty(courseContent) &&
+          _.map(courseContent, content => (
+            <ContentCard key={content._id} content={content} />
+          ))}
+      </ContentContainer>
       {/* Edit Course modal */}
       <Modal show={showEditModal} onHide={handleCloseEditModal} size="lg">
         <Modal.Header closeButton>
@@ -226,8 +233,10 @@ const mapDispatchToProps = {
   fetchCourseContent
 };
 
-const mapStateToProps = ({ courses }) => {
-  return { courses };
+const mapStateToProps = ({ courses, userContent }) => {
+  const isFetching = courses.isFetching || userContent.isFetching;
+
+  return { courses, isFetching };
 };
 
 export default connect(

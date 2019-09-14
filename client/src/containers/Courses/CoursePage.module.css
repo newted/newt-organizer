@@ -1,3 +1,8 @@
+.cardContainer {
+  flex-wrap: wrap;
+  padding: 0;
+}
+
 .modalBody {
   display: flex;
   flex-direction: column;

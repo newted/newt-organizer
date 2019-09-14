@@ -1,0 +1,26 @@
+.card {
+  height: 200px;
+  width: 21%;
+  margin: 2%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+}
+
+@media screen and (max-width: 1225px) {
+  .card {
+    width: 29.33%;
+  }
+}
+
+@media screen and (max-width: 955px) {
+  .card {
+    width: 46%;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .card {
+    width: 96%;
+  }
+}
