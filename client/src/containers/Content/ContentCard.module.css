@@ -1,10 +1,21 @@
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 200px;
   width: 21%;
   margin: 2%;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  padding: 1.5rem;
   border-radius: 0.6rem;
+  background-color: #ff386b;
+  color: white;
+  box-shadow: 0px 10px 40px -10px rgba(0, 64, 128, 0.2);
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: #ffdbe4;
+  color: #ff386b;
 }
 
 @media screen and (max-width: 1225px) {
