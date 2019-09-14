@@ -14,7 +14,7 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import ToastContent from "../../components/CustomToast/ToastContent";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
-import ContentCard from "../Content/ContentCard";
+import CourseContent from "./CourseContent";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
@@ -139,11 +139,10 @@ const NewCoursePage = ({
           </div>
         </div>
       </HeaderContainer>
-      <ContentContainer className={styles.cardContainer}>
-        {!_.isEmpty(courseContent) &&
-          _.map(courseContent, content => (
-            <ContentCard key={content._id} content={content} />
-          ))}
+      <ContentContainer
+        className={!_.isEmpty(courseContent) ? styles.cardContainer : ""}
+      >
+        <CourseContent courseContent={courseContent} />
       </ContentContainer>
       {/* Edit Course modal */}
       <Modal show={showEditModal} onHide={handleCloseEditModal} size="lg">
