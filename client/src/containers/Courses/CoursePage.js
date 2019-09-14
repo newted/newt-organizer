@@ -33,6 +33,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 
 const NewCoursePage = ({
   courses,
+  courseContent,
   isFetching,
   updateCourse,
   deleteCourse,
@@ -42,7 +43,6 @@ const NewCoursePage = ({
   history
 }) => {
   const [currentCourse, setCurrentCourse] = useState({});
-  const [courseContent, setCourseContent] = useState([]);
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -52,7 +52,7 @@ const NewCoursePage = ({
 
   useEffect(() => {
     // Fetch content for the course and set to state
-    fetchCourseContent(courseId).then(content => setCourseContent(content));
+    fetchCourseContent(courseId);
   }, [courseId, fetchCourseContent]);
 
   useEffect(() => {
@@ -233,10 +233,23 @@ const mapDispatchToProps = {
   fetchCourseContent
 };
 
-const mapStateToProps = ({ courses, userContent }) => {
+const mapStateToProps = ({ courses, userContent }, props) => {
+  const { courseId } = props.match.params;
+
+  const course = courses.items ? courses.items[courseId] : null;
+  let courseContent = [];
+
+  // Get content info for the particular course
+  if (!_.isEmpty(course) && !_.isEmpty(userContent.items)) {
+    _.forEach(course.individualContent, contentId =>
+      courseContent.push(userContent.items[contentId])
+    );
+  }
+
+  // Set to true if either is fetching
   const isFetching = courses.isFetching || userContent.isFetching;
 
-  return { courses, isFetching };
+  return { courses, courseContent, isFetching };
 };
 
 export default connect(
