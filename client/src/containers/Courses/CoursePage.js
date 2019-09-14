@@ -12,14 +12,12 @@ import {
 } from "../../components/PageContainers";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import EditCourseModal from "./EditCourseModal";
+import DeleteCourseModal from "./DeleteCourseModal";
 import ToastContent from "../../components/CustomToast/ToastContent";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 import CourseContent from "./CourseContent";
-import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
-import Form from "react-bootstrap/Form";
-import { Formik } from "formik";
-import { courseFormSchema } from "./courseFormSchema";
 // API
 import {
   updateCourse,
@@ -93,7 +91,7 @@ const NewCoursePage = ({
   };
 
   // Function to handle course deleting
-  const handleDeleteCourse = async courseId => {
+  const handleDeleteCourse = async () => {
     // Make request to delete course
     await deleteCourse(courseId);
     // Go to Courses page
@@ -145,64 +143,18 @@ const NewCoursePage = ({
         <CourseContent courseContent={courseContent} />
       </ContentContainer>
       {/* Edit Course modal */}
-      <Modal show={showEditModal} onHide={handleCloseEditModal} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Edit {currentCourse.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className={styles.modalBody}>
-          <Formik
-            validationSchema={courseFormSchema}
-            initialValues={{
-              name: currentCourse.name
-            }}
-            onSubmit={values => handleFormSubmit(currentCourse._id, values)}
-          >
-            {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-              <Form noValidate onSubmit={handleSubmit} className={styles.form}>
-                <Form.Group controlId="courseName">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={!!errors.name}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.name}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <div className={styles.buttonContainer}>
-                  <Button
-                    category="primary"
-                    type="submit"
-                    style={{ width: "200px", marginTop: "1rem" }}
-                  >
-                    Update
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </Modal.Body>
-      </Modal>
+      <EditCourseModal
+        show={showEditModal}
+        onHide={handleCloseEditModal}
+        course={currentCourse}
+        onFormSubmit={handleFormSubmit}
+      />
       {/* Delete modal */}
-      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Course</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this course?</Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCloseDeleteModal}>Close</Button>
-          <Button
-            category="danger"
-            onClick={() => handleDeleteCourse(currentCourse._id)}
-          >
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <DeleteCourseModal
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
+        onDelete={handleDeleteCourse}
+      />
     </MainContainer>
   );
 };
