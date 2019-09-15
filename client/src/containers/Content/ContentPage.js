@@ -14,7 +14,10 @@ import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Loader from "../../components/Loader";
 import EditContentModal from "./EditContentModal";
 // API
-import { fetchIndividualContent } from "../../actions/userContent";
+import {
+  fetchIndividualContent,
+  updateUserContent
+} from "../../actions/userContent";
 // Styling
 import styles from "./ContentPage.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
@@ -23,6 +26,7 @@ const ContentPage = ({
   isFetching,
   content,
   fetchIndividualContent,
+  updateUserContent,
   match
 }) => {
   const [showEditModal, setshowEditModal] = useState(false);
@@ -39,8 +43,9 @@ const ContentPage = ({
     }
   }, [content, userContentId, fetchIndividualContent]);
 
+  // Function to handle updating course when edit form is submitted
   const handleEditFormSubmit = values => {
-    console.log(values, userContentId);
+    updateUserContent(userContentId, values);
     handleCloseEditModal();
   };
 
@@ -131,7 +136,7 @@ const mapStateToProps = ({ userContent }, props) => {
   };
 };
 
-const mapDispatchToProps = { fetchIndividualContent };
+const mapDispatchToProps = { fetchIndividualContent, updateUserContent };
 
 export default connect(
   mapStateToProps,
