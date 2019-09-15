@@ -1,0 +1,21 @@
+.contentContainer {
+  display: block;
+}
+
+.contentInfo {
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  height: fit-content;
+  min-height: 200px;
+}
+
+.content {
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  min-height: 500px;
+}
