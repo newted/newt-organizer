@@ -7,13 +7,29 @@ export const RESOLVE_USER_CONTENT = "RESOLVE_USER_CONTENT";
 export const CREATE_USER_CONTENT = "CREATE_USER_CONTENT";
 export const FETCH_USER_CONTENT = "FETCH_USER_CONTENT";
 
+export const fetchIndividualContent = contentId => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to get individual content
+    const res = await axios.get(`/api/user-content/${contentId}`, {
+      headers: { Authorization: idToken }
+    });
+
+    dispatch({ type: FETCH_USER_CONTENT, payload: [res.data] });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchCourseContent = courseId => async dispatch => {
   try {
     dispatch({ type: REQUEST_USER_CONTENT });
     // Get current user token
     const idToken = await firebase.auth().currentUser.getIdToken(true);
     // Make request to get courses content
-    const res = await axios.get(`/api/user-content/${courseId}`, {
+    const res = await axios.get(`/api/user-content/course/${courseId}`, {
       headers: { Authorization: idToken }
     });
 

@@ -88,7 +88,7 @@ class AppContainer extends Component {
               auth={auth}
             />
             <PrivateRoute
-              path="/content/:contentId"
+              path="/content/:userContentId"
               component={ContentPage}
               auth={auth}
             />
