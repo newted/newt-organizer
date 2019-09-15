@@ -13,6 +13,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Loader from "../../components/Loader";
 import EditContentModal from "./EditContentModal";
+import DeleteItemModal from "../../components/Modal/DeleteItemModal";
 // API
 import {
   fetchIndividualContent,
@@ -30,11 +31,15 @@ const ContentPage = ({
   match
 }) => {
   const [showEditModal, setshowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { userContentId } = match.params;
 
   // Functions to set edit modal show state to true and false
   const handleShowEditModal = () => setshowEditModal(true);
   const handleCloseEditModal = () => setshowEditModal(false);
+  // Functions to set delete modal show state to true and false
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
   // Fetch content if it doesn't exist in store
   useEffect(() => {
@@ -104,7 +109,7 @@ const ContentPage = ({
                     <Dropdown.Item onClick={handleShowEditModal}>
                       Edit
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => alert("delete content")}>
+                    <Dropdown.Item onClick={handleShowDeleteModal}>
                       Delete
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -119,6 +124,11 @@ const ContentPage = ({
         onHide={handleCloseEditModal}
         content={content}
         onFormSubmit={handleEditFormSubmit}
+      />
+      <DeleteItemModal
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
+        onDelete={() => alert("delete")}
       />
     </MainContainer>
   );

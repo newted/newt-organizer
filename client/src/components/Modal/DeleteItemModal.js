@@ -1,13 +1,16 @@
 import React from "react";
+import _ from "lodash";
 import Modal from "react-bootstrap/Modal";
 import Button from "../../components/Button";
 
-const DeleteCourseModal = ({ show, onHide, onDelete }) => (
+const DeleteItemModal = ({ show, onHide, itemToDelete = "item", onDelete }) => (
   <Modal show={show} onHide={onHide}>
     <Modal.Header closeButton>
-      <Modal.Title>Delete Course</Modal.Title>
+      <Modal.Title>Delete {_.capitalize(itemToDelete)}</Modal.Title>
     </Modal.Header>
-    <Modal.Body>Are you sure you want to delete this course?</Modal.Body>
+    <Modal.Body>
+      Are you sure you want to delete this {itemToDelete}?
+    </Modal.Body>
     <Modal.Footer>
       <Button onClick={onHide}>Close</Button>
       <Button category="danger" onClick={onDelete}>
@@ -17,4 +20,4 @@ const DeleteCourseModal = ({ show, onHide, onDelete }) => (
   </Modal>
 );
 
-export default DeleteCourseModal;
+export default DeleteItemModal;

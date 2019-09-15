@@ -13,7 +13,7 @@ import {
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import EditCourseModal from "./EditCourseModal";
-import DeleteCourseModal from "./DeleteCourseModal";
+import DeleteItemModal from "../../components/Modal/DeleteItemModal";
 import ToastContent from "../../components/CustomToast/ToastContent";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 import CourseContent from "./CourseContent";
@@ -150,9 +150,10 @@ const NewCoursePage = ({
         onFormSubmit={handleFormSubmit}
       />
       {/* Delete modal */}
-      <DeleteCourseModal
+      <DeleteItemModal
         show={showDeleteModal}
         onHide={handleCloseDeleteModal}
+        itemToDelete="course"
         onDelete={handleDeleteCourse}
       />
     </MainContainer>
