@@ -1,31 +1,25 @@
 import React from "react";
-import * as yup from "yup";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import _ from "lodash";
 // Components
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
-// API
-import { createUserContent } from "../../actions/userContent";
+import { defaultContentSchema } from "./contentSchemas";
 // Styling
 import styles from "./AddContent.module.css";
 
-const contentSchema = yup.object({
-  name: yup.string().required("A name is required"),
-  description: yup.string(),
-  dateDue: yup.date().required("A due date is required")
-});
+const initialFormValues = { name: "", description: "", dateDue: "" };
 
-const DefaultContentForm = ({ courseId, createUserContent, history }) => (
+const DefaultContentForm = ({
+  type = "submit",
+  initialValues = initialFormValues,
+  onFormSubmit
+}) => (
   <Formik
-    validationSchema={contentSchema}
-    initialValues={{ name: "", description: "", dateDue: "" }}
-    onSubmit={values => {
-      createUserContent(values, courseId);
-      history.push(`/courses/${courseId}`);
-    }}
+    validationSchema={defaultContentSchema}
+    initialValues={initialValues}
+    onSubmit={values => onFormSubmit(values)}
   >
     {({
       handleSubmit,
@@ -90,7 +84,7 @@ const DefaultContentForm = ({ courseId, createUserContent, history }) => (
             type="submit"
             style={{ width: "300px", marginTop: "2.5rem" }}
           >
-            Create
+            {_.capitalize(type)}
           </Button>
         </div>
       </Form>
@@ -98,9 +92,4 @@ const DefaultContentForm = ({ courseId, createUserContent, history }) => (
   </Formik>
 );
 
-const mapDispatchToProps = { createUserContent };
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(withRouter(DefaultContentForm));
+export default DefaultContentForm;

@@ -1,20 +1,11 @@
 import React from "react";
-import * as yup from "yup";
 // Components
 import Button from "../../components/Button";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
+import { youtubeContentSchema } from "./contentSchemas";
 // Styling
 import styles from "./AddContent.module.css";
-
-const youtubeContentSchema = yup.object({
-  url: yup
-    .string()
-    .url(
-      "Make sure it's a URL. E.g.: https://www.youtube.com/watch?v=LN0ucKNX0hc"
-    )
-    .required("A YouTube URL is required")
-});
 
 const YoutubeContentForm = () => (
   <Formik
