@@ -65,4 +65,24 @@ module.exports = app => {
       res.status(500).send(error);
     }
   });
+
+  // PUT request to update content info
+  app.put("/api/user-content/:contentId/update", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+    const data = req.body;
+
+    // Find UserContent by id and update
+    UserContent.findByIdAndUpdate(
+      contentId,
+      data,
+      { new: true },
+      (error, userContent) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(userContent);
+        }
+      }
+    );
+  });
 };

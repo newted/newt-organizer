@@ -6,6 +6,7 @@ export const REQUEST_USER_CONTENT = "REQUEST_USER_CONTENT";
 export const RESOLVE_USER_CONTENT = "RESOLVE_USER_CONTENT";
 export const CREATE_USER_CONTENT = "CREATE_USER_CONTENT";
 export const FETCH_USER_CONTENT = "FETCH_USER_CONTENT";
+export const UPDATE_USER_CONTENT = "UPDATE_USER_CONTENT";
 
 export const fetchIndividualContent = contentId => async dispatch => {
   try {
@@ -66,6 +67,24 @@ export const createUserContent = (values, courseId) => async dispatch => {
     // Dispatch creating user content and updating course
     dispatch({ type: CREATE_USER_CONTENT, payload: userContentRes.data });
     dispatch({ type: UPDATE_COURSE, payload: courseRes.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateUserContent = (userContentId, values) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to update content
+    const res = await axios.put(
+      `/api/user-content/${userContentId}/update`,
+      values,
+      { headers: { Authorization: idToken } }
+    );
+
+    dispatch({ type: UPDATE_USER_CONTENT, payload: res.data });
   } catch (error) {
     console.error(error);
   }

@@ -2,7 +2,8 @@ import {
   REQUEST_USER_CONTENT,
   RESOLVE_USER_CONTENT,
   CREATE_USER_CONTENT,
-  FETCH_USER_CONTENT
+  FETCH_USER_CONTENT,
+  UPDATE_USER_CONTENT
 } from "../actions/userContent";
 import { dataArrayToObject } from "../utils/reducerHelpers";
 
@@ -22,6 +23,7 @@ export default function(
         isFetching: false
       };
     case CREATE_USER_CONTENT:
+    case UPDATE_USER_CONTENT:
       return {
         ...state,
         isFetching: false,
