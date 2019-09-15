@@ -11,6 +11,11 @@
     0 3px 6px 0 rgba(0, 0, 0, 0.07);
 }
 
+.form {
+  margin: 1rem 0;
+  width: 70%;
+}
+
 .formLabel {
   font-weight: 500;
 }

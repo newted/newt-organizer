@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import moment from "moment";
@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Loader from "../../components/Loader";
+import EditContentModal from "./EditContentModal";
 // API
 import { fetchIndividualContent } from "../../actions/userContent";
 // Styling
@@ -24,7 +25,12 @@ const ContentPage = ({
   fetchIndividualContent,
   match
 }) => {
+  const [showEditModal, setshowEditModal] = useState(false);
   const { userContentId } = match.params;
+
+  // Functions to set edit modal show state to true and false
+  const handleShowEditModal = () => setshowEditModal(true);
+  const handleCloseEditModal = () => setshowEditModal(false);
 
   // Fetch content if it doesn't exist in store
   useEffect(() => {
@@ -32,6 +38,11 @@ const ContentPage = ({
       fetchIndividualContent(userContentId);
     }
   }, [content, userContentId, fetchIndividualContent]);
+
+  const handleEditFormSubmit = values => {
+    console.log(values, userContentId);
+    handleCloseEditModal();
+  };
 
   // If fetching or content object is empty, show loading indicator
   if (isFetching || _.isEmpty(content)) {
@@ -85,7 +96,7 @@ const ContentPage = ({
                     <FiMoreVertical size={18} />
                   </Dropdown.Toggle>
                   <Dropdown.Menu className={styles.dropdownMenu}>
-                    <Dropdown.Item onClick={() => alert("Edit content")}>
+                    <Dropdown.Item onClick={handleShowEditModal}>
                       Edit
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => alert("delete content")}>
@@ -98,6 +109,12 @@ const ContentPage = ({
           </Col>
         </Row>
       </ContentContainer>
+      <EditContentModal
+        show={showEditModal}
+        onHide={handleCloseEditModal}
+        content={content}
+        onFormSubmit={handleEditFormSubmit}
+      />
     </MainContainer>
   );
 };

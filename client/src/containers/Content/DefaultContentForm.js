@@ -29,7 +29,11 @@ const DefaultContentForm = ({
       errors,
       setFieldValue
     }) => (
-      <Form noValidate onSubmit={handleSubmit}>
+      <Form
+        noValidate
+        onSubmit={handleSubmit}
+        className={type === "edit" ? styles.form : ""}
+      >
         <Form.Group controlId="contentName">
           <Form.Label className={styles.formLabel}>Name</Form.Label>
           <Form.Control
