@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 // Components
 import {
@@ -15,17 +15,30 @@ import TabPane from "react-bootstrap/TabPane";
 import TabContainer from "react-bootstrap/TabContainer";
 import DefaultContentForm from "./DefaultContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
+import YoutubeConfirmation from "./YoutubeConfirmation";
 // API
-import { createUserContent } from "../../actions/userContent";
+import {
+  createUserContent,
+  getYoutubeVideoInfo
+} from "../../actions/userContent";
 // Styles
 import styles from "./AddContent.module.css";
 
 const AddContent = ({ location, history, createUserContent }) => {
+  const [onConfirmationPage, setOnConfirmationPage] = useState(false);
+  const [videoContentInfo, setVideoContentInfo] = useState({});
+
   // Function to handle creating default content
   const handleDefaultFormSubmit = values => {
     const { courseId } = location.state;
     createUserContent(values, courseId);
     history.push(`/courses/${courseId}`);
+  };
+
+  const handleGoToConfirmationPage = async values => {
+    const videoContent = await getYoutubeVideoInfo(values.url);
+    setVideoContentInfo(videoContent);
+    setOnConfirmationPage(true);
   };
 
   return (
@@ -62,7 +75,11 @@ const AddContent = ({ location, history, createUserContent }) => {
                   />
                 </TabPane>
                 <TabPane eventKey="youtube">
-                  <YoutubeContentForm />
+                  {onConfirmationPage ? (
+                    <YoutubeConfirmation contentInfo={videoContentInfo} />
+                  ) : (
+                    <YoutubeContentForm onNext={handleGoToConfirmationPage} />
+                  )}
                 </TabPane>
               </TabContent>
             </Col>

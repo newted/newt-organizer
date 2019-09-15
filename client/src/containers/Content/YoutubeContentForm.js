@@ -7,11 +7,11 @@ import { youtubeContentSchema } from "./contentSchemas";
 // Styling
 import styles from "./AddContent.module.css";
 
-const YoutubeContentForm = () => (
+const YoutubeContentForm = ({ onNext }) => (
   <Formik
     validationSchema={youtubeContentSchema}
     initialValues={{ url: "" }}
-    onSubmit={values => console.log(values)}
+    onSubmit={values => onNext(values)}
   >
     {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
       <Form noValidate onSubmit={handleSubmit}>
