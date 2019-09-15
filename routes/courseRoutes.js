@@ -79,6 +79,27 @@ module.exports = app => {
     );
   });
 
+  // PUT request to delete content id from course
+  app.put("/api/courses/:courseId/delete-content", requireLogin, (req, res) => {
+    const { courseId } = req.params;
+    const { userContentId } = req.body;
+
+    Course.findByIdAndUpdate(
+      courseId,
+      {
+        $pull: { individualContent: userContentId }
+      },
+      { new: true },
+      (error, course) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(course);
+        }
+      }
+    );
+  });
+
   // DELETE request to delete a course
   app.delete("/api/courses/:courseId", requireLogin, (req, res) => {
     const { courseId } = req.params;

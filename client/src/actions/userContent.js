@@ -1,12 +1,13 @@
 import axios from "axios";
 import firebase from "../config/firebase";
-import { UPDATE_COURSE } from "./courses";
+import { REQUEST_COURSES, UPDATE_COURSE } from "./courses";
 
 export const REQUEST_USER_CONTENT = "REQUEST_USER_CONTENT";
 export const RESOLVE_USER_CONTENT = "RESOLVE_USER_CONTENT";
 export const CREATE_USER_CONTENT = "CREATE_USER_CONTENT";
 export const FETCH_USER_CONTENT = "FETCH_USER_CONTENT";
 export const UPDATE_USER_CONTENT = "UPDATE_USER_CONTENT";
+export const DELETE_USER_CONTENT = "DELETE_USER_CONTENT";
 
 export const fetchIndividualContent = contentId => async dispatch => {
   try {
@@ -85,6 +86,36 @@ export const updateUserContent = (userContentId, values) => async dispatch => {
     );
 
     dispatch({ type: UPDATE_USER_CONTENT, payload: res.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteUserContent = (
+  userContentId,
+  courseId
+) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    dispatch({ type: REQUEST_COURSES });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to delete content
+    await axios.delete(`/api/user-content/${userContentId}`, {
+      headers: { Authorization: idToken }
+    });
+
+    // Make request to update course (delete contentId from it)
+    const res = await axios.put(
+      `/api/courses/${courseId}/delete-content`,
+      { userContentId },
+      {
+        headers: { Authorization: idToken }
+      }
+    );
+
+    dispatch({ type: DELETE_USER_CONTENT, payload: userContentId });
+    dispatch({ type: UPDATE_COURSE, payload: res.data });
   } catch (error) {
     console.error(error);
   }

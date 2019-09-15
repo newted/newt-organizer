@@ -17,7 +17,8 @@ import DeleteItemModal from "../../components/Modal/DeleteItemModal";
 // API
 import {
   fetchIndividualContent,
-  updateUserContent
+  updateUserContent,
+  deleteUserContent
 } from "../../actions/userContent";
 // Styling
 import styles from "./ContentPage.module.css";
@@ -28,7 +29,9 @@ const ContentPage = ({
   content,
   fetchIndividualContent,
   updateUserContent,
-  match
+  deleteUserContent,
+  match,
+  history
 }) => {
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -48,10 +51,16 @@ const ContentPage = ({
     }
   }, [content, userContentId, fetchIndividualContent]);
 
-  // Function to handle updating course when edit form is submitted
+  // Function to handle updating content when edit form is submitted
   const handleEditFormSubmit = values => {
     updateUserContent(userContentId, values);
     handleCloseEditModal();
+  };
+
+  // Function to handle deleting content
+  const handleDeleteContent = () => {
+    deleteUserContent(userContentId, content.courseId);
+    history.push(`/courses/${content.courseId}`);
   };
 
   // If fetching or content object is empty, show loading indicator
@@ -128,7 +137,7 @@ const ContentPage = ({
       <DeleteItemModal
         show={showDeleteModal}
         onHide={handleCloseDeleteModal}
-        onDelete={() => alert("delete")}
+        onDelete={handleDeleteContent}
       />
     </MainContainer>
   );
@@ -146,7 +155,11 @@ const mapStateToProps = ({ userContent }, props) => {
   };
 };
 
-const mapDispatchToProps = { fetchIndividualContent, updateUserContent };
+const mapDispatchToProps = {
+  fetchIndividualContent,
+  updateUserContent,
+  deleteUserContent
+};
 
 export default connect(
   mapStateToProps,

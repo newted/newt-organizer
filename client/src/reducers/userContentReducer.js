@@ -3,9 +3,13 @@ import {
   RESOLVE_USER_CONTENT,
   CREATE_USER_CONTENT,
   FETCH_USER_CONTENT,
-  UPDATE_USER_CONTENT
+  UPDATE_USER_CONTENT,
+  DELETE_USER_CONTENT
 } from "../actions/userContent";
-import { dataArrayToObject } from "../utils/reducerHelpers";
+import {
+  dataArrayToObject,
+  deleteItemFromObject
+} from "../utils/reducerHelpers";
 
 export default function(
   state = { isFetching: false, items: {}, error: { message: null } },
@@ -41,6 +45,12 @@ export default function(
           ...state.items,
           ...contentObj
         }
+      };
+    case DELETE_USER_CONTENT:
+      return {
+        ...state,
+        isFetching: false,
+        items: deleteItemFromObject(state.items, action.payload)
       };
     default:
       return state;

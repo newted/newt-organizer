@@ -85,4 +85,17 @@ module.exports = app => {
       }
     );
   });
+
+  app.delete("/api/user-content/:contentId", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+
+    // Find by id and delete
+    UserContent.findByIdAndDelete(contentId, error => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.sendStatus(200);
+      }
+    });
+  });
 };
