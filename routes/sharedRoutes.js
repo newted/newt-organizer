@@ -24,6 +24,7 @@ module.exports = app => {
       // Initialize object for video/content info
       let videoContentInfo = {
         videoInfo: {},
+        sourceInfo: { name: "youtube" },
         hasKnowledgeTracking: false,
         hasQuiz: false
       };

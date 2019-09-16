@@ -47,8 +47,9 @@ const AddContent = ({ location, history, createUserContent }) => {
     delete videoContentInfo.videoInfo.name;
     delete videoContentInfo.videoInfo.description;
 
-    const data = { ...values, courseId, ...videoContentInfo };
-    console.log(data);
+    const data = { ...values, ...videoContentInfo };
+    createUserContent(data, courseId);
+    history.push(`/courses/${courseId}`);
   };
 
   return (

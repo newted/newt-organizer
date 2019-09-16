@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const thumbnailSchema = new Schema(
+  {
+    url: String,
+    width: Number,
+    height: Number
+  },
+  { _id: false }
+);
+
 const userContentSchema = new Schema({
   name: String,
   description: String,
@@ -96,11 +105,11 @@ const userContentSchema = new Schema({
     channelId: String,
     datePublished: Date,
     thumbnails: {
-      maxres: {
-        url: String,
-        width: Number,
-        height: Number
-      }
+      default: thumbnailSchema,
+      high: thumbnailSchema,
+      maxres: thumbnailSchema,
+      medium: thumbnailSchema,
+      standard: thumbnailSchema
     }
   },
   dateCreated: Date,
