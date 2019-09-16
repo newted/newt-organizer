@@ -41,6 +41,10 @@ const AddContent = ({ location, history, createUserContent }) => {
     setOnConfirmationPage(true);
   };
 
+  const handleYoutubeFormSubmit = values => {
+    console.log(values);
+  };
+
   return (
     <MainContainer>
       <HeaderContainer>
@@ -76,7 +80,10 @@ const AddContent = ({ location, history, createUserContent }) => {
                 </TabPane>
                 <TabPane eventKey="youtube">
                   {onConfirmationPage ? (
-                    <YoutubeConfirmation contentInfo={videoContentInfo} />
+                    <YoutubeConfirmation
+                      contentInfo={videoContentInfo}
+                      onFormSubmit={handleYoutubeFormSubmit}
+                    />
                   ) : (
                     <YoutubeContentForm onNext={handleGoToConfirmationPage} />
                   )}

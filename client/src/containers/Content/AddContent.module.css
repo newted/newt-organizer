@@ -25,3 +25,9 @@
   font-size: 0.9rem;
   color: var(--grey-2);
 }
+
+.youtubeImgPreview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}

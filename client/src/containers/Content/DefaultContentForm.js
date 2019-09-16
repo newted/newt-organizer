@@ -10,11 +10,15 @@ import { defaultContentSchema } from "./contentSchemas";
 import styles from "./AddContent.module.css";
 
 const initialFormValues = { name: "", description: "", dateDue: "" };
+const defaultOptions = { hasKnowledgeTracking: false, hasQuiz: false };
 
 const DefaultContentForm = ({
   type = "submit",
+  category,
   initialValues = initialFormValues,
-  onFormSubmit
+  onFormSubmit,
+  numTextBoxRows = 3,
+  options = defaultOptions
 }) => (
   <Formik
     validationSchema={defaultContentSchema}
@@ -57,7 +61,7 @@ const DefaultContentForm = ({
           </Form.Label>
           <Form.Control
             as="textarea"
-            rows="3"
+            rows={numTextBoxRows}
             type="text"
             name="description"
             value={values.description}
@@ -65,22 +69,40 @@ const DefaultContentForm = ({
             onBlur={handleBlur}
           />
         </Form.Group>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Form.Label className={styles.formLabel}>Due Date</Form.Label>
-          <DatePicker
-            name="dateDue"
-            value={values.dateDue}
-            selected={values.dateDue}
-            onChange={date => setFieldValue("dateDue", date)}
-            dateFormat="MMM d, yyyy h:mm aa"
-            placeholderText="Select date"
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={30}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.dateDue}
-          </Form.Control.Feedback>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Label className={styles.formLabel}>Due Date</Form.Label>
+            <DatePicker
+              name="dateDue"
+              value={values.dateDue}
+              selected={values.dateDue}
+              onChange={date => setFieldValue("dateDue", date)}
+              dateFormat="MMM d, yyyy h:mm aa"
+              placeholderText="Select date"
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={30}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.dateDue}
+            </Form.Control.Feedback>
+          </div>
+          {category === "youtube" && (
+            <div>
+              <Form.Label className={styles.formLabel}>
+                Knowledge Tracking Available
+              </Form.Label>
+              <div>{options.hasKnowledgeTracking ? "Yes" : "No"}</div>
+            </div>
+          )}
+          {category === "youtube" && (
+            <div>
+              <Form.Label className={styles.formLabel}>
+                Quiz Available
+              </Form.Label>
+              <div>{options.hasQuiz ? "Yes" : "No"}</div>
+            </div>
+          )}
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
