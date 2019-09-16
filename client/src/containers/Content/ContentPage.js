@@ -9,11 +9,10 @@ import {
 } from "../../components/PageContainers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Dropdown from "react-bootstrap/Dropdown";
-import CustomToggle from "../../components/Dropdown/CustomToggle";
 import Loader from "../../components/Loader";
 import EditContentModal from "./EditContentModal";
 import DeleteItemModal from "../../components/Modal/DeleteItemModal";
+import ContentFlow from "./ContentFlow";
 // API
 import {
   fetchIndividualContent,
@@ -22,7 +21,6 @@ import {
 } from "../../actions/userContent";
 // Styling
 import styles from "./ContentPage.module.css";
-import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
 const ContentPage = ({
   isFetching,
@@ -112,35 +110,12 @@ const ContentPage = ({
             </div>
           </Col>
           <Col lg="auto" md={0}></Col>
-          <Col lg md className={styles.content}>
-            <div className={styles.contentHeaderContainer}>
-              <h2 className={styles.contentHeader}>{content.name}</h2>
-              <div className={styles.headerInfo}>
-                <h5 className={styles.date}>
-                  Due {moment(content.dateDue).format("MMM DD")}
-                </h5>
-                <span style={{ height: "26px" }}>
-                  <FiCheckSquare size={26} className={styles.check} />
-                </span>
-                <Dropdown
-                  alignRight={true}
-                  drop="down"
-                  className={styles.dropdown}
-                >
-                  <Dropdown.Toggle id="content-dropdown" as={CustomToggle}>
-                    <FiMoreVertical size={18} />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className={styles.dropdownMenu}>
-                    <Dropdown.Item onClick={handleShowEditModal}>
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={handleShowDeleteModal}>
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </div>
+          <Col lg md>
+            <ContentFlow
+              content={content}
+              showEditModal={handleShowEditModal}
+              showDeleteModal={handleShowDeleteModal}
+            />
           </Col>
         </Row>
       </ContentContainer>

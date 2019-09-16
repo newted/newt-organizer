@@ -20,54 +20,6 @@
   text-decoration: underline;
 }
 
-.content {
-  border: 1px solid var(--lightGrey);
-  border-radius: 0.5rem;
-  padding: 2.5rem;
-  box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.1),
-    0 3px 6px 0 rgba(0, 0, 0, 0.07);
-  min-height: 500px;
-  min-width: 400px;
-}
-
-.contentHeaderContainer {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ddd;
-}
-
-.contentHeader {
-  color: var(--off-black);
-}
-
-.headerInfo {
-  display: flex;
-  align-items: flex-end;
-}
-
-.date {
-  color: var(--darkGrey-2);
-  margin-right: 1.25rem;
-}
-
-.check {
-  color: var(--darkGrey-2);
-  cursor: pointer;
-  margin-right: 1.25rem;
-}
-
-.dropdown {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  height: 26px;
-}
-
-.dropdownMenu {
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-}
-
 .infoRow {
   display: flex;
 }
