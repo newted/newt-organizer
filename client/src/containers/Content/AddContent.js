@@ -53,7 +53,7 @@ const AddContent = ({ location, history, createUserContent }) => {
       <ContentContainer className={styles.contentForms}>
         <TabContainer id="add-content-tabs" defaultActiveKey="default">
           <Row>
-            <Col md={3} style={{ marginTop: "1rem" }}>
+            <Col lg={3} style={{ marginTop: "1rem" }}>
               <h5 style={{ color: "#666", marginBottom: "1rem" }}>
                 Content Type
               </h5>
@@ -70,7 +70,7 @@ const AddContent = ({ location, history, createUserContent }) => {
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col md={9} className={styles.tabPane}>
+            <Col lg={9} className={styles.tabPane}>
               <TabContent>
                 <TabPane eventKey="default">
                   <ContentForm

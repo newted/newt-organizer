@@ -69,8 +69,8 @@ const ContentForm = ({
             onBlur={handleBlur}
           />
         </Form.Group>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className={styles.lastFormRow}>
+          <div className={`${styles.dateDue} ${styles.lastFormRowField}`}>
             <Form.Label className={styles.formLabel}>Due Date</Form.Label>
             <DatePicker
               name="dateDue"
@@ -88,7 +88,7 @@ const ContentForm = ({
             </Form.Control.Feedback>
           </div>
           {category === "youtube" && (
-            <div>
+            <div className={styles.lastFormRowField}>
               <Form.Label className={styles.formLabel}>
                 Knowledge Tracking Available
               </Form.Label>
@@ -96,7 +96,7 @@ const ContentForm = ({
             </div>
           )}
           {category === "youtube" && (
-            <div>
+            <div className={styles.lastFormRowField}>
               <Form.Label className={styles.formLabel}>
                 Quiz Available
               </Form.Label>

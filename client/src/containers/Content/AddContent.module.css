@@ -26,6 +26,21 @@
   color: var(--grey-2);
 }
 
+.lastFormRow {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.dateDue {
+  display: flex;
+  flex-direction: column;
+}
+
+.lastFormRowField {
+  margin-bottom: 1rem;
+}
+
 .youtubeImgPreview {
   display: flex;
   justify-content: center;
