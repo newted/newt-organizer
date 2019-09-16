@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import DefaultContentForm from "./DefaultContentForm";
+import ContentForm from "./ContentForm";
 import styles from "./EditContentModal.module.css";
 
 const EditContentModal = ({ show, onHide, content, onFormSubmit }) => (
@@ -9,7 +9,7 @@ const EditContentModal = ({ show, onHide, content, onFormSubmit }) => (
       <Modal.Title>Edit {content.name}</Modal.Title>
     </Modal.Header>
     <Modal.Body className={styles.modalBody}>
-      <DefaultContentForm
+      <ContentForm
         type="edit"
         initialValues={{
           name: content.name,

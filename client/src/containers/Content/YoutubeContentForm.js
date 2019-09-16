@@ -3,13 +3,13 @@ import React from "react";
 import Button from "../../components/Button";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
-import { youtubeContentSchema } from "./contentSchemas";
+import { youtubeUrlSchema } from "./contentSchemas";
 // Styling
 import styles from "./AddContent.module.css";
 
 const YoutubeContentForm = ({ onNext }) => (
   <Formik
-    validationSchema={youtubeContentSchema}
+    validationSchema={youtubeUrlSchema}
     initialValues={{ url: "" }}
     onSubmit={values => onNext(values)}
   >

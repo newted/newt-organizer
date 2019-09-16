@@ -1,5 +1,5 @@
 import React from "react";
-import DefaultContentForm from "./DefaultContentForm";
+import ContentForm from "./ContentForm";
 // Styling
 import styles from "./AddContent.module.css";
 
@@ -24,7 +24,7 @@ const YoutubeConfirmation = ({ contentInfo, onFormSubmit }) => {
           alt={contentInfo.videoData.snippet.title}
         />
       </div>
-      <DefaultContentForm
+      <ContentForm
         type="create"
         category="youtube"
         initialValues={initialValues}

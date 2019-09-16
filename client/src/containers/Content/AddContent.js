@@ -13,7 +13,7 @@ import Nav from "react-bootstrap/Nav";
 import TabContent from "react-bootstrap/TabContent";
 import TabPane from "react-bootstrap/TabPane";
 import TabContainer from "react-bootstrap/TabContainer";
-import DefaultContentForm from "./DefaultContentForm";
+import ContentForm from "./ContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
 import YoutubeConfirmation from "./YoutubeConfirmation";
 // API
@@ -73,7 +73,7 @@ const AddContent = ({ location, history, createUserContent }) => {
             <Col md={9} className={styles.tabPane}>
               <TabContent>
                 <TabPane eventKey="default">
-                  <DefaultContentForm
+                  <ContentForm
                     type="create"
                     onFormSubmit={handleDefaultFormSubmit}
                   />

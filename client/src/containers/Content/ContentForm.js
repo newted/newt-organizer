@@ -5,14 +5,14 @@ import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
-import { defaultContentSchema } from "./contentSchemas";
+import { contentSchema } from "./contentSchemas";
 // Styling
 import styles from "./AddContent.module.css";
 
 const initialFormValues = { name: "", description: "", dateDue: "" };
 const defaultOptions = { hasKnowledgeTracking: false, hasQuiz: false };
 
-const DefaultContentForm = ({
+const ContentForm = ({
   type = "submit",
   category,
   initialValues = initialFormValues,
@@ -21,7 +21,7 @@ const DefaultContentForm = ({
   options = defaultOptions
 }) => (
   <Formik
-    validationSchema={defaultContentSchema}
+    validationSchema={contentSchema}
     initialValues={initialValues}
     onSubmit={values => onFormSubmit(values)}
   >
@@ -118,4 +118,4 @@ const DefaultContentForm = ({
   </Formik>
 );
 
-export default DefaultContentForm;
+export default ContentForm;
