@@ -63,6 +63,24 @@ const ContentPage = ({
     history.push(`/courses/${content.courseId}`);
   };
 
+  const renderCreatorInfo = () => {
+    const { contentInfo, sourceInfo } = content;
+
+    if (sourceInfo.name === "user") {
+      return "You";
+    } else {
+      if (contentInfo.contentCreator) {
+        return (
+          <a className={styles.link} href={contentInfo.contentCreator.url}>
+            {contentInfo.contentCreator.name}
+          </a>
+        );
+      }
+
+      return sourceInfo.name;
+    }
+  };
+
   // If fetching or content object is empty, show loading indicator
   if (isFetching || _.isEmpty(content)) {
     return <Loader />;
@@ -75,12 +93,10 @@ const ContentPage = ({
           <Col lg={3} md={12} className={styles.contentInfo}>
             <h4 style={{ marginBottom: "1rem" }}>{content.name}</h4>
             <div className={styles.infoRow}>
-              <span className={styles.infoRowField}>Creator:</span>
-              <span className={styles.infoRowValue}>
-                {content.sourceInfo.name === "user"
-                  ? "You"
-                  : content.sourceInfo.name}
+              <span className={styles.infoRowField}>
+                {content.contentInfo.contentCreator ? "Creator:" : "Source:"}
               </span>
+              <span className={styles.infoRowValue}>{renderCreatorInfo()}</span>
             </div>
             <div className={styles.infoRow}>
               <span className={styles.infoRowField}>Date created:</span>

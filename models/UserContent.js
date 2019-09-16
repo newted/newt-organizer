@@ -49,10 +49,15 @@ const userContentSchema = new Schema({
       }
     }
   ],
-  // Denormalized from Content collection (name, level, and topics)
+  // Denormalized from Content collection (name, creator, level, and topics)
   contentInfo: {
     name: String,
     level: Number,
+    contentCreator: {
+      name: String,
+      url: String,
+      contentCreatorId: Schema.Types.ObjectId
+    },
     primaryTopics: [
       {
         name: String,

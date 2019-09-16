@@ -24,7 +24,7 @@ module.exports = app => {
       // Initialize object for video/content info
       let videoContentInfo = {
         videoInfo: {},
-        sourceInfo: { name: "youtube" },
+        sourceInfo: { name: "YouTube" },
         hasKnowledgeTracking: false,
         hasQuiz: false
       };
@@ -49,17 +49,6 @@ module.exports = app => {
         await Content.findOne(
           // Find by mediaId and source name
           { "source.name": "YouTube", "source.mediaId": videoId },
-          // Projection to only return specific, required information
-          {
-            _id: 1,
-            name: 1,
-            level: 1,
-            knowledgeSubject: 1,
-            knowledgeModule: 1,
-            quizId: 1,
-            primaryTopics: 1,
-            secondaryTopics: 1
-          },
           async (error, content) => {
             if (error) {
               res.send(error);
@@ -81,7 +70,12 @@ module.exports = app => {
                 level: content.level,
                 primaryTopics: content.primaryTopics,
                 secondaryTopics: content.secondaryTopics,
-                contentId: content._id
+                contentId: content._id,
+                contentCreator: {
+                  name: content.contentCreator.name,
+                  url: content.contentCreator.url,
+                  contentCreatorId: content.contentCreator.contentCreatorId
+                }
               };
               // Add knowledge subject info
               videoContentInfo["knowledgeSubject"] = {

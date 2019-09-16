@@ -11,6 +11,15 @@
   color: var(--darkGrey-2);
 }
 
+.link {
+  color: var(--blue);
+}
+
+.link:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 .content {
   border: 1px solid var(--lightGrey);
   border-radius: 0.5rem;
@@ -64,14 +73,14 @@
 }
 
 .infoRow > .infoRowField {
-  width: 60%;
+  width: 50%;
   font-weight: 500;
   min-width: 100px;
   max-width: 150px;
 }
 
 .infoRow > .infoRowValue {
-  width: 40%;
+  width: 50%;
   max-width: 150px;
 }
 

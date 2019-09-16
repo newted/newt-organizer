@@ -134,6 +134,7 @@ export async function getYoutubeVideoInfo(url) {
     try {
       // Make request to server, which will make YouTube API request.
       const res = await axios.get(`/api/youtube/videoContentInfo/${videoId}`);
+      console.log(res.data);
 
       return res.data;
     } catch (error) {
