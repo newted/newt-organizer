@@ -3,25 +3,25 @@ import ContentForm from "./ContentForm";
 // Styling
 import styles from "./AddContent.module.css";
 
-const YoutubeConfirmation = ({ contentInfo, onFormSubmit }) => {
+const YoutubeConfirmation = ({ videoContentInfo, onFormSubmit }) => {
   const initialValues = {
-    name: contentInfo.videoData.snippet.title,
-    description: contentInfo.videoData.snippet.description,
+    name: videoContentInfo.videoInfo.name,
+    description: videoContentInfo.videoInfo.description,
     dateDue: ""
   };
   const options = {
-    hasKnowledgeTracking: contentInfo.hasKnowledgeTracking,
-    hasQuiz: contentInfo.hasQuiz
+    hasKnowledgeTracking: videoContentInfo.hasKnowledgeTracking,
+    hasQuiz: videoContentInfo.hasQuiz
   };
 
   return (
     <>
       <div className={styles.youtubeImgPreview}>
         <img
-          src={contentInfo.videoData.snippet.thumbnails.maxres.url}
-          height={contentInfo.videoData.snippet.thumbnails.medium.height}
-          width={contentInfo.videoData.snippet.thumbnails.medium.width}
-          alt={contentInfo.videoData.snippet.title}
+          src={videoContentInfo.videoInfo.thumbnails.maxres.url}
+          height={videoContentInfo.videoInfo.thumbnails.medium.height}
+          width={videoContentInfo.videoInfo.thumbnails.medium.width}
+          alt={videoContentInfo.videoInfo.title}
         />
       </div>
       <ContentForm

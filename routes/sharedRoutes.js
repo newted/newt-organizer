@@ -8,7 +8,7 @@ const Quiz = mongoose.model("quizzes");
 
 module.exports = app => {
   // Get video information through YouTube API through the video ID.
-  app.get("/api/youtube/videoInfo/:videoId", async (req, res) => {
+  app.get("/api/youtube/videoContentInfo/:videoId", async (req, res) => {
     const { videoId } = req.params;
 
     const baseUrl = "https://www.googleapis.com/youtube/v3/videos";
@@ -22,18 +22,28 @@ module.exports = app => {
       // Make request to YouTube API
       const { data } = await axios.get(baseUrl, { params });
       // Initialize object for video/content info
-      let videoInfo = {
-        videoData: {},
+      let videoContentInfo = {
+        videoInfo: {},
         hasKnowledgeTracking: false,
         hasQuiz: false
       };
 
       // If the Content collection has a video with that id (that is, if it has
       // skills tracking), then get the corresponding information and add it to
-      // the videoInfo object
+      // the videoContentInfo object
       if (data.items[0]) {
+        // Extract data that's needed
+        const videoData = {
+          name: data.items[0].snippet.title,
+          description: data.items[0].snippet.description,
+          videoId: data.items[0].id,
+          channelId: data.items[0].snippet.channelId,
+          datePublished: data.items[0].snippet.publishedAt,
+          thumbnails: data.items[0].snippet.thumbnails
+        };
+
         // Add YouTube video data
-        videoInfo.videoData = data.items[0];
+        videoContentInfo.videoInfo = videoData;
 
         await Content.findOne(
           // Find by mediaId and source name
@@ -55,17 +65,17 @@ module.exports = app => {
             }
 
             // If there's a result, this content has knowledge tracking. Thus
-            // add the additional information to the videoInfo object
+            // add the additional information to the videoContentInfo object
             if (content) {
-              // If there's a quiz Id, fetch the quiz data and add to videoInfo
+              // If there's a quiz Id, fetch the quiz data and add to videoContentInfo
               // object
               if (content.quizId) {
                 const quiz = await Quiz.findById(content.quizId);
-                videoInfo.hasQuiz = true;
+                videoContentInfo.hasQuiz = true;
               }
-              videoInfo.hasKnowledgeTracking = true;
+              videoContentInfo.hasKnowledgeTracking = true;
               // Add content info
-              videoInfo["contentInfo"] = {
+              videoContentInfo["contentInfo"] = {
                 name: content.name,
                 level: content.level,
                 primaryTopics: content.primaryTopics,
@@ -73,19 +83,19 @@ module.exports = app => {
                 contentId: content._id
               };
               // Add knowledge subject info
-              videoInfo["knowledgeSubject"] = {
+              videoContentInfo["knowledgeSubject"] = {
                 name: content.knowledgeSubject.name,
                 knowledgeSubjectId: content.knowledgeSubject.knowledgeSubjectId
               };
               // Add knowledge module info
-              videoInfo["knowledgeModule"] = {
+              videoContentInfo["knowledgeModule"] = {
                 name: content.knowledgeModule.name,
                 knowledgeModuleId: content.knowledgeModule.knowledgeModuleId
               };
               // Send data
-              res.send(videoInfo);
+              res.send(videoContentInfo);
             } else {
-              res.send(videoInfo);
+              res.send(videoContentInfo);
             }
           }
         );

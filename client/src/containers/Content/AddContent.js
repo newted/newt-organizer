@@ -42,7 +42,13 @@ const AddContent = ({ location, history, createUserContent }) => {
   };
 
   const handleYoutubeFormSubmit = values => {
-    console.log(values);
+    const { courseId } = location.state;
+    // Remove name and description fields from videoInfo (will use form values)
+    delete videoContentInfo.videoInfo.name;
+    delete videoContentInfo.videoInfo.description;
+
+    const data = { ...values, courseId, ...videoContentInfo };
+    console.log(data);
   };
 
   return (
@@ -81,7 +87,7 @@ const AddContent = ({ location, history, createUserContent }) => {
                 <TabPane eventKey="youtube">
                   {onConfirmationPage ? (
                     <YoutubeConfirmation
-                      contentInfo={videoContentInfo}
+                      videoContentInfo={videoContentInfo}
                       onFormSubmit={handleYoutubeFormSubmit}
                     />
                   ) : (
