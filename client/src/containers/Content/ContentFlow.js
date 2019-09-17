@@ -1,7 +1,9 @@
 // Component that shows the content on the right tab in the content page
 import React from "react";
 import moment from "moment";
+import _ from "lodash";
 // Components
+import Button from "../../components/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
 // Styling
@@ -75,6 +77,23 @@ const ContentFlow = ({ content, showEditModal, showDeleteModal }) => (
         <>
           <h5 className={styles.subheading}>Description</h5>
           <p style={{ marginBottom: "1.75rem" }}>{content.description}</p>
+        </>
+      )}
+      {/* If assignment has a quiz, add step + display take quiz button */}
+      {content.hasQuiz && (
+        <>
+          <h5 className={styles.instruction}>2. Check your understanding</h5>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              category="primary"
+              onClick={() => alert("Quiz")}
+              style={{ width: "50%" }}
+            >
+              {_.isEmpty(content.quizInfo)
+                ? "Take the quiz"
+                : "Continue quiz/See results"}
+            </Button>
+          </div>
         </>
       )}
     </div>
