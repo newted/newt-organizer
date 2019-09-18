@@ -91,6 +91,24 @@ export const updateUserContent = (userContentId, values) => async dispatch => {
   }
 };
 
+export const addQuizToUserContent = (userContentId, data) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to add quiz to user content
+    const res = await axios.put(
+      `/api/user-content/${userContentId}/add-quiz`,
+      data,
+      { headers: { Authorization: idToken } }
+    );
+
+    dispatch({ type: UPDATE_USER_CONTENT, payload: res.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteUserContent = (
   userContentId,
   courseId

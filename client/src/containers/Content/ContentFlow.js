@@ -10,7 +10,12 @@ import CustomToggle from "../../components/Dropdown/CustomToggle";
 import styles from "./ContentFlow.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
 
-const ContentFlow = ({ content, showEditModal, showDeleteModal }) => (
+const ContentFlow = ({
+  content,
+  showEditModal,
+  showDeleteModal,
+  onTakeQuiz
+}) => (
   <div className={styles.content}>
     <div className={styles.contentHeaderContainer}>
       <h2 className={styles.contentHeader}>{content.name}</h2>
@@ -86,7 +91,7 @@ const ContentFlow = ({ content, showEditModal, showDeleteModal }) => (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button
               category="primary"
-              onClick={() => alert("Quiz")}
+              onClick={() => onTakeQuiz(content)}
               style={{ width: "50%" }}
             >
               {_.isEmpty(content.quizInfo)

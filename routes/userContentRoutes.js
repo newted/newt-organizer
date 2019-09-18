@@ -81,6 +81,32 @@ module.exports = app => {
     );
   });
 
+  // PUT request to add quiz to user content
+  app.put("/api/user-content/:contentId/add-quiz", requireLogin, (req, res) => {
+    const { contentId } = req.params;
+    const { quizId } = req.body;
+
+    UserContent.findByIdAndUpdate(
+      contentId,
+      {
+        $push: {
+          quizInfo: {
+            quizId,
+            dateCreated: Date.now()
+          }
+        }
+      },
+      { new: true },
+      (error, userContent) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.send(userContent);
+        }
+      }
+    );
+  });
+
   app.delete("/api/user-content/:contentId", requireLogin, (req, res) => {
     const { contentId } = req.params;
 

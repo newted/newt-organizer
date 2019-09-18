@@ -17,8 +17,10 @@ import ContentFlow from "./ContentFlow";
 import {
   fetchIndividualContent,
   updateUserContent,
-  deleteUserContent
+  deleteUserContent,
+  addQuizToUserContent
 } from "../../actions/userContent";
+import { createPersonalQuiz } from "../../actions/quizzes";
 // Styling
 import styles from "./ContentPage.module.css";
 
@@ -28,6 +30,8 @@ const ContentPage = ({
   fetchIndividualContent,
   updateUserContent,
   deleteUserContent,
+  createPersonalQuiz,
+  addQuizToUserContent,
   match,
   history
 }) => {
@@ -59,6 +63,21 @@ const ContentPage = ({
   const handleDeleteContent = () => {
     deleteUserContent(userContentId, content.courseId);
     history.push(`/courses/${content.courseId}`);
+  };
+
+  // Handler function for when the 'Take the quiz' button is clicked
+  const handleTakeQuiz = userContent => {
+    // Create personal quiz and update assignment
+    const data = {
+      contentId: userContent.contentInfo.contentId,
+      userContentId: userContent._id
+    };
+    // Dispatch action to create quiz, then update user content to add quiz id
+    createPersonalQuiz(data).then(quiz => {
+      addQuizToUserContent(userContent._id, {
+        quizId: quiz._id
+      });
+    });
   };
 
   const renderCreatorInfo = () => {
@@ -115,6 +134,7 @@ const ContentPage = ({
               content={content}
               showEditModal={handleShowEditModal}
               showDeleteModal={handleShowDeleteModal}
+              onTakeQuiz={handleTakeQuiz}
             />
           </Col>
         </Row>
@@ -149,7 +169,9 @@ const mapStateToProps = ({ userContent }, props) => {
 const mapDispatchToProps = {
   fetchIndividualContent,
   updateUserContent,
-  deleteUserContent
+  deleteUserContent,
+  createPersonalQuiz,
+  addQuizToUserContent
 };
 
 export default connect(
