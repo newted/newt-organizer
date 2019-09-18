@@ -21,7 +21,11 @@ import {
   deleteUserContent,
   addQuizToUserContent
 } from "../../actions/userContent";
-import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
+import {
+  createPersonalQuiz,
+  fetchQuiz,
+  completeQuiz
+} from "../../actions/quizzes";
 // Styling
 import styles from "./ContentPage.module.css";
 
@@ -34,6 +38,7 @@ const ContentPage = ({
   deleteUserContent,
   createPersonalQuiz,
   fetchQuiz,
+  completeQuiz,
   addQuizToUserContent,
   match,
   history
@@ -101,6 +106,20 @@ const ContentPage = ({
         );
       }
     }
+  };
+
+  // Handler function to submit request to update quiz once it's complete
+  const handleCompleteQuiz = quiz => {
+    // Set completed date
+    quiz.dateCompleted = Date.now();
+
+    // Update quiz results
+    completeQuiz(quiz).then(updatedQuiz => {
+      // Add completed data to user content's quiz info
+      content.quizInfo[0].dateCompleted = updatedQuiz.dateCompleted;
+      // Update user content with new quiz info
+      updateUserContent(userContentId, { quizInfo: content.quizInfo });
+    });
   };
 
   const renderCreatorInfo = () => {
@@ -178,7 +197,7 @@ const ContentPage = ({
         handleCloseModal={handleCloseQuizModal}
         quizName={`Quiz for ${content.name}`}
         quiz={currentQuiz}
-        onComplete={() => alert("Quiz complete")}
+        onComplete={handleCompleteQuiz}
       />
     </MainContainer>
   );
@@ -203,6 +222,7 @@ const mapDispatchToProps = {
   deleteUserContent,
   createPersonalQuiz,
   fetchQuiz,
+  completeQuiz,
   addQuizToUserContent
 };
 
