@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import Loader from "../../components/Loader";
 import EditContentModal from "./EditContentModal";
 import DeleteItemModal from "../../components/Modal/DeleteItemModal";
+import QuizModal from "../../components/QuizModal";
 import ContentFlow from "./ContentFlow";
 // API
 import {
@@ -20,23 +21,27 @@ import {
   deleteUserContent,
   addQuizToUserContent
 } from "../../actions/userContent";
-import { createPersonalQuiz } from "../../actions/quizzes";
+import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
 // Styling
 import styles from "./ContentPage.module.css";
 
 const ContentPage = ({
   isFetching,
   content,
+  userQuizzes,
   fetchIndividualContent,
   updateUserContent,
   deleteUserContent,
   createPersonalQuiz,
+  fetchQuiz,
   addQuizToUserContent,
   match,
   history
 }) => {
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  const [currentQuiz, setCurrentQuiz] = useState({});
   const { userContentId } = match.params;
 
   // Functions to set edit modal show state to true and false
@@ -45,6 +50,9 @@ const ContentPage = ({
   // Functions to set delete modal show state to true and false
   const handleShowDeleteModal = () => setShowDeleteModal(true);
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
+  // Functions to set quiz modal to ...
+  const handleShowQuizModal = () => setShowQuizModal(true);
+  const handleCloseQuizModal = () => setShowQuizModal(false);
 
   // Fetch content if it doesn't exist in store
   useEffect(() => {
@@ -67,17 +75,32 @@ const ContentPage = ({
 
   // Handler function for when the 'Take the quiz' button is clicked
   const handleTakeQuiz = userContent => {
-    // Create personal quiz and update assignment
-    const data = {
-      contentId: userContent.contentInfo.contentId,
-      userContentId: userContent._id
-    };
-    // Dispatch action to create quiz, then update user content to add quiz id
-    createPersonalQuiz(data).then(quiz => {
-      addQuizToUserContent(userContent._id, {
-        quizId: quiz._id
+    // Open quiz modal
+    handleShowQuizModal();
+
+    if (_.isEmpty(content.quizInfo)) {
+      // Create personal quiz and update assignment
+      const data = {
+        contentId: userContent.contentInfo.contentId,
+        userContentId: userContent._id
+      };
+      // Dispatch action to create quiz, then update user content to add quiz id
+      createPersonalQuiz(data).then(quiz => {
+        addQuizToUserContent(userContent._id, {
+          quizId: quiz._id
+        }).then(() => setCurrentQuiz(quiz));
       });
-    });
+    } else {
+      // If quiz has already been fetched, set to state, otherwise fetch quiz first
+      if (userQuizzes[content.quizInfo[0].quizId]) {
+        setCurrentQuiz(userQuizzes[content.quizInfo[0].quizId]);
+      } else {
+        // Fetch personal quiz using id
+        fetchQuiz(content.quizInfo[0].quizId).then(quiz =>
+          setCurrentQuiz(quiz)
+        );
+      }
+    }
   };
 
   const renderCreatorInfo = () => {
@@ -150,11 +173,18 @@ const ContentPage = ({
         onHide={handleCloseDeleteModal}
         onDelete={handleDeleteContent}
       />
+      <QuizModal
+        show={showQuizModal}
+        handleCloseModal={handleCloseQuizModal}
+        quizName={`Quiz for ${content.name}`}
+        quiz={currentQuiz}
+        onComplete={() => alert("Quiz complete")}
+      />
     </MainContainer>
   );
 };
 
-const mapStateToProps = ({ userContent }, props) => {
+const mapStateToProps = ({ userContent, quizzes }, props) => {
   const { userContentId } = props.match.params;
   let currentUserContent = userContent.items[userContentId]
     ? userContent.items[userContentId]
@@ -162,7 +192,8 @@ const mapStateToProps = ({ userContent }, props) => {
 
   return {
     isFetching: userContent.isFetching,
-    content: currentUserContent
+    content: currentUserContent,
+    userQuizzes: quizzes.items
   };
 };
 
@@ -171,6 +202,7 @@ const mapDispatchToProps = {
   updateUserContent,
   deleteUserContent,
   createPersonalQuiz,
+  fetchQuiz,
   addQuizToUserContent
 };
 
