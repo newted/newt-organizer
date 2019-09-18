@@ -49,6 +49,8 @@ const ContentPage = ({
   const [currentQuiz, setCurrentQuiz] = useState({});
   const { userContentId } = match.params;
 
+  console.log(currentQuiz);
+
   // Functions to set edit modal show state to true and false
   const handleShowEditModal = () => setshowEditModal(true);
   const handleCloseEditModal = () => setshowEditModal(false);
@@ -120,6 +122,18 @@ const ContentPage = ({
       // Update user content with new quiz info
       updateUserContent(userContentId, { quizInfo: content.quizInfo });
     });
+  };
+
+  // Function that returns whether a quiz has been completed or not, so the
+  // right quiz page flow (questions or results) can be shown
+  const isQuizComplete = () => {
+    // If the quizInfo array is empty (no quizzes), return false. Otherwise
+    // check if the dateCompleted field is filled. If there's a date, return
+    // true, otherwise false
+    if (_.isEmpty(content.quizInfo)) {
+      return false;
+    }
+    return !_.isEmpty(content.quizInfo[0].dateCompleted);
   };
 
   const renderCreatorInfo = () => {
@@ -197,6 +211,7 @@ const ContentPage = ({
         handleCloseModal={handleCloseQuizModal}
         quizName={`Quiz for ${content.name}`}
         quiz={currentQuiz}
+        showReview={isQuizComplete()}
         onComplete={handleCompleteQuiz}
       />
     </MainContainer>
