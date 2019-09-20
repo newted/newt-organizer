@@ -7,18 +7,17 @@ import { FiFileText, FiCheckSquare } from "react-icons/fi";
 import { shortenText } from "../../utils/containerHelpers";
 
 const TimelineCard = ({
-  assignment: { _id, name, courseId, courseName, description, completed },
-  onComplete,
-  onIncomplete
+  assignment: { _id, name, courseId, courseName, description, isComplete },
+  toggleComplete
 }) => (
   <div
     className={
-      completed ? `${styles.card} ${styles.completedCard}` : styles.card
+      isComplete ? `${styles.card} ${styles.completedCard}` : styles.card
     }
   >
     <div
       className={
-        completed
+        isComplete
           ? `${styles.cardVisual} ${styles.completedCardVisual}`
           : styles.cardVisual
       }
@@ -41,20 +40,18 @@ const TimelineCard = ({
       <div className={styles.cardStatus}>
         <div
           style={{ height: "25px" }}
-          onClick={() =>
-            completed ? onIncomplete(courseId, _id) : onComplete(courseId, _id)
-          }
+          onClick={() => toggleComplete(_id, isComplete)}
         >
           <FiCheckSquare
             size={25}
             className={
-              completed
+              isComplete
                 ? `${styles.check} ${styles.completedCheck}`
                 : styles.check
             }
           />
         </div>
-        {completed && <div style={{ marginLeft: ".5rem" }}>Done!</div>}
+        {isComplete && <div style={{ marginLeft: ".5rem" }}>Done!</div>}
       </div>
     </div>
   </div>

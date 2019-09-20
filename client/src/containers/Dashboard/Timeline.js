@@ -5,10 +5,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { initializePrevAssignments } from "../../utils/containerHelpers";
 // API
-import {
-  markAssignmentAsComplete,
-  markAssignmentAsIncomplete
-} from "../../actions/assignments";
+import { updateUserContent } from "../../actions/userContent";
 // Components
 import TimelineCard from "./TimelineCard";
 import PrevWeekCard from "./PrevWeekCard";
@@ -47,12 +44,14 @@ class Timeline extends Component {
     }
   };
 
+  // Handler function to toggle completion
+  toggleContentCompletion = (userContentId, currentCompletionState) => {
+    const { updateUserContent } = this.props;
+    updateUserContent(userContentId, { isComplete: !currentCompletionState });
+  };
+
   renderUpcomingAssignments() {
-    const {
-      upcomingAssignments,
-      markAssignmentAsComplete,
-      markAssignmentAsIncomplete
-    } = this.props;
+    const { upcomingAssignments } = this.props;
 
     if (upcomingAssignments.length > 0) {
       return _.map(upcomingAssignments, assignment => (
@@ -64,8 +63,7 @@ class Timeline extends Component {
             </div>
             <TimelineCard
               assignment={assignment}
-              onComplete={markAssignmentAsComplete}
-              onIncomplete={markAssignmentAsIncomplete}
+              toggleComplete={this.toggleContentCompletion}
               key={assignment._id}
             />
           </div>
@@ -207,8 +205,7 @@ function mapStateToProps({ courses, sidebar }, { userContents }) {
 }
 
 const mapDispatchToProps = {
-  markAssignmentAsComplete,
-  markAssignmentAsIncomplete
+  updateUserContent
 };
 
 export default connect(
