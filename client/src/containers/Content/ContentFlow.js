@@ -14,6 +14,7 @@ const ContentFlow = ({
   content,
   showEditModal,
   showDeleteModal,
+  onToggleContent,
   onTakeQuiz
 }) => {
   // Function to display the appropriate text on quiz button based on quiz state
@@ -36,8 +37,18 @@ const ContentFlow = ({
           <h5 className={styles.date}>
             Due {moment(content.dateDue).format("MMM DD")}
           </h5>
-          <span style={{ height: "26px" }}>
-            <FiCheckSquare size={26} className={styles.check} />
+          <span
+            style={{ height: "26px" }}
+            onClick={() => onToggleContent(content.isComplete)}
+          >
+            <FiCheckSquare
+              size={26}
+              className={
+                content.isComplete
+                  ? `${styles.check} ${styles.completedCheck}`
+                  : styles.check
+              }
+            />
           </span>
           <Dropdown alignRight={true} drop="down" className={styles.dropdown}>
             <Dropdown.Toggle id="content-dropdown" as={CustomToggle}>

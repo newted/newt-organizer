@@ -81,6 +81,11 @@ const ContentPage = ({
     history.push(`/courses/${content.courseId}`);
   };
 
+  // Function to toggle completion of content
+  const toggleContentCompletion = currentCompletionState => {
+    updateUserContent(userContentId, { isComplete: !currentCompletionState });
+  };
+
   // Handler function for when the 'Take the quiz' button is clicked
   const handleTakeQuiz = userContent => {
     // Open quiz modal
@@ -225,6 +230,7 @@ const ContentPage = ({
               showEditModal={handleShowEditModal}
               showDeleteModal={handleShowDeleteModal}
               onTakeQuiz={handleTakeQuiz}
+              onToggleContent={toggleContentCompletion}
             />
           </Col>
         </Row>
