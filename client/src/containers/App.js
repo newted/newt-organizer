@@ -39,6 +39,7 @@ class App extends Component {
             path={[
               "/dashboard",
               "/courses",
+              "/learn",
               "/content",
               "/assignments",
               "/profile",

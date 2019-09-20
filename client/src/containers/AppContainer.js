@@ -14,6 +14,7 @@ import ToastContent from "../components/CustomToast/ToastContent";
 // Containers
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
+import LearnPage from "./Learn";
 import CourseList from "./Courses/CourseList";
 import CoursePage from "./Courses/CoursePage";
 import AddContent from "./Content/AddContent";
@@ -88,6 +89,8 @@ class AppContainer extends Component {
               auth={auth}
             />
             <PrivateRoute path="/courses" component={CourseList} auth={auth} />
+            {/* Learn Page routes */}
+            <PrivateRoute path="/learn" component={LearnPage} auth={auth} />
             {/* Content routes */}
             <PrivateRoute
               path="/content/add"
