@@ -52,8 +52,6 @@ class QuizModalContent extends Component {
       quizName,
       onCloseModal,
       currentSection,
-      currentQuestion,
-      numQuestions,
       isQuizComplete,
       showReview,
       onClickFinish

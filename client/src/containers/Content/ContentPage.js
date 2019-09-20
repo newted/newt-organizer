@@ -26,6 +26,7 @@ import {
   fetchQuiz,
   completeQuiz
 } from "../../actions/quizzes";
+import { updateLearningMap } from "../../actions/learningMap";
 // Styling
 import styles from "./ContentPage.module.css";
 
@@ -33,6 +34,7 @@ const ContentPage = ({
   isFetching,
   content,
   userQuizzes,
+  learningMapId,
   fetchIndividualContent,
   updateUserContent,
   deleteUserContent,
@@ -40,6 +42,7 @@ const ContentPage = ({
   fetchQuiz,
   completeQuiz,
   addQuizToUserContent,
+  updateLearningMap,
   match,
   history
 }) => {
@@ -120,6 +123,38 @@ const ContentPage = ({
       content.quizInfo[0].dateCompleted = updatedQuiz.dateCompleted;
       // Update user content with new quiz info
       updateUserContent(userContentId, { quizInfo: content.quizInfo });
+
+      // Update learning map
+      let quizTopicsIds = [];
+      // Get all the topic ids from each question and add it to the array
+      _.each(updatedQuiz.results, ({ topics }) => {
+        quizTopicsIds = _.concat(quizTopicsIds, topics);
+      });
+      // Remove duplicate topic ids
+      quizTopicsIds = _.uniq(quizTopicsIds);
+      // Combine primary and secondary topics into single array
+      const allTopics = content.contentInfo.primaryTopics.concat(
+        content.contentInfo.secondaryTopics
+      );
+
+      // Filter out topics that aren't part of the quiz (not in topicIds array)
+      const quizTopics = _.filter(
+        allTopics,
+        ({ topicId }) => _.indexOf(quizTopicsIds, topicId) !== -1
+      );
+
+      const data = {
+        knowledgeSubject: content.knowledgeSubject,
+        knowledgeModule: content.knowledgeModule,
+        topics: quizTopics,
+        contentHistory: {
+          name: content.contentInfo.name,
+          contentId: content.contentInfo.contentId
+        }
+      };
+
+      // Send request to update learning map
+      updateLearningMap(learningMapId, data);
     });
   };
 
@@ -217,7 +252,7 @@ const ContentPage = ({
   );
 };
 
-const mapStateToProps = ({ userContent, quizzes }, props) => {
+const mapStateToProps = ({ userContent, quizzes, learningMap }, props) => {
   const { userContentId } = props.match.params;
   let currentUserContent = userContent.items[userContentId]
     ? userContent.items[userContentId]
@@ -226,7 +261,8 @@ const mapStateToProps = ({ userContent, quizzes }, props) => {
   return {
     isFetching: userContent.isFetching,
     content: currentUserContent,
-    userQuizzes: quizzes.items
+    userQuizzes: quizzes.items,
+    learningMapId: learningMap.items._id
   };
 };
 
@@ -237,7 +273,8 @@ const mapDispatchToProps = {
   createPersonalQuiz,
   fetchQuiz,
   completeQuiz,
-  addQuizToUserContent
+  addQuizToUserContent,
+  updateLearningMap
 };
 
 export default connect(
