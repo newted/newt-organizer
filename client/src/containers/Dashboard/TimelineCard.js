@@ -7,15 +7,7 @@ import { FiFileText, FiCheckSquare } from "react-icons/fi";
 import { shortenText } from "../../utils/containerHelpers";
 
 const TimelineCard = ({
-  assignment: {
-    _id,
-    name,
-    courseId,
-    programId,
-    courseName,
-    details,
-    completed
-  },
+  assignment: { _id, name, courseId, courseName, description, completed },
   onComplete,
   onIncomplete
 }) => (
@@ -36,15 +28,15 @@ const TimelineCard = ({
     <div className={styles.cardBody}>
       <div className={styles.cardText}>
         <div className={styles.headers}>
-          <Link to={{ pathname: `/assignments/${_id}` }}>
+          <Link to={{ pathname: `/content/${_id}` }}>
             <h5 className={styles.title}>{name}</h5>
           </Link>
           <div style={{ color: "#bbb", marginRight: ".5rem" }}>&mdash;</div>
-          <Link to={{ pathname: `/programs/${programId}/courses/${courseId}` }}>
+          <Link to={{ pathname: `/courses/${courseId}` }}>
             <h5 className={styles.subtitle}>{courseName}</h5>
           </Link>
         </div>
-        <div className={styles.details}>{shortenText(details, 150)}</div>
+        <div className={styles.details}>{shortenText(description, 150)}</div>
       </div>
       <div className={styles.cardStatus}>
         <div

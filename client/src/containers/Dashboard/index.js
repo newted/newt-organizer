@@ -1,33 +1,46 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import _ from "lodash";
+import { connect } from "react-redux";
 // Components
-// import Loader from "../../components/Loader";
-// import Timeline from "./Timeline";
-// Styling
-import styles from "./Dashboard.module.css";
+import {
+  MainContainer,
+  HeaderContainer,
+  ContentContainer
+} from "../../components/PageContainers";
+import MessageBox from "../../components/MessageBox";
+import Loader from "../../components/Loader";
+import Timeline from "./Timeline";
 
-class Dashboard extends Component {
-  static propTypes = {
-    // Connect props
-    history: PropTypes.object,
-    location: PropTypes.object,
-    match: PropTypes.object
+const Dashboard = ({ isFetching, userContents }) => {
+  if (isFetching) {
+    return <Loader />;
+  }
+
+  return (
+    <MainContainer>
+      <HeaderContainer>
+        <h2>Dashboard</h2>
+      </HeaderContainer>
+      <ContentContainer>
+        {_.isEmpty(userContents) ? (
+          <MessageBox>
+            Looks like you haven't added anything to learn. Click on the Courses
+            tab, create a course, then add any content that you wish to learn to
+            it.
+          </MessageBox>
+        ) : (
+          <Timeline userContents={userContents} />
+        )}
+      </ContentContainer>
+    </MainContainer>
+  );
+};
+
+const mapStateToProps = ({ courses, userContent }) => {
+  return {
+    isFetching: courses.isFetching || userContent.isFetching,
+    userContents: userContent.items
   };
+};
 
-  renderContent() {
-    return <div className={styles.message}>Under construction</div>;
-  }
-
-  render() {
-    return (
-      <div className={styles.mainContainer}>
-        <div className={styles.headerContainer}>
-          <h2 className={styles.header}>Dashboard</h2>
-        </div>
-        {this.renderContent()}
-      </div>
-    );
-  }
-}
-
-export default Dashboard;
+export default connect(mapStateToProps)(Dashboard);

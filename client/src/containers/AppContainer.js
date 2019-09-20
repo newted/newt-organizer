@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withToastManager } from "react-toast-notifications";
 // API
 import { fetchCourses, resolveCourses } from "../actions/courses";
+import { fetchCourseContent } from "../actions/userContent";
 import { getLearningMap } from "../actions/learningMap";
 // Components
 import Sidebar from "../components/Sidebar";
@@ -31,19 +32,25 @@ class AppContainer extends Component {
       // Get a user's learning map
       this.props.getLearningMap();
       // Fetch user's courses
-      this.props.fetchCourses().catch(error => {
-        // Display error notification
-        this.props.toastManager.add(
-          <ToastContent
-            message="Something went wrong, could not fetch courses."
-            error={error.message}
-            displayRetry={false}
-          />,
-          { appearance: "error", autoDismiss: true }
-        );
-        // Call resolve action creator to set isFetching back to false
-        this.props.resolveCourses();
-      });
+      this.props
+        .fetchCourses()
+        // For each course, fetch its content
+        .then(courses =>
+          courses.forEach(course => this.props.fetchCourseContent(course._id))
+        )
+        .catch(error => {
+          // Display error notification
+          this.props.toastManager.add(
+            <ToastContent
+              message="Something went wrong, could not fetch courses."
+              error={error.message}
+              displayRetry={false}
+            />,
+            { appearance: "error", autoDismiss: true }
+          );
+          // Call resolve action creator to set isFetching back to false
+          this.props.resolveCourses();
+        });
     }
   }
 
@@ -119,6 +126,7 @@ function mapStateToProps({ auth, sidebar }) {
 
 const mapDispatchToProps = {
   fetchCourses,
+  fetchCourseContent,
   resolveCourses,
   getLearningMap
 };

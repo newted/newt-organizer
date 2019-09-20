@@ -17,10 +17,6 @@ import styles from "./Timeline.module.css";
 
 class Timeline extends Component {
   static propTypes = {
-    programs: PropTypes.shape({
-      isFetching: PropTypes.bool,
-      items: PropTypes.object
-    }),
     sidebar: PropTypes.shape({
       isCollapsed: PropTypes.bool
     }),
@@ -152,7 +148,7 @@ class Timeline extends Component {
         }
       >
         <div className={styles.agendaContainer}>
-          <h3 className={styles.header}>Your Upcoming Schedule</h3>
+          <h3 className={styles.header}>Your Next Two Weeks</h3>
           <div className={styles.timeline}>
             {this.renderUpcomingAssignments()}
           </div>
@@ -166,7 +162,7 @@ class Timeline extends Component {
   }
 }
 
-function mapStateToProps({ courses, programs, sidebar }) {
+function mapStateToProps({ courses, sidebar }, { userContents }) {
   const upcomingAssignments = [];
   // Initialize as an array of 3 objects with each object representing one
   // week, so 3 weeks in total. Each object has a startDate, endDate, and
@@ -174,42 +170,36 @@ function mapStateToProps({ courses, programs, sidebar }) {
   // week, 2 weeks ago, and 3 weeks ago in that order.
   let prevAssignments = initializePrevAssignments();
 
-  _.forEach(courses.items, course => {
-    _.forEach(course.assignments, assignment => {
-      assignment["courseName"] = course.name;
-      assignment["courseId"] = course._id;
-      assignment["programId"] = course.programId;
+  _.forEach(userContents, content => {
+    content.courseName = courses.items[content.courseId].name;
+    // Difference in week number between current week and week number that
+    // the assignment due date is in. 0 means it's the same week of year.
+    // Positive number means it's the weeks before, and negative number means
+    // it's the weeks after.
+    const weekDiff = moment().week() - moment(content.dateDue).week();
 
-      // Difference in week number between current week and week number that
-      // the assignment due date is in. 0 means it's the same week of year.
-      // Positive number means it's the weeks before, and negative number means
-      // it's the weeks after.
-      const weekDiff = moment().week() - moment(assignment.dateDue).week();
+    // Add assignment to upcoming list only if it is in the same week of year
+    // or one week ahead than the current week (within the next two weeks),
+    // with week of year being number of weeks since Jan 1st.
+    if (weekDiff === 0 || weekDiff === -1) {
+      upcomingAssignments.push(content);
+    }
 
-      // Add assignment to upcoming list only if it is in the same week of year
-      // or one week ahead than the current week (within the next two weeks),
-      // with week of year being number of weeks since Jan 1st.
-      if (weekDiff === 0 || weekDiff === -1) {
-        upcomingAssignments.push(assignment);
-      }
-
-      // Add assignment to previous week list if it is a lower week number than
-      // the current week.
-      if (weekDiff > 0 && weekDiff <= 3) {
-        // Push assignment in descending order (most recent week
-        // comes first). This is done by the index being 1 less than the week
-        // difference. So if week diff is 1 (one week earlier), put the
-        // assignment in the 0th index array.
-        prevAssignments[weekDiff - 1].assignments.push(assignment);
-      }
-    });
+    // Add assignment to previous week list if it is a lower week number than
+    // the current week.
+    if (weekDiff > 0 && weekDiff <= 3) {
+      // Push assignment in descending order (most recent week
+      // comes first). This is done by the index being 1 less than the week
+      // difference. So if week diff is 1 (one week earlier), put the
+      // assignment in the 0th index array.
+      prevAssignments[weekDiff - 1].assignments.push(content);
+    }
   });
 
   // Sort by due date
   upcomingAssignments.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
 
   return {
-    programs,
     sidebar,
     upcomingAssignments,
     prevAssignments
