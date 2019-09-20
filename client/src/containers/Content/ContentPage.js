@@ -49,8 +49,6 @@ const ContentPage = ({
   const [currentQuiz, setCurrentQuiz] = useState({});
   const { userContentId } = match.params;
 
-  console.log(currentQuiz);
-
   // Functions to set edit modal show state to true and false
   const handleShowEditModal = () => setshowEditModal(true);
   const handleCloseEditModal = () => setshowEditModal(false);
@@ -112,6 +110,7 @@ const ContentPage = ({
 
   // Handler function to submit request to update quiz once it's complete
   const handleCompleteQuiz = quiz => {
+    handleCloseQuizModal();
     // Set completed date
     quiz.dateCompleted = Date.now();
 

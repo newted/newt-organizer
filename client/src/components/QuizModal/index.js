@@ -69,13 +69,16 @@ class QuizModal extends Component {
     }));
   };
 
+  handleShowOutro = () => {
+    this.setState({ currentSection: "outro" });
+  };
+
   // Function to handle clicking the Finish button - send user to Finish section
   handleFinishClick = () => {
     const { quiz } = this.props;
     const { onComplete } = this.props;
 
     onComplete(quiz);
-    this.setState({ currentSection: "outro" });
   };
 
   // Function to check if the quiz has been completed (all the questions
@@ -118,6 +121,7 @@ class QuizModal extends Component {
             onClickFinish={this.handleFinishClick}
             onClickOption={this.handleOptionClick}
             onClickNext={this.incrementCurrentQuestion}
+            onClickSummary={this.handleShowOutro}
             onClickBack={this.decrementCurrentQuestion}
           />
         ) : (

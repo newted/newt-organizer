@@ -16,8 +16,10 @@ const QuizQuestion = ({
     optionChosen,
     correctAnswer
   },
+  isQuizComplete,
   onClickOption,
   onClickNext,
+  onClickSummary,
   onClickBack
 }) => (
   <div className={styles.quizBody}>
@@ -60,14 +62,24 @@ const QuizQuestion = ({
           Back
         </Button>
       )}
-      {/* Don't show next button if it's the last question */}
-      {currentQuestion !== numQuestions && (
+      {/* If it's the last question, render Show Summary button, otherwise
+          Next button */}
+      {currentQuestion !== numQuestions ? (
         <Button
           variant="primary"
           className={styles.actionButton}
           onClick={onClickNext}
         >
           Next
+        </Button>
+      ) : (
+        <Button
+          variant="primary"
+          className={styles.actionButton}
+          onClick={onClickSummary}
+          disabled={!isQuizComplete}
+        >
+          Show Summary
         </Button>
       )}
     </div>

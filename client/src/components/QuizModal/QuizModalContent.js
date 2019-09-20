@@ -61,36 +61,35 @@ class QuizModalContent extends Component {
 
     return (
       <>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{quizName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{this.renderQuizBody(currentSection)}</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={onCloseModal}
-            style={{ width: "100px" }}
-          >
-            Close
-          </Button>
-          {/* Show Finish button in footer when on the last question (don't
-              show when in outro section or if quiz is complete) */}
-          {currentQuestion === numQuestions &&
-            currentSection !== "outro" &&
-            !showReview && (
-              <Button
-                variant="primary"
-                className={
-                  isQuizComplete
-                    ? styles.finishButton
-                    : `${styles.finishButton} ${styles.disabledButton}`
-                }
-                onClick={onClickFinish}
-                disabled={!isQuizComplete}
-              >
-                Finish
-              </Button>
-            )}
+          {!(currentSection === "outro" && !showReview) && (
+            <Button
+              variant="secondary"
+              onClick={onCloseModal}
+              style={{ width: "100px" }}
+            >
+              Close
+            </Button>
+          )}
+          {/* Show Finish button in outro section, unless it's in review */}
+          {currentSection === "outro" && !showReview && (
+            <Button
+              variant="primary"
+              className={
+                isQuizComplete
+                  ? styles.finishButton
+                  : `${styles.finishButton} ${styles.disabledButton}`
+              }
+              onClick={onClickFinish}
+              disabled={!isQuizComplete}
+            >
+              Finish
+            </Button>
+          )}
         </Modal.Footer>
       </>
     );
