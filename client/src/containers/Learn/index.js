@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 // Components
@@ -8,41 +8,77 @@ import {
   ContentContainer
 } from "../../components/PageContainers";
 import Loader from "../../components/Loader";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import MessageBox from "../../components/MessageBox";
+import LearnContentCard from "./LearnContentCard";
+import ContentFlow from "../Content/ContentFlow";
+// Helpers
+import { statusDueDateSort } from "../../utils/containerHelpers";
 // Styling
 import styles from "./Learn.module.css";
 
-const LearnPage = ({ isFetching, userContents }) => {
+const LearnPage = ({ isFetching, userContents, match }) => {
+  const [currentContent, setCurrentContent] = useState(null);
+  const { userContentId } = match.params;
+
+  // Use the userContentId from the url to get and set the currentContent from
+  // the userContents array. If there's no id in the url, set it to the first
+  // item in the array
+  useEffect(() => {
+    if (!_.isEmpty(userContents)) {
+      if (userContentId) {
+        const filteredContent = _.filter(
+          userContents,
+          content => content._id === userContentId
+        );
+
+        setCurrentContent(filteredContent[0]);
+      } else {
+        setCurrentContent(userContents[0]);
+      }
+    }
+  }, [userContentId, currentContent, userContents]);
+
   if (isFetching) return <Loader />;
+
+  // If the content data array is empty or the currentContent state hasn't been
+  // set yet, display message indicating so.
+  if (_.isEmpty(userContents) || !currentContent) {
+    return (
+      <MessageBox>
+        Looks like you haven't added anything to learn. Click on the Courses
+        tab, create a course, then add any content that you wish to learn to it.
+      </MessageBox>
+    );
+  }
 
   return (
     <MainContainer>
       <HeaderContainer>
         <h2>Learn</h2>
       </HeaderContainer>
-      <ContentContainer className={styles.contentContainer}>
-        <Row>
-          <Col lg={4} md={12}>
-            <div className={styles.contentList}>
-              {_.map(userContents, content => (
-                <p key={content._id}>{content.name}</p>
-              ))}
-            </div>
-          </Col>
-          <Col lg={8} md={12}>
-            {/* <ContentFlow /> */}
-          </Col>
-        </Row>
+      <ContentContainer>
+        <div className={styles.contentList}>
+          {_.map(userContents, content => (
+            <LearnContentCard key={content._id} userContent={content} />
+          ))}
+        </div>
+        <div className={styles.contentFlow}>
+          <ContentFlow content={currentContent} />
+        </div>
       </ContentContainer>
     </MainContainer>
   );
 };
 
 const mapStateToProps = ({ courses, userContent }) => {
+  let userContentArray = _.values(userContent.items);
+
+  // Sort by completion status and date
+  statusDueDateSort(userContentArray);
+
   return {
     isFetching: courses.isFetching || userContent.isFetching,
-    userContents: userContent.items
+    userContents: userContentArray
   };
 };
 

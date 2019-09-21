@@ -90,7 +90,11 @@ class AppContainer extends Component {
             />
             <PrivateRoute path="/courses" component={CourseList} auth={auth} />
             {/* Learn Page routes */}
-            <PrivateRoute path="/learn" component={LearnPage} auth={auth} />
+            <PrivateRoute
+              path="/learn/:userContentId?"
+              component={LearnPage}
+              auth={auth}
+            />
             {/* Content routes */}
             <PrivateRoute
               path="/content/add"
