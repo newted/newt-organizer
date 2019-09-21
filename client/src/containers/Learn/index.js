@@ -11,14 +11,37 @@ import Loader from "../../components/Loader";
 import MessageBox from "../../components/MessageBox";
 import LearnContentCard from "./LearnContentCard";
 import ContentFlow from "../Content/ContentFlow";
+import EditContentModal from "../Content/EditContentModal";
+import DeleteItemModal from "../../components/Modal/DeleteItemModal";
+// API
+import {
+  updateUserContent,
+  deleteUserContent
+} from "../../actions/userContent";
 // Helpers
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Styling
 import styles from "./Learn.module.css";
 
-const LearnPage = ({ isFetching, userContents, match }) => {
+const LearnPage = ({
+  isFetching,
+  userContents,
+  updateUserContent,
+  deleteUserContent,
+  match,
+  history
+}) => {
   const [currentContent, setCurrentContent] = useState(null);
+  const [showEditModal, setshowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { userContentId } = match.params;
+
+  // Functions to set edit modal show state to true and false
+  const handleShowEditModal = () => setshowEditModal(true);
+  const handleCloseEditModal = () => setshowEditModal(false);
+  // Functions to set delete modal show state to true and false
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
   // Use the userContentId from the url to get and set the currentContent from
   // the userContents array. If there's no id in the url, set it to the first
@@ -38,6 +61,18 @@ const LearnPage = ({ isFetching, userContents, match }) => {
     }
   }, [userContentId, currentContent, userContents]);
 
+  // Function to handle updating content when edit form is submitted
+  const handleEditFormSubmit = values => {
+    updateUserContent(currentContent._id, values);
+    handleCloseEditModal();
+  };
+
+  // Function to handle deleting content
+  const handleDeleteContent = () => {
+    deleteUserContent(currentContent._id, currentContent.courseId);
+    handleCloseDeleteModal();
+  };
+
   if (isFetching) return <Loader />;
 
   // Message indicating to content exists and how to add some
@@ -56,7 +91,7 @@ const LearnPage = ({ isFetching, userContents, match }) => {
       <ContentContainer>
         {/* If the content data array is empty or the currentContent state
             hasn't been set yet, render no content. */}
-        {_.isEmpty(userContents) || !currentContent ? (
+        {!currentContent ? (
           renderNoContent()
         ) : (
           <>
@@ -70,11 +105,30 @@ const LearnPage = ({ isFetching, userContents, match }) => {
               ))}
             </div>
             <div className={styles.contentFlow}>
-              <ContentFlow content={currentContent} />
+              <ContentFlow
+                content={currentContent}
+                showEditModal={handleShowEditModal}
+                showDeleteModal={handleShowDeleteModal}
+              />
             </div>
           </>
         )}
       </ContentContainer>
+      {currentContent && (
+        <>
+          <EditContentModal
+            show={showEditModal}
+            onHide={handleCloseEditModal}
+            content={currentContent}
+            onFormSubmit={handleEditFormSubmit}
+          />
+          <DeleteItemModal
+            show={showDeleteModal}
+            onHide={handleCloseDeleteModal}
+            onDelete={handleDeleteContent}
+          />
+        </>
+      )}
     </MainContainer>
   );
 };
@@ -96,4 +150,9 @@ const mapStateToProps = ({ courses, userContent }) => {
   };
 };
 
-export default connect(mapStateToProps)(LearnPage);
+const mapDispatchToProps = { updateUserContent, deleteUserContent };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LearnPage);
