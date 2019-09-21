@@ -1,0 +1,12 @@
+.contentContainer {
+  display: block;
+}
+
+.contentList {
+  border: 1px solid var(--lightGrey);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  height: 500px;
+  color: var(--darkGrey-2);
+}

@@ -202,29 +202,32 @@ const ContentPage = ({
     <MainContainer>
       <ContentContainer className={styles.contentContainer}>
         <Row>
-          <Col lg={3} md={12} className={styles.contentInfo}>
-            <h4 style={{ marginBottom: "1rem" }}>{content.name}</h4>
-            <div className={styles.infoRow}>
-              <span className={styles.infoRowField}>
-                {content.contentInfo.contentCreator ? "Creator:" : "Source:"}
-              </span>
-              <span className={styles.infoRowValue}>{renderCreatorInfo()}</span>
-            </div>
-            <div className={styles.infoRow}>
-              <span className={styles.infoRowField}>Date created:</span>
-              <span className={styles.infoRowValue}>
-                {moment(content.dateCreated).format("DD MMM")}
-              </span>
-            </div>
-            <div className={styles.infoRow}>
-              <span className={styles.infoRowField}>Date due:</span>
-              <span className={styles.infoRowValue}>
-                {moment(content.dateDue).format("DD MMM")}
-              </span>
+          <Col lg={3} md={12}>
+            <div className={styles.contentInfo}>
+              <h4 style={{ marginBottom: "1rem" }}>Info</h4>
+              <div className={styles.infoRow}>
+                <span className={styles.infoRowField}>
+                  {content.contentInfo.contentCreator ? "Creator:" : "Source:"}
+                </span>
+                <span className={styles.infoRowValue}>
+                  {renderCreatorInfo()}
+                </span>
+              </div>
+              <div className={styles.infoRow}>
+                <span className={styles.infoRowField}>Date created:</span>
+                <span className={styles.infoRowValue}>
+                  {moment(content.dateCreated).format("DD MMM")}
+                </span>
+              </div>
+              <div className={styles.infoRow}>
+                <span className={styles.infoRowField}>Date due:</span>
+                <span className={styles.infoRowValue}>
+                  {moment(content.dateDue).format("DD MMM")}
+                </span>
+              </div>
             </div>
           </Col>
-          <Col lg="auto" md={0}></Col>
-          <Col lg md>
+          <Col lg={9} md={12}>
             <ContentFlow
               content={content}
               showEditModal={handleShowEditModal}

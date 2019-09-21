@@ -6,6 +6,7 @@
     0 3px 6px 0 rgba(0, 0, 0, 0.07);
   min-height: 500px;
   min-width: 400px;
+  margin-bottom: 1rem;
 }
 
 .contentHeaderContainer {
