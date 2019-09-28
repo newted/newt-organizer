@@ -14,6 +14,7 @@ import ContentFlow from "../Content/ContentFlow";
 import EditContentModal from "../Content/EditContentModal";
 import DeleteItemModal from "../../components/Modal/DeleteItemModal";
 import QuizModal from "../../components/QuizModal";
+import Button from "../../components/Button";
 // API
 import {
   updateUserContent,
@@ -36,6 +37,7 @@ const LearnPage = ({
   userContents,
   userQuizzes,
   learningMapId,
+  numCompleted,
   updateUserContent,
   deleteUserContent,
   createPersonalQuiz,
@@ -46,7 +48,9 @@ const LearnPage = ({
   match,
   history
 }) => {
+  const [displayedUserContents, setDisplayedUserContents] = useState([]);
   const [currentContent, setCurrentContent] = useState(null);
+  const [showCompleted, setShowCompleted] = useState(false);
   const [showEditModal, setshowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -80,6 +84,22 @@ const LearnPage = ({
       }
     }
   }, [userContentId, currentContent, userContents]);
+
+  // Effect to set Content Cards to display based on whether the Show Completed
+  // button is toggled or not (default is false). Toggle between not completed
+  // and all Content Cards
+  useEffect(() => {
+    if (!_.isEmpty(userContents)) {
+      if (!showCompleted) {
+        const filteredUserContents = userContents.filter(
+          ({ isComplete }) => !isComplete
+        );
+        setDisplayedUserContents(filteredUserContents);
+      } else {
+        setDisplayedUserContents(userContents);
+      }
+    }
+  }, [userContents, showCompleted]);
 
   // Function to handle updating content when edit form is submitted
   const handleEditFormSubmit = values => {
@@ -204,6 +224,18 @@ const LearnPage = ({
     <MainContainer>
       <HeaderContainer>
         <h2>Learn</h2>
+        {!_.isEmpty(userContents) && (
+          <Button
+            additionalClass={
+              showCompleted
+                ? [styles.completedBtn, styles.selected].join(" ")
+                : styles.completedBtn
+            }
+            onClick={() => setShowCompleted(!showCompleted)}
+          >
+            {`Show completed (${numCompleted})`}
+          </Button>
+        )}
       </HeaderContainer>
       <ContentContainer>
         {/* If the content data array is empty or the currentContent state
@@ -213,7 +245,7 @@ const LearnPage = ({
         ) : (
           <>
             <div className={styles.contentList}>
-              {_.map(userContents, content => (
+              {_.map(displayedUserContents, content => (
                 <LearnContentCard
                   key={content._id}
                   userContent={content}
@@ -268,6 +300,9 @@ const mapStateToProps = ({ courses, userContent, quizzes, learningMap }) => {
     content.courseName = courses.items[content.courseId].name;
   });
 
+  const numCompleted = userContentArray.filter(({ isComplete }) => isComplete)
+    .length;
+
   // Sort by completion status and date
   statusDueDateSort(userContentArray);
 
@@ -275,7 +310,8 @@ const mapStateToProps = ({ courses, userContent, quizzes, learningMap }) => {
     isFetching: courses.isFetching || userContent.isFetching,
     userContents: userContentArray,
     userQuizzes: quizzes.items,
-    learningMapId: learningMap.items._id
+    learningMapId: learningMap.items._id,
+    numCompleted
   };
 };
 

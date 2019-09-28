@@ -22,3 +22,12 @@
   box-sizing: border-box;
   margin-left: 1rem;
 }
+
+.completedBtn:hover {
+  border: 1px solid var(--lightGreen-btn-border);
+}
+
+.selected {
+  border: 1px solid var(--lightGreen-btn-border);
+  color: var(--lightGreen-btn-border);
+}
