@@ -94,6 +94,13 @@ const LearnPage = ({
     handleCloseDeleteModal();
   };
 
+  // Function to toggle completion of content
+  const toggleContentCompletion = currentCompletionState => {
+    updateUserContent(currentContent._id, {
+      isComplete: !currentCompletionState
+    });
+  };
+
   // Handler function for when the 'Take the quiz' button is clicked
   const handleTakeQuiz = userContent => {
     // Open quiz modal
@@ -220,6 +227,7 @@ const LearnPage = ({
                 showEditModal={handleShowEditModal}
                 showDeleteModal={handleShowDeleteModal}
                 onTakeQuiz={handleTakeQuiz}
+                onToggleContent={toggleContentCompletion}
               />
             </div>
           </>
