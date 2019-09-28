@@ -20,7 +20,12 @@ import {
   deleteUserContent,
   addQuizToUserContent
 } from "../../actions/userContent";
-import { createPersonalQuiz, fetchQuiz } from "../../actions/quizzes";
+import {
+  createPersonalQuiz,
+  fetchQuiz,
+  completeQuiz
+} from "../../actions/quizzes";
+import { updateLearningMap } from "../../actions/learningMap";
 // Helpers
 import { statusDueDateSort } from "../../utils/containerHelpers";
 // Styling
@@ -30,11 +35,14 @@ const LearnPage = ({
   isFetching,
   userContents,
   userQuizzes,
+  learningMapId,
   updateUserContent,
   deleteUserContent,
   createPersonalQuiz,
   addQuizToUserContent,
   fetchQuiz,
+  completeQuiz,
+  updateLearningMap,
   match,
   history
 }) => {
@@ -116,6 +124,65 @@ const LearnPage = ({
     }
   };
 
+  // Handler function to submit request to update quiz once it's complete
+  const handleCompleteQuiz = quiz => {
+    handleCloseQuizModal();
+    // Set completed date
+    quiz.dateCompleted = Date.now();
+
+    // Update quiz results
+    completeQuiz(quiz).then(updatedQuiz => {
+      // Add completed data to user content's quiz info
+      currentContent.quizInfo[0].dateCompleted = updatedQuiz.dateCompleted;
+      // Update user content with new quiz info
+      updateUserContent(userContentId, { quizInfo: currentContent.quizInfo });
+
+      // Update learning map
+      let quizTopicsIds = [];
+      // Get all the topic ids from each question and add it to the array
+      _.each(updatedQuiz.results, ({ topics }) => {
+        quizTopicsIds = _.concat(quizTopicsIds, topics);
+      });
+      // Remove duplicate topic ids
+      quizTopicsIds = _.uniq(quizTopicsIds);
+      // Combine primary and secondary topics into single array
+      const allTopics = currentContent.contentInfo.primaryTopics.concat(
+        currentContent.contentInfo.secondaryTopics
+      );
+
+      // Filter out topics that aren't part of the quiz (not in topicIds array)
+      const quizTopics = _.filter(
+        allTopics,
+        ({ topicId }) => _.indexOf(quizTopicsIds, topicId) !== -1
+      );
+
+      const data = {
+        knowledgeSubject: currentContent.knowledgeSubject,
+        knowledgeModule: currentContent.knowledgeModule,
+        topics: quizTopics,
+        contentHistory: {
+          name: currentContent.contentInfo.name,
+          contentId: currentContent.contentInfo.contentId
+        }
+      };
+
+      // Send request to update learning map
+      updateLearningMap(learningMapId, data);
+    });
+  };
+
+  // Function that returns whether a quiz has been completed or not, so the
+  // right quiz page flow (questions or results) can be shown
+  const isQuizComplete = () => {
+    // If the quizInfo array is empty (no quizzes), return false. Otherwise
+    // check if the dateCompleted field is filled. If there's a date, return
+    // true, otherwise false
+    if (_.isEmpty(currentContent.quizInfo)) {
+      return false;
+    }
+    return !_.isEmpty(currentContent.quizInfo[0].dateCompleted);
+  };
+
   if (isFetching) return <Loader />;
 
   // Message indicating to content exists and how to add some
@@ -176,8 +243,8 @@ const LearnPage = ({
             handleCloseModal={handleCloseQuizModal}
             quizName={`Quiz for ${currentContent.name}`}
             quiz={currentQuiz}
-            // showReview={isQuizComplete()}
-            // onComplete={handleCompleteQuiz}
+            showReview={isQuizComplete()}
+            onComplete={handleCompleteQuiz}
           />
         </>
       )}
@@ -185,7 +252,7 @@ const LearnPage = ({
   );
 };
 
-const mapStateToProps = ({ courses, userContent, quizzes }) => {
+const mapStateToProps = ({ courses, userContent, quizzes, learningMap }) => {
   let userContentArray = _.values(userContent.items);
 
   // Add course name for each user content
@@ -199,7 +266,8 @@ const mapStateToProps = ({ courses, userContent, quizzes }) => {
   return {
     isFetching: courses.isFetching || userContent.isFetching,
     userContents: userContentArray,
-    userQuizzes: quizzes.items
+    userQuizzes: quizzes.items,
+    learningMapId: learningMap.items._id
   };
 };
 
@@ -208,7 +276,9 @@ const mapDispatchToProps = {
   deleteUserContent,
   createPersonalQuiz,
   fetchQuiz,
-  addQuizToUserContent
+  addQuizToUserContent,
+  completeQuiz,
+  updateLearningMap
 };
 
 export default connect(
