@@ -17,7 +17,7 @@ class Table extends Component {
 
     return _.map(data, object => {
       return (
-        // A table row for each object (assignment, etc.)
+        // A table row for each object
         <tr key={object._id}>
           {_.map(Object.keys(fieldsObj), label => {
             // Getting the object key so that info can be accessed

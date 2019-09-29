@@ -7,7 +7,7 @@ const iconSize = 30;
 export const UniversityIcon = <FaUniversity size={iconSize} />;
 export const BookIcon = <FiBook size={iconSize} />;
 
-// Red, green or grey circle to indicate whether assignment is incomplete,
+// Red, green or grey circle to indicate whether content is incomplete,
 // complete, or in progress
 export const StatusIcon = (completed, inProgress, size) => {
   if (inProgress) {

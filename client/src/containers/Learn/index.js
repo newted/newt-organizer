@@ -127,7 +127,7 @@ const LearnPage = ({
     handleShowQuizModal();
 
     if (_.isEmpty(userContent.quizInfo)) {
-      // Create personal quiz and update assignment
+      // Create personal quiz and update user content
       const data = {
         contentId: userContent.contentInfo.contentId,
         userContentId: userContent._id

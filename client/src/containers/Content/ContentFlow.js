@@ -101,14 +101,14 @@ const ContentFlow = ({
             </div>
           </div>
         )}
-        {/* If assignment has a description, display it */}
+        {/* If content has a description, display it */}
         {content.description && (
           <>
             <h5 className={styles.subheading}>Description</h5>
             <p style={{ marginBottom: "1.75rem" }}>{content.description}</p>
           </>
         )}
-        {/* If assignment has a quiz, add step + display take quiz button */}
+        {/* If content has a quiz, add step + display take quiz button */}
         {content.hasQuiz && (
           <>
             <h5 className={styles.instruction}>2. Check your understanding</h5>

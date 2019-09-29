@@ -108,7 +108,7 @@ module.exports = app => {
             contentHistory.dateCompleted = Date.now();
 
             // Add "learning/ fields" (add content to content history and give a
-            // confidence rating) for each topic in the assignment/content
+            // confidence rating) for each topic in the content
             const evaluatedTopics = topics.map(topic => {
               return Object.assign(topic, {
                 contentHistory: [contentHistory],

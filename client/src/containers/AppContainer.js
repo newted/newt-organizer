@@ -19,9 +19,6 @@ import CourseList from "./Courses/CourseList";
 import CoursePage from "./Courses/CoursePage";
 import AddContent from "./Content/AddContent";
 import ContentPage from "./Content/ContentPage";
-import AddAssignment from "./Assignments/AddAssignment";
-import AssignmentList from "./Assignments/AssignmentList";
-import EditAssignment from "./Assignments/EditAssignment";
 import LearningMap from "./LearningMap";
 // Styling
 import styles from "./AppContainer.module.css";
@@ -74,16 +71,6 @@ class AppContainer extends Component {
             <PrivateRoute path="/profile" component={Profile} auth={auth} />
             {/* Courses based Routes */}
             <PrivateRoute
-              path="/courses/:courseId/assignments/add"
-              component={AddAssignment}
-              auth={auth}
-            />
-            <PrivateRoute
-              path="/courses/:courseId/assignments/:assignmentId/edit"
-              component={EditAssignment}
-              auth={auth}
-            />
-            <PrivateRoute
               path="/courses/:courseId"
               component={CoursePage}
               auth={auth}
@@ -106,12 +93,7 @@ class AppContainer extends Component {
               component={ContentPage}
               auth={auth}
             />
-            {/* Assignments based Routes */}
-            <PrivateRoute
-              path="/assignments/:assignmentId?"
-              component={AssignmentList}
-              auth={auth}
-            />
+            {/* Learning map route */}
             <PrivateRoute
               path="/learning-map"
               component={LearningMap}

@@ -41,7 +41,6 @@ class App extends Component {
               "/courses",
               "/learn",
               "/content",
-              "/assignments",
               "/profile",
               "/learning-map"
             ]}

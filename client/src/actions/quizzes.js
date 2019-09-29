@@ -40,7 +40,7 @@ export const createPersonalQuiz = data => async dispatch => {
     // Dispatch quiz to store
     dispatch({ type: CREATE_PERSONAL_QUIZ, payload: res.data });
 
-    // Return data (so it can be used to update an assignment)
+    // Return data (so it can be used to update the user content)
     return res.data;
   } catch (error) {
     dispatch({ type: RESOLVE_PERSONAL_QUIZ });

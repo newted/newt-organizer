@@ -92,7 +92,7 @@ const ContentPage = ({
     handleShowQuizModal();
 
     if (_.isEmpty(content.quizInfo)) {
-      // Create personal quiz and update assignment
+      // Create personal quiz and update userContent
       const data = {
         contentId: userContent.contentInfo.contentId,
         userContentId: userContent._id
