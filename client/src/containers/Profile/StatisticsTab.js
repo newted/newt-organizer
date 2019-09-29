@@ -27,24 +27,18 @@ function mapStateToProps({ auth, courses }) {
     ? moment(auth.item.dateCreated).format("MMM DD, YYYY")
     : "N/A";
   const numCourses = Object.keys(courses.items).length;
-
-  // let assignments = [];
-  // courseIds.forEach(courseId =>
-  //   assignments.push(...courses.items[courseId].assignments)
-  // );
-  // const numAssignments = assignments.length;
-  // const numCompletedAssignments = assignments.filter(
-  //   ({ completed }) => completed
-  // ).length;
-
-  // const percentAssignmentCompleted =
-  //   Math.round((numCompletedAssignments / numAssignments) * 100) + "%";
+  let allContent = [];
+  _.forEach(
+    courses.items,
+    ({ individualContent }) =>
+      (allContent = [...allContent, ...individualContent])
+  );
+  const numContent = allContent.length;
 
   const stats = {
     "User Since": userSince,
-    "Number of Courses": numCourses
-    // "Number of Assignments": numAssignments,
-    // "% Assignments Completed": `${percentAssignmentCompleted} \u2014 (${numCompletedAssignments} out of ${numAssignments})`
+    "Number of Courses": numCourses,
+    "Individual Content": numContent
   };
 
   return { stats };
