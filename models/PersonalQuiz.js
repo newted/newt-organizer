@@ -39,9 +39,9 @@ const personalQuizSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Content"
   },
-  assignmentId: {
+  userContentId: {
     type: Schema.Types.ObjectId,
-    ref: "Course.assignments"
+    ref: "UserContent"
   },
   // Used to indicate the number of times the same quiz was taken (aka which
   // iteration the user is on).

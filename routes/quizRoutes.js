@@ -24,7 +24,7 @@ module.exports = app => {
   app.post("/api/quiz/create", requireLogin, async (req, res) => {
     try {
       const userId = req.user.uid;
-      const { contentId, assignmentId, iteration } = req.body;
+      const { contentId, userContentId, iteration } = req.body;
 
       // Find the quiz for the particular content item
       const quiz = await Quiz.findOne({ contentId });
@@ -47,7 +47,6 @@ module.exports = app => {
           dateCreated: Date.now(),
           results: setupResults,
           contentId,
-          assignmentId,
           iteration
         });
 
