@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import moment from "moment";
 import { connect } from "react-redux";
-import { initializePrevAssignments } from "../../utils/containerHelpers";
+import { initializePrevWeeks } from "../../utils/containerHelpers";
 // API
 import { updateUserContent } from "../../actions/userContent";
 // Components
@@ -17,19 +17,19 @@ class Timeline extends Component {
     sidebar: PropTypes.shape({
       isCollapsed: PropTypes.bool
     }),
-    upcomingAssignments: PropTypes.arrayOf(PropTypes.object),
-    prevAssignments: PropTypes.arrayOf(
+    upcomingContent: PropTypes.arrayOf(PropTypes.object),
+    prevContent: PropTypes.arrayOf(
       PropTypes.shape({
         startDate: PropTypes.string,
         endDate: PropTypes.string,
-        assignments: PropTypes.arrayOf(PropTypes.object)
+        content: PropTypes.arrayOf(PropTypes.object)
       })
     )
   };
 
   // Variable to keep the last date used. When displaying the Timeline cards,
-  // if two assignments are to be done/due on the same date, then it doesn't
-  // make sense to render the same date twice. Instead, both assignments should
+  // if two content items are to be done/due on the same date, then it doesn't
+  // make sense to render the same date twice. Instead, both content items should
   // be under the one date heading. This constant allows for that date check.
   currentDate = "";
 
@@ -50,60 +50,60 @@ class Timeline extends Component {
     updateUserContent(userContentId, { isComplete: !currentCompletionState });
   };
 
-  renderUpcomingAssignments() {
-    const { upcomingAssignments } = this.props;
+  renderupcomingContent() {
+    const { upcomingContent } = this.props;
 
-    if (upcomingAssignments.length > 0) {
-      return _.map(upcomingAssignments, assignment => (
-        <Fragment key={assignment._id}>
-          {this.renderDate(assignment.dateDue)}
+    if (upcomingContent.length > 0) {
+      return _.map(upcomingContent, content => (
+        <Fragment key={content._id}>
+          {this.renderDate(content.dateDue)}
           <div className={styles.cardGroup}>
             <div className={styles.time}>
-              {moment(assignment.dateDue).format("hh:mm A")}
+              {moment(content.dateDue).format("hh:mm A")}
             </div>
             <TimelineCard
-              assignment={assignment}
+              userContent={content}
               toggleComplete={this.toggleContentCompletion}
-              key={assignment._id}
+              key={content._id}
             />
           </div>
         </Fragment>
       ));
     } else {
-      // If there are no assignments, return no content message
+      // If there is no content, return no content message
       return (
         <div className={styles.date}>
-          Set up assignments to see your Timeline here.
+          Add content to Learn to populate your Timeline.
         </div>
       );
     }
   }
 
-  renderPrevAssignments() {
-    const { prevAssignments } = this.props;
+  renderprevContent() {
+    const { prevContent } = this.props;
 
-    // If all 3 weeks have no assignments, display No Data message.
+    // If all 3 weeks have no content items, display No Data message.
     if (
-      prevAssignments[0].assignments.length === 0 &&
-      prevAssignments[1].assignments.length === 0 &&
-      prevAssignments[2].assignments.length === 0
+      prevContent[0].content.length === 0 &&
+      prevContent[1].content.length === 0 &&
+      prevContent[2].content.length === 0
     ) {
-      return <div>No assignment data available for previous weeks.</div>;
+      return <div>No learning data available for previous weeks.</div>;
     }
 
-    // Get number of assignments completed and percent completed for each
+    // Get number of content items completed and percent completed for each
     // week
-    return _.map(prevAssignments, (weekGroup, index) => {
+    return _.map(prevContent, (weekGroup, index) => {
       // Initialize variables
-      const total = weekGroup.assignments.length;
+      const total = weekGroup.content.length;
       let numCompleted = 0;
       let percentCompleted = "-";
 
       if (total > 0) {
-        // For each assignment, if it has been completed, increment the number
+        // For each content item, if it has been completed, increment the number
         // completed by 1
-        _.forEach(weekGroup.assignments, ({ completed }) => {
-          if (completed) {
+        _.forEach(weekGroup.content, ({ isComplete }) => {
+          if (isComplete) {
             numCompleted += 1;
           }
         });
@@ -112,11 +112,11 @@ class Timeline extends Component {
         percentCompleted = Math.round((numCompleted / total) * 100) + "%";
       }
 
-      // Always returns a card unless there were no assignments in all 3 prior
+      // Always returns a card unless there was no content in all 3 prior
       // weeks (the if statement above catches that).
       // A downside is that if a user is a week in of using the account, after
-      // the first week the previous assignments will show 3 weeks prior as
-      // having no assignments, even though the account wasn't created then.
+      // the first week the previous content items will show 3 weeks prior as
+      // having no content items, even though the account wasn't created then.
       // A solution to this is to cross-check with user_account_creation_date,
       // but that's not implemented yet so, for another day.
       return (
@@ -147,13 +147,11 @@ class Timeline extends Component {
       >
         <div className={styles.agendaContainer}>
           <h3 className={styles.header}>Your Next Two Weeks</h3>
-          <div className={styles.timeline}>
-            {this.renderUpcomingAssignments()}
-          </div>
+          <div className={styles.timeline}>{this.renderupcomingContent()}</div>
         </div>
         <div className={styles.prevWeekContainer}>
           <h3 className={styles.header}>Previous Weeks</h3>
-          <div className={styles.timeline}>{this.renderPrevAssignments()}</div>
+          <div className={styles.timeline}>{this.renderprevContent()}</div>
         </div>
       </div>
     );
@@ -161,46 +159,46 @@ class Timeline extends Component {
 }
 
 function mapStateToProps({ courses, sidebar }, { userContents }) {
-  const upcomingAssignments = [];
+  const upcomingContent = [];
   // Initialize as an array of 3 objects with each object representing one
   // week, so 3 weeks in total. Each object has a startDate, endDate, and
-  // assignments field. Each object contains the information for the previous
+  // content field. Each object contains the information for the previous
   // week, 2 weeks ago, and 3 weeks ago in that order.
-  let prevAssignments = initializePrevAssignments();
+  let prevContent = initializePrevWeeks();
 
   _.forEach(userContents, content => {
     content.courseName = courses.items[content.courseId].name;
     // Difference in week number between current week and week number that
-    // the assignment due date is in. 0 means it's the same week of year.
+    // the content due date is in. 0 means it's the same week of year.
     // Positive number means it's the weeks before, and negative number means
     // it's the weeks after.
     const weekDiff = moment().week() - moment(content.dateDue).week();
 
-    // Add assignment to upcoming list only if it is in the same week of year
+    // Add content to upcoming list only if it is in the same week of year
     // or one week ahead than the current week (within the next two weeks),
     // with week of year being number of weeks since Jan 1st.
     if (weekDiff === 0 || weekDiff === -1) {
-      upcomingAssignments.push(content);
+      upcomingContent.push(content);
     }
 
-    // Add assignment to previous week list if it is a lower week number than
+    // Add content to previous week list if it is a lower week number than
     // the current week.
     if (weekDiff > 0 && weekDiff <= 3) {
-      // Push assignment in descending order (most recent week
+      // Push content in descending order (most recent week
       // comes first). This is done by the index being 1 less than the week
       // difference. So if week diff is 1 (one week earlier), put the
-      // assignment in the 0th index array.
-      prevAssignments[weekDiff - 1].assignments.push(content);
+      // content in the 0th index array.
+      prevContent[weekDiff - 1].content.push(content);
     }
   });
 
   // Sort by due date
-  upcomingAssignments.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+  upcomingContent.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
 
   return {
     sidebar,
-    upcomingAssignments,
-    prevAssignments
+    upcomingContent,
+    prevContent
   };
 }
 

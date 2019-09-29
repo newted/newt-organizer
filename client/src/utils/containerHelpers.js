@@ -1,7 +1,7 @@
 import moment from "moment";
 
 // Sort two objects first by status (incomplete, in progress, complete), and
-// then by due date. (Used in Assignment Table)
+// then by due date.
 // Essentially, the `Show Completed` button should render the completed
 // items at the bottom of the table, but the incomplete and in progress
 // items should be ordered by descending order of due date.
@@ -32,12 +32,12 @@ export const statusDueDateSort = array => {
 // that goes into the Previous Weeks section in the Dashboard. There's 3
 // objects in the returned array, in descending order of previous 3 weeks. Each
 // object has a start and end date of that given week, as well as
-// the assignments that were done (or supposed to be done) that week.
-export const initializePrevAssignments = () => {
+// the content items that were done (or supposed to be done) that week.
+export const initializePrevWeeks = () => {
   const prevWeeks = [
-    { startDate: "", endDate: "", assignments: [] },
-    { startDate: "", endDate: "", assignments: [] },
-    { startDate: "", endDate: "", assignments: [] }
+    { startDate: "", endDate: "", content: [] },
+    { startDate: "", endDate: "", content: [] },
+    { startDate: "", endDate: "", content: [] }
   ];
 
   const currentWeek = moment().week();

@@ -7,7 +7,7 @@ import { FiFileText, FiCheckSquare } from "react-icons/fi";
 import { shortenText } from "../../utils/containerHelpers";
 
 const TimelineCard = ({
-  assignment: { _id, name, courseId, courseName, description, isComplete },
+  userContent: { _id, name, courseId, courseName, description, isComplete },
   toggleComplete
 }) => (
   <div
