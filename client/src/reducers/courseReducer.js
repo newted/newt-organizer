@@ -7,6 +7,7 @@ import {
   UPDATE_COURSE,
   DELETE_COURSE
 } from "../actions/courses";
+import { GET_DEMO_COURSES } from "../actions/demo";
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -60,6 +61,11 @@ export default function(
         ...state,
         isFetching: false,
         items: deleteItemFromObject(state.items, action.payload)
+      };
+    case GET_DEMO_COURSES:
+      return {
+        ...state,
+        items: action.payload
       };
     default:
       return state;

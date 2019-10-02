@@ -49,8 +49,10 @@ const NewCoursePage = ({
   const { addToast } = useToasts();
 
   useEffect(() => {
-    // Fetch content for the course and set to state
-    fetchCourseContent(courseId);
+    if (!courses.items[courseId]) {
+      // Fetch content for the course and set to state
+      fetchCourseContent(courseId);
+    }
   }, [courseId, fetchCourseContent]);
 
   useEffect(() => {

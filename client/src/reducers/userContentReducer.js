@@ -6,6 +6,7 @@ import {
   UPDATE_USER_CONTENT,
   DELETE_USER_CONTENT
 } from "../actions/userContent";
+import { GET_DEMO_USER_CONTENT } from "../actions/demo";
 import {
   dataArrayToObject,
   deleteItemFromObject
@@ -51,6 +52,11 @@ export default function(
         ...state,
         isFetching: false,
         items: deleteItemFromObject(state.items, action.payload)
+      };
+    case GET_DEMO_USER_CONTENT:
+      return {
+        ...state,
+        items: action.payload
       };
     default:
       return state;

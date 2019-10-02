@@ -15,197 +15,232 @@ const futureDueDater = numDays => {
     .format();
 };
 
-const programs = {
+const courses = {
   P001: {
-    courses: ["C001", "C002"],
+    individualContent: ["C001", "C002", "C003", "C010"],
     dateCreated: "2019-02-18T21:25:23.916Z",
-    institution: "Udacity",
-    name: "React Nanodegree",
+    name: "React Fundamentals",
     _id: "P001",
     _user: "demouser"
   },
   P002: {
-    courses: ["C003", "C004"],
-    dateCreated: "2019-02-19T21:25:23.916Z",
-    institution: "Crash Course",
-    name: "Crash Course",
+    individualContent: ["C004", "C005"],
+    dateCreated: "2019-02-18T21:25:23.916Z",
+    name: "Intro to Redux",
     _id: "P002",
+    _user: "demouser"
+  },
+  P003: {
+    individualContent: ["C006", "C007", "C008", "C009"],
+    dateCreated: "2019-02-19T21:25:23.916Z",
+    name: "Crash Course World History",
+    _id: "P003",
+    _user: "demouser"
+  },
+  P004: {
+    individualContent: ["C011"],
+    dateCreated: "2019-02-19T21:25:23.916Z",
+    name: "Crash Course Computer Science",
+    _id: "P004",
     _user: "demouser"
   }
 };
 
-const courses = {
+const userContent = {
   C001: {
-    assignments: [
-      {
-        completed: true,
-        dateCreated: "2019-02-19T21:25:48.205Z",
-        dateDue: prevDueDater(20),
-        details: "Learn about JSX, a JavaScript syntax extension.",
-        inProgress: false,
-        name: "Practicing JSX",
-        _id: "A001"
-      },
-      {
-        completed: false,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: prevDueDater(10),
-        details: "The building blocks of React.",
-        inProgress: true,
-        name: "Function and Class Components",
-        _id: "A002"
-      },
-      {
-        completed: false,
-        dateCreated: "2019-02-20T23:25:48.205Z",
-        dateDue: futureDueDater(2),
-        details: "Storing and using component-specific data.",
-        inProgress: false,
-        name: "Managing State",
-        _id: "A003"
-      },
-      {
-        completed: false,
-        dateCreated: "2019-02-20T23:25:48.205Z",
-        dateDue: futureDueDater(8),
-        details: "Handling events with React elements.",
-        inProgress: false,
-        name: "Handling Events",
-        _id: "A010"
-      }
-    ],
-    dataCreated: "2019-02-19T21:25:23.916Z",
-    name: "React Fundamentals",
-    programId: "P001",
+    isComplete: true,
+    dateCreated: "2019-02-19T21:25:48.205Z",
+    dateDue: prevDueDater(20),
+    description: "Learn about JSX, a JavaScript syntax extension.",
+    inProgress: false,
+    name: "Practicing JSX",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
     _id: "C001"
   },
   C002: {
-    assignments: [
-      {
-        completed: true,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: prevDueDater(11),
-        inProgress: false,
-        name: "Actions and Reducers",
-        _id: "A004"
-      },
-      {
-        completed: true,
-        dateCreated: "2019-02-20T21:25:55.205Z",
-        dateDue: prevDueDater(4),
-        inProgress: false,
-        name: "Redux Store",
-        _id: "A005"
-      }
-    ],
-    dataCreated: "2019-02-20T21:25:23.916Z",
-    name: "Intro to Redux",
-    programId: "P001",
+    isComplete: false,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: prevDueDater(10),
+    description: "The building blocks of React.",
+    inProgress: true,
+    name: "Function and Class Components",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
     _id: "C002"
   },
   C003: {
-    assignments: [
-      {
-        completed: true,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: prevDueDater(3),
-        details: "John Green investigates the dawn of human civilization.",
-        inProgress: false,
-        name: "The Agricultural Revolution",
-        _id: "A006"
-      },
-      {
-        completed: true,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: prevDueDater(1),
-        details:
-          "John Green teaches you about one of the largest of the ancient civilizations.",
-        inProgress: false,
-        name: "Indus Valley Civilization",
-        _id: "A007"
-      },
-      {
-        completed: false,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: futureDueDater(2),
-        details:
-          "John presents Mesopotamia, and the early civilizations that arose around the Fertile Crescent",
-        inProgress: false,
-        name: "Mesopotamia",
-        _id: "A008"
-      },
-      {
-        completed: false,
-        dateCreated: "2019-02-20T21:25:48.205Z",
-        dateDue: futureDueDater(4),
-        details: "John covers the long, long history of ancient Egypt.",
-        inProgress: false,
-        name: "Ancient Egypt",
-        _id: "A009"
-      }
-    ],
-    dateCreated: "2019-02-20T21:25:23.916Z",
-    name: "Crash Course World History",
-    programId: "P002",
+    isComplete: false,
+    dateCreated: "2019-02-20T23:25:48.205Z",
+    dateDue: futureDueDater(2),
+    description: "Storing and using component-specific data.",
+    inProgress: false,
+    name: "Managing State",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
     _id: "C003"
   },
+  C010: {
+    isComplete: false,
+    dateCreated: "2019-02-20T23:25:48.205Z",
+    dateDue: futureDueDater(8),
+    description: "Handling events with React elements.",
+    inProgress: false,
+    name: "Handling Events",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C010"
+  },
   C004: {
-    assignments: [
-      {
-        completed: false,
-        dateCreated: "2019-08-08T21:25:48.205Z",
-        dateDue: futureDueDater(1),
-        details:
-          "We're going to take a look at computing's origins, because even though our digital computers are relatively new, the need for computation is not!",
-        inProgress: false,
-        name: "Early Computing: Crash Course Computer Science #1",
-        _id: "A011",
-        videoInfo: {
-          thumbnails: {
-            maxres: {
-              url: "https://i.ytimg.com/vi/O5nskjZ_GoI/maxresdefault.jpg",
-              width: 1280,
-              height: 720
-            }
-          },
-          videoId: "O5nskjZ_GoI",
-          channelId: "UCX6b17PVsYBQ0ip5gyeme-Q",
-          datePublished: {
-            $date: "2017-02-22T22:00:02.000Z"
-          }
-        },
-        hasKnowledgeTracking: true,
-        contentInfo: {
-          primaryTopics: [
-            { name: "abacus" },
-            { name: "Analytical Engine" },
-            { name: "Hollerith Machine" },
-            { name: "pre-computed tables" },
-            { name: "punch cards" },
-            { name: "Step Reckoner" }
-          ]
-        },
-        knowledgeModule: {
-          name: "History of Computer Science"
-        },
-        source: "youtube"
-      }
-    ],
-    dateCreated: "2019-08-08T21:25:48.205Z",
-    name: "Crash Course Computer Science",
-    programId: "P002",
+    isComplete: true,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: prevDueDater(11),
+    inProgress: false,
+    name: "Actions and Reducers",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
     _id: "C004"
+  },
+  C005: {
+    isComplete: true,
+    dateCreated: "2019-02-20T21:25:55.205Z",
+    dateDue: prevDueDater(4),
+    inProgress: false,
+    name: "Redux Store",
+    courseId: "P001",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C005"
+  },
+  C006: {
+    isComplete: true,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: prevDueDater(3),
+    description: "John Green investigates the dawn of human civilization.",
+    inProgress: false,
+    name: "The Agricultural Revolution",
+    courseId: "P002",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C006"
+  },
+  C007: {
+    isComplete: true,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: prevDueDater(1),
+    description:
+      "John Green teaches you about one of the largest of the ancient civilizations.",
+    inProgress: false,
+    name: "Indus Valley Civilization",
+    courseId: "P002",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C007"
+  },
+  C008: {
+    isComplete: false,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: futureDueDater(2),
+    description:
+      "John presents Mesopotamia, and the early civilizations that arose around the Fertile Crescent",
+    inProgress: false,
+    name: "Mesopotamia",
+    courseId: "P002",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C008"
+  },
+  C009: {
+    isComplete: false,
+    dateCreated: "2019-02-20T21:25:48.205Z",
+    dateDue: futureDueDater(4),
+    description: "John covers the long, long history of ancient Egypt.",
+    inProgress: false,
+    name: "Ancient Egypt",
+    courseId: "P002",
+    sourceInfo: {
+      name: "user"
+    },
+    contentInfo: {},
+    _id: "C009"
+  },
+  C011: {
+    isComplete: false,
+    partOfCollection: false,
+    dateCreated: "2019-08-08T21:25:48.205Z",
+    dateDue: futureDueDater(1),
+    description:
+      "We're going to take a look at computing's origins, because even though our digital computers are relatively new, the need for computation is not!",
+    inProgress: false,
+    courseId: "P004",
+    name: "Early Computing: Crash Course Computer Science #1",
+    _id: "C011",
+    videoInfo: {
+      thumbnails: {
+        maxres: {
+          url: "https://i.ytimg.com/vi/O5nskjZ_GoI/maxresdefault.jpg",
+          width: 1280,
+          height: 720
+        }
+      },
+      videoId: "O5nskjZ_GoI",
+      channelId: "UCX6b17PVsYBQ0ip5gyeme-Q",
+      datePublished: {
+        $date: "2017-02-22T22:00:02.000Z"
+      }
+    },
+    hasKnowledgeTracking: true,
+    hasQuiz: false,
+    contentInfo: {
+      primaryTopics: [
+        { name: "abacus" },
+        { name: "Analytical Engine" },
+        { name: "Hollerith Machine" },
+        { name: "pre-computed tables" },
+        { name: "punch cards" },
+        { name: "Step Reckoner" }
+      ]
+    },
+    knowledgeModule: {
+      name: "History of Computer Science"
+    },
+    sourceInfo: {
+      name: "YouTube"
+    }
   }
 };
-
-export function _getPrograms() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...programs }), 300);
-  });
-}
 
 export function _getCourses() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...courses }), 300);
+  });
+}
+
+export function _getUserContent() {
+  return new Promise((res, rej) => {
+    setTimeout(() => res({ ...userContent }), 300);
   });
 }
