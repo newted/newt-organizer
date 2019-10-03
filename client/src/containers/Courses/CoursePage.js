@@ -53,7 +53,7 @@ const NewCoursePage = ({
       // Fetch content for the course and set to state
       fetchCourseContent(courseId);
     }
-  }, [courseId, fetchCourseContent]);
+  }, [courses.items, courseId, fetchCourseContent]);
 
   useEffect(() => {
     // Filter out course which matches page's courseId

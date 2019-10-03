@@ -1,6 +1,13 @@
 import { setAuthedUser } from "./authedUser";
 // Demo data
-import { _getCourses, _getUserContent } from "../utils/demoData";
+import {
+  _getCourses,
+  _getUserContent,
+  _getLearningMap,
+  _getKnowledgeMap
+} from "../utils/demoData";
+import { GET_LEARNING_MAP } from "./learningMap";
+import { GET_KNOWLEDGE_MAPS } from "./knowledgeMap";
 
 export const GET_DEMO_COURSES = "GET_DEMO_COURSES";
 export const GET_DEMO_USER_CONTENT = "GET_DEMO_USER_CONTENT";
@@ -25,6 +32,8 @@ export const signInDemoUser = history => async dispatch => {
   // Get demo programs and courses data
   const courses = await _getCourses();
   const userContent = await _getUserContent();
+  const learningMap = await _getLearningMap();
+  const knowledgeMap = await _getKnowledgeMap();
 
   // Add courses and user content data to store
   dispatch({
@@ -34,5 +43,13 @@ export const signInDemoUser = history => async dispatch => {
   dispatch({
     type: GET_DEMO_USER_CONTENT,
     payload: userContent
+  });
+  dispatch({
+    type: GET_LEARNING_MAP,
+    payload: learningMap
+  });
+  dispatch({
+    type: GET_KNOWLEDGE_MAPS,
+    payload: knowledgeMap
   });
 };

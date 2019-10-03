@@ -26,7 +26,7 @@ import styles from "./AppContainer.module.css";
 class AppContainer extends Component {
   // Fetch data
   componentDidMount() {
-    if (this.props.auth.exists) {
+    if (this.props.auth.exists && this.props.auth.item._id !== "demouser") {
       // Get a user's learning map
       this.props.getLearningMap();
       // Fetch user's courses

@@ -233,6 +233,143 @@ const userContent = {
   }
 };
 
+const learningMap = {
+  _id: "demo-learning-map",
+  knowledgeMap: ["history-of-comp-sci-k-map"],
+  dateCreated: "2019-09-23T01:43:12.726Z",
+  lastUpdated: "2019-09-23T01:43:12.726Z",
+  _user: "demouser"
+};
+
+const knowledgeMap = {
+  "Computer Science": {
+    "History of Computer Science": {
+      contentHistory: [
+        {
+          name: "Early Computing",
+          dateCompleted: "2019-09-23T01:43:12.726Z",
+          contentId: "C011"
+        }
+      ],
+      knowledgeModule: {
+        name: "History of Computer Science",
+        knowledgeModuleId: "history-of-comp-sci-k-map"
+      },
+      knowledgeSubject: {
+        name: "Computer Science",
+        knowledgeSubjectId: "comp-sci-k-map"
+      },
+      learningMapId: "demo-learning-map",
+      topics: [
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Analytical Engine",
+          category: "entity",
+          topicId: "analytical-engine"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "punch cards",
+          category: "entity",
+          topicId: "punch-cards"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "astrolabe",
+          category: "entity",
+          topicId: "astrolabe"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Difference Engine",
+          category: "entity",
+          topicId: "difference-engine"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Ada Lovelace",
+          category: "person",
+          topicId: "ada-lovelace"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Charles Babbage",
+          category: "person",
+          topicId: "charles-babbage"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Gottfried Leibniz",
+          category: "person",
+          topicId: "gottfried-leibniz"
+        },
+        {
+          confidenceRating: 70,
+          contentHistory: [
+            {
+              name: "Early Computing",
+              contentId: "C011",
+              dateCompleted: "2019-09-23T01:43:12.726Z"
+            }
+          ],
+          name: "Herman Hollerith",
+          category: "person",
+          topicId: "herman-hollerith"
+        }
+      ]
+    }
+  }
+};
+
 export function _getCourses() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...courses }), 300);
@@ -242,5 +379,17 @@ export function _getCourses() {
 export function _getUserContent() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...userContent }), 300);
+  });
+}
+
+export function _getLearningMap() {
+  return new Promise((res, rej) => {
+    setTimeout(() => res({ ...learningMap }), 300);
+  });
+}
+
+export function _getKnowledgeMap() {
+  return new Promise((res, rej) => {
+    setTimeout(() => res({ ...knowledgeMap }), 300);
   });
 }
