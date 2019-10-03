@@ -6,8 +6,10 @@ import {
   _getLearningMap,
   _getKnowledgeMap
 } from "../utils/demoData";
-import { GET_LEARNING_MAP } from "./learningMap";
-import { GET_KNOWLEDGE_MAPS } from "./knowledgeMap";
+import { REQUEST_COURSES } from "./courses";
+import { REQUEST_USER_CONTENT } from "./userContent";
+import { REQUEST_LEARNING_MAP, GET_LEARNING_MAP } from "./learningMap";
+import { REQUEST_KNOWLEDGE_MAP, GET_KNOWLEDGE_MAPS } from "./knowledgeMap";
 
 export const GET_DEMO_COURSES = "GET_DEMO_COURSES";
 export const GET_DEMO_USER_CONTENT = "GET_DEMO_USER_CONTENT";
@@ -28,6 +30,11 @@ export const signInDemoUser = history => async dispatch => {
 
   // Redirect to dashbaord
   history.push("/dashboard");
+
+  dispatch({ type: REQUEST_COURSES });
+  dispatch({ type: REQUEST_USER_CONTENT });
+  dispatch({ type: REQUEST_LEARNING_MAP });
+  dispatch({ type: REQUEST_KNOWLEDGE_MAP });
 
   // Get demo programs and courses data
   const courses = await _getCourses();

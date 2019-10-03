@@ -65,6 +65,7 @@ export default function(
     case GET_DEMO_COURSES:
       return {
         ...state,
+        isFetching: false,
         items: action.payload
       };
     default:

@@ -4,6 +4,7 @@ import firebase from "../config/firebase";
 export const REQUEST_SIGN_IN_USER = "REQUEST_SIGN_IN_USER";
 export const SET_AUTHED_USER = "SET_AUTHED_USER";
 export const REMOVE_AUTHED_USER = "REMOVE_AUTHED_USER";
+export const RESET_APP = "RESET_APP";
 
 const requestSignInUser = () => {
   return {
@@ -97,6 +98,7 @@ export const authenticateWithGithub = history => dispatch => {
 export const signOut = () => async dispatch => {
   await firebase.auth().signOut();
   dispatch(removeAuthedUser());
+  dispatch({ type: RESET_APP });
 };
 
 // General function that uses Firebase authentication service (popup)

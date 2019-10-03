@@ -56,6 +56,7 @@ export default function(
     case GET_DEMO_USER_CONTENT:
       return {
         ...state,
+        isFetching: false,
         items: action.payload
       };
     default:
