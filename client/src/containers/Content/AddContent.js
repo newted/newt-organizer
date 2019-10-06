@@ -16,6 +16,7 @@ import TabContainer from "react-bootstrap/TabContainer";
 import ContentForm from "./ContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
 import YoutubeConfirmation from "./YoutubeConfirmation";
+import BookContentForm from "./BookContentForm";
 // API
 import {
   createUserContent,
@@ -75,6 +76,11 @@ const AddContent = ({ location, history, createUserContent }) => {
                     YouTube
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item as={CustomNavItem}>
+                  <Nav.Link as={CustomNavLink} eventKey="book">
+                    Book
+                  </Nav.Link>
+                </Nav.Item>
               </Nav>
             </Col>
             <Col lg={9} className={styles.tabPane}>
@@ -94,6 +100,9 @@ const AddContent = ({ location, history, createUserContent }) => {
                   ) : (
                     <YoutubeContentForm onNext={handleGoToConfirmationPage} />
                   )}
+                </TabPane>
+                <TabPane eventKey="book">
+                  <BookContentForm />
                 </TabPane>
               </TabContent>
             </Col>
