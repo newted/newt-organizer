@@ -17,6 +17,7 @@ import ContentForm from "./ContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
 import YoutubeConfirmation from "./YoutubeConfirmation";
 import BookContentForm from "./BookContentForm";
+import BookSearchResults from "./BookSearchResults";
 // API
 import {
   createUserContent,
@@ -29,6 +30,7 @@ import styles from "./AddContent.module.css";
 const AddContent = ({ location, history, createUserContent }) => {
   const [onConfirmationPage, setOnConfirmationPage] = useState(false);
   const [videoContentInfo, setVideoContentInfo] = useState({});
+  const [bookSearchResults, setBookSearchResults] = useState(null);
 
   // Function to handle creating default content
   const handleDefaultFormSubmit = values => {
@@ -56,8 +58,9 @@ const AddContent = ({ location, history, createUserContent }) => {
 
   const handleGetBookSearchResults = async values => {
     const { title, author } = values;
-    const bookSearchResults = await getBookInfo(title, author);
-    console.log(bookSearchResults);
+    const result = await getBookInfo(title, author);
+    console.log(result);
+    setBookSearchResults(result.items);
   };
 
   return (
@@ -110,6 +113,9 @@ const AddContent = ({ location, history, createUserContent }) => {
                 </TabPane>
                 <TabPane eventKey="book">
                   <BookContentForm onSubmit={handleGetBookSearchResults} />
+                  {bookSearchResults ? (
+                    <BookSearchResults books={bookSearchResults} />
+                  ) : null}
                 </TabPane>
               </TabContent>
             </Col>
