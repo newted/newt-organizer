@@ -6,10 +6,10 @@ import Form from "react-bootstrap/Form";
 // Styling
 import styles from "./AddContent.module.css";
 
-const BookContentForm = () => (
+const BookContentForm = ({ onSubmit }) => (
   <Formik
     initialValues={{ title: "", author: "" }}
-    onSubmit={values => console.log(values)}
+    onSubmit={values => onSubmit(values)}
   >
     {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
       <Form noValidate onSubmit={handleSubmit}>

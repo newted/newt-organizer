@@ -160,3 +160,19 @@ export async function getYoutubeVideoInfo(url) {
     }
   }
 }
+
+export async function getBookInfo(title, author) {
+  const formattedTitle = title.split(" ").join("+");
+  const formattedAuthor = author ? author.split(" ").join("+") : null;
+  let url = `https://www.googleapis.com/books/v1/volumes?q=${formattedTitle}`;
+
+  if (formattedAuthor) {
+    url = url + `+${formattedAuthor}`;
+  }
+
+  const res = await axios.get(url);
+
+  return res.data;
+}
+
+getBookInfo("bad blood", "carreyrou");

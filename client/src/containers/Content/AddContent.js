@@ -20,7 +20,8 @@ import BookContentForm from "./BookContentForm";
 // API
 import {
   createUserContent,
-  getYoutubeVideoInfo
+  getYoutubeVideoInfo,
+  getBookInfo
 } from "../../actions/userContent";
 // Styles
 import styles from "./AddContent.module.css";
@@ -51,6 +52,12 @@ const AddContent = ({ location, history, createUserContent }) => {
     const data = { ...values, ...videoContentInfo };
     createUserContent(data, courseId);
     history.push(`/courses/${courseId}`);
+  };
+
+  const handleGetBookSearchResults = async values => {
+    const { title, author } = values;
+    const bookSearchResults = await getBookInfo(title, author);
+    console.log(bookSearchResults);
   };
 
   return (
@@ -102,7 +109,7 @@ const AddContent = ({ location, history, createUserContent }) => {
                   )}
                 </TabPane>
                 <TabPane eventKey="book">
-                  <BookContentForm />
+                  <BookContentForm onSubmit={handleGetBookSearchResults} />
                 </TabPane>
               </TabContent>
             </Col>
