@@ -1,13 +1,18 @@
 import React from "react";
+// Components
+import {
+  MainContainer,
+  HeaderContainer
+} from "../../components/PageContainers";
 
-const BookSearchResults = ({ books }) => (
-  <div style={{ marginTop: "2rem " }}>
-    <ul>
-      {books.map(book => (
-        <li>{book.volumeInfo.title}</li>
-      ))}
-    </ul>
-  </div>
-);
+const BookSearchResults = ({ location }) => {
+  return (
+    <MainContainer>
+      <HeaderContainer>
+        <h4>Search Results</h4>
+      </HeaderContainer>
+    </MainContainer>
+  );
+};
 
 export default BookSearchResults;

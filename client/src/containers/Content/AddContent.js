@@ -17,12 +17,10 @@ import ContentForm from "./ContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
 import YoutubeConfirmation from "./YoutubeConfirmation";
 import BookContentForm from "./BookContentForm";
-import BookSearchResults from "./BookSearchResults";
 // API
 import {
   createUserContent,
-  getYoutubeVideoInfo,
-  getBookInfo
+  getYoutubeVideoInfo
 } from "../../actions/userContent";
 // Styles
 import styles from "./AddContent.module.css";
@@ -30,7 +28,6 @@ import styles from "./AddContent.module.css";
 const AddContent = ({ location, history, createUserContent }) => {
   const [onConfirmationPage, setOnConfirmationPage] = useState(false);
   const [videoContentInfo, setVideoContentInfo] = useState({});
-  const [bookSearchResults, setBookSearchResults] = useState(null);
 
   // Function to handle creating default content
   const handleDefaultFormSubmit = values => {
@@ -56,11 +53,16 @@ const AddContent = ({ location, history, createUserContent }) => {
     history.push(`/courses/${courseId}`);
   };
 
-  const handleGetBookSearchResults = async values => {
+  const handleGoToBookSearchResults = async values => {
     const { title, author } = values;
-    const result = await getBookInfo(title, author);
-    console.log(result);
-    setBookSearchResults(result.items);
+    let url = `/content/add/book-search?title=${title}`;
+
+    // Add author to url if any value was entered
+    if (author) {
+      url = url + `&author=${author}`;
+    }
+    // Go to search results page
+    history.push(url);
   };
 
   return (
@@ -112,10 +114,7 @@ const AddContent = ({ location, history, createUserContent }) => {
                   )}
                 </TabPane>
                 <TabPane eventKey="book">
-                  <BookContentForm onSubmit={handleGetBookSearchResults} />
-                  {bookSearchResults ? (
-                    <BookSearchResults books={bookSearchResults} />
-                  ) : null}
+                  <BookContentForm onSubmit={handleGoToBookSearchResults} />
                 </TabPane>
               </TabContent>
             </Col>

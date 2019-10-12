@@ -18,6 +18,7 @@ import LearnPage from "./Learn";
 import CourseList from "./Courses/CourseList";
 import CoursePage from "./Courses/CoursePage";
 import AddContent from "./Content/AddContent";
+import BookSearchResults from "./Content/BookSearchResults";
 import ContentPage from "./Content/ContentPage";
 import LearningMap from "./LearningMap";
 // Styling
@@ -83,6 +84,11 @@ class AppContainer extends Component {
               auth={auth}
             />
             {/* Content routes */}
+            <PrivateRoute
+              path="/content/add/book-search"
+              component={BookSearchResults}
+              auth={auth}
+            />
             <PrivateRoute
               path="/content/add"
               component={AddContent}
