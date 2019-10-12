@@ -164,14 +164,11 @@ export async function getYoutubeVideoInfo(url) {
 export async function getBookInfo(title, author) {
   const formattedTitle = title.split(" ").join("+");
   const formattedAuthor = author ? author.split(" ").join("+") : null;
-  let url = `https://www.googleapis.com/books/v1/volumes?q=${formattedTitle}`;
+  const searchString = formattedAuthor
+    ? `${formattedTitle}+${formattedAuthor}`
+    : formattedTitle;
 
-  if (formattedAuthor) {
-    url = url + `+${formattedAuthor}`;
-  }
-
-  const res = await axios.get(url);
-
+  const res = await axios.get(`/api/book-search/${searchString}`);
   return res.data;
 }
 

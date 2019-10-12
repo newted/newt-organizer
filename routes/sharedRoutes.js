@@ -99,4 +99,17 @@ module.exports = app => {
       res.send(error);
     }
   });
+
+  // Get book info through Google Books API
+  app.get("/api/book-search/:searchString", async (req, res) => {
+    const { searchString } = req.params;
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${searchString}&key=${keys.youtubeApiKey}`;
+
+    try {
+      const { data } = await axios.get(url);
+      res.send(data);
+    } catch (error) {
+      res.send(error);
+    }
+  });
 };
