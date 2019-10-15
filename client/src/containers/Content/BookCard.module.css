@@ -23,6 +23,17 @@
   color: var(--grey);
 }
 
+.pageCount {
+  font-size: 0.8rem;
+  color: var(--grey);
+}
+
+.description {
+  margin-top: 1rem;
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
 @media screen and (max-width: 1050px) {
   .bookCard {
     width: 46%;

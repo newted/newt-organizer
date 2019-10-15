@@ -2,9 +2,11 @@ import React from "react";
 import _ from "lodash";
 // Styling
 import styles from "./BookCard.module.css";
+// Helpers
+import { shortenText } from "../../utils/containerHelpers";
 
 const BookCard = ({ bookInfo }) => {
-  const { title, authors } = bookInfo.volumeInfo;
+  const { title, authors, pageCount, description } = bookInfo.volumeInfo;
 
   return (
     <div className={styles.bookCard}>
@@ -14,10 +16,16 @@ const BookCard = ({ bookInfo }) => {
         className={styles.bookThumbnail}
       />
       <div>
-        <h5 className={styles.title}>{bookInfo.volumeInfo.title}</h5>
+        <h5 className={styles.title}>{title}</h5>
         <p className={styles.author}>
           {!_.isEmpty(authors) ? authors.join(", ") : "N/A"}
         </p>
+        {pageCount && (
+          <p className={styles.pageCount}>{`${pageCount} pages`}</p>
+        )}
+        {description && (
+          <p className={styles.description}>{shortenText(description, 70)}</p>
+        )}
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ const BookSearchResults = ({ location }) => {
       getResults(title, author);
     }
   }, [location.search]);
+  console.log(searchResults);
 
   return (
     <MainContainer>
