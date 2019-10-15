@@ -7,8 +7,11 @@ import {
   HeaderContainer,
   ContentContainer
 } from "../../components/PageContainers";
+import BookCard from "./BookCard";
 // API
 import { getBookInfo } from "../../actions/userContent";
+// Styling
+import styles from "./BookSearchResults.module.css";
 
 const BookSearchResults = ({ location }) => {
   const [searchResults, setSearchResults] = useState(null);
@@ -32,7 +35,10 @@ const BookSearchResults = ({ location }) => {
       <HeaderContainer>
         <h4>Search Results</h4>
       </HeaderContainer>
-      <ContentContainer>{JSON.stringify(searchResults)}</ContentContainer>
+      <ContentContainer className={styles.cardContainer}>
+        {!_.isEmpty(searchResults) &&
+          searchResults.map(book => <BookCard bookInfo={book} key={book.id} />)}
+      </ContentContainer>
     </MainContainer>
   );
 };
