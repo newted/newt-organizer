@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 // Styling
 import styles from "./BookCard.module.css";
+import { FiPlus } from "react-icons/fi";
 // Helpers
 import { shortenText } from "../../utils/containerHelpers";
 
@@ -16,7 +17,16 @@ const BookCard = ({ bookInfo }) => {
         className={styles.bookThumbnail}
       />
       <div>
-        <h5 className={styles.title}>{title}</h5>
+        <div className={styles.titleContainer}>
+          <h5>{title}</h5>
+          <div
+            className={styles.iconContainer}
+            onClick={() => alert(`Add ${title} to course`)}
+          >
+            <FiPlus size={19} color="white" />
+          </div>
+        </div>
+
         <p className={styles.author}>
           {!_.isEmpty(authors) ? authors.join(", ") : "N/A"}
         </p>

@@ -14,8 +14,26 @@
   box-shadow: 0px 10px 40px -10px rgba(0, 64, 128, 0.2);
 }
 
-.title {
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 0.3rem;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 19px;
+  width: 19px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: #86e29b;
+}
+
+.iconContainer:hover {
+  background-color: var(--lightGreen);
 }
 
 .author {
