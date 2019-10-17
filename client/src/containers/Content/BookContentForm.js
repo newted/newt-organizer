@@ -6,14 +6,24 @@ import Form from "react-bootstrap/Form";
 // Styling
 import styles from "./AddContent.module.css";
 
-const BookContentForm = ({ onSubmit }) => (
+const BookContentForm = ({ onSubmit, direction = "vertical" }) => (
   <Formik
     initialValues={{ title: "", author: "" }}
     onSubmit={values => onSubmit(values)}
+    direction={direction}
   >
     {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
-      <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group controlId="title">
+      <Form
+        noValidate
+        onSubmit={handleSubmit}
+        className={direction === "horizontal" ? styles.horizontalForm : null}
+      >
+        <Form.Group
+          className={
+            direction === "horizontal" ? styles.horizontalFormGroup : null
+          }
+          controlId="title"
+        >
           <Form.Label className={styles.formLabel}>Title</Form.Label>
           <Form.Control
             type="text"
@@ -27,7 +37,12 @@ const BookContentForm = ({ onSubmit }) => (
             {errors.title}
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group controlId="author">
+        <Form.Group
+          className={
+            direction === "horizontal" ? styles.horizontalFormGroup : null
+          }
+          controlId="author"
+        >
           <Form.Label className={styles.formLabel}>Author</Form.Label>
           <Form.Control
             type="text"
@@ -41,11 +56,21 @@ const BookContentForm = ({ onSubmit }) => (
             {errors.author}
           </Form.Control.Feedback>
         </Form.Group>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          className={
+            direction === "horizontal"
+              ? styles.searchButtonContainerHorizontal
+              : styles.searchButtonContainer
+          }
+        >
           <Button
             category="primary"
             type="submit"
-            style={{ width: "300px", marginTop: "2rem" }}
+            additionalClass={
+              direction === "horizontal"
+                ? styles.searchButtonHorizontal
+                : styles.searchButton
+            }
           >
             Search
           </Button>

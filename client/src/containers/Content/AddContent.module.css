@@ -20,6 +20,21 @@
   font-weight: 500;
 }
 
+.horizontalForm {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.horizontalFormGroup {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+  margin-right: 2rem;
+  width: 40%;
+  min-width: 200px;
+}
+
 .optional {
   margin-left: 0.5rem;
   font-size: 0.9rem;
@@ -45,4 +60,26 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+.searchButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.searchButtonContainerHorizontal {
+  display: flex;
+  align-items: flex-end;
+}
+
+.searchButton {
+  width: 300px;
+  margin-top: 2rem;
+}
+
+.searchButtonHorizontal {
+  margin-top: 0;
+  width: 200px;
+  min-width: 100px;
+  height: 35px;
 }

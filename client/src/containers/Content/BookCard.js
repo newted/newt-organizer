@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import _ from "lodash";
 // Styling
 import styles from "./BookCard.module.css";

@@ -7,6 +7,7 @@ import {
   HeaderContainer,
   ContentContainer
 } from "../../components/PageContainers";
+import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
 // API
 import { getBookInfo } from "../../actions/userContent";
@@ -29,10 +30,12 @@ const BookSearchResults = ({ location }) => {
       getResults(title, author);
     }
   }, [location.search]);
-  console.log(searchResults);
 
   return (
     <MainContainer>
+      <ContentContainer className={styles.searchContainer}>
+        <BookContentForm direction="horizontal" />
+      </ContentContainer>
       <HeaderContainer>
         <h4>Search Results</h4>
       </HeaderContainer>
