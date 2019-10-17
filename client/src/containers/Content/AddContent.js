@@ -22,6 +22,8 @@ import {
   createUserContent,
   getYoutubeVideoInfo
 } from "../../actions/userContent";
+// Helpers
+import { handleBookSearch } from "./bookSearchHelpers";
 // Styles
 import styles from "./AddContent.module.css";
 
@@ -53,16 +55,8 @@ const AddContent = ({ location, history, createUserContent }) => {
     history.push(`/courses/${courseId}`);
   };
 
-  const handleGoToBookSearchResults = async values => {
-    const { title, author } = values;
-    let url = `/content/add/book-search?title=${title}`;
-
-    // Add author to url if any value was entered
-    if (author) {
-      url = url + `&author=${author}`;
-    }
-    // Go to search results page
-    history.push(url);
+  const handleGoToBookSearchResults = values => {
+    handleBookSearch(values, history);
   };
 
   return (

@@ -11,12 +11,18 @@ import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
 // API
 import { getBookInfo } from "../../actions/userContent";
+// Helpers
+import { handleBookSearch } from "./bookSearchHelpers";
 // Styling
 import styles from "./BookSearchResults.module.css";
 
-const BookSearchResults = ({ location }) => {
+const BookSearchResults = ({ location, history }) => {
   const [searchParams, setSearchParams] = useState({ title: "", author: "" });
   const [searchResults, setSearchResults] = useState(null);
+
+  const handleGoToBookSearchResults = values => {
+    handleBookSearch(values, history);
+  };
 
   useEffect(() => {
     let params = { title: "", author: "" };
@@ -41,7 +47,11 @@ const BookSearchResults = ({ location }) => {
   return (
     <MainContainer>
       <ContentContainer className={styles.searchContainer}>
-        <BookContentForm initialValues={searchParams} direction="horizontal" />
+        <BookContentForm
+          initialValues={searchParams}
+          onSubmit={handleGoToBookSearchResults}
+          direction="horizontal"
+        />
       </ContentContainer>
       <HeaderContainer>
         <h4>Search Results</h4>
