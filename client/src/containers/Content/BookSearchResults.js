@@ -15,18 +15,25 @@ import { getBookInfo } from "../../actions/userContent";
 import styles from "./BookSearchResults.module.css";
 
 const BookSearchResults = ({ location }) => {
+  const [searchParams, setSearchParams] = useState({ title: "", author: "" });
   const [searchResults, setSearchResults] = useState(null);
 
   useEffect(() => {
-    const params = qs.parse(location.search.slice(1));
+    let params = { title: "", author: "" };
+    // Get search parameters from url
+    const urlParams = qs.parse(location.search.slice(1));
+    // Spread into initialized params object so all fields are available to
+    // pass as initial values to search form
+    params = { ...params, ...urlParams };
     const getResults = async (title, author) => {
       const results = await getBookInfo(title, author);
+      setSearchParams(params);
       setSearchResults(results.items);
     };
 
     // Make request to get book info
     if (!_.isEmpty(params)) {
-      const { title, author } = params;
+      const { title, author } = urlParams;
       getResults(title, author);
     }
   }, [location.search]);
@@ -34,7 +41,7 @@ const BookSearchResults = ({ location }) => {
   return (
     <MainContainer>
       <ContentContainer className={styles.searchContainer}>
-        <BookContentForm direction="horizontal" />
+        <BookContentForm initialValues={searchParams} direction="horizontal" />
       </ContentContainer>
       <HeaderContainer>
         <h4>Search Results</h4>

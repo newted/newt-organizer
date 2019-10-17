@@ -6,9 +6,14 @@ import Form from "react-bootstrap/Form";
 // Styling
 import styles from "./AddContent.module.css";
 
-const BookContentForm = ({ onSubmit, direction = "vertical" }) => (
+const BookContentForm = ({
+  onSubmit,
+  initialValues = { title: "", author: "" },
+  direction = "vertical"
+}) => (
   <Formik
-    initialValues={{ title: "", author: "" }}
+    initialValues={initialValues}
+    enableReinitialize
     onSubmit={values => onSubmit(values)}
     direction={direction}
   >
