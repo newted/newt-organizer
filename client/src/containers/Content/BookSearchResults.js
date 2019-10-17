@@ -9,6 +9,7 @@ import {
 } from "../../components/PageContainers";
 import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
+import BookModal from "./BookModal";
 // API
 import { getBookInfo } from "../../actions/userContent";
 // Helpers
@@ -19,9 +20,19 @@ import styles from "./BookSearchResults.module.css";
 const BookSearchResults = ({ location, history }) => {
   const [searchParams, setSearchParams] = useState({ title: "", author: "" });
   const [searchResults, setSearchResults] = useState(null);
+  const [currentBook, setCurrentBook] = useState(null);
+  const [showBookModal, setShowBookModal] = useState(false);
+
+  const handleShowBookModal = () => setShowBookModal(true);
+  const handleCloseBookModal = () => setShowBookModal(false);
 
   const handleGoToBookSearchResults = values => {
     handleBookSearch(values, history);
+  };
+
+  const handleBookSelect = bookInfo => {
+    setCurrentBook(bookInfo);
+    handleShowBookModal();
   };
 
   useEffect(() => {
@@ -58,8 +69,21 @@ const BookSearchResults = ({ location, history }) => {
       </HeaderContainer>
       <ContentContainer className={styles.cardContainer}>
         {!_.isEmpty(searchResults) &&
-          searchResults.map(book => <BookCard bookInfo={book} key={book.id} />)}
+          searchResults.map(book => (
+            <BookCard
+              bookInfo={book}
+              onClick={handleBookSelect}
+              key={book.id}
+            />
+          ))}
       </ContentContainer>
+      {!_.isEmpty(currentBook) && (
+        <BookModal
+          show={showBookModal}
+          onHide={handleCloseBookModal}
+          bookInfo={currentBook}
+        />
+      )}
     </MainContainer>
   );
 };

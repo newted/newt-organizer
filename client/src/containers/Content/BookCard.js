@@ -6,11 +6,11 @@ import { FiPlus } from "react-icons/fi";
 // Helpers
 import { shortenText } from "../../utils/containerHelpers";
 
-const BookCard = ({ bookInfo }) => {
+const BookCard = ({ bookInfo, onClick }) => {
   const { title, authors, pageCount, description } = bookInfo.volumeInfo;
 
   return (
-    <div className={styles.bookCard}>
+    <div className={styles.bookCard} onClick={() => onClick(bookInfo)}>
       <img
         src={bookInfo.volumeInfo.imageLinks.smallThumbnail}
         alt={bookInfo.volumeInfo.title}
@@ -18,7 +18,7 @@ const BookCard = ({ bookInfo }) => {
       />
       <div>
         <div className={styles.titleContainer}>
-          <h5>{title}</h5>
+          <h5 className={styles.title}>{title}</h5>
           <div
             className={styles.iconContainer}
             onClick={() => alert(`Add ${title} to course`)}
