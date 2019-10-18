@@ -47,8 +47,9 @@ const BookSearchResults = ({
 
   const handleAddBookToCourse = bookInfo => {
     const { courseId } = location.state;
-    const data = convertBookToUserContent(bookInfo, courseId);
-    console.log("Adding book to course:", data);
+    const data = convertBookToUserContent(bookInfo);
+    createUserContent(data, courseId);
+    history.push(`/courses/${courseId}`);
   };
 
   useEffect(() => {

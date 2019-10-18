@@ -16,7 +16,7 @@ export const formatDate = date => {
   return moment(date, "YYYY-MM-DD").format("MMM D, YYYY");
 };
 
-export const convertBookToUserContent = (bookInfo, courseId) => {
+export const convertBookToUserContent = bookInfo => {
   const formattedPublishDate = moment(
     bookInfo.volumeInfo.publishedDate,
     "YYYY-MM-DD"
@@ -25,9 +25,8 @@ export const convertBookToUserContent = (bookInfo, courseId) => {
   return {
     name: bookInfo.volumeInfo.title,
     description: bookInfo.volumeInfo.description,
-    courseId: courseId,
     sourceInfo: {
-      name: "book"
+      name: "Book"
     },
     bookInfo: {
       bookId: bookInfo.id,
