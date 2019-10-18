@@ -21,6 +21,10 @@ export const convertBookToUserContent = bookInfo => {
     bookInfo.volumeInfo.publishedDate,
     "YYYY-MM-DD"
   ).toDate();
+  // Initialize with a due date 2 weeks from now
+  const dateDue = moment()
+    .add(2, "weeks")
+    .toDate();
 
   return {
     name: bookInfo.volumeInfo.title,
@@ -28,6 +32,7 @@ export const convertBookToUserContent = bookInfo => {
     sourceInfo: {
       name: "Book"
     },
+    dateDue: dateDue,
     bookInfo: {
       bookId: bookInfo.id,
       title: bookInfo.volumeInfo.title,
