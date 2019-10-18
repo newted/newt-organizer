@@ -81,6 +81,7 @@ const BookSearchResults = ({ location, history }) => {
         <BookModal
           show={showBookModal}
           onHide={handleCloseBookModal}
+          onSubmit={() => alert("Adding book to course..")}
           bookInfo={currentBook}
         />
       )}

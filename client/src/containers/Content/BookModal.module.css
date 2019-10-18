@@ -1,0 +1,43 @@
+.bookImg {
+  width: 100%;
+  max-width: 169px;
+  /* min-width: 128px; */
+}
+
+.tableRow {
+  border-bottom: none;
+  font-size: 0.8rem;
+}
+
+.tableRow:hover {
+  background-color: #fff;
+}
+
+.tableCell {
+  padding: 0.25rem;
+}
+
+.moreInfoField {
+  font-weight: 600;
+  padding-left: 0;
+}
+
+.moreInfoValue {
+  padding-right: 0;
+}
+
+.title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.author {
+  font-size: 1rem;
+  color: var(--grey);
+  margin-bottom: 1.1rem;
+}
+
+.description {
+  color: var(--darkGrey-2);
+  font-size: 0.9rem;
+}
