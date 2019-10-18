@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const handleBookSearch = (values, history) => {
   const { title, author } = values;
   let url = `/content/add/book-search?title=${title}`;
@@ -8,4 +10,8 @@ export const handleBookSearch = (values, history) => {
   }
   // Go to search results page
   history.push(url);
+};
+
+export const formatDate = date => {
+  return moment(date, "YYYY-MM-DD").format("MMM D, YYYY");
 };

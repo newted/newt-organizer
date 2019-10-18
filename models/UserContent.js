@@ -117,6 +117,25 @@ const userContentSchema = new Schema({
       standard: thumbnailSchema
     }
   },
+  // Data from books api
+  bookInfo: {
+    bookId: String,
+    title: String,
+    subtitle: String,
+    description: String,
+    authors: [String],
+    thumbnails: {
+      standard: String,
+      small: String
+    },
+    industryIdentifiers: {
+      ISBN_10: String,
+      ISBN_13: String
+    },
+    pageCount: Number,
+    publisher: String,
+    datePublished: Date
+  },
   dateCreated: Date,
   dateDue: Date,
   lastUpdated: Date

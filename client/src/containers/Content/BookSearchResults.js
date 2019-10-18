@@ -7,6 +7,7 @@ import {
   HeaderContainer,
   ContentContainer
 } from "../../components/PageContainers";
+import Loader from "../../components/Loader";
 import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
 import BookModal from "./BookModal";
@@ -54,6 +55,10 @@ const BookSearchResults = ({ location, history }) => {
       getResults(title, author);
     }
   }, [location.search]);
+
+  if (_.isEmpty(searchResults)) {
+    return <Loader />;
+  }
 
   return (
     <MainContainer>

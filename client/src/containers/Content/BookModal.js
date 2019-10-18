@@ -5,6 +5,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
 import Button from "../../components/Button";
+// Helpers
+import { formatDate } from "./bookSearchHelpers";
 // Styling
 import styles from "./BookModal.module.css";
 
@@ -39,7 +41,7 @@ const BookModal = ({ show, onHide, onSubmit, bookInfo }) => (
                     Date published:
                   </td>
                   <td className={`${styles.tableCell} ${styles.moreInfoValue}`}>
-                    {bookInfo.volumeInfo.publishedDate}
+                    {formatDate(bookInfo.volumeInfo.publishedDate)}
                   </td>
                 </tr>
                 <tr className={styles.tableRow}>
