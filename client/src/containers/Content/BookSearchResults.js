@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import qs from "qs";
+import { connect } from "react-redux";
 // Components
 import {
   MainContainer,
@@ -12,13 +13,21 @@ import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
 import BookModal from "./BookModal";
 // API
-import { getBookInfo } from "../../actions/userContent";
+import { getBookInfo, createUserContent } from "../../actions/userContent";
 // Helpers
-import { handleBookSearch } from "./bookSearchHelpers";
+import {
+  handleBookSearch,
+  convertBookToUserContent
+} from "./bookSearchHelpers";
 // Styling
 import styles from "./BookSearchResults.module.css";
 
-const BookSearchResults = ({ location, history }) => {
+const BookSearchResults = ({
+  courseId,
+  location,
+  history,
+  createUserContent
+}) => {
   const [searchParams, setSearchParams] = useState({ title: "", author: "" });
   const [searchResults, setSearchResults] = useState(null);
   const [currentBook, setCurrentBook] = useState(null);
@@ -34,6 +43,12 @@ const BookSearchResults = ({ location, history }) => {
   const handleBookSelect = bookInfo => {
     setCurrentBook(bookInfo);
     handleShowBookModal();
+  };
+
+  const handleAddBookToCourse = bookInfo => {
+    const { courseId } = location.state;
+    const data = convertBookToUserContent(bookInfo, courseId);
+    console.log("Adding book to course:", data);
   };
 
   useEffect(() => {
@@ -86,7 +101,7 @@ const BookSearchResults = ({ location, history }) => {
         <BookModal
           show={showBookModal}
           onHide={handleCloseBookModal}
-          onSubmit={() => alert("Adding book to course..")}
+          onSubmit={handleAddBookToCourse}
           bookInfo={currentBook}
         />
       )}
@@ -94,4 +109,9 @@ const BookSearchResults = ({ location, history }) => {
   );
 };
 
-export default BookSearchResults;
+const mapDispatchToProps = { createUserContent };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(BookSearchResults);

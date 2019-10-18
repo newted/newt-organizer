@@ -88,7 +88,7 @@ const BookModal = ({ show, onHide, onSubmit, bookInfo }) => (
     </Modal.Body>
     <Modal.Footer>
       <Button onClick={onHide}>Close</Button>
-      <Button onClick={onSubmit} category="success">
+      <Button onClick={() => onSubmit(bookInfo)} category="success">
         Add to Course
       </Button>
     </Modal.Footer>

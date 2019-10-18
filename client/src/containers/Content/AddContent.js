@@ -56,7 +56,8 @@ const AddContent = ({ location, history, createUserContent }) => {
   };
 
   const handleGoToBookSearchResults = values => {
-    handleBookSearch(values, history);
+    const { courseId } = location.state;
+    handleBookSearch(values, courseId, history);
   };
 
   return (
