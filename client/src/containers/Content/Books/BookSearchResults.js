@@ -7,13 +7,13 @@ import {
   MainContainer,
   HeaderContainer,
   ContentContainer
-} from "../../components/PageContainers";
-import Loader from "../../components/Loader";
+} from "../../../components/PageContainers";
+import Loader from "../../../components/Loader";
 import BookContentForm from "./BookContentForm";
 import BookCard from "./BookCard";
 import BookModal from "./BookModal";
 // API
-import { getBookInfo, createUserContent } from "../../actions/userContent";
+import { getBookInfo, createUserContent } from "../../../actions/userContent";
 // Helpers
 import {
   handleBookSearch,
@@ -37,7 +37,8 @@ const BookSearchResults = ({
   const handleCloseBookModal = () => setShowBookModal(false);
 
   const handleGoToBookSearchResults = values => {
-    handleBookSearch(values, history);
+    const { courseId } = location.state;
+    handleBookSearch(values, courseId, history);
   };
 
   const handleBookSelect = bookInfo => {

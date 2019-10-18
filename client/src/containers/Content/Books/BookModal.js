@@ -4,7 +4,7 @@ import _ from "lodash";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 // Helpers
 import { formatDate } from "./bookSearchHelpers";
 // Styling

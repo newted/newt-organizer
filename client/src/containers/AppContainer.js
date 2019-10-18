@@ -18,7 +18,7 @@ import LearnPage from "./Learn";
 import CourseList from "./Courses/CourseList";
 import CoursePage from "./Courses/CoursePage";
 import AddContent from "./Content/AddContent";
-import BookSearchResults from "./Content/BookSearchResults";
+import BookSearchResults from "./Content/Books/BookSearchResults";
 import ContentPage from "./Content/ContentPage";
 import LearningMap from "./LearningMap";
 // Styling

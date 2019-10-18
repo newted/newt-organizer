@@ -4,7 +4,7 @@ import _ from "lodash";
 import styles from "./BookCard.module.css";
 import { FiPlus } from "react-icons/fi";
 // Helpers
-import { shortenText } from "../../utils/containerHelpers";
+import { shortenText } from "../../../utils/containerHelpers";
 
 const BookCard = ({ bookInfo, onClick }) => {
   const { title, authors, pageCount, description } = bookInfo.volumeInfo;

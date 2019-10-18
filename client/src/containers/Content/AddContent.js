@@ -16,14 +16,14 @@ import TabContainer from "react-bootstrap/TabContainer";
 import ContentForm from "./ContentForm";
 import YoutubeContentForm from "./YoutubeContentForm";
 import YoutubeConfirmation from "./YoutubeConfirmation";
-import BookContentForm from "./BookContentForm";
+import BookContentForm from "./Books/BookContentForm";
 // API
 import {
   createUserContent,
   getYoutubeVideoInfo
 } from "../../actions/userContent";
 // Helpers
-import { handleBookSearch } from "./bookSearchHelpers";
+import { handleBookSearch } from "./Books/bookSearchHelpers";
 // Styles
 import styles from "./AddContent.module.css";
 

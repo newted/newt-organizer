@@ -1,10 +1,10 @@
 import React from "react";
 // Components
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
 // Styling
-import styles from "./AddContent.module.css";
+import styles from "../AddContent.module.css";
 
 const BookContentForm = ({
   onSubmit,
