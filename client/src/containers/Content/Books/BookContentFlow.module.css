@@ -1,0 +1,19 @@
+.bookInfo {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.bookThumbnail {
+  margin-right: 2rem;
+}
+
+.author {
+  font-size: 1rem;
+  color: var(--darkGrey-2);
+  margin-bottom: 0.5rem;
+}
+
+.pageCount {
+  font-size: 0.9rem;
+  color: var(--darkGrey-2);
+}

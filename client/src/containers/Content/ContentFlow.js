@@ -6,6 +6,7 @@ import _ from "lodash";
 import Button from "../../components/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import CustomToggle from "../../components/Dropdown/CustomToggle";
+import BookContentFlow from "./Books/BookContentFlow";
 // Styling
 import styles from "./ContentFlow.module.css";
 import { FiCheckSquare, FiMoreVertical } from "react-icons/fi";
@@ -81,6 +82,10 @@ const ContentFlow = ({
               allowFullScreen
             />
           </div>
+        )}
+        {/* If content is a book so Book Content design */}
+        {content.sourceInfo.name.toLowerCase() === "book" && (
+          <BookContentFlow content={content} />
         )}
         {/* If content has knowledge tracking, display related information.
             (Just Knowledge module for now) */}
