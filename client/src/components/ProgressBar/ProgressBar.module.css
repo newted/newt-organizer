@@ -1,0 +1,10 @@
+.progressBar {
+  border-radius: 0.25rem;
+  background-color: rgba(0, 123, 255, 0.6);
+}
+
+.progressLabel {
+  color: white;
+  font-size: 0.8rem;
+  padding-left: 0.5rem;
+}

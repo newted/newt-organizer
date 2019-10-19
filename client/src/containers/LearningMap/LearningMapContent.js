@@ -4,6 +4,7 @@ import _ from "lodash";
 import Loader from "../../components/Loader";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
+import ProgressBar from "../../components/ProgressBar";
 // Styling
 import { FiInfo } from "react-icons/fi";
 import styles from "./LearningMapContent.module.css";
@@ -49,14 +50,7 @@ const Content = ({ learningInfo }) => {
             <tr key={name}>
               <td className={styles.topicsRow}>{name}</td>
               <td className={styles.ratingRow}>
-                <div
-                  className={styles.ratingBar}
-                  style={{ width: `${confidenceRating}%` }}
-                >
-                  <span
-                    className={styles.ratingLabel}
-                  >{`${confidenceRating}%`}</span>
-                </div>
+                <ProgressBar percentComplete={confidenceRating} />
               </td>
             </tr>
           ))}
