@@ -133,6 +133,10 @@ const userContentSchema = new Schema({
       ISBN_13: String
     },
     pageCount: Number,
+    pagesRead: {
+      type: Number,
+      default: 0
+    },
     publisher: String,
     datePublished: Date
   },

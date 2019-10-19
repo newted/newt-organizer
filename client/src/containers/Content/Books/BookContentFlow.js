@@ -22,7 +22,7 @@ const BookContentFlow = ({ content }) => (
         <p className={styles.progressLabel}>Progress</p>
         <div className={styles.progressBarContainer}>
           <div className={styles.progressBar}>
-            <ProgressBar percentComplete={70} />
+            <ProgressBar percentComplete={content.bookInfo.pagesRead} />
           </div>
           <Button
             additionalClass={styles.updateBtn}

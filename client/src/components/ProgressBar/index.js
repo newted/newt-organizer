@@ -4,7 +4,13 @@ import styles from "./ProgressBar.module.css";
 
 const ProgressBar = ({ percentComplete }) => (
   <div className={styles.progressBar} style={{ width: `${percentComplete}%` }}>
-    <span className={styles.progressLabel}>{`${percentComplete}%`}</span>
+    <span
+      className={
+        percentComplete > 10
+          ? `${styles.progressLabel} ${styles.whiteLabel}`
+          : `${styles.progressLabel} ${styles.blackLabel}`
+      }
+    >{`${percentComplete}%`}</span>
   </div>
 );
 
