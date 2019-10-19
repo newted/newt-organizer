@@ -47,6 +47,7 @@ const BookSearchResults = ({
   };
 
   const handleAddBookToCourse = bookInfo => {
+    handleCloseBookModal();
     const { courseId } = location.state;
     const data = convertBookToUserContent(bookInfo);
     createUserContent(data, courseId);
@@ -95,6 +96,7 @@ const BookSearchResults = ({
             <BookCard
               bookInfo={book}
               onClick={handleBookSelect}
+              onSubmit={handleAddBookToCourse}
               key={book.id}
             />
           ))}
