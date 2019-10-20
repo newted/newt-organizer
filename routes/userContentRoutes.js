@@ -107,6 +107,33 @@ module.exports = app => {
     );
   });
 
+  // PUT request to update number of pages read for a book
+  app.put(
+    "/api/user-content/:contentId/book-progress",
+    requireLogin,
+    (req, res) => {
+      const { contentId } = req.params;
+      const { pagesRead } = req.body;
+
+      UserContent.findByIdAndUpdate(
+        contentId,
+        {
+          $set: {
+            "bookInfo.pagesRead": pagesRead
+          }
+        },
+        { new: true },
+        (error, userContent) => {
+          if (error) {
+            res.status(500).send(error);
+          } else {
+            res.send(userContent);
+          }
+        }
+      );
+    }
+  );
+
   app.delete("/api/user-content/:contentId", requireLogin, (req, res) => {
     const { contentId } = req.params;
 

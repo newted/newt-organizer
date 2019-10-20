@@ -109,6 +109,24 @@ export const addQuizToUserContent = (userContentId, data) => async dispatch => {
   }
 };
 
+export const updatePagesRead = (userContentId, pagesRead) => async dispatch => {
+  try {
+    dispatch({ type: REQUEST_USER_CONTENT });
+    // Get current user token
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
+    // Make request to update number of pages read
+    const res = await axios.put(
+      `/api/user-content/${userContentId}/book-progress`,
+      { pagesRead },
+      { headers: { Authorization: idToken } }
+    );
+
+    dispatch({ type: UPDATE_USER_CONTENT, payload: res.data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteUserContent = (
   userContentId,
   courseId
