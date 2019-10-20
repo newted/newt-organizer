@@ -109,7 +109,7 @@ export const addQuizToUserContent = (userContentId, data) => async dispatch => {
   }
 };
 
-export const updatePagesRead = (userContentId, pagesRead) => async dispatch => {
+export const updatePagesRead = (userContentId, values) => async dispatch => {
   try {
     dispatch({ type: REQUEST_USER_CONTENT });
     // Get current user token
@@ -117,7 +117,7 @@ export const updatePagesRead = (userContentId, pagesRead) => async dispatch => {
     // Make request to update number of pages read
     const res = await axios.put(
       `/api/user-content/${userContentId}/book-progress`,
-      { pagesRead },
+      values,
       { headers: { Authorization: idToken } }
     );
 

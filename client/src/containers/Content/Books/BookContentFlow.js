@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 // Components
 import ProgressBar from "../../../components/ProgressBar";
 import Button from "../../../components/Button";
@@ -7,10 +8,12 @@ import { Formik } from "formik";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+// API
+import { updatePagesRead } from "../../../actions/userContent";
 // Styles
 import styles from "./BookContentFlow.module.css";
 
-const BookContentFlow = ({ content }) => {
+const BookContentFlow = ({ content, updatePagesRead }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -46,10 +49,11 @@ const BookContentFlow = ({ content }) => {
           </div>
         </div>
       </div>
+      {/* Modal with form to update pages read */}
       <Formik
         initialValues={{ pagesRead: content.bookInfo.pagesRead }}
         enableReinitialize
-        onSubmit={values => alert(`I'm on page ${values.pagesRead}`)}
+        onSubmit={values => updatePagesRead(content._id, values)}
       >
         {({ handleSubmit, handleChange, handleBlur, values }) => (
           <Modal show={showModal} onHide={handleCloseModal}>
@@ -64,7 +68,7 @@ const BookContentFlow = ({ content }) => {
                   </Form.Label>
                   <Col sm="9" xs="8">
                     <Form.Control
-                      type="text"
+                      type="number"
                       name="pagesRead"
                       value={values.pagesRead}
                       onChange={handleChange}
@@ -87,4 +91,9 @@ const BookContentFlow = ({ content }) => {
   );
 };
 
-export default BookContentFlow;
+const mapDispatchToProps = { updatePagesRead };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(BookContentFlow);
