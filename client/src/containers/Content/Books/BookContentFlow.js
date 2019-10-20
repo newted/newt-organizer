@@ -19,6 +19,10 @@ const BookContentFlow = ({ content, updatePagesRead }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
+  const calculatePercentComplete = (pagesRead, totalPages) => {
+    return Math.round((pagesRead / totalPages) * 100);
+  };
+
   return (
     <>
       <div className={styles.bookSection}>
@@ -37,7 +41,12 @@ const BookContentFlow = ({ content, updatePagesRead }) => {
             <p className={styles.progressLabel}>Progress</p>
             <div className={styles.progressBarContainer}>
               <div className={styles.progressBar}>
-                <ProgressBar percentComplete={content.bookInfo.pagesRead} />
+                <ProgressBar
+                  percentComplete={calculatePercentComplete(
+                    content.bookInfo.pagesRead,
+                    content.bookInfo.pageCount
+                  )}
+                />
               </div>
               <Button
                 additionalClass={styles.updateBtn}
