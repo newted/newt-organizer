@@ -1,4 +1,5 @@
 import moment from "moment";
+import * as yup from "yup";
 
 export const handleBookSearch = (values, courseId, history) => {
   const { title, author } = values;
@@ -52,4 +53,14 @@ export const convertBookToUserContent = bookInfo => {
       datePublished: formattedPublishDate
     }
   };
+};
+
+export const createPagesReadValidationSchema = totalPages => {
+  return yup.object({
+    pagesRead: yup
+      .number()
+      .min(0, "Pages read must be greater than or equal to 0")
+      .max(totalPages, `That's more than the total number of pages`)
+      .integer("The number should be an integer.")
+  });
 };

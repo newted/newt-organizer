@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { createPagesReadValidationSchema } from "./bookSearchHelpers";
 // Components
 import ProgressBar from "../../../components/ProgressBar";
 import Button from "../../../components/Button";
@@ -61,10 +62,13 @@ const BookContentFlow = ({ content, updatePagesRead }) => {
       {/* Modal with form to update pages read */}
       <Formik
         initialValues={{ pagesRead: content.bookInfo.pagesRead }}
+        validationSchema={createPagesReadValidationSchema(
+          content.bookInfo.pageCount
+        )}
         enableReinitialize
         onSubmit={values => updatePagesRead(content._id, values)}
       >
-        {({ handleSubmit, handleChange, handleBlur, values }) => (
+        {({ handleSubmit, handleChange, handleBlur, values, errors }) => (
           <Modal show={showModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
               <Modal.Title>Update Progress</Modal.Title>
@@ -82,7 +86,11 @@ const BookContentFlow = ({ content, updatePagesRead }) => {
                       value={values.pagesRead}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      isInvalid={!!errors.pagesRead}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.pagesRead}
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Form>
