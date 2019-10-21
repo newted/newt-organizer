@@ -12,7 +12,11 @@ const BookCard = ({ bookInfo, onClick, onSubmit }) => {
   return (
     <div className={styles.bookCard} onClick={() => onClick(bookInfo)}>
       <img
-        src={bookInfo.volumeInfo.imageLinks.smallThumbnail}
+        src={
+          !_.isEmpty(bookInfo.volumeInfo.imageLinks)
+            ? bookInfo.volumeInfo.imageLinks.smallThumbnail
+            : null
+        }
         alt={bookInfo.volumeInfo.title}
         className={styles.bookThumbnail}
       />
@@ -31,7 +35,9 @@ const BookCard = ({ bookInfo, onClick, onSubmit }) => {
           {!_.isEmpty(authors) ? authors.join(", ") : "N/A"}
         </p>
         {pageCount && (
-          <p className={styles.pageCount}>{`${pageCount} pages`}</p>
+          <p className={styles.pageCount}>
+            {pageCount ? `${pageCount} pages` : null}
+          </p>
         )}
         {description && (
           <p className={styles.description}>{shortenText(description, 70)}</p>
