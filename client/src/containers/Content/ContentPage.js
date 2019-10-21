@@ -19,7 +19,8 @@ import {
   fetchIndividualContent,
   updateUserContent,
   deleteUserContent,
-  addQuizToUserContent
+  addQuizToUserContent,
+  updatePagesRead
 } from "../../actions/userContent";
 import {
   createPersonalQuiz,
@@ -42,6 +43,7 @@ const ContentPage = ({
   fetchQuiz,
   completeQuiz,
   addQuizToUserContent,
+  updatePagesRead,
   updateLearningMap,
   match,
   history
@@ -83,6 +85,17 @@ const ContentPage = ({
 
   // Function to toggle completion of content
   const toggleContentCompletion = currentCompletionState => {
+    // If the content is a book, then set the pages read to the total number of
+    // pages in the book (i.e. completing the book)
+    if (
+      !currentCompletionState &&
+      content.sourceInfo.name.toLowerCase() === "book"
+    ) {
+      updatePagesRead(userContentId, {
+        pagesRead: content.bookInfo.pageCount
+      });
+    }
+    // Toggle completion
     updateUserContent(userContentId, { isComplete: !currentCompletionState });
   };
 
@@ -283,6 +296,7 @@ const mapDispatchToProps = {
   fetchQuiz,
   completeQuiz,
   addQuizToUserContent,
+  updatePagesRead,
   updateLearningMap
 };
 

@@ -19,7 +19,8 @@ import Button from "../../components/Button";
 import {
   updateUserContent,
   deleteUserContent,
-  addQuizToUserContent
+  addQuizToUserContent,
+  updatePagesRead
 } from "../../actions/userContent";
 import {
   createPersonalQuiz,
@@ -44,6 +45,7 @@ const LearnPage = ({
   addQuizToUserContent,
   fetchQuiz,
   completeQuiz,
+  updatePagesRead,
   updateLearningMap,
   match,
   history
@@ -116,6 +118,17 @@ const LearnPage = ({
 
   // Function to toggle completion of content
   const toggleContentCompletion = currentCompletionState => {
+    // If the content is a book, then set the pages read to the total number of
+    // pages in the book (i.e. completing the book)
+    if (
+      !currentCompletionState &&
+      currentContent.sourceInfo.name.toLowerCase() === "book"
+    ) {
+      updatePagesRead(currentContent._id, {
+        pagesRead: currentContent.bookInfo.pageCount
+      });
+    }
+    // Toggle completion
     updateUserContent(currentContent._id, {
       isComplete: !currentCompletionState
     });
@@ -322,6 +335,7 @@ const mapDispatchToProps = {
   fetchQuiz,
   addQuizToUserContent,
   completeQuiz,
+  updatePagesRead,
   updateLearningMap
 };
 
