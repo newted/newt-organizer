@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // Styling
 import styles from "./LearnContentCard.module.css";
-import { FiFileText } from "react-icons/fi";
+import { selectCardIcon } from "../../utils/containerHelpers";
 
 const LearnContentCard = ({ userContent, isActive }) => {
   const setCardClass = (isActive, isComplete, cardVisual = false) => {
@@ -32,7 +32,7 @@ const LearnContentCard = ({ userContent, isActive }) => {
     <Link to={`/learn/${userContent._id}`}>
       <div className={setCardClass(isActive, userContent.isComplete)}>
         <div className={setCardClass(isActive, userContent.isComplete, true)}>
-          <FiFileText size={30} color="#666" />
+          {selectCardIcon(userContent.sourceInfo.name, 26, "#666")}
         </div>
         <div className={styles.cardBody}>
           <h5>{userContent.name}</h5>

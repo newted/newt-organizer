@@ -1,4 +1,6 @@
+import React from "react";
 import moment from "moment";
+import { FiFileText, FiBook, FiPlayCircle } from "react-icons/fi";
 
 // Sort two objects first by status (incomplete, in progress, complete), and
 // then by due date.
@@ -86,3 +88,15 @@ export function shortenText(text, maxCharacters) {
     return text.substr(0, characterCount) + "...";
   }
 }
+
+// Returns a different icon based on the type of the user content (book, video, etc.)
+export const selectCardIcon = (type, iconSize = 30, iconColor = "#555") => {
+  switch (type.toLowerCase()) {
+    case "book":
+      return <FiBook size={iconSize} color={iconColor} />;
+    case "youtube":
+      return <FiPlayCircle size={iconSize} color={iconColor} />;
+    default:
+      return <FiFileText size={iconSize} color={iconColor} />;
+  }
+};

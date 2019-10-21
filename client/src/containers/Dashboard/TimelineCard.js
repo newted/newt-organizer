@@ -2,12 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 // Styling
 import styles from "./TimelineCard.module.css";
-import { FiFileText, FiCheckSquare } from "react-icons/fi";
+import { FiCheckSquare } from "react-icons/fi";
 // Helpers
-import { shortenText } from "../../utils/containerHelpers";
+import { shortenText, selectCardIcon } from "../../utils/containerHelpers";
 
 const TimelineCard = ({
-  userContent: { _id, name, courseId, courseName, description, isComplete },
+  userContent: {
+    _id,
+    name,
+    courseId,
+    courseName,
+    description,
+    isComplete,
+    sourceInfo
+  },
   toggleComplete
 }) => (
   <div
@@ -22,7 +30,7 @@ const TimelineCard = ({
           : styles.cardVisual
       }
     >
-      <FiFileText size={30} color="#555" />
+      {selectCardIcon(sourceInfo.name)}
     </div>
     <div className={styles.cardBody}>
       <div className={styles.cardText}>
